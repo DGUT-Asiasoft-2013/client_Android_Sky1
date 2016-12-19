@@ -1,20 +1,20 @@
 package com.itcast.booksale.entity;
 
 /**
- * 用户信息
+ * 鐢ㄦ埛淇℃伅
  * @author Administrator
  *
  */
 public class User {
 
-	private Integer id;           //用户id
+	private Integer id;           //鐢ㄦ埛id
 	
 	String account;
 	String passwordHash;
 	String name;
 	String avatar;
 	String email;
-	String phoneNumb;//手机号必填(联系方法)
+	String phoneNumb;//鐢佃瘽鍙风爜
 	String qq;
 	
 	public Integer getId() {

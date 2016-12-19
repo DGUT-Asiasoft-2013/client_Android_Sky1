@@ -3,18 +3,18 @@ package com.itcast.booksale.entity;
 import java.util.Date;
 
 /**
- * ÆÀÂÛĞÅÏ¢
+ * è¯„è®ºå®ç°ç±»
  * @author Administrator
  *
  */
 public class Comment {
 	
 	private int id;
-	private User user;
-	private String content;       //ÆÀÂÛÄÚÈİ
-	private Date createDate;      //ÆÀÂÛ´´½¨Ê±¼ä
-	private Date editDate;      //ÆÀÂÛ±à¼­Ê±¼ä
-	private Book book;          //Êé¼®ĞÅÏ¢
+	private User user;                
+	private String content;       //è¯„è®ºå†…å®¹
+	private Date createDate;      //è¯„è®ºåˆ›å»ºæ—¶é—´
+	private Date editDate;      //è¯„è®ºç¼–è¾‘æ—¶é—´
+	private Book book;          //ä¹¦ä¿¡æ¯
 	public int getId() {
 		return id;
 	}

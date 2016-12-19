@@ -1,39 +1,39 @@
 package com.itcast.booksale.entity;
 
 /**
- * Í¼ÊéÀàĞÅÏ¢
+ * ä¹¦
  * @author Administrator
  *
  */
 
 public class Book {
 	
-	    //Í¼ÊéID
-		private String id;
-	    //Í¼Êé±êÌâ
-		private String Title;	
-		//Í¼Êé×÷Õß
-	    private String Author;
-	    //×÷ÕßĞÅÏ¢
-	    private String AuthorInfo;
-	    //Í¼Êé³ö°æÉç
-	    private String Publisher;
-	    //³ö°æÊ±¼ä
-	    private String PublishDate;
-	    //Í¼ÊéISBNÂë
-	    private String ISBN;
-	    //Í¼Êé¼Û¸ñ
-	    private String Price;
-	    //Í¼ÊéÒ³Êı
-	    private String Page;
-	    //Í¼ÊéÆÀ·Ö
-	    private String Rate;
-	    //Í¼Êé±êÇ©
-	    private String Tag;
-	    //Í¼ÊéÄ¿Â¼
-	    private String Content;
-	    //Í¼ÊéÕªÒª
-	    private String Summary;
+	//å›¾ä¹¦ID
+	private String id;
+    //å›¾ä¹¦æ ‡é¢˜
+	private String Title;	
+	//å›¾ä¹¦ä½œè€…
+    private String Author;
+    //ä½œè€…ä¿¡æ¯
+    private String AuthorInfo;
+    //å›¾ä¹¦å‡ºç‰ˆç¤¾
+    private String Publisher;
+    //å‡ºç‰ˆæ—¶é—´
+    private String PublishDate;
+    //å›¾ä¹¦ISBNç 
+    private String ISBN;
+    //å›¾ä¹¦ä»·æ ¼
+    private String Price;
+    //å›¾ä¹¦é¡µæ•°
+    private String Page;
+    //å›¾ä¹¦è¯„åˆ†
+    private String Rate;
+    //å›¾ä¹¦æ ‡ç­¾
+    private String Tag;
+    //å›¾ä¹¦ç›®å½•
+    private String Content;
+    //å›¾ä¹¦æ‘˜è¦
+    private String Summary;
 		public String getId() {
 			return id;
 		}
