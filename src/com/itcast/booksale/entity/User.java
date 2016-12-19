@@ -1,7 +1,14 @@
 package com.itcast.booksale.entity;
 
+/**
+ * 用户信息
+ * @author Administrator
+ *
+ */
 public class User {
 
+	private Integer id;           //用户id
+	
 	String account;
 	String passwordHash;
 	String name;
@@ -9,6 +16,13 @@ public class User {
 	String email;
 	String phoneNumb;//手机号必填(联系方法)
 	String qq;
+	
+	public Integer getId() {
+		return id;
+	}
+	public void setId(Integer id) {
+		this.id = id;
+	}
 	public String getAccount() {
 		return account;
 	}
