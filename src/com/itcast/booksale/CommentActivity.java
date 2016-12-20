@@ -73,7 +73,6 @@ public class CommentActivity extends Activity {
 			public void onResponse(final Call arg0, final Response arg1) throws IOException {
 
 				try {
-					// ���Ǻ�ִ̨�еģ���ǰִ̨��ʱ�����Ȱ��������ַ�����
 					String ar = arg1.body().string();
 					CommentActivity.this.onResponse(arg0, ar);
 				} catch (final Exception e) {
