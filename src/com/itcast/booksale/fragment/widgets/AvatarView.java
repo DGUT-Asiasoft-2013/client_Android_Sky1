@@ -28,6 +28,7 @@ import okhttp3.Response;
 
 public class AvatarView extends View {
 
+	
 	public AvatarView(Context context) {
 		super(context);
 	}
