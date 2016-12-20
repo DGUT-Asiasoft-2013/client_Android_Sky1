@@ -7,8 +7,10 @@ import java.io.Serializable;
  * @author Administrator
  *
  */
+
 public class User implements Serializable{
 	
+
 	private Integer id;           //用户id
 	
 	String account;

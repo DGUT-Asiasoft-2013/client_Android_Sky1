@@ -37,6 +37,11 @@ import okhttp3.Response;
  */
 public class Comment_Listfragment extends Fragment {
 
+	String bookId;//在书评那里设置id，这里获取id
+
+
+
+
 	int page;
 	View view ;
 	private ListView comment_list;              //列表
@@ -66,7 +71,7 @@ public class Comment_Listfragment extends Fragment {
 	public void loadComment() {
 		OkHttpClient client=Servelet.getOkHttpClient();       //获得客户端
 		//获得请求
-		Request request=Servelet.requestuildApi("book/"+Book.getID()+"/comment")
+		Request request=Servelet.requestuildApi("book/"+bookId+"/comment")//---获取书的Id
 				.get()
 				.build();
 		
@@ -196,5 +201,14 @@ public class Comment_Listfragment extends Fragment {
 			return commentview;
 		}
 		
+	}
+	
+	//用于获取书籍ID
+	public String getBookId() {
+		return bookId;
+	}
+
+	public void setBookId(String bookId) {
+		this.bookId = bookId;
 	}
 }

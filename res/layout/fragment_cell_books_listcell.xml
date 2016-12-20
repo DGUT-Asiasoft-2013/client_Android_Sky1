@@ -27,23 +27,23 @@
         android:orientation="vertical" >
 
         <TextView
-            android:id="@+id/book_title"
+            android:id="@+id/cell_title"
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:layout_gravity="center"
             android:layout_marginLeft="10dp"
-            android:text="书籍名称"
+            android:text="书籍名称--作者"
             android:textColor="@android:color/black"
             android:textSize="18sp" />
 
         <TextView
-            android:id="@+id/book_author"
+            android:id="@+id/text_about_book"
             android:layout_width="match_parent"
             android:layout_height="20dp"
             android:layout_gravity="center"
             android:layout_marginLeft="10dp"
             android:singleLine="true"
-            android:text="作者"
+            android:text="内容简介"
             android:textColor="@android:color/darker_gray" />
 
         <TextView

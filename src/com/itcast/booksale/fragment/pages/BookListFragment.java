@@ -85,20 +85,22 @@ public class BookListFragment extends Fragment {
 			//设置数据，并获取
 
 			TextView textDate = (TextView)view.findViewById(R.id.edit_date);//编写日期
-			TextView bookTitle = (TextView)view.findViewById(R.id.book_title);//书名
-			TextView bookAuthor = (TextView)view.findViewById(R.id.book_author);//作者
+			TextView bookCellTitle = (TextView)view.findViewById(R.id.cell_title);//书名
+			TextView bookSummary = (TextView)view.findViewById(R.id.text_about_book);//作者
 			TextView bookPrice = (TextView)view.findViewById(R.id.book_price);//售价
-
 			AvatarView bookAvatar = (AvatarView)view.findViewById(R.id.book_avatar);//封面
 
+			Book book = booksData.get(position);
+			
 			String list_createDate = DateFormat
 					.format("yyyy-MM-dd hh:mm",
 							booksData.get(position).getCreateDate()).toString();
 
 			textDate.setText(list_createDate);
-			bookTitle.setText("测试专用书");
-			bookAuthor.setText("水机情报");
-			bookPrice.setText(1.00 +" 元");
+			bookCellTitle.setText(book.getTitle()+"--"+book.getAuthor());
+			bookSummary.setText(book.getSummary());
+			bookPrice.setText(book.getPrice()+" 元");
+			//书的封面暂不设
 
 
 
@@ -138,7 +140,8 @@ public class BookListFragment extends Fragment {
 	}
 
 	void reload(){
-		Request request = Servelet.requestuildApi("feeds")
+
+		Request request = Servelet.requestuildApi("books")
 				.get()
 				.build();
 
