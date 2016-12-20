@@ -3,6 +3,7 @@ package com.itcast.booksale.fragment.widgets;
 import java.io.IOException;
 
 import com.itcast.booksale.entity.User;
+import com.itcast.booksale.servelet.Servelet;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -18,7 +19,6 @@ import android.text.BidiFormatter;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
-import api.Server;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -67,12 +67,12 @@ public class AvatarView extends View {
 	}
 
 	public void load(User user){
-		load(Server.serverAddress + user.getAvatar());
+		load(Servelet.urlstring + user.getAvatar());
 }
 	public void load(String url){
 
 		Log.d("yy",url);
-		OkHttpClient client = Server.getSharedClient();
+		OkHttpClient client = Servelet.getOkHttpClient();
 		Request request = new Request.Builder()
 				.url(url)
 				.method("get",null)
