@@ -6,12 +6,13 @@ import java.util.Date;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
- * 图书类信息
+ * 书
  * @author Administrator
  *
  */
 @JsonIgnoreProperties(ignoreUnknown=true)
 public class Book implements Serializable{
+
 
 	//用户
 	User user;

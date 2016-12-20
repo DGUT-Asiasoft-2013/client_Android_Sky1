@@ -14,7 +14,7 @@ public class User {
 	String name;
 	String avatar;
 	String email;
-	String phoneNumb;//手机号必填(联系方法)
+	String phoneNumb;//电话号码
 	String qq;
 	
 	public Integer getId() {
