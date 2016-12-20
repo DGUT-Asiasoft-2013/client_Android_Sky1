@@ -3,18 +3,24 @@ package com.itcast.booksale.entity;
 import java.util.Date;
 
 /**
+<<<<<<< HEAD
+ * 评论信息
+=======
  * 评论实现类
+>>>>>>> branch 'master' of https://github.com/DGUT-Asiasoft-2013/client_Android_Sky1.git
  * @author Administrator
  *
  */
 public class Comment {
 	
 	private int id;
+
 	private User user;                
 	private String content;       //评论内容
 	private Date createDate;      //评论创建时间
 	private Date editDate;      //评论编辑时间
 	private Book book;          //书信息
+
 	public int getId() {
 		return id;
 	}

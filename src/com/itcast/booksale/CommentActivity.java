@@ -73,8 +73,8 @@ public class CommentActivity extends Activity {
 			public void onResponse(final Call arg0, final Response arg1) throws IOException {
 
 				try {
-					// String ar = arg1.body().string();为后台运行的，不能再前台运行，所以把它放在前面来
-					String ar = arg1.body().string();
+
+					String ar = arg1.body().string();// String ar = arg1.body().string();为后台运行的，不能再前台运行，所以把它放在前面来
 					CommentActivity.this.onResponse(arg0, ar);
 				} catch (final Exception e) {
 					runOnUiThread(new Runnable() {

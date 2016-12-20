@@ -1,12 +1,14 @@
 package com.itcast.booksale.entity;
 
+import java.io.Serializable;
+
 /**
  * 用户信息
  * @author Administrator
  *
  */
-public class User {
-
+public class User implements Serializable{
+	
 	private Integer id;           //用户id
 	
 	String account;
