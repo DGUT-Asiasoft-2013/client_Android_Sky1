@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <drawable name="bg_btn_focused">#073a05</drawable>  
+    <drawable name="bg_btn_normal">#749057</drawable> 
+</resources>
