@@ -3,11 +3,7 @@ package com.itcast.booksale.entity;
 import java.util.Date;
 
 /**
-<<<<<<< HEAD
- * 评论信息
-=======
  * 评论实现类
->>>>>>> branch 'master' of https://github.com/DGUT-Asiasoft-2013/client_Android_Sky1.git
  * @author Administrator
  *
  */

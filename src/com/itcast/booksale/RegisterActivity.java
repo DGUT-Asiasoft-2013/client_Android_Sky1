@@ -23,35 +23,36 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class RegisterActivity extends Activity {
-SimpleTextInputCellFragment fragInputCellAccount;//ÓÃ»§µÄÕËºÅ
-SimpleTextInputCellFragment fragInputCellName;//ÓÃ»§µÄêÇ³Æ
-SimpleTextInputCellFragment fragInputCellPassword;//ÓÃ»§µÄÃÜÂë
-SimpleTextInputCellFragment fragInputCellPasswordRepeat;//ÖØ¸´ÃÜÂë
-SimpleTextInputCellFragment fragInputCellEmail;//ÓÃ»§µÄÓÊÏäµØÖ·
-SimpleTextInputCellFragment fragInputCellPhone;//ÓÃ»§µÄµç»°ºÅÂë
-SimpleTextInputCellFragment fragInputCellQq;//ÓÃ»§µÄQQ
+	SimpleTextInputCellFragment fragInputCellAccount;//ç”¨æˆ·çš„è´¦å·
+	SimpleTextInputCellFragment fragInputCellName;//ç”¨æˆ·çš„æ˜µç§°
+	SimpleTextInputCellFragment fragInputCellPassword;//ç”¨æˆ·çš„å¯†ç 
+	SimpleTextInputCellFragment fragInputCellPasswordRepeat;//é‡å¤å¯†ç 
+	SimpleTextInputCellFragment fragInputCellEmail;//ç”¨æˆ·çš„é‚®ç®±åœ°å€
+	SimpleTextInputCellFragment fragInputCellPhone;//ç”¨æˆ·çš„ç”µè¯å·ç 
+	SimpleTextInputCellFragment fragInputCellQq;//ç”¨æˆ·çš„QQ
+	
+	
+	PictureInputCellFragment fragImage;//å¤´åƒ
 
-PictureInputCellFragment fragImage;//Í·Ïñ
-
-ProgressDialog ProgressDialog;//½ø¶È¶Ô»°¿ò
+	ProgressDialog ProgressDialog;//è¿›åº¦å¯¹è¯æ¡†
 
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_register);//¼ÓÔØ²¼¾Ö
+		setContentView(R.layout.activity_register);//åŠ è½½å¸ƒå±€
 		
-		fragInputCellAccount=(SimpleTextInputCellFragment) getFragmentManager().findFragmentById(R.id.input_account);//¼ÓÔØÕËºÅaccount
-		fragInputCellName=(SimpleTextInputCellFragment) getFragmentManager().findFragmentById(R.id.input_name);//¼ÓÔØêÇ³Æname
-		fragInputCellPassword=(SimpleTextInputCellFragment) getFragmentManager().findFragmentById(R.id.input_password);//¼ÓÔØÃÜÂëpassword
-		fragInputCellPasswordRepeat=(SimpleTextInputCellFragment) getFragmentManager().findFragmentById(R.id.input_password_repeat);//¼ÓÔØÖØ¸´ÃÜÂë
-		fragInputCellEmail=(SimpleTextInputCellFragment) getFragmentManager().findFragmentById(R.id.input_email);//¼ÓÔØÓÊÏäEmai
-		fragInputCellPhone=(SimpleTextInputCellFragment) getFragmentManager().findFragmentById(R.id.input_phone);//¼ÓÔØµç»°ºÅÂëPhone
-		fragInputCellQq=(SimpleTextInputCellFragment) getFragmentManager().findFragmentById(R.id.input_qq);//¼ÓÔØQQ
+		fragInputCellAccount=(SimpleTextInputCellFragment) getFragmentManager().findFragmentById(R.id.input_account);//åŠ è½½è´¦å·account
+		fragInputCellName=(SimpleTextInputCellFragment) getFragmentManager().findFragmentById(R.id.input_name);//åŠ è½½æ˜µç§°name
+		fragInputCellPassword=(SimpleTextInputCellFragment) getFragmentManager().findFragmentById(R.id.input_password);//åŠ è½½å¯†ç password
+		fragInputCellPasswordRepeat=(SimpleTextInputCellFragment) getFragmentManager().findFragmentById(R.id.input_password_repeat);//åŠ è½½é‡å¤å¯†ç 
+		fragInputCellEmail=(SimpleTextInputCellFragment) getFragmentManager().findFragmentById(R.id.input_email);//åŠ è½½é‚®ç®±Emai
+		fragInputCellPhone=(SimpleTextInputCellFragment) getFragmentManager().findFragmentById(R.id.input_phone);//åŠ è½½ç”µè¯å·ç Phone
+		fragInputCellQq=(SimpleTextInputCellFragment) getFragmentManager().findFragmentById(R.id.input_qq);//åŠ è½½QQ
 		
-		fragImage=(PictureInputCellFragment) getFragmentManager().findFragmentById(R.id.input_avatar);//¼ÓÔØÍ·Ïñavatar
+		fragImage=(PictureInputCellFragment) getFragmentManager().findFragmentById(R.id.input_avatar);//åŠ è½½å¤´åƒavatar
 		
-		findViewById(R.id.btn_submit).setOnClickListener(new View.OnClickListener() {//ÉèÖÃ°´Å¥btn_submitµÄµã»÷ÊÂ¼ş
+		findViewById(R.id.btn_submit).setOnClickListener(new View.OnClickListener() {//è®¾ç½®æŒ‰é’®btn_submitçš„ç‚¹å‡»äº‹ä»¶
 			
 			@Override
 			public void onClick(View v) {
@@ -62,69 +63,69 @@ ProgressDialog ProgressDialog;//½ø¶È¶Ô»°¿ò
 
 
 	@Override
-		protected void onResume() {//³õÊ¼»¯¿Ø¼ş
+		protected void onResume() {//åˆå§‹åŒ–æ§ä»¶
 			// TODO Auto-generated method stub
 			super.onResume();
 			
-			fragInputCellAccount.setLabelText("ÕËºÅ:");//ÕËºÅ
+			fragInputCellAccount.setLabelText("è´¦å·:");//è´¦å·
 			{
-				fragInputCellAccount.setHintText("ÇëÊäÈëÕËºÅ");
+				fragInputCellAccount.setHintText("è¯·è¾“å…¥è´¦å·");
 			}
 			
-			fragInputCellName.setLabelText("êÇ³Æ:");//êÇ³Æ
+			fragInputCellName.setLabelText("æ˜µç§°:");//æ˜µç§°
 			{
-				fragInputCellName.setHintText("ÇëÊäÈëêÇ³Æ");
+				fragInputCellName.setHintText("è¯·è¾“å…¥æ˜µç§°");
 			}
 			
-			fragInputCellPassword.setLabelText("ÃÜÂë:");//ÃÜÂë
+			fragInputCellPassword.setLabelText("å¯†ç :");//å¯†ç 
 			{
-				fragInputCellPassword.setHintText("ÇëÊäÈëÃÜÂë");
+				fragInputCellPassword.setHintText("è¯·è¾“å…¥å¯†ç ");
 			}
 			
-			fragInputCellPasswordRepeat.setLabelText("ÖØ¸´ÃÜÂë:");//ÖØ¸´ÃÜÂë
+			fragInputCellPasswordRepeat.setLabelText("é‡å¤å¯†ç :");//é‡å¤å¯†ç 
 			{
-				fragInputCellPasswordRepeat.setHintText("ÇëÔÙ´ÎÊäÈëÃÜÂë");
+				fragInputCellPasswordRepeat.setHintText("è¯·å†æ¬¡è¾“å…¥å¯†ç ");
 			}
 			
-			fragInputCellEmail.setLabelText("ÓÊÏä:");//ÓÊÏä
+			fragInputCellEmail.setLabelText("é‚®ç®±:");//é‚®ç®±
 			{
-				fragInputCellEmail.setHintText("ÇëÊäÈëÓÊÏä");
+				fragInputCellEmail.setHintText("è¯·è¾“å…¥é‚®ç®±");
 				fragInputCellEmail.setIsEmail(true);
 			}
 			
-			fragInputCellPhone.setLabelText("µç»°:");//µç»°
+			fragInputCellPhone.setLabelText("ç”µè¯:");//ç”µè¯
 			{
-				fragInputCellPhone.setHintText("ÇëÊäÈëµç»°ºÅÂë");
+				fragInputCellPhone.setHintText("è¯·è¾“å…¥ç”µè¯å·ç ");
 				fragInputCellPhone.setIsPhone(true);
 			}
 			
 			fragInputCellQq.setLabelText("QQ:");//QQ
 			{
-				fragInputCellQq.setHintText("ÇëÊäÈëQQºÅÂë");
+				fragInputCellQq.setHintText("è¯·è¾“å…¥QQå·ç ");
 				fragInputCellQq.setIsNumber(true);
 			}
 		}
 	
-	protected void Submit() {  //¶¨ÒåÌá½»°´Å¥µÄ·½·¨
-		String password=fragInputCellPassword.getText();//»ñÈ¡ÊäÈëµÄÃÜÂë
-		String passwordRepeat=fragInputCellPasswordRepeat.getText();//»ñÈ¡ÊäÈëµÄÖØ¸´ÃÜÂë
+	protected void Submit() {  //å®šä¹‰æäº¤æŒ‰é’®çš„æ–¹æ³•
+		String password=fragInputCellPassword.getText();//è·å–è¾“å…¥çš„å¯†ç 
+		String passwordRepeat=fragInputCellPasswordRepeat.getText();//è·å–è¾“å…¥çš„é‡å¤å¯†ç 
 		
-		if(!password.equals(passwordRepeat)){//ÅĞ¶ÏÁ½´ÎÊäµÄÃÜÂëÊÇ·ñÒ»Ñù£¬Èô²»Ò»ÑùÔòµ¯³ö¶Ô»°ÌáÊ¾¿ò
+		if(!password.equals(passwordRepeat)){//åˆ¤æ–­ä¸¤æ¬¡è¾“çš„å¯†ç æ˜¯å¦ä¸€æ ·ï¼Œè‹¥ä¸ä¸€æ ·åˆ™å¼¹å‡ºå¯¹è¯æç¤ºæ¡†
 			new AlertDialog.Builder(RegisterActivity.this)
-			.setMessage("Á½´ÎÊäÈëµÄÃÜÂë²»Ò»Ñù")
-			.setNegativeButton("ºÃ", null)
-			.show();//ÏÔÊ¾¶Ô»°¿ò
+			.setMessage("ä¸¤æ¬¡è¾“å…¥çš„å¯†ç ä¸ä¸€æ ·")
+			.setNegativeButton("å¥½", null)
+			.show();//æ˜¾ç¤ºå¯¹è¯æ¡†
 			
 			return;
 		}
 		
-		String account=fragInputCellAccount.getText();//»ñÈ¡ÊäÈëµÄÕË»§
-		String name=fragInputCellName.getText();//»ñÈ¡ÊäÈëµÄêÇ³Æ
-		String email=fragInputCellEmail.getText();//»ñÈ¡ÊäÈëµÄÓÊÏä
-		String phone=fragInputCellPhone.getText();//»ñÈ¡ÊäÈëµÄµç»°
-		String qq=fragInputCellQq.getText();//»ñÈ¡ÊäÈëµÄQQ
+		String account=fragInputCellAccount.getText();//è·å–è¾“å…¥çš„è´¦æˆ·
+		String name=fragInputCellName.getText();//è·å–è¾“å…¥çš„æ˜µç§°
+		String email=fragInputCellEmail.getText();//è·å–è¾“å…¥çš„é‚®ç®±
+		String phone=fragInputCellPhone.getText();//è·å–è¾“å…¥çš„ç”µè¯
+		String qq=fragInputCellQq.getText();//è·å–è¾“å…¥çš„QQ
 	
-		MultipartBody.Builder requestBodyBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM)//Éú³ÉÇëÇóÌå
+		MultipartBody.Builder requestBodyBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM)//ç”Ÿæˆè¯·æ±‚ä½“
 				.addFormDataPart("num", account)
 				.addFormDataPart("name", name)
 				.addFormDataPart("email", email)
@@ -132,34 +133,34 @@ ProgressDialog ProgressDialog;//½ø¶È¶Ô»°¿ò
 				.addFormDataPart("phoneNumb", phone)
 				.addFormDataPart("qq", qq);
 		
-		if(fragImage.getPngData()!=null){//ÈôÍ·Ïñ²»Îª¿ÕÊ±£¬»ñÈ¡Í·Ïñ
+		if(fragImage.getPngData()!=null){//è‹¥å¤´åƒä¸ä¸ºç©ºæ—¶ï¼Œè·å–å¤´åƒ
 			requestBodyBuilder.addFormDataPart("avatar", "avatar",RequestBody.create(MediaType.parse("image/png")
 					, fragImage.getPngData()));
 		}
 		
-		//·¢ÆğÇëÇó
+		//å‘èµ·è¯·æ±‚
 		Request request=Servelet.requestuildApi("register")
 								.method("post", null)
 								.post(requestBodyBuilder.build())
 								.build();
 		
-		//½ø¶ÈÌõ
+		//è¿›åº¦æ¡
 		final ProgressDialog progressDialog = new ProgressDialog(RegisterActivity.this);
-		progressDialog.setMessage("ÇëÉÔºó");
+		progressDialog.setMessage("è¯·ç¨å");
 		progressDialog.setCancelable(false);
 		progressDialog.setCanceledOnTouchOutside(false);
 		progressDialog.show();
 		
-		//¿Í»§¶ËÁ¬½Ó·şÎñÆ÷
+		//å®¢æˆ·ç«¯è¿æ¥æœåŠ¡å™¨
 		Servelet.getOkHttpClient().newCall(request).enqueue(new Callback() {
 			
 			@Override
-			public void onResponse(final Call arg0, final Response arg1) throws IOException {//¿ÉÒÔÁ¬½Ó·şÎñÆ÷Ê±
+			public void onResponse(final Call arg0, final Response arg1) throws IOException {//å¯ä»¥è¿æ¥æœåŠ¡å™¨æ—¶
 				runOnUiThread(new Runnable() {
 					String ar=arg1.body().toString();
 					@Override
 					public void run() {
-						progressDialog.dismiss();//½ø¶ÈÌõÏûÊ§						
+						progressDialog.dismiss();//è¿›åº¦æ¡æ¶ˆå¤±						
 						
 						RegisterActivity.this.onResponse(arg0, ar);		
 					}
@@ -174,7 +175,7 @@ ProgressDialog ProgressDialog;//½ø¶È¶Ô»°¿ò
 
 					@Override
 					public void run() {
-						progressDialog.dismiss();// Ê¹ProgressDialogÏûÊ§
+						progressDialog.dismiss();// ä½¿ProgressDialogæ¶ˆå¤±
 
 						RegisterActivity.this.onFailure(arg0, arg1);
 					}
@@ -184,20 +185,20 @@ ProgressDialog ProgressDialog;//½ø¶È¶Ô»°¿ò
 	}
 
 
-	protected void onFailure(Call arg0, Exception arg1) {//ÎŞ·¨Á¬½Ó·şÎñÆ÷Ê±
-		new AlertDialog.Builder(this).setTitle("ÇëÇóÊ§°Ü").setMessage(arg1.getLocalizedMessage())
-		.setNegativeButton("ºÃ", null).show();
+	protected void onFailure(Call arg0, Exception arg1) {//æ— æ³•è¿æ¥æœåŠ¡å™¨æ—¶
+		new AlertDialog.Builder(this).setTitle("è¯·æ±‚å¤±è´¥").setMessage(arg1.getLocalizedMessage())
+		.setNegativeButton("å¥½", null).show();
 	}
 
 
-	protected void onResponse(Call arg0, String ar) {//³É¹¦
+	protected void onResponse(Call arg0, String ar) {//æˆåŠŸ
 		try {
-			new AlertDialog.Builder(this).setTitle("ÇëÇó³É¹¦").setMessage("ÄúµÄÇëÇó³É¹¦")
-			.setPositiveButton("È·¶¨", new DialogInterface.OnClickListener(){
+			new AlertDialog.Builder(this).setTitle("è¯·æ±‚æˆåŠŸ").setMessage("æ‚¨çš„è¯·æ±‚æˆåŠŸ")
+			.setPositiveButton("ç¡®å®š", new DialogInterface.OnClickListener(){
 				
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
-					Intent intent=new Intent(RegisterActivity.this,LoginActivity.class);//Ìø×ªµ½µÇÂ½Ò³Ãæ
+					Intent intent=new Intent(RegisterActivity.this,LoginActivity.class);//è·³è½¬åˆ°ç™»é™†é¡µé¢
 					startActivity(intent);
 				}
 			})

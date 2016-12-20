@@ -10,27 +10,28 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
 
-//¶¨ÒåÒ»Ğ©±à¼­¿òµÄ¸ñÊ½
+//å®šä¹‰ä¸€äº›ç¼–è¾‘æ¡†çš„æ ¼å¼
 public class SimpleTextInputCellFragment extends BaseInputCellFragment{
-	TextView label;//±êÇ©
-	EditText edit;//±à¼­
+	TextView label;//æ ‡ç­¾
+	EditText edit;//ç¼–è¾‘
 	
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {//fragment¼ÓÔØÊÓÍ¼
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {//fragmentåŠ è½½è§†å›¾
 
-		View view=inflater.inflate(R.layout.fragment_inputcell_simpletext, container);//µÃµ½¼ÓÔØview
-		label=(TextView) view.findViewById(R.id.label);//»ñÈ¡TextView¿Ø¼şlabel
-		edit=(EditText) view.findViewById(R.id.edit);//»ñÈ¡EditView¿Ø¼şedit
+		View view=inflater.inflate(R.layout.fragment_inputcell_simpletext, container);//å¾—åˆ°åŠ è½½view
+		label=(TextView) view.findViewById(R.id.label);//è·å–TextViewæ§ä»¶label
+		edit=(EditText) view.findViewById(R.id.edit);//è·å–EditViewæ§ä»¶edit
 		
 		return view;
 	}
-
+	
+	
 	@Override
-	public void setLabelText(String labelText) {//ÖØĞ´³éÏóÀàµÄ·½·¨ 
+	public void setLabelText(String labelText) {//é‡å†™æŠ½è±¡ç±»çš„æ–¹æ³• 
 		label.setText(labelText);
 	}
 
-	public String getText() {  //»ñÈ¡±à¼­¿òeditµÄ×Ö·û´®
+	public String getText() {  //è·å–ç¼–è¾‘æ¡†editçš„å­—ç¬¦ä¸²
 		return edit.getText().toString();
 	}
 	
@@ -39,7 +40,7 @@ public class SimpleTextInputCellFragment extends BaseInputCellFragment{
 		edit.setHint(hintText);
 	}
 	
-	public void setIsPassword(boolean isPassword){//±ØĞëÎªÉèÖÃÃÜÂë
+	public void setIsPassword(boolean isPassword){//å¿…é¡»ä¸ºè®¾ç½®å¯†ç 
 		if(isPassword){
 			edit.setInputType(EditorInfo.TYPE_CLASS_TEXT|EditorInfo.TYPE_TEXT_VARIATION_PASSWORD);	
 		}else{
@@ -47,7 +48,7 @@ public class SimpleTextInputCellFragment extends BaseInputCellFragment{
 		}		
 	}
 	
-	public void setIsEmail(boolean isEmail){//ÉèÖÃ±ØĞëÎªÓÊÏäµØÖ·
+	public void setIsEmail(boolean isEmail){//è®¾ç½®å¿…é¡»ä¸ºé‚®ç®±åœ°å€
 		if(isEmail){
 			edit.setInputType(EditorInfo.TYPE_CLASS_TEXT|EditorInfo.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);	
 		}else{
@@ -55,7 +56,7 @@ public class SimpleTextInputCellFragment extends BaseInputCellFragment{
 		}		
 	}
 	
-	public void setIsNumber(boolean isNumber){//ÉèÖÃ±ØĞëÎªÓÊÏäµØÖ·
+	public void setIsNumber(boolean isNumber){//è®¾ç½®å¿…é¡»ä¸ºé‚®ç®±åœ°å€
 		if(isNumber){
 			edit.setInputType(EditorInfo.TYPE_CLASS_TEXT|EditorInfo.TYPE_CLASS_NUMBER);	
 		}else{
@@ -63,7 +64,7 @@ public class SimpleTextInputCellFragment extends BaseInputCellFragment{
 		}		
 	}
 	
-	public void setIsPhone(boolean isPhone){//ÉèÖÃ±ØĞëÎªµç»°ºÅÂë
+	public void setIsPhone(boolean isPhone){//è®¾ç½®å¿…é¡»ä¸ºç”µè¯å·ç 
 		if(isPhone){
 			edit.setInputType(EditorInfo.TYPE_CLASS_TEXT|EditorInfo.TYPE_CLASS_PHONE);	
 		}else{

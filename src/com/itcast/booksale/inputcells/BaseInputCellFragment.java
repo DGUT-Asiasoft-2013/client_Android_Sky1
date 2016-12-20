@@ -2,8 +2,8 @@ package com.itcast.booksale.inputcells;
 
 import android.app.Fragment;
 
-//¶¨ÒåÒ»¸ö³éÏóÀàBaseInputCellFragment
+//å®šä¹‰ä¸€ä¸ªæŠ½è±¡ç±»BaseInputCellFragment
 public abstract class BaseInputCellFragment extends Fragment{
-	public abstract void setLabelText(String labelText);//ÉèÖÃ±êÇ©Ãû
-	public abstract void setHintText(String hintText);//ÉèÖÃÌáÊ¾×Ö·û
+	public abstract void setLabelText(String labelText);//è®¾ç½®æ ‡ç­¾å
+	public abstract void setHintText(String hintText);//è®¾ç½®æç¤ºå­—ç¬¦
 }

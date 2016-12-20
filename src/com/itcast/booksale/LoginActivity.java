@@ -28,6 +28,11 @@ import okhttp3.MultipartBody;
 import okhttp3.Request;
 import okhttp3.Response;
 
+/**
+ * 登录操作
+ * @author Administrator
+ *
+ */
 public class LoginActivity extends Activity {
 	SimpleTextInputCellFragment fragAccount,fragPassword;//账号和密码
 	
