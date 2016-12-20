@@ -13,21 +13,21 @@ import android.view.ViewGroup;
 public class PasswordRecoverStep2Fragment extends Fragment {
 	View view;
 	
-	SimpleTextInputCellFragment fragVerify;//ÑéÖ¤Âë
-	SimpleTextInputCellFragment fragPassword;//ÃÜÂë
-	SimpleTextInputCellFragment fragPasswordRepeat;//ÖØ¸´ÃÜÂë
+	SimpleTextInputCellFragment fragVerify;//éªŒè¯ç 
+	SimpleTextInputCellFragment fragPassword;//å¯†ç 
+	SimpleTextInputCellFragment fragPasswordRepeat;//é‡å¤å¯†ç 
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		
 		if(view==null){
-			view=inflater.inflate(R.layout.fragment_password_recover_step2, null);//¼ÓÔØ²¼¾Ö
+			view=inflater.inflate(R.layout.fragment_password_recover_step2, null);//åŠ è½½å¸ƒå±€
 			
-			fragVerify=(SimpleTextInputCellFragment) getFragmentManager().findFragmentById(R.id.input_verify);//¼ÓÔØÑéÖ¤Âë
-			fragPassword=(SimpleTextInputCellFragment) getFragmentManager().findFragmentById(R.id.input_password);//¼ÓÔØÃÜÂë
-			fragPasswordRepeat=(SimpleTextInputCellFragment) getFragmentManager().findFragmentById(R.id.input_password_repeat);//¼ÓÔØÖØ¸´ÃÜÂë
+			fragVerify=(SimpleTextInputCellFragment) getFragmentManager().findFragmentById(R.id.input_verify);//åŠ è½½éªŒè¯ç 
+			fragPassword=(SimpleTextInputCellFragment) getFragmentManager().findFragmentById(R.id.input_password);//åŠ è½½å¯†ç 
+			fragPasswordRepeat=(SimpleTextInputCellFragment) getFragmentManager().findFragmentById(R.id.input_password_repeat);//åŠ è½½é‡å¤å¯†ç 
 			
-			view.findViewById(R.id.btn_submit).setOnClickListener(new View.OnClickListener() {  //Ìí¼Ó°´Å¥µÄµã»÷ÊÂ¼ş
+			view.findViewById(R.id.btn_submit).setOnClickListener(new View.OnClickListener() {  //æ·»åŠ æŒ‰é’®çš„ç‚¹å‡»äº‹ä»¶
 				
 				@Override
 				public void onClick(View v) {
@@ -40,30 +40,31 @@ public class PasswordRecoverStep2Fragment extends Fragment {
 	}
 	
 	@Override
-	public void onResume() {//³õÊ¼»¯¿Ø¼ş
+	public void onResume() {
+		//åˆå§‹åŒ–æ§ä»¶
 		super.onResume();
 		
-		fragVerify.setLabelText("ÑéÖ¤Âë:");
+		fragVerify.setLabelText("éªŒè¯ç :");
 		{
-			fragVerify.setHintText("ÇëÊäÈëÑéÖ¤Âë");
+			fragVerify.setHintText("è¯·è¾“å…¥éªŒè¯ç ");
 		}
 		
-		fragPassword.setLabelText("ĞÂÃÜÂë:");
+		fragPassword.setLabelText("æ–°å¯†ç :");
 		{
-			fragPassword.setHintText("ÇëÊäÈëĞÂÃÜÂë");
+			fragPassword.setHintText("è¯·è¾“å…¥æ–°å¯†ç ");
 			fragPassword.setIsPassword(true);
 		}
 		
-		fragPasswordRepeat.setLabelText("ÖØ¸´ĞÂÃÜÂë:");
+		fragPasswordRepeat.setLabelText("é‡å¤æ–°å¯†ç :");
 		{
-			fragPasswordRepeat.setHintText("ÇëÔÙ´ÎÊäÈëĞÂÃÜÂë");
+			fragPasswordRepeat.setHintText("è¯·å†æ¬¡è¾“å…¥æ–°å¯†ç ");
 			fragPasswordRepeat.setIsPassword(true);
 		}
 	}
 	
-	OnSubmitClickedListener onSubmitClickedListener;//¶¨ÒåÒ»¸öÄÚ²¿Àà
+	OnSubmitClickedListener onSubmitClickedListener;//å®šä¹‰ä¸€ä¸ªå†…éƒ¨ç±»
 	
-	public static interface OnSubmitClickedListener {//µã»÷Ê±´´½¨½Ó¿Ú£¬µ÷ÓÃ´Ë·½·¨
+	public static interface OnSubmitClickedListener {//ç‚¹å‡»æ—¶åˆ›å»ºæ¥å£ï¼Œè°ƒç”¨æ­¤æ–¹æ³•
 		void onSubmitClicked();
 	}
 	
@@ -72,12 +73,17 @@ public class PasswordRecoverStep2Fragment extends Fragment {
 	}
 	
 	public void onSubmitClicked() {
-		if (fragPassword.getText().equals(fragPasswordRepeat.getText())) {//ÏÈÅĞ¶ÏĞÂÃÜÂëÓëÖØ¸´ĞÂÃÜÂëÊÇ·ñÒ»ÖÂ
-			if (onSubmitClickedListener != null) {//Èô¼àÌıÆ÷²»Îª¿ÕÊ±£¿
+		if (fragPassword.getText().equals(fragPasswordRepeat.getText())) {
+			//å…ˆåˆ¤æ–­æ–°å¯†ç ä¸é‡å¤æ–°å¯†ç æ˜¯å¦ä¸€è‡´
+			if (onSubmitClickedListener != null) {
+				//è‹¥ç›‘å¬å™¨ä¸ä¸ºç©ºæ—¶ï¼Ÿ
 				onSubmitClickedListener.onSubmitClicked();
 			}
-		} else {//²»Ò»ÖÂÊ±ÏÔÊ¾ÌáÊ¾¶Ô»°¿ò
-			new AlertDialog.Builder(getActivity()).setMessage("ÃÜÂë²»Ò»ÖÂ").setNegativeButton("È·¶¨",null).show();
+		} else {//ä¸ä¸€è‡´æ—¶æ˜¾ç¤ºæç¤ºå¯¹è¯æ¡†
+			new AlertDialog
+			.Builder(getActivity())
+			.setMessage("å¯†ç ä¸ä¸€è‡´")
+			.setNegativeButton("ç¡®å®š",null).show();
 		}
 	}	
 

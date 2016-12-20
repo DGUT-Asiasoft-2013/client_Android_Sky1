@@ -2,7 +2,6 @@ package com.itcast.booksale.fragment.pages;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.zip.Inflater;
 
 import com.example.booksale.R;
 import com.fasterxml.jackson.core.type.TypeReference;
