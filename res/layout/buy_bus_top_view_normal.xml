@@ -1,0 +1,41 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="48dp"
+    android:background="@android:color/transparent"
+    android:orientation="vertical" >
+    
+    <!-- 这是购物车的顶部标题 -->
+
+    <ImageView
+        android:id="@+id/back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_gravity="center_vertical"
+        android:padding="12dp"
+        android:src="@drawable/topbar_up" />
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:minHeight="48dp"
+        android:text="购物车"
+        android:textColor="#1a1a1a"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/subtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:gravity="center"
+        android:minHeight="48dp"
+        android:text="编辑"
+        android:textColor="#1a1a1a"
+        android:textSize="14sp"
+        android:layout_marginRight="12dp"
+        android:visibility="visible" />
+
+</RelativeLayout>

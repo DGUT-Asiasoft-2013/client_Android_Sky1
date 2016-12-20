@@ -73,7 +73,7 @@ public class CommentActivity extends Activity {
 			public void onResponse(final Call arg0, final Response arg1) throws IOException {
 
 				try {
-					// ���Ǻ�ִ̨�еģ���ǰִ̨��ʱ�����Ȱ��������ַ�����
+					// String ar = arg1.body().string();为后台运行的，不能再前台运行，所以把它放在前面来
 					String ar = arg1.body().string();
 					CommentActivity.this.onResponse(arg0, ar);
 				} catch (final Exception e) {
@@ -81,8 +81,8 @@ public class CommentActivity extends Activity {
 
 						@Override
 						public void run() {
-							new AlertDialog.Builder(CommentActivity.this).setTitle("�ύʧ��").setMessage(e.toString())
-									.setPositiveButton("ȷ��", new DialogInterface.OnClickListener() {
+							new AlertDialog.Builder(CommentActivity.this).setTitle("失败").setMessage(e.toString())
+									.setPositiveButton("确定", new DialogInterface.OnClickListener() {
 
 										@Override
 										public void onClick(DialogInterface dialog, int which) {

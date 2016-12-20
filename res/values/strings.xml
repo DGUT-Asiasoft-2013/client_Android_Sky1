@@ -9,5 +9,7 @@
     <string name="time">时间</string>
     <string name="please_enter">请输入你的评论</string>
     <string name="commit">提交</string>
+    <string name="allchoose">全选</string>
+    <string name="count">合计:</string>
 
 </resources>
