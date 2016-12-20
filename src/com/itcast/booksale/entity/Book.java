@@ -1,119 +1,152 @@
 package com.itcast.booksale.entity;
 
+import java.io.Serializable;
+import java.util.Date;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 /**
- * Í¼ÊéÀàĞÅÏ¢
+ * å›¾ä¹¦ç±»ä¿¡æ¯
  * @author Administrator
  *
  */
+@JsonIgnoreProperties(ignoreUnknown=true)
+public class Book implements Serializable{
 
-public class Book {
-	
-	    //Í¼ÊéID
-		private String id;
-	    //Í¼Êé±êÌâ
-		private String Title;	
-		//Í¼Êé×÷Õß
-	    private String Author;
-	    //×÷ÕßĞÅÏ¢
-	    private String AuthorInfo;
-	    //Í¼Êé³ö°æÉç
-	    private String Publisher;
-	    //³ö°æÊ±¼ä
-	    private String PublishDate;
-	    //Í¼ÊéISBNÂë
-	    private String ISBN;
-	    //Í¼Êé¼Û¸ñ
-	    private String Price;
-	    //Í¼ÊéÒ³Êı
-	    private String Page;
-	    //Í¼ÊéÆÀ·Ö
-	    private String Rate;
-	    //Í¼Êé±êÇ©
-	    private String Tag;
-	    //Í¼ÊéÄ¿Â¼
-	    private String Content;
-	    //Í¼ÊéÕªÒª
-	    private String Summary;
-		public String getId() {
-			return id;
-		}
-		public void setId(String id) {
-			this.id = id;
-		}
-		public String getTitle() {
-			return Title;
-		}
-		public void setTitle(String title) {
-			Title = title;
-		}
-		public String getAuthor() {
-			return Author;
-		}
-		public void setAuthor(String author) {
-			Author = author;
-		}
-		public String getAuthorInfo() {
-			return AuthorInfo;
-		}
-		public void setAuthorInfo(String authorInfo) {
-			AuthorInfo = authorInfo;
-		}
-		public String getPublisher() {
-			return Publisher;
-		}
-		public void setPublisher(String publisher) {
-			Publisher = publisher;
-		}
-		public String getPublishDate() {
-			return PublishDate;
-		}
-		public void setPublishDate(String publishDate) {
-			PublishDate = publishDate;
-		}
-		public String getISBN() {
-			return ISBN;
-		}
-		public void setISBN(String iSBN) {
-			ISBN = iSBN;
-		}
-		public String getPrice() {
-			return Price;
-		}
-		public void setPrice(String price) {
-			Price = price;
-		}
-		public String getPage() {
-			return Page;
-		}
-		public void setPage(String page) {
-			Page = page;
-		}
-		public String getRate() {
-			return Rate;
-		}
-		public void setRate(String rate) {
-			Rate = rate;
-		}
-		public String getTag() {
-			return Tag;
-		}
-		public void setTag(String tag) {
-			Tag = tag;
-		}
-		public String getContent() {
-			return Content;
-		}
-		public void setContent(String content) {
-			Content = content;
-		}
-		public String getSummary() {
-			return Summary;
-		}
-		public void setSummary(String summary) {
-			Summary = summary;
-		}
-	    
-	    
-	    
+	//ç”¨æˆ·
+	User user;
+
+	//å‘å¸ƒå‡ºå”®æ—¥æœŸä¸ç¼–è¾‘æ—¥æœŸ
+	Date createDate;
+	Date editDate;
+
+	//å›¾ä¹¦ID
+	Integer id;
+
+	//å›¾ä¹¦æ ‡é¢˜
+	private String Title;	
+	//å›¾ä¹¦ä½œè€…
+	private String Author;
+	//ä½œè€…ä¿¡æ¯
+	private String AuthorInfo;
+	//å›¾ä¹¦å‡ºç‰ˆç¤¾
+	private String Publisher;
+	//å‡ºç‰ˆæ—¶é—´
+	private String PublishDate;
+	//å›¾ä¹¦ISBNç 
+	private String ISBN;
+	//å›¾ä¹¦ä»·æ ¼
+	private String Price;
+	//å›¾ä¹¦é¡µæ•°
+	private String Page;
+	//å›¾ä¹¦è¯„åˆ†
+	private String Rate;
+	//å›¾ä¹¦æ ‡ç­¾
+	private String Tag;
+	//å›¾ä¹¦ç›®å½•
+	private String Content;
+	//å›¾ä¹¦æ‘˜è¦
+	private String Summary;
+
+
+
+	public String getTitle() {
+		return Title;
+	}
+	public void setTitle(String title) {
+		Title = title;
+	}
+	public String getAuthor() {
+		return Author;
+	}
+	public void setAuthor(String author) {
+		Author = author;
+	}
+	public String getAuthorInfo() {
+		return AuthorInfo;
+	}
+	public void setAuthorInfo(String authorInfo) {
+		AuthorInfo = authorInfo;
+	}
+	public String getPublisher() {
+		return Publisher;
+	}
+	public void setPublisher(String publisher) {
+		Publisher = publisher;
+	}
+	public String getPublishDate() {
+		return PublishDate;
+	}
+	public void setPublishDate(String publishDate) {
+		PublishDate = publishDate;
+	}
+	public String getISBN() {
+		return ISBN;
+	}
+	public void setISBN(String iSBN) {
+		ISBN = iSBN;
+	}
+	public String getPrice() {
+		return Price;
+	}
+	public void setPrice(String price) {
+		Price = price;
+	}
+	public String getPage() {
+		return Page;
+	}
+	public void setPage(String page) {
+		Page = page;
+	}
+	public String getRate() {
+		return Rate;
+	}
+	public void setRate(String rate) {
+		Rate = rate;
+	}
+	public String getTag() {
+		return Tag;
+	}
+	public void setTag(String tag) {
+		Tag = tag;
+	}
+	public String getContent() {
+		return Content;
+	}
+	public void setContent(String content) {
+		Content = content;
+	}
+	public String getSummary() {
+		return Summary;
+	}
+	public void setSummary(String summary) {
+		Summary = summary;
+	}
+
+	public Date getCreateDate() {
+		return createDate;
+	}
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
+	}
+	public Date getEditDate() {
+		return editDate;
+	}
+	public void setEditDate(Date editDate) {
+		this.editDate = editDate;
+	}
+	public Integer getId() {
+		return id;
+	}
+	public void setId(Integer id) {
+		this.id = id;
+	}
+	public User getUser() {
+		return user;
+	}
+	public void setUser(User user) {
+		this.user = user;
+	}
+
 
 }

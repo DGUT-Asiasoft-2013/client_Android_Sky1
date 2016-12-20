@@ -1,20 +1,20 @@
 package com.itcast.booksale.entity;
 
 /**
- * ÓÃ»§ĞÅÏ¢
+ * ç”¨æˆ·ä¿¡æ¯
  * @author Administrator
  *
  */
 public class User {
 
-	private Integer id;           //ÓÃ»§id
+	private Integer id;           //ç”¨æˆ·id
 	
 	String account;
 	String passwordHash;
 	String name;
 	String avatar;
 	String email;
-	String phoneNumb;//ÊÖ»úºÅ±ØÌî(ÁªÏµ·½·¨)
+	String phoneNumb;//æ‰‹æœºå·å¿…å¡«(è”ç³»æ–¹æ³•)
 	String qq;
 	
 	public Integer getId() {

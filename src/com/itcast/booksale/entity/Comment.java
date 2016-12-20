@@ -3,7 +3,7 @@ package com.itcast.booksale.entity;
 import java.util.Date;
 
 /**
- * 评论信息
+ * 璇勮淇℃伅
  * @author Administrator
  *
  */
@@ -11,10 +11,10 @@ public class Comment {
 	
 	private int id;
 	private User user;
-	private String content;       //评论内容
-	private Date createDate;      //评论创建时间
-	private Date editDate;      //评论编辑时间
-	private Book book;          //书籍信息
+	private String content;       //璇勮鍐呭
+	private Date createDate;      //璇勮鍒涘缓鏃堕棿
+	private Date editDate;      //璇勮缂栬緫鏃堕棿
+	private Book book;          //涔︾睄淇℃伅
 	public int getId() {
 		return id;
 	}
