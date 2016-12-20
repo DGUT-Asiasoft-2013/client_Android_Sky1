@@ -1,20 +1,31 @@
 package com.itcast.booksale;
 
+import java.io.IOException;
+
 import com.example.booksale.R;
+
 import com.itcast.booksale.fragment.pages.BookListFragment;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.Toast;
+
+import okhttp3.Call;
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class MainActivity extends Activity {
 
 
 	
-
+	
 	private Button btn_comment;
 
 	@Override
@@ -24,6 +35,7 @@ public class MainActivity extends Activity {
 
 		btn_comment=(Button) findViewById(R.id.btn_books_review);
 		btn_comment.setOnClickListener(new CommmentOnClickListener());
+		
 
 	}
 
@@ -38,4 +50,13 @@ public class MainActivity extends Activity {
 		}
 		
 	}
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+
+		
+	}
+
+	
 }

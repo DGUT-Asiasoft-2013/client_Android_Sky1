@@ -22,6 +22,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name="com.itcast.booksale.BooksContentActivity" >
+        </activity>
+        <activity android:name="com.itcast.booksale.CommentActivity" >
+        </activity>
+        <activity android:name="com.itcast.booksale.Show" >
+        </activity>
     </application>
 
 </manifest>
