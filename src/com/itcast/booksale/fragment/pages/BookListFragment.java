@@ -11,6 +11,7 @@ import com.itcast.booksale.BooksContentActivity;
 import com.itcast.booksale.entity.Book;
 import com.itcast.booksale.entity.Page;
 import com.itcast.booksale.fragment.widgets.AvatarView;
+import com.itcast.booksale.servelet.Servelet;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
@@ -25,7 +26,6 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import api.Server;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Request;
@@ -139,11 +139,11 @@ public class BookListFragment extends Fragment {
 	}
 
 	void reload(){
-		Request request = Server.requestBuilderWithApi("feeds")
+		Request request = Servelet.requestuildApi("feeds")
 				.get()
 				.build();
 
-		Server.getSharedClient().newCall(request).enqueue(new Callback() {
+		Servelet.getOkHttpClient().newCall(request).enqueue(new Callback() {
 
 			@Override
 			public void onResponse(Call arg0, Response arg1) throws IOException {
