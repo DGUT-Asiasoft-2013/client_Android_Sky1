@@ -25,12 +25,12 @@
             </intent-filter>
         </activity>
         
-        <activity android:name=".HelloWorldActivity"></activity>
-        <activity android:name=".LoginActivity"></activity>
-        <activity android:name=".PasswordRecoverActivity"></activity>
+        <activity android:name="com.itcast.booksale.HelloWorldActivity"></activity>
+        <activity android:name="com.itcast.booksale.LoginActivity"></activity>
+        <activity android:name="com.itcast.booksale.PasswordRecoverActivity"></activity>
         <activity android:name="com.itcast.booksale.BooksContentActivity" >
         </activity>
-        <activity android:name=".RegisterActivity"></activity>
+        <activity android:name="com.itcast.booksale.RegisterActivity"></activity>
         <activity android:name="com.itcast.booksale.CommentActivity" >
         </activity>
         <activity android:name="com.itcast.booksale.ShareBooksActivity" >
