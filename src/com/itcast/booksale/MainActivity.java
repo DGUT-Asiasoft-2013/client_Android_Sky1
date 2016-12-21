@@ -14,12 +14,12 @@ public class MainActivity extends Activity {
 
 	
 	
-	private Button btn_comment;
+	private Button btn_comment;        //评论按钮
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
+		setContentView(R.layout.mainactivity_comment);
 
 		btn_comment=(Button) findViewById(R.id.btn_books_review);
 		btn_comment.setOnClickListener(new CommmentOnClickListener());

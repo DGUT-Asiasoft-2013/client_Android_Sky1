@@ -1,33 +1,20 @@
 package com.itcast.booksale;
 
-import java.io.IOException;
 import java.util.List;
 
 import com.example.booksale.R;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.itcast.booksale.entity.Book;
 import com.itcast.booksale.entity.Comment;
-import com.itcast.booksale.entity.Page;
 import com.itcast.booksale.entity.User;
 import com.itcast.booksale.fragment.widgets.AvatarView;
 import com.itcast.booksale.fragment.widgets.Comment_Listfragment;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
-
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.MultipartBody;
-import okhttp3.Request;
-import okhttp3.Response;
 
 public class BooksContentActivity extends Activity {
 
