@@ -1,25 +1,13 @@
 package com.itcast.booksale;
 
-import java.io.IOException;
-
 import com.example.booksale.R;
-
-import com.itcast.booksale.fragment.pages.BookListFragment;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.Toast;
-
-import okhttp3.Call;
-import okhttp3.Request;
-import okhttp3.Response;
 
 public class MainActivity extends Activity {
 
