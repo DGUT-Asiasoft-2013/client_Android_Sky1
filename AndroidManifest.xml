@@ -7,6 +7,8 @@
     <uses-sdk
         android:minSdkVersion="19"
         android:targetSdkVersion="19" />
+    
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:allowBackup="true"
@@ -22,11 +24,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        
+        <activity android:name="com.itcast.booksale.HelloWorldActivity"></activity>
+        <activity android:name="com.itcast.booksale.LoginActivity"></activity>
+        <activity android:name="com.itcast.booksale.PasswordRecoverActivity"></activity>
         <activity android:name="com.itcast.booksale.BooksContentActivity" >
         </activity>
+        <activity android:name="com.itcast.booksale.RegisterActivity"></activity>
         <activity android:name="com.itcast.booksale.CommentActivity" >
         </activity>
-        <activity android:name="com.itcast.booksale.Show" >
+        <activity android:name="com.itcast.booksale.ShareBooksActivity" >
         </activity>
     </application>
 

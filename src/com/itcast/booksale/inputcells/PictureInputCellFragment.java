@@ -21,6 +21,7 @@ import java.io.ByteArrayOutputStream;
 
 import com.example.booksale.R;;
 
+//拍照的fragment
 public class PictureInputCellFragment extends Fragment {
 	final int REQUESTCODE_CAMERA = 1;//拍照
 	final int REQUESTCODE_ALBUM = 2;//本地图片

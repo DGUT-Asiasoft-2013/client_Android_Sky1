@@ -22,6 +22,11 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
+/**
+ * 添加卖书的信息
+ * @author Administrator
+ *
+ */
 public class ShareBooksActivity extends Activity{
 
 	//图书信息(8个)
@@ -123,7 +128,7 @@ public class ShareBooksActivity extends Activity{
 	void goMainView(){
 
 
-		Intent itnt = new Intent(this,主界面.class);
+		Intent itnt = new Intent(this,HelloWorldActivity.class);
 		startActivity(itnt);
 
 		finish();
