@@ -45,7 +45,7 @@ public class SubscribeListUserFragment extends Fragment {
 			btnLoadMore = inflater.inflate(R.layout.widget_load_more_button, null);
 			textLoadMore = (TextView) btnLoadMore.findViewById(R.id.text);
 
-			listView = (ListView) view.findViewById(R.id.list_subscribe);
+			listView = (ListView) view.findViewById(R.id.list_subscribe_user);
 			listView.addFooterView(btnLoadMore);
 			listView.setAdapter(listAdapter);
 

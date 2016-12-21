@@ -10,22 +10,22 @@ import android.view.View;
 import android.view.ViewGroup;
 
 public class PasswordRecoverStep1Fragment extends Fragment {
-	SimpleTextInputCellFragment fragEmail;//ÓÊÏä
+	SimpleTextInputCellFragment fragEmail;//é‚®ç®±
 	View view;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		if(view==null){
-			view =inflater.inflate(R.layout.fragment_password_recover_step1, null);//¼ÓÔØ²¼¾Ö
+			view =inflater.inflate(R.layout.fragment_password_recover_step1, null);//åŠ è½½å¸ƒå±€
 			
-			fragEmail=(SimpleTextInputCellFragment) getFragmentManager().findFragmentById(R.id.input_email);//¼ÓÔØÓÊÏä
+			fragEmail=(SimpleTextInputCellFragment) getFragmentManager().findFragmentById(R.id.input_email);//åŠ è½½é‚®ç®±
 			
-			view.findViewById(R.id.btn_next).setOnClickListener(new View.OnClickListener() {//Ìí¼Ó°´Å¥btn_nextµÄµã»÷¼àÌıÊÂ¼ş
+			view.findViewById(R.id.btn_next).setOnClickListener(new View.OnClickListener() {//æ·»åŠ æŒ‰é’®btn_nextçš„ç‚¹å‡»ç›‘å¬äº‹ä»¶
 				
 				@Override
 				public void onClick(View v) {
-					goNext();//Íü¼ÇÃÜÂëµÄÏÂÒ»²½					
+					goNext();//å¿˜è®°å¯†ç çš„ä¸‹ä¸€æ­¥					
 				}
 			});
 		}
@@ -33,24 +33,24 @@ public class PasswordRecoverStep1Fragment extends Fragment {
 	}
 
 	@Override
-	public void onResume() {//³õÊ¼»¯¿Ø¼ş
+	public void onResume() {//åˆå§‹åŒ–æ§ä»¶
 		super.onResume();
 		
-		fragEmail.setLabelText("ÓÊÏä");
+		fragEmail.setLabelText("é‚®ç®±");
 		{
-			fragEmail.setHintText("ÇëÊäÈë×¢²áÊ±°ó¶¨µÄÓÊÏä");
+			fragEmail.setHintText("è¯·è¾“å…¥æ³¨å†Œæ—¶ç»‘å®šçš„é‚®ç®±");
 		}
 	}
 	
-	protected void goNext() {//¶¨ÒåÏÂÒ»²½
-		if(onGoNextListener!=null){  //Èô²»Îª¿Õ
+	protected void goNext() {//å®šä¹‰ä¸‹ä¸€æ­¥
+		if(onGoNextListener!=null){   //è‹¥ä¸ä¸ºç©º
 			onGoNextListener.onGoNext();
 		}
 	}
 	
-	OnGoNextListener onGoNextListener;//¶¨ÒåÒ»¸öÄÚ²¿Àà
+	OnGoNextListener onGoNextListener;//å®šä¹‰ä¸€ä¸ªå†…éƒ¨ç±»
 	
-	public static interface OnGoNextListener{//µã»÷Ê±´´½¨½Ó¿Ú£¬µ÷ÓÃ´Ë·½·¨
+	public static interface OnGoNextListener{//ç‚¹å‡»æ—¶åˆ›å»ºæ¥å£ï¼Œè°ƒç”¨æ­¤æ–¹æ³•
 		void onGoNext();
 	}
 	
@@ -58,7 +58,7 @@ public class PasswordRecoverStep1Fragment extends Fragment {
 		this.onGoNextListener = onGoNextListener;
 	}
 	
-	public String getText() {//»ñÈ¡ÊäÈëµÄÓÊÏä
+	public String getText() {//è·å–è¾“å…¥çš„é‚®ç®±
 		return fragEmail.getText().toString();
 	}
 

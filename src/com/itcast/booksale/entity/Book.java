@@ -12,8 +12,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
  */
 @JsonIgnoreProperties(ignoreUnknown=true)
 public class Book implements Serializable{
-
-
 	//用户
 	User user;
 
@@ -25,105 +23,29 @@ public class Book implements Serializable{
 	Integer id;
 
 	//图书标题
-	private String Title;	
+	private String title;	
 	//图书作者
-	private String Author;
-	//作者信息
-	private String AuthorInfo;
+	private String author;
 	//图书出版社
-	private String Publisher;
-	//出版时间
-	private String PublishDate;
+	private String publisher;
 	//图书ISBN码
-	private String ISBN;
+	private String isbn;
 	//图书价格
-	private String Price;
-	//图书页数
-	private String Page;
-	//图书评分
-	private String Rate;
+	private String price;
 	//图书标签
-	private String Tag;
-	//图书目录
-	private String Content;
+	private String tag;
 	//图书摘要
-	private String Summary;
+	private String summary;
+	//卖家备注
+	private String text;
 
 
-
-	public String getTitle() {
-		return Title;
+	public User getUser() {
+		return user;
 	}
-	public void setTitle(String title) {
-		Title = title;
+	public void setUser(User user) {
+		this.user = user;
 	}
-	public String getAuthor() {
-		return Author;
-	}
-	public void setAuthor(String author) {
-		Author = author;
-	}
-	public String getAuthorInfo() {
-		return AuthorInfo;
-	}
-	public void setAuthorInfo(String authorInfo) {
-		AuthorInfo = authorInfo;
-	}
-	public String getPublisher() {
-		return Publisher;
-	}
-	public void setPublisher(String publisher) {
-		Publisher = publisher;
-	}
-	public String getPublishDate() {
-		return PublishDate;
-	}
-	public void setPublishDate(String publishDate) {
-		PublishDate = publishDate;
-	}
-	public String getISBN() {
-		return ISBN;
-	}
-	public void setISBN(String iSBN) {
-		ISBN = iSBN;
-	}
-	public String getPrice() {
-		return Price;
-	}
-	public void setPrice(String price) {
-		Price = price;
-	}
-	public String getPage() {
-		return Page;
-	}
-	public void setPage(String page) {
-		Page = page;
-	}
-	public String getRate() {
-		return Rate;
-	}
-	public void setRate(String rate) {
-		Rate = rate;
-	}
-	public String getTag() {
-		return Tag;
-	}
-	public void setTag(String tag) {
-		Tag = tag;
-	}
-	public String getContent() {
-		return Content;
-	}
-	public void setContent(String content) {
-		Content = content;
-	}
-	public String getSummary() {
-		return Summary;
-	}
-	public void setSummary(String summary) {
-		Summary = summary;
-	}
-
 	public Date getCreateDate() {
 		return createDate;
 	}
@@ -142,12 +64,53 @@ public class Book implements Serializable{
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	public User getUser() {
-		return user;
+	public String getTitle() {
+		return title;
 	}
-	public void setUser(User user) {
-		this.user = user;
+	public void setTitle(String title) {
+		this.title = title;
 	}
-
+	public String getAuthor() {
+		return author;
+	}
+	public void setAuthor(String author) {
+		this.author = author;
+	}
+	public String getPublisher() {
+		return publisher;
+	}
+	public void setPublisher(String publisher) {
+		this.publisher = publisher;
+	}
+	public String getIsbn() {
+		return isbn;
+	}
+	public void setIsbn(String isbn) {
+		this.isbn = isbn;
+	}
+	public String getPrice() {
+		return price;
+	}
+	public void setPrice(String price) {
+		this.price = price;
+	}
+	public String getTag() {
+		return tag;
+	}
+	public void setTag(String tag) {
+		this.tag = tag;
+	}
+	public String getSummary() {
+		return summary;
+	}
+	public void setSummary(String summary) {
+		this.summary = summary;
+	}
+	public String getText() {
+		return text;
+	}
+	public void setText(String text) {
+		this.text = text;
+	}
 
 }

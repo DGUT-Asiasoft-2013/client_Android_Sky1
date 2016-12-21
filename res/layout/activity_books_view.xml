@@ -7,17 +7,24 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="fill_parent" >
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="0.5"
             android:orientation="vertical" >
 
+            <TextView
+                android:id="@+id/book_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="书名" />
+
             <ImageView
-                android:layout_width="180dp"
-                android:layout_height="180dp"
+                android:layout_width="160dp"
+                android:layout_height="160dp"
                 android:layout_gravity="center"
                 android:background="@drawable/ic_launcher" />
 
@@ -59,6 +66,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="65dp"
+                    android:layout_weight="0.5"
                     android:orientation="vertical" >
 
                     <TextView
@@ -68,7 +76,7 @@
                         android:layout_gravity="left"
                         android:layout_marginLeft="10dp"
                         android:singleLine="true"
-                        android:text="文章内容"
+                        android:text="联系电话"
                         android:textColor="@android:color/darker_gray" />
 
                     <TextView
@@ -78,7 +86,7 @@
                         android:layout_gravity="left"
                         android:layout_marginLeft="10dp"
                         android:singleLine="true"
-                        android:text="文章内容"
+                        android:text="qq"
                         android:textColor="@android:color/darker_gray" />
 
                     <TextView
@@ -87,8 +95,30 @@
                         android:layout_height="20dp"
                         android:layout_marginLeft="10dp"
                         android:gravity="left"
-                        android:text="2016-4-5"
+                        android:text="卖家的话"
                         android:textColor="@android:color/holo_blue_dark" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="65dp"
+                    android:orientation="vertical" >
+
+                    <Button
+                        android:id="@+id/btn_subscribe"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.5"
+                        android:text="订阅"
+                        android:textSize="15sp" />
+
+                    <Button
+                        android:id="@+id/btn_massage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.5"
+                        android:text="私信"
+                        android:textSize="15sp" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -109,16 +139,30 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@android:color/darker_gray" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.6"
+                android:orientation="vertical" >
+
+                <fragment
+                    android:id="@+id/show_comment_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="122dp"
+                    android:layout_marginTop="1dp"
+                    class="com.itcast.booksale.fragment.widgets.Comment_Listfragment"
+                    tools:layout="@layout/book_comment" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btn_comment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="评论"
+                android:textSize="15sp" />
         </LinearLayout>
     </ScrollView>
 
-    <fragment
-        android:id="@+id/show_comment_list"
-        android:layout_width="match_parent"
-        android:layout_height="263dp"
-        android:layout_marginTop="1dp"
-        android:layout_weight="0.63"
-        class="com.example.helloworld.fragments.pages.CommentListFragment"
-        tools:layout="@layout/fragment_page_comment_list" />
 
 </LinearLayout>

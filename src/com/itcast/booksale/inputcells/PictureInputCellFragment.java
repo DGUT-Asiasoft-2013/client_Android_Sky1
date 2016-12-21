@@ -22,25 +22,25 @@ import java.io.ByteArrayOutputStream;
 import com.example.booksale.R;;
 
 public class PictureInputCellFragment extends Fragment {
-	final int REQUESTCODE_CAMERA = 1;//ÅÄÕÕ
-	final int REQUESTCODE_ALBUM = 2;//±¾µØÍ¼Æ¬
+	final int REQUESTCODE_CAMERA = 1;//æ‹ç…§
+	final int REQUESTCODE_ALBUM = 2;//æœ¬åœ°å›¾ç‰‡
 	
-	ImageView imageView;//Í¼Æ¬
-	TextView labelText;//±êÇ©
-	TextView hintText;//ÌáÊ¾
+	ImageView imageView;//å›¾ç‰‡
+	TextView labelText;//æ ‡ç­¾
+	TextView hintText;//æç¤º
 	
-	byte[] pngData;//×Ö·ûĞÍÊı×é
+	byte[] pngData;//å­—ç¬¦å‹æ•°ç»„
 	
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_inputcell_picture, container);
 
-		imageView = (ImageView) view.findViewById(R.id.image);//»ñÈ¡ImageView¿Ø¼şimage
-		labelText = (TextView) view.findViewById(R.id.label);//»ñÈ¡TextView¿Ø¼şlabel
-		hintText = (TextView) view.findViewById(R.id.hint);//»ñÈ¡TextView¿Ø¼şhint
+		imageView = (ImageView) view.findViewById(R.id.image);//è·å–ImageViewæ§ä»¶image
+		labelText = (TextView) view.findViewById(R.id.label);//è·å–TextViewæ§ä»¶label
+		hintText = (TextView) view.findViewById(R.id.hint);//è·å–TextViewæ§ä»¶hint
 		
-		imageView.setOnClickListener(new OnClickListener() {//ÉèÖÃ¿Ø¼şimageViewµÄµã»÷ÊÂ¼ş
+		imageView.setOnClickListener(new OnClickListener() {//è®¾ç½®æ§ä»¶imageViewçš„ç‚¹å‡»äº‹ä»¶
 			
 			@Override
 			public void onClick(View v) {
@@ -53,85 +53,85 @@ public class PictureInputCellFragment extends Fragment {
 	}
 	
 	protected void onImageViewClicked() {
-		String[] items={"ÅÄÕÕ","Ïà²á"};//Ìí¼Óitems¼¯ºÏÊôĞÔ
+		String[] items={"æ‹ç…§","ç›¸å†Œ"};//æ·»åŠ itemsé›†åˆå±æ€§
 		
-		new AlertDialog.Builder(getActivity())   //Éú³ÉÁĞ±í¶Ô»°¿ò
-		.setTitle(hintText.getText())   //ÌáÈ¡hintText¿Ø¼şÄÚÈİÀ´ÉèÖÃ±êÌâ
-		.setItems(items, new DialogInterface.OnClickListener() {   //ÁĞ±í¶Ô»°¿òitemµÄµã»÷ÊÂ¼ş
+		new AlertDialog.Builder(getActivity())   //ç”Ÿæˆåˆ—è¡¨å¯¹è¯æ¡†
+		.setTitle(hintText.getText())   //æå–hintTextæ§ä»¶å†…å®¹æ¥è®¾ç½®æ ‡é¢˜
+		.setItems(items, new DialogInterface.OnClickListener() {   //åˆ—è¡¨å¯¹è¯æ¡†itemçš„ç‚¹å‡»äº‹ä»¶
 			
 			@Override
-			public void onClick(DialogInterface dialog, int which) {  //itemµÄµã»÷Ñ¡Ôñ
+			public void onClick(DialogInterface dialog, int which) {  //itemçš„ç‚¹å‡»é€‰æ‹©
 				switch (which){
 				case 0:
-					takePhoto();//ÅÄÕÕ
+					takePhoto();//æ‹ç…§
 					break;
 					
 				case 1:
-					pickFromAlbum();//Ïà²á
+					pickFromAlbum();//ç›¸å†Œ
 					break;
 					
 				default:
 					break;
 				}	
 			}
-		}).setNegativeButton("È¡Ïû", null)//ÉèÖÃÒ»¸öÈ¡Ïû°´Å¥
+		}).setNegativeButton("å–æ¶ˆ", null)//è®¾ç½®ä¸€ä¸ªå–æ¶ˆæŒ‰é’®
 		  .show();
 		
 	}
 
 	
-	protected void takePhoto() {//¶¨ÒåÅÄÕÕµÄ·½·¨
-		//´ò¿ªÅÄÕÕ³ÌĞò
+	protected void takePhoto() {//å®šä¹‰æ‹ç…§çš„æ–¹æ³•
+		//æ‰“å¼€æ‹ç…§ç¨‹åº
 		Intent intent=new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-		startActivityForResult(intent, REQUESTCODE_CAMERA);//µÃµ½ĞÂ´ò¿ªActivity¹Ø±Õºó·µ»ØµÄÊı¾İ
+		startActivityForResult(intent, REQUESTCODE_CAMERA);//å¾—åˆ°æ–°æ‰“å¼€Activityå…³é—­åè¿”å›çš„æ•°æ®
 	}
 	
 
-	protected void pickFromAlbum() {//¶¨ÒåÏà²áµÄ·½·¨
-		//´ò¿ªÏà²á
+	protected void pickFromAlbum() {//å®šä¹‰ç›¸å†Œçš„æ–¹æ³•
+		//æ‰“å¼€ç›¸å†Œ
 		Intent intent=new Intent(Intent.ACTION_GET_CONTENT);
 		intent.setType("image/*");
 		startActivityForResult(intent, REQUESTCODE_ALBUM);
 	}
 	
-	void saveBitmap(Bitmap bitmap){//±£´æÍ¼Æ¬
-		ByteArrayOutputStream baos=new ByteArrayOutputStream();//´´½¨Ò»¸ö×Ö½ÚÊı×éÊä³öÁ÷¶ÔÏó
-		bitmap.compress(CompressFormat.PNG,100, baos);//Ñ¹ËõÍ¼Æ¬¡ª¡ª½«Í¼Æ¬Ñ¹ËõÎªPNG¸ñÊ½£»100ÊÇÑ¹ËõÂÊ£¨±íÊ¾²»Ñ¹Ëõ£©
-		pngData=baos.toByteArray();//´´½¨Ò»¸ö´óĞ¡Óë´ËÊä³öÁ÷µÄµ±Ç°´óĞ¡µÄÒ»¸öĞÂ·ÖÅä»º³åÇø¡£
+	void saveBitmap(Bitmap bitmap){//ä¿å­˜å›¾ç‰‡
+		ByteArrayOutputStream baos=new ByteArrayOutputStream();//åˆ›å»ºä¸€ä¸ªå­—èŠ‚æ•°ç»„è¾“å‡ºæµå¯¹è±¡
+		bitmap.compress(CompressFormat.PNG,100, baos);//å‹ç¼©å›¾ç‰‡â€”â€”å°†å›¾ç‰‡å‹ç¼©ä¸ºPNGæ ¼å¼ï¼›100æ˜¯å‹ç¼©ç‡ï¼ˆè¡¨ç¤ºä¸å‹ç¼©ï¼‰
+		pngData=baos.toByteArray();//åˆ›å»ºä¸€ä¸ªå¤§å°ä¸æ­¤è¾“å‡ºæµçš„å½“å‰å¤§å°çš„ä¸€ä¸ªæ–°åˆ†é…ç¼“å†²åŒºã€‚
 	}
 
 	@Override
-	public void onActivityResult(int requestCode, int resultCode, Intent data) {   //ÎªÁËµÃµ½´«»ØµÄÊı¾İ¡ª¡ªĞÂµÄActivity¹Ø±Õºó»áÏòÇ°ÃæµÄActivity´«»ØÊı¾İ
-		if(resultCode == Activity.RESULT_CANCELED) return;//µ±È¡ÏûÊ±·µ»Ø
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {   //ä¸ºäº†å¾—åˆ°ä¼ å›çš„æ•°æ®â€”â€”æ–°çš„Activityå…³é—­åä¼šå‘å‰é¢çš„Activityä¼ å›æ•°æ®
+		if(resultCode == Activity.RESULT_CANCELED) return;//å½“å–æ¶ˆæ—¶è¿”å›
 
-		if(requestCode == REQUESTCODE_CAMERA){//µ±Ñ¡ÔñÅÄÕÕÊ±
+		if(requestCode == REQUESTCODE_CAMERA){//å½“é€‰æ‹©æ‹ç…§æ—¶
 
-			Bitmap bmp = (Bitmap)data.getExtras().get("data");//»ñµÃÊı¾İ
-			imageView.setImageBitmap(bmp);//¼ÓÔØ½ÓÊÕµÄÍ¼Æ¬Êı
+			Bitmap bmp = (Bitmap)data.getExtras().get("data");//è·å¾—æ•°æ®
+			imageView.setImageBitmap(bmp);//åŠ è½½æ¥æ”¶çš„å›¾ç‰‡æ•°
 			
-			saveBitmap(bmp);//±£´æÍ¼Æ¬
-		}else if(requestCode == REQUESTCODE_ALBUM){//µ±Ñ¡ÔñÏà²á
+			saveBitmap(bmp);//ä¿å­˜å›¾ç‰‡
+		}else if(requestCode == REQUESTCODE_ALBUM){//å½“é€‰æ‹©ç›¸å†Œ
 			
 			try {
-				Bitmap bmp = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), data.getData());//»ñµÃÏà²áµÄÊı¾İ
-				imageView.setImageBitmap(bmp);//¼ÓÔØ½ÓÊÕµÄÍ¼Æ¬Êı¾İ
+				Bitmap bmp = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), data.getData());//è·å¾—ç›¸å†Œçš„æ•°æ®
+				imageView.setImageBitmap(bmp);//åŠ è½½æ¥æ”¶çš„å›¾ç‰‡æ•°æ®
 				
-				saveBitmap(bmp);//±£´æÍ¼Æ¬
+				saveBitmap(bmp);//ä¿å­˜å›¾ç‰‡
 			} catch (Exception e) {
-				e.printStackTrace();//´òÓ¡Òì³£ÒÔ¼°ÏÔÊ¾µ÷ÓÃĞÅÏ¢£¨ÓĞÖúÓÚµ÷ÊÔ£©
+				e.printStackTrace();//æ‰“å°å¼‚å¸¸ä»¥åŠæ˜¾ç¤ºè°ƒç”¨ä¿¡æ¯ï¼ˆæœ‰åŠ©äºè°ƒè¯•ï¼‰
 			}
 		}
 	}
 
-	public byte[] getPngData(){//¶¨Òå»ñµÃPNG¸ñÊ½Êı¾İµÄ·½·¨
+	public byte[] getPngData(){//å®šä¹‰è·å¾—PNGæ ¼å¼æ•°æ®çš„æ–¹æ³•
 		return pngData;
 	}
 	
-	public void setLabelText(String labelText){//ÉèÖÃ±êÇ©
+	public void setLabelText(String labelText){//è®¾ç½®æ ‡ç­¾
 		this.labelText.setText(labelText);
 	}
 
-	public void setHintText(String hintText){//ÉèÖÃÌáÊ¾
+	public void setHintText(String hintText){//è®¾ç½®æç¤º
 		this.hintText.setText(hintText);
 	}
 }

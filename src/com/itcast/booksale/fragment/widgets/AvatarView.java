@@ -72,7 +72,9 @@ public class AvatarView extends View {
 }
 	public void load(String url){
 
-		Log.d("yy",url);
+
+//		Log.d("yy",url);//查看获取的地址
+
 		OkHttpClient client = Servelet.getOkHttpClient();
 		Request request = new Request.Builder()
 				.url(url)
