@@ -3,13 +3,136 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
+
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        
+        <!-- 头像 -->
+        <com.itcast.booksale.fragment.widgets.AvatarView 
+            android:id="@+id/avatar"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="16dp"/>
+   
     
-<TextView 
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="我的"
-    />
-
-
-
+        <!-- 用户名 -->
+    <TextView
+        android:id="@+id/current_user"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:text="用户名"
+        />
+    
+     <ProgressBar 
+        android:id="@+id/progress"
+        style="@android:style/Widget.ProgressBar.Small"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"/>
+     
+     <View style="@style/user_line"/>
+     </LinearLayout>
+     
+   <LinearLayout 
+       android:layout_width="match_parent"
+       android:layout_height="16dp"
+       android:orientation="vertical"
+       android:background="@color/tab_text_pressed">
+       
+   </LinearLayout>
+   
+    <View style="@style/user_line"/>
+	<LinearLayout
+	    style="@style/userbaselayout">
+	    <TextView 
+	        style="@style/usertext"
+	        android:text="个人资料"/>
+	    
+	    <ImageView 
+	        style="@style/usertext_img"/>
+	</LinearLayout>	    
+	
+	<View style="@style/user_line"/>
+	<LinearLayout 
+	    style="@style/userbaselayout">
+	    
+	    <TextView 
+	        style="@style/usertext"
+	        android:text="总资产"/>
+	    
+	    <ImageView 
+	        style="@style/usertext_img"/>
+	</LinearLayout>	
+	
+	<View style="@style/user_line"/>
+	<LinearLayout 
+	    style="@style/userbaselayout">
+	    
+	    <TextView 
+	        style="@style/usertext"
+	        android:text="订单"/>
+	    
+	    <ImageView 
+	        style="@style/usertext_img"/>
+	</LinearLayout>	
+	<View style="@style/user_line"/>
+	
+	<!-- 绿色条 -->
+    <LinearLayout 
+       android:layout_width="match_parent"
+       android:layout_height="16dp"
+       android:orientation="vertical"
+       android:background="@color/tab_text_pressed">
+       
+   </LinearLayout>
+   
+    <LinearLayout 
+	    style="@style/userbaselayout">
+	    
+	    <TextView 
+	        style="@style/usertext"
+	        android:text="设置"/>
+	    
+	    <ImageView 
+	        style="@style/usertext_img"/>
+	</LinearLayout>	
+	<View style="@style/user_line"/>
+	
+	<!-- 绿色条 -->
+    <LinearLayout 
+       android:layout_width="match_parent"
+       android:layout_height="16dp"
+       android:orientation="vertical"
+       android:background="@color/tab_text_pressed">
+       
+   </LinearLayout>
+   
+	<LinearLayout 
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:orientation="horizontal"
+	    android:weightSum="2">
+	    
+	    <Button 
+	        android:id="@+id/login"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="1"
+	        android:text="登录"
+	        android:textColor="#749057"/>
+	    
+	    <Button 
+	        android:id="@+id/register"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="1"
+	        android:text="注册"
+	        android:textColor="#749057"/>
+	</LinearLayout>
+	
 </LinearLayout>

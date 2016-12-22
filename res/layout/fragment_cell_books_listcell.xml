@@ -12,12 +12,13 @@
         android:layout_width="50dp"
         android:layout_height="65dp"
         android:orientation="vertical" >
-<!-- 这里后期改动 -->
-        <com.itcast.booksale.fragment.widgets.AvatarView
+
+        <!-- 这里后期改动 -->
+
+        <com.itcast.booksale.fragment.widgets.BookAvatarView
             android:id="@+id/book_avatar"
             android:layout_width="50dp"
-            android:layout_height="65dp"
-            android:background="@android:color/white" />
+            android:layout_height="65dp" />
     </LinearLayout>
 
     <LinearLayout
@@ -59,15 +60,17 @@
         android:layout_width="50dp"
         android:layout_height="65dp"
         android:orientation="vertical" >
-        
-        <TextView android:id="@+id/book_price"
+
+        <TextView
+            android:id="@+id/book_price"
             android:layout_width="50dp"
             android:layout_height="30dp"
             android:layout_weight="0.5"
-            android:text="价格"
-            android:gravity="center"/>
-        
-        <Button android:id="@+id/book_purchase"
+            android:gravity="center"
+            android:text="价格" />
+
+        <Button
+            android:id="@+id/book_purchase"
             android:layout_width="50dp"
             android:layout_height="35dp"
             android:focusable="false"
@@ -75,8 +78,7 @@
             android:focusableInTouchMode="false"
             android:layout_weight="0.5"
             android:text="想淘"
-            android:textSize="12sp"/>
-        
+            android:textSize="12sp" />
     </LinearLayout>
 
 </LinearLayout>

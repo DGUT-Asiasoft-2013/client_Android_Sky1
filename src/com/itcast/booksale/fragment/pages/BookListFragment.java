@@ -10,7 +10,7 @@ import com.itcast.booksale.BooksContentActivity;
 import com.itcast.booksale.entity.Book;
 import com.itcast.booksale.entity.Page;
 import com.itcast.booksale.fragment.widgets.AvatarView;
-import com.itcast.booksale.fragment.widgets.Buy_book_bus_fragment;
+import com.itcast.booksale.fragment.widgets.BookAvatarView;
 import com.itcast.booksale.servelet.Servelet;
 
 import android.annotation.SuppressLint;
@@ -20,6 +20,7 @@ import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -102,6 +103,7 @@ public class BookListFragment extends Fragment {
 				}
 				
 			});
+			BookAvatarView bookAvatar = (BookAvatarView)view.findViewById(R.id.book_avatar);//封面
 
 			Book book = booksData.get(position);
 			
@@ -113,6 +115,7 @@ public class BookListFragment extends Fragment {
 			bookCellTitle.setText(book.getTitle()+"--"+book.getAuthor());
 			bookSummary.setText(book.getSummary());
 			bookPrice.setText(book.getPrice()+" 元");
+			bookAvatar.load(Servelet.urlstring + book.getBookavatar());
 			//书的封面暂不设
 
 			

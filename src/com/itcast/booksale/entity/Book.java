@@ -39,9 +39,12 @@ public class Book implements Serializable {
 	private String summary;
 	// 卖家备注
 	private String text;
-
+	//图书照片
+	private String bookavatar;
 	// 书本数量
 	private int booknumber;
+	
+	
 
 	public int getBooknumber() {
 		return booknumber;
@@ -58,7 +61,12 @@ public class Book implements Serializable {
 	public void setUser(User user) {
 		this.user = user;
 	}
-
+	public String getBookavatar() {
+		return bookavatar;
+	}
+	public void setBookavatar(String bookavatar) {
+		this.bookavatar = bookavatar;
+	}
 	public Date getCreateDate() {
 		return createDate;
 	}
