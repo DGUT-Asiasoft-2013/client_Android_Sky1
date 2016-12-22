@@ -1,35 +1,54 @@
 package com.itcast.booksale;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.example.booksale.R;
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.itcast.booksale.entity.Book;
 import com.itcast.booksale.entity.Comment;
+import com.itcast.booksale.entity.Page;
 import com.itcast.booksale.entity.User;
 import com.itcast.booksale.fragment.widgets.AvatarView;
 import com.itcast.booksale.fragment.widgets.BookAvatarView;
-import com.itcast.booksale.fragment.widgets.Comment_Listfragment;
 import com.itcast.booksale.servelet.Servelet;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.format.DateFormat;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 /*
  * 书的详情界面
  */
 public class BooksContentActivity extends Activity {
 
-	List<Comment> comments;
 	int page = 0;
-	Comment_Listfragment fragComment;            //Comment_Listfragment是用于展示图书的评论的
+	
+	View view ;
+	private List<Comment> list=new ArrayList<Comment>();
+	CommentAdapter adapter;
 
 	private Book book;
-	ListView commentListView;              //
+	ListView commentListView;              //评论显示列表
 	
 	private Button btn_subscribe;             //订阅按钮
 	private Button btn_massage;             //私信按钮
@@ -52,14 +71,11 @@ public class BooksContentActivity extends Activity {
 		setContentView(R.layout.activity_books_view);
 		
 		
-		//获得书本信息
-		book = (Book) getIntent().getSerializableExtra("data");
+		book = (Book) getIntent().getSerializableExtra("data");//从BookListFragment获取Book
 
-		fragComment = (Comment_Listfragment) getFragmentManager().findFragmentById(R.id.show_comment_list);
 
-		commentListView = (ListView) findViewById(R.id.comment_list);
-
-		book = (Book) getIntent().getSerializableExtra("data");//获取Book
+		commentListView = (ListView) findViewById(R.id.comment_listview);
+		
 
 		
 		initmethod();            //初始化
@@ -74,8 +90,6 @@ public class BooksContentActivity extends Activity {
 		bookUserAvatar.load(Servelet.urlstring + book.getUser().getAvatar());
 		bookAvatar.load(Servelet.urlstring + book.getBookavatar());
 		
-		//设置书籍id给评论用
-		fragComment.setBookId(book.getId().toString());//(book.getId().toString());
 
 		//评论
 		btn_comment.setOnClickListener(new View.OnClickListener() {
@@ -105,6 +119,9 @@ public class BooksContentActivity extends Activity {
 
 			}
 		});
+		
+		adapter=new CommentAdapter();
+		commentListView.setAdapter(adapter);
 
 	}
 	
@@ -129,6 +146,142 @@ public class BooksContentActivity extends Activity {
 	@Override
 	protected void onResume() {
 		super.onResume();
+		loadComment();             //调用下载评论方法
+	}
+	
+	/*
+	 * 下面这个方法为下载评论
+	 */
+	public void loadComment() {
+//		OkHttpClient client=Servelet.getOkHttpClient();       //获得客户端
+		//获得请求//---获取书的Id
+		Request request=Servelet.requestuildApi("book/"+book.getId()+"/comment")
+				.get()
+				.build();
+		
+		Servelet.getOkHttpClient().newCall(request).enqueue(new Callback() {
+			
+			@Override
+			public void onResponse(Call arg0, Response arg1) throws IOException {
+				try {
+					
+					//此为后台进行的，所以不能放在主线程里面进行
+					 String responseString = arg1.body().string();
+					//获得page类的对象
+					final Page<Comment> pageComment;
+					
+					final ObjectMapper objectMapper=new ObjectMapper();
+					Log.d("loading feed list", responseString);
+					//把解析下来的东西传入pageComment中
+					pageComment=objectMapper.readValue(responseString, new TypeReference<Page<Comment>>() {});
+					
+					
+					BooksContentActivity.this.runOnUiThread(new Runnable() {
+
+						@Override
+						public void run() {
+							//把解析下来的页数传给Comment_Listfragment
+							page=pageComment.getNumber();
+							//把内容传给list
+							list=pageComment.getContent();
+							//刷新
+							adapter.notifyDataSetInvalidated();
+						}
+					});
+				}catch (JsonParseException e) {
+					e.printStackTrace();
+					
+				} catch (JsonMappingException e) {
+					e.printStackTrace();
+					
+				}catch (final Exception e) {
+					BooksContentActivity.this.runOnUiThread(new Runnable() {
+						
+						@Override
+						public void run() {
+							
+							new AlertDialog.Builder(BooksContentActivity.this)
+							.setTitle("失败ing")
+							.setMessage(e.toString())
+							.show();
+						}
+					});
+				}
+				
+			}
+			
+			@Override
+			public void onFailure(Call arg0, IOException arg1) {
+				onFailure(arg0, arg1);
+			}
+		});
+	}
+	
+	public void onFailure(Call arg0, final Exception arg1)  {
+		
+		BooksContentActivity.this.runOnUiThread(new Runnable() {
+			
+			@Override
+			public void run() {
+				new AlertDialog.Builder(BooksContentActivity.this)
+				.setTitle("失败")
+				.setMessage(arg1.toString())
+				.show();
+				
+			}
+		});
+		
+	}
+	
+	
+	
+	class CommentAdapter extends BaseAdapter
+	{
+		View commentview;         //创建Commentview
+
+		@Override
+		public int getCount() {
+			return list==null?0:list.size();
+		}
+
+		@Override
+		public Object getItem(int position) {
+			return list.get(position);
+		}
+
+		@Override
+		public long getItemId(int position) {
+			return position;
+		}
+
+		@Override
+		public View getView(int position, View convertView, ViewGroup parent) {
+			if (convertView==null) {
+				//如果convertView为空，则为listview设置
+				LayoutInflater inflater=LayoutInflater.from(parent.getContext());
+				commentview=inflater.inflate(R.layout.book_comment_content_list, null);
+			}
+			else {
+				commentview=convertView;
+			}
+			TextView user_comment_name=(TextView) commentview.findViewById(R.id.user_comment_name);
+			TextView user_comment_createtime=(TextView) commentview.findViewById(R.id.user_comment_createtime);
+			TextView user_comment_content=(TextView) commentview.findViewById(R.id.user_comment_content_tv);
+			//获得下载的某个文章的某个评论
+			Comment comment=list.get(position);
+			//设置用户名
+			user_comment_name.setText(comment.getCommentor().getName());
+			//将Date类型的时间转换为string类型
+			String date=(String) DateFormat.format("yyyy-MM-dd hh:mm", comment.getCreateDate());
+			//设置时间
+			user_comment_createtime.setText(date);
+			
+			//设置内容
+			user_comment_content.setText(comment.getContent());
+			
+			return commentview;
+		}
+		
 	}
 
 	void goCommentActivity(){

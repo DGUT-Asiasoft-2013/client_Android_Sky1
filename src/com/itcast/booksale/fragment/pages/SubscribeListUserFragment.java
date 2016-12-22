@@ -7,6 +7,7 @@ import com.example.booksale.R;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.itcast.booksale.entity.Book;
+import com.itcast.booksale.entity.Page;
 import com.itcast.booksale.entity.User;
 import com.itcast.booksale.fragment.widgets.AvatarView;
 import com.itcast.booksale.servelet.Servelet;
