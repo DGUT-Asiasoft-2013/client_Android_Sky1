@@ -10,22 +10,22 @@ import android.view.View;
 import android.view.ViewGroup;
 
 public class PasswordRecoverStep1Fragment extends Fragment {
-	SimpleTextInputCellFragment fragEmail;//邮箱
+	SimpleTextInputCellFragment fragEmail;//閭
 	View view;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		if(view==null){
-			view =inflater.inflate(R.layout.fragment_password_recover_step1, null);//加载布局
+			view =inflater.inflate(R.layout.fragment_password_recover_step1, null);//鍔犺浇甯冨眬
 			
-			fragEmail=(SimpleTextInputCellFragment) getFragmentManager().findFragmentById(R.id.input_email);//加载邮箱
+			fragEmail=(SimpleTextInputCellFragment) getFragmentManager().findFragmentById(R.id.input_email);//鍔犺浇閭
 			
-			view.findViewById(R.id.btn_next).setOnClickListener(new View.OnClickListener() {//添加按钮btn_next的点击监听事件
+			view.findViewById(R.id.btn_next).setOnClickListener(new View.OnClickListener() {//娣诲姞鎸夐挳btn_next鐨勭偣鍑荤洃鍚簨浠�
 				
 				@Override
 				public void onClick(View v) {
-					goNext();//忘记密码的下一步					
+					goNext();//蹇樿瀵嗙爜鐨勪笅涓�姝�					
 				}
 			});
 		}
@@ -33,24 +33,24 @@ public class PasswordRecoverStep1Fragment extends Fragment {
 	}
 
 	@Override
-	public void onResume() {//初始化控件
+	public void onResume() {//鍒濆鍖栨帶浠�
 		super.onResume();
 		
-		fragEmail.setLabelText("邮箱");
+		fragEmail.setLabelText("邮箱:");
 		{
-			fragEmail.setHintText("请输入注册时绑定的邮箱");
+			fragEmail.setHintText("请输入绑定的邮箱");
 		}
 	}
 	
-	protected void goNext() {//定义下一步
-		if(onGoNextListener!=null){   //若不为空
+	protected void goNext() {//瀹氫箟涓嬩竴姝�
+		if(onGoNextListener!=null){   //鑻ヤ笉涓虹┖
 			onGoNextListener.onGoNext();
 		}
 	}
 	
-	OnGoNextListener onGoNextListener;//定义一个内部类
+	OnGoNextListener onGoNextListener;//瀹氫箟涓�涓唴閮ㄧ被
 	
-	public static interface OnGoNextListener{//点击时创建接口，调用此方法
+	public static interface OnGoNextListener{//鐐瑰嚮鏃跺垱寤烘帴鍙ｏ紝璋冪敤姝ゆ柟娉�
 		void onGoNext();
 	}
 	
@@ -58,7 +58,7 @@ public class PasswordRecoverStep1Fragment extends Fragment {
 		this.onGoNextListener = onGoNextListener;
 	}
 	
-	public String getText() {//获取输入的邮箱
+	public String getText() {//鑾峰彇杈撳叆鐨勯偖绠�
 		return fragEmail.getText().toString();
 	}
 
