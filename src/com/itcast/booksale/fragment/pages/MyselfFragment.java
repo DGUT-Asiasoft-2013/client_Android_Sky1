@@ -9,6 +9,10 @@ import com.itcast.booksale.RegisterActivity;
 import com.itcast.booksale.entity.User;
 import com.itcast.booksale.fragment.widgets.AvatarView;
 import com.itcast.booksale.fragment.widgets.MainTabbarFragment;
+import com.itcast.booksale.myself.OrderActivity;
+import com.itcast.booksale.myself.PersonalActivity;
+import com.itcast.booksale.myself.SettingActivity;
+import com.itcast.booksale.myself.SumMoneyActivity;
 import com.itcast.booksale.servelet.Servelet;
 
 import android.R.string;
@@ -29,46 +33,65 @@ import okhttp3.Response;
 
 public class MyselfFragment extends Fragment{
 View view;
-
+View view_setting,view_personal,view_sum_money,view_order;//设置,个人资料
 
 TextView user_name;//用户名
 ProgressBar progressBar;//进度条
 AvatarView avatar;//用户头像
 
 TextView fragTextMyself;
-Button btn_login,btn_register;
+
 	
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		if(view==null){
 			view=inflater.inflate(R.layout.fragment_myself, null);//加载布局
-			
-			user_name=(TextView) view.findViewById(R.id.current_user);//用户名
+
+     		user_name=(TextView) view.findViewById(R.id.current_user);//用户名
 			progressBar=(ProgressBar) view.findViewById(R.id.progress);//进度条
 			avatar=(AvatarView) view.findViewById(R.id.avatar);//头像
 			
 			fragTextMyself=(TextView) view.findViewById(R.id.tab_tv_myself);
+	
+			view_setting=view.findViewById(R.id.view_setting);//设置的按钮
+			view_personal=view.findViewById(R.id.view_personal);//个人资料按钮
+			view_sum_money=view.findViewById(R.id.view_sum_money);//总资产的按钮
+			view_order=view.findViewById(R.id.view_order);//订单的按钮
 			
-			btn_login=(Button) view.findViewById(R.id.login);//登录
-			btn_register=(Button) view.findViewById(R.id.register);//注册
-			
-			btn_login.setOnClickListener(new View.OnClickListener() {//为登录按钮设置点击监听事件
+			view_setting.setOnClickListener(new View.OnClickListener() {//为设置按钮添加点击监听事件
 				
 				@Override
 				public void onClick(View v) {
-					Intent intent=new Intent(getActivity(), LoginActivity.class);
-					startActivity(intent);
-					
+					Intent intent=new Intent(getActivity(),SettingActivity.class);
+					startActivity(intent);			
 				}
 			});
 			
-			btn_register.setOnClickListener(new View.OnClickListener() {//为注册按钮设置点击监听事件
+			view_personal.setOnClickListener(new View.OnClickListener() {//为个人资料设置点击监听事件
 				
 				@Override
 				public void onClick(View v) {
-					Intent intent=new Intent(getActivity(),RegisterActivity.class);
-					startActivity(intent);		
+					Intent intent=new Intent(getActivity(), PersonalActivity.class);
+					startActivity(intent);	
+				}
+			});
+			
+			view_sum_money.setOnClickListener(new View.OnClickListener() {//为总资产按钮设置点击监听事件
+				
+				@Override
+				public void onClick(View v) {
+					Intent intent=new Intent(getActivity(), SumMoneyActivity.class);
+					startActivity(intent);	
+				}
+			});
+			
+			view_order.setOnClickListener(new View.OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					Intent intent=new Intent(getActivity(), OrderActivity.class);
+					startActivity(intent);
 				}
 			});
 		}
