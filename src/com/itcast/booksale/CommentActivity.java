@@ -31,7 +31,7 @@ public class CommentActivity extends Activity {
 	Book book;
 	
 	private EditText add_comment_text; // 用户添加的评论
-	private Button btn_comment_commit;
+	private Button btn_comment_commit;           //提交按钮
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -68,7 +68,7 @@ public class CommentActivity extends Activity {
 		MultipartBody body = new MultipartBody.Builder().addFormDataPart("content", comment_text).build();
 
 		//发起请求
-		Request request = Servelet.requestuildApi("/article/" + book.getId() + "/comment").method("post", null)//获取书的id
+		Request request = Servelet.requestuildApi("/book/" + book.getId() + "/comment").method("post", null)//获取书的id
 				.post(body).build();
 
 		// 客户端连接

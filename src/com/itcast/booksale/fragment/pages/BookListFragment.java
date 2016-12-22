@@ -9,8 +9,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.itcast.booksale.BooksContentActivity;
 import com.itcast.booksale.entity.Book;
 import com.itcast.booksale.entity.Page;
+import com.itcast.booksale.entity.User;
 import com.itcast.booksale.fragment.widgets.AvatarView;
 import com.itcast.booksale.fragment.widgets.BookAvatarView;
+import com.itcast.booksale.fragment.widgets.Buy_book_bus_fragment;
+import com.itcast.booksale.fragment.widgets.MainTabbarFragment;
 import com.itcast.booksale.servelet.Servelet;
 
 import android.annotation.SuppressLint;
@@ -41,6 +44,8 @@ public class BookListFragment extends Fragment {
 	List<Book> booksData;
 	ListView bookListView;
 	int page = 0;
+	Buy_book_bus_fragment bookbus=new Buy_book_bus_fragment();          //购物车页面
+	User saler;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -93,13 +98,12 @@ public class BookListFragment extends Fragment {
 			TextView bookSummary = (TextView)view.findViewById(R.id.text_about_book);//作者
 			TextView bookPrice = (TextView)view.findViewById(R.id.book_price);//售价
 			Button xiangtao_btn=(Button) view.findViewById(R.id.book_purchase);
-			//AvatarView bookAvatar = (AvatarView)view.findViewById(R.id.book_avatar);//封面
 			xiangtao_btn.setOnClickListener(new OnClickListener() {
 				
 				@Override
 				public void onClick(View v) {
-//					Intent intent=new Intent(getActivity(), Buy_book_bus_fragment.class);
-//					startActivity(intent);
+					FragmentTransaction ft=getFragmentManager().beginTransaction(); 
+					MainTabbarFragment.chageFragment(new BookListFragment(), bookbus, ft);         //跳转页面
 				}
 				
 			});
@@ -149,7 +153,7 @@ public class BookListFragment extends Fragment {
 		Book book = booksData.get(position);
 
 		Intent itnt = new Intent(getActivity(), BooksContentActivity.class);
-		itnt.putExtra("data", book);
+		itnt.putExtra("data", book);             //传书的内容给BooksContentActivity
 
 		startActivity(itnt);
 	}
@@ -160,7 +164,9 @@ public class BookListFragment extends Fragment {
 		reload();//获取书籍数据
 	}
 
+	//下载书
 	void reload(){
+
 
 		Request request = Servelet.requestuildApi("books")
 				.get()

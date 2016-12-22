@@ -11,7 +11,7 @@ public class Comment {
 	
 	private int id;
 
-	private User user;                
+	private User commentor;                
 	private String content;       //评论内容
 	private Date createDate;      //评论创建时间
 	private Date editDate;      //评论编辑时间
@@ -23,11 +23,12 @@ public class Comment {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public User getUser() {
-		return user;
+	
+	public User getCommentor() {
+		return commentor;
 	}
-	public void setUser(User user) {
-		this.user = user;
+	public void setCommentor(User commentor) {
+		this.commentor = commentor;
 	}
 	public String getContent() {
 		return content;

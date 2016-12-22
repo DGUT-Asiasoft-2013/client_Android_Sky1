@@ -124,13 +124,17 @@ public class LoginActivity extends Activity {
 			
 			@Override
 			public void onResponse(Call arg0, final Response arg1) throws IOException {//服务器启动成功
-				runOnUiThread(new Runnable() {
+				final String string=arg1.body().string();           //后台运行
+				LoginActivity.this.runOnUiThread(new Runnable() {
 					
 					@Override
 					public void run() {
+
 						User user;
 						progressDialog.dismiss();//进度条消失
+
 						try {
+
 							String stirng = arg1.body().string();
 							//Toast.makeText(LoginActivity.this, "进来了", Toast.LENGTH_SHORT).show();
 							ObjectMapper objectMapper=new ObjectMapper();
