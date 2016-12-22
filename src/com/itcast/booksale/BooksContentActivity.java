@@ -14,6 +14,7 @@ import com.itcast.booksale.servelet.Servelet;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
@@ -147,8 +148,8 @@ public class BooksContentActivity extends Activity {
 	void goMassageHim(){
 		Book book = (Book) getIntent().getSerializableExtra("data");
 		User user = (User) book.getUser();//把user信息传过去
-
-		Intent itnt = new Intent(this,SendPrivateMessage.class);            //!!!--------跳转到私信的活动页面
+Log.d("user", user.getAccount());
+		Intent itnt = new Intent(this,SendPrivateMessageActivity.class);            //!!!--------跳转到私信的活动页面
 
 		itnt.putExtra("sendToReceiver", user);
 		startActivity(itnt);

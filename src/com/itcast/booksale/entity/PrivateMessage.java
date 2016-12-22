@@ -10,7 +10,6 @@ public class PrivateMessage {
 	User privateMessageReceiver;//接收者
 	Date createDate;//发送时间
 	int id;//私信id
-	String chatType;//消息的类型,"send"表示是发送出去的,"receive"表示是接收的信息
 	String privateText;//私信的内容
 	public User getPrivateMessageSender() {
 		return privateMessageSender;
@@ -36,12 +35,7 @@ public class PrivateMessage {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public String getChatType() {
-		return chatType;
-	}
-	public void setChatType(String chatType) {
-		this.chatType = chatType;
-	}
+
 	public String getPrivateText() {
 		return privateText;
 	}
