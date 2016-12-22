@@ -1,27 +1,36 @@
 package com.itcast.booksale;
 
+import java.io.IOException;
 import java.util.List;
 
 import com.example.booksale.R;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.itcast.booksale.entity.Book;
 import com.itcast.booksale.entity.Comment;
 import com.itcast.booksale.entity.User;
 import com.itcast.booksale.fragment.widgets.AvatarView;
 import com.itcast.booksale.fragment.widgets.Comment_Listfragment;
+import com.itcast.booksale.servelet.Servelet;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.MultipartBody;
+import okhttp3.Request;
+import okhttp3.Response;
 
 /*
  * 书的详情界面
  */
 public class BooksContentActivity extends Activity {
-
 	List<Comment> comments;
 	int page = 0;
 	Comment_Listfragment fragComment;            //Comment_Listfragment是用于展示图书的评论的
@@ -41,6 +50,7 @@ public class BooksContentActivity extends Activity {
 	private TextView bookSummaryText;  
 	
 	private AvatarView bookUserAvatar;           //图书照片
+	private boolean issubscribe;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -122,6 +132,7 @@ public class BooksContentActivity extends Activity {
 	@Override
 	protected void onResume() {
 		super.onResume();
+		reload();
 	}
 
 	void goCommentActivity(){
@@ -135,7 +146,129 @@ public class BooksContentActivity extends Activity {
 
 	void goSubscribeActivity(){
 		//订阅的方法
+		MultipartBody body = new MultipartBody.Builder()
+				.addFormDataPart("subscribe", String.valueOf(!issubscribe))
+				.build(); 
+
+		Request request = Servelet.requestuildApi("saler/"+book.getUser().getName()+"/subscribe")
+				.post(body).build();
+
+		Servelet.getOkHttpClient().newCall(request).enqueue(new Callback() {
+
+			@Override
+			public void onResponse(Call arg0, Response arg1) throws IOException {
+				runOnUiThread(new Runnable() {
+					public void run() {
+						reload();
+					}
+				});
+			}
+
+			@Override
+			public void onFailure(Call arg0, IOException arg1) {
+				runOnUiThread(new Runnable() {
+					public void run() {
+						reload();
+					}
+				});
+			}
+		});
 	}
+	void reload(){
+		reloadSubscribe();
+		checkLiked();
+	}
+	void reloadSubscribe(){
+		Request request = Servelet.requestuildApi("saler/"+book.getUser().getName()+"/subscribe")
+				.get().build();
+
+		Servelet.getOkHttpClient().newCall(request).enqueue(new Callback() {
+
+			@Override
+			public void onResponse(Call arg0, Response arg1) throws IOException {
+				try{
+					String responseString = arg1.body().string();
+					final Integer count = new ObjectMapper().readValue(responseString, Integer.class);
+
+					runOnUiThread(new Runnable() {
+						@Override
+						public void run() {
+							onReloadLikesResult(count);
+						}
+					});
+				}catch (Exception e) {
+					e.printStackTrace();
+					runOnUiThread(new Runnable() {
+						@Override
+						public void run() {
+							onReloadLikesResult(0);
+						}
+					});
+				}
+			}
+
+			@Override
+			public void onFailure(Call arg0, IOException e) {
+				e.printStackTrace();
+				runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						onReloadLikesResult(0);
+					}
+				});
+			}
+		});
+	}
+	void onReloadLikesResult(int count){
+		if(count>0){
+			btn_subscribe.setText("订阅数("+count+")");
+		}else{
+			btn_subscribe.setText("订阅");
+		}
+	}
+	void onCheckLikedResult(boolean result){
+		issubscribe = result;
+		btn_subscribe.setTextColor(result ? Color.RED : Color.BLACK);
+	}
+	void checkLiked(){
+		Request request = Servelet.requestuildApi("saler/"+book.getUser().getName()+"/issubscribe").get().build();
+		Servelet.getOkHttpClient().newCall(request).enqueue(new Callback() {
+			@Override
+			public void onResponse(Call arg0, Response arg1) throws IOException {
+				try{
+					final String responseString = arg1.body().string();
+					final Boolean result = new ObjectMapper().readValue(responseString, Boolean.class);
+
+					runOnUiThread(new Runnable() {
+						@Override
+						public void run() {
+							onCheckLikedResult(result);
+						}
+					});
+				}catch(final Exception e){
+					e.printStackTrace();
+					runOnUiThread(new Runnable() {
+						@Override
+						public void run() {
+							onCheckLikedResult(false);
+						}
+					});
+				}
+			}
+
+			@Override
+			public void onFailure(Call arg0, IOException e) {
+				e.printStackTrace();
+				runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						onCheckLikedResult(false);
+					}
+				});				
+			}
+		});
+	}
+
 
 	void goMassageHim(){
 		Book book = (Book) getIntent().getSerializableExtra("data");
