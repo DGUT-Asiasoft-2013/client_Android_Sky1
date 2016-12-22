@@ -22,10 +22,17 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
+/**
+ * 添加卖书的信息
+ * @author Administrator
+ *
+ */
 public class ShareBooksActivity extends Activity{
 
 	//图书信息(8个)
-	EditText editBookTitle,editBookAuthor,editPrice,editBookPublisher,editISBN,editTag,editBookSummary,editText;
+	EditText editBookTitle,editBookAuthor
+	,editPrice,editBookPublisher,editISBN
+	,editTag,editBookSummary,editText,editBookNumber;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +48,7 @@ public class ShareBooksActivity extends Activity{
 		editISBN = (EditText) findViewById(R.id.input_book_isbn);//ISBN
 		editBookSummary = (EditText) findViewById(R.id.input_book_summary);//图书摘要
 		editText = (EditText) findViewById(R.id.input_user_text);//卖家留言
+		editBookNumber=(EditText) findViewById(R.id.input_book_number);
 
 	    //确定出售
 		findViewById(R.id.btn_share_book).setOnClickListener(new View.OnClickListener() {
@@ -64,7 +72,9 @@ public class ShareBooksActivity extends Activity{
 		String bookSummary = editBookSummary.getText().toString();
 		String text = editText.getText().toString();
 		String ISBN = editISBN.getText().toString();
+		String booknumber=editBookNumber.getText().toString();
 		  
+		//下面的addFormDataPart("title", bookTitle)左边的title应该跟服务器的一样，记住
 		MultipartBody bookBody = new MultipartBody.Builder()
 				.addFormDataPart("title", bookTitle)
 				.addFormDataPart("author", bookAuthor)
@@ -72,8 +82,9 @@ public class ShareBooksActivity extends Activity{
 				.addFormDataPart("publisher", bookPublisher)
 				.addFormDataPart("summary", bookSummary)
 				.addFormDataPart("tag", bookTag)
-				.addFormDataPart("isbn", ISBN)
+				.addFormDataPart("book_isbn", ISBN) 
 				.addFormDataPart("text", text)
+				.addFormDataPart("booknumber", booknumber)
 				.build();
 		
 		Request request = Servelet.requestuildApi("books")
@@ -123,7 +134,9 @@ public class ShareBooksActivity extends Activity{
 	void goMainView(){
 
 
-		Intent itnt = new Intent(this,SendPrivateMessage.class);
+
+		Intent itnt = new Intent(this,HelloWorldActivity.class);
+
 		startActivity(itnt);
 
 		finish();

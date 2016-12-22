@@ -11,20 +11,16 @@ import com.itcast.booksale.fragment.widgets.PasswordRecoverStep2Fragment;
 import com.itcast.booksale.fragment.widgets.PasswordRecoverStep2Fragment.OnSubmitClickedListener;
 import com.itcast.booksale.servelet.Servelet;
 
-import android.R.string;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Toast;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.MultipartBody;
 import okhttp3.Request;
 import okhttp3.Response;
-import okhttp3.OkHttpClient;
 
 public class PasswordRecoverActivity extends Activity {
 	PasswordRecoverStep1Fragment step1Fragment=new PasswordRecoverStep1Fragment();//动态添加fragment忘记密码的第一步

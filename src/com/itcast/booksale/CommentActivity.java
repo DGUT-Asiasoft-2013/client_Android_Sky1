@@ -38,6 +38,8 @@ public class CommentActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.add_book_comment);
 		init();
+		//接收BooksContentActivity传过来的book信息
+		book=(Book) getIntent().getSerializableExtra("data");          
 		btn_comment_commit.setOnClickListener(new CommitClickListener());
 	}
 
