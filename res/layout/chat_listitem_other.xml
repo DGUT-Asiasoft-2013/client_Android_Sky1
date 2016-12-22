@@ -2,12 +2,13 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#f0f0f0" 
-    android:paddingRight="80dip"
-    android:paddingLeft="8dip"
+    android:background="#f0f0f0"
     android:paddingBottom="10dip"
-    android:paddingTop="10dip">
-     
+    android:paddingLeft="8dip"
+    android:paddingRight="80dip"
+    android:paddingTop="10dip" >
+
+    <!--
     <ImageView 
         android:id="@+id/chatlist_image_other"
         android:layout_width="40dip"
@@ -16,18 +17,23 @@
         android:layout_alignParentLeft="true"
         android:background="@drawable/shop_ico"
     />
-    <TextView   
+    -->
+
+    <com.itcast.booksale.fragment.widgets.AvatarView
+        android:id="@+id/chatlist_avatar_other"
+        android:layout_width="50dip"
+        android:layout_height="50dip"
+        android:layout_alignParentLeft="true"
+        android:layout_marginRight="5dip" />
+
+    <TextView
         android:id="@+id/chatlist_text_other"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/chatlist_image_other"
-        android:layout_alignTop="@id/chatlist_image_other"
-        android:text="hewdfb"
-       
+        android:layout_alignTop="@id/chatlist_avatar_other"
+        android:layout_toRightOf="@id/chatlist_avatar_other"
+        android:paddingBottom="18dip"
         android:paddingTop="13dip"
-        android:paddingBottom="18dip"      />
-    
-    
-    
+        android:text="hewdfb" />
 
 </RelativeLayout>

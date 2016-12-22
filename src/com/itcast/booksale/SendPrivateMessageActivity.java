@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.itcast.booksale.entity.Page;
 import com.itcast.booksale.entity.PrivateMessage;
 import com.itcast.booksale.entity.User;
+import com.itcast.booksale.fragment.widgets.AvatarView;
 import com.itcast.booksale.servelet.Servelet;
 
 import android.annotation.SuppressLint;
@@ -77,11 +78,13 @@ public class SendPrivateMessageActivity extends Activity {
 
 	class ViewHolderMe {
 		// public ImageView imageView = null;// 头像在右
+		AvatarView avatar = null;
 		public TextView textView = null;
 	}
 
 	class ViewHolderOthers {
 		// public ImageView imageView = null;// 头像在左
+		AvatarView avatar = null;
 		public TextView textView = null;
 	}
 
@@ -105,14 +108,18 @@ public class SendPrivateMessageActivity extends Activity {
 					view = LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_listitem_me, null);
 					holder1 = new ViewHolderMe();
 					holder1.textView = (TextView) view.findViewById(R.id.chatlist_text_me);
+					holder1.avatar=(AvatarView) view.findViewById(R.id.chatlist_avatar_me);
 					holder1.textView.setText(data.getPrivateMessageSender().getName()+" : "+data.getPrivateText());
+					holder1.avatar.load(data.getPrivateMessageSender());
 					view.setTag(holder1);
 					break;
 				case TYPE2:// 如果穿回来的数据中接受者是Intent中的接收者,那么就加载chat_listitem_me,即,是别人发送的
 					view = LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_listitem_other, null);
 					holder2 = new ViewHolderOthers();
 					holder2.textView = (TextView) view.findViewById(R.id.chatlist_text_other);
+					holder2.avatar = (AvatarView) view.findViewById(R.id.chatlist_avatar_other);
 					holder2.textView.setText(data.getPrivateMessageSender().getName()+" : "+data.getPrivateText());
+					holder2.avatar.load(data.getPrivateMessageSender());
 					view.setTag(holder2);
 					break;
 				}
@@ -121,13 +128,17 @@ public class SendPrivateMessageActivity extends Activity {
 				case TYPE1:
 					holder1 = (ViewHolderMe) view.getTag();
 					holder1.textView = (TextView) view.findViewById(R.id.chatlist_text_me);
+					holder1.avatar=(AvatarView) view.findViewById(R.id.chatlist_avatar_me);
 					holder1.textView.setText(data.getPrivateMessageSender().getName()+" : "+data.getPrivateText());
+					holder1.avatar.load(data.getPrivateMessageSender());
 					break;
 
 				case TYPE2:
 					holder2 = (ViewHolderOthers) view.getTag();
 					holder2.textView = (TextView) view.findViewById(R.id.chatlist_text_other);
+					holder2.avatar=(AvatarView) view.findViewById(R.id.chatlist_avatar_other);
 					holder2.textView.setText(data.getPrivateMessageSender().getName()+" : "+data.getPrivateText());
+					holder2.avatar.load(data.getPrivateMessageSender());
 					break;
 				}
 			}

@@ -2,13 +2,14 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="#f0f0f0" 
+    android:background="#f0f0f0"
+    android:paddingBottom="10dip"
     android:paddingLeft="80dip"
     android:paddingRight="8dip"
-    android:paddingBottom="10dip"
-    android:paddingTop="10dip">
-        
-    <ImageView 
+    android:paddingTop="10dip" >
+
+    <!--
+         <ImageView 
         android:id="@+id/chatlist_image_me"
         android:layout_width="40dip"
         android:layout_height="40dip"
@@ -16,18 +17,23 @@
         android:layout_alignParentRight="true"
         android:background="@drawable/shopping_bus"
        />
-    <TextView 
+    -->
+
+    <com.itcast.booksale.fragment.widgets.AvatarView
+        android:id="@+id/chatlist_avatar_me"
+        android:layout_width="50dip"
+        android:layout_height="50dip"
+        android:layout_alignParentRight="true"
+        android:layout_marginLeft="5dip" />
+
+    <TextView
         android:id="@+id/chatlist_text_me"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toLeftOf="@id/chatlist_image_me"
-        android:layout_alignTop="@id/chatlist_image_me"
-        android:text="会忽悠了gyughiulhlluihui过"
-      
+        android:layout_alignTop="@id/chatlist_avatar_me"
+        android:layout_toLeftOf="@id/chatlist_avatar_me"
+        android:paddingBottom="18dip"
         android:paddingTop="13dip"
-        android:paddingBottom="18dip"      />
-    
-    
-    
+        android:text="会忽悠了gyughiulhlluihui过" />
 
 </RelativeLayout>
