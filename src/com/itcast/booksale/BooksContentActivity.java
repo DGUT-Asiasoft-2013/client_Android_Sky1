@@ -9,6 +9,7 @@ import com.itcast.booksale.entity.User;
 import com.itcast.booksale.fragment.widgets.AvatarView;
 import com.itcast.booksale.fragment.widgets.BookAvatarView;
 import com.itcast.booksale.fragment.widgets.Comment_Listfragment;
+import com.itcast.booksale.servelet.Servelet;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -26,7 +27,7 @@ public class BooksContentActivity extends Activity {
 	List<Comment> comments;
 	int page = 0;
 	Comment_Listfragment fragComment;            //Comment_Listfragment是用于展示图书的评论的
-	//	Article commentMess;
+
 	private Book book;
 	ListView commentListView;              //
 	
@@ -69,8 +70,9 @@ public class BooksContentActivity extends Activity {
 		bookUserQQ.setText(book.getUser().getQq());
 		bookUserText.setText(book.getText());
 		bookSummaryText.setText("   "+book.getSummary());
-		bookUserAvatar.load(book.getUser().getAvatar());
-		bookAvatar.load(book.getBookavatar());
+		
+		bookUserAvatar.load(Servelet.urlstring + book.getUser().getAvatar());
+		bookAvatar.load(Servelet.urlstring + book.getBookavatar());
 		
 		//设置书籍id给评论用
 		fragComment.setBookId(book.getId().toString());//(book.getId().toString());

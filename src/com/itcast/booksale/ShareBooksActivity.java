@@ -33,9 +33,11 @@ import okhttp3.Response;
 public class ShareBooksActivity extends Activity{
 
 	//图书信息(8个)
-	EditText editBookTitle,editBookAuthor,editPrice,editBookPublisher,editISBN,editTag,editBookSummary,editText;
-	PictureInputCellFragment fragInputBookAvatar;
-	
+	EditText editBookTitle,editBookAuthor
+	,editPrice,editBookPublisher,editISBN
+	,editTag,editBookSummary,editText,editBookNumber;
+    PictureInputCellFragment fragInputBookAvatar;//图书照片
+    
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -50,9 +52,10 @@ public class ShareBooksActivity extends Activity{
 		editISBN = (EditText) findViewById(R.id.input_book_isbn);//ISBN
 		editBookSummary = (EditText) findViewById(R.id.input_book_summary);//图书摘要
 		editText = (EditText) findViewById(R.id.input_user_text);//卖家留言
-		fragInputBookAvatar = (PictureInputCellFragment) getFragmentManager().findFragmentById(R.id.input_share_picture);
-		
-		
+		//添加图片
+		fragInputBookAvatar = (PictureInputCellFragment) getFragmentManager().findFragmentById(R.id.input_share_picture);		
+		editBookNumber=(EditText) findViewById(R.id.input_book_number);
+
 	    //确定出售
 		findViewById(R.id.btn_share_book).setOnClickListener(new View.OnClickListener() {
 			
@@ -75,7 +78,10 @@ public class ShareBooksActivity extends Activity{
 		String bookSummary = editBookSummary.getText().toString();
 		String text = editText.getText().toString();
 		String ISBN = editISBN.getText().toString();
+		String booknumber=editBookNumber.getText().toString();
 		  
+		
+		//下面的addFormDataPart("title", bookTitle)左边的title应该跟服务器的一样，记住
 		MultipartBody.Builder bookBody = new MultipartBody.Builder()
 				.addFormDataPart("title", bookTitle)
 				.addFormDataPart("author", bookAuthor)
@@ -83,9 +89,11 @@ public class ShareBooksActivity extends Activity{
 				.addFormDataPart("publisher", bookPublisher)
 				.addFormDataPart("summary", bookSummary)
 				.addFormDataPart("tag", bookTag)
-				.addFormDataPart("book_isbn", ISBN)
-				.addFormDataPart("text", text);
+				.addFormDataPart("book_isbn", ISBN) 
+				.addFormDataPart("text", text)
+				.addFormDataPart("booknumber", booknumber);
 		
+
 		//----------------
 		//创建存储图片
 		byte[] pngData = fragInputBookAvatar.getPngData();
@@ -94,6 +102,7 @@ public class ShareBooksActivity extends Activity{
 			bookBody.addFormDataPart("bookavatar", "bookavatar.png", fileBody);
 			
 		}
+		
 		//创建新载体
 		RequestBody newBookBody = bookBody.build();
 		Request request = Servelet.requestuildApi("sellbooks")
@@ -125,20 +134,39 @@ public class ShareBooksActivity extends Activity{
 		});
 	}
 	
-	void onSucceed(String text){
-		new AlertDialog.Builder(this).setMessage(text)
-		.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-
+	void onSucceed(final String text){
+		runOnUiThread(new Runnable() {
+			
 			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				//返回主界面
-				goMainView();
+			public void run() {
+				new AlertDialog.Builder(ShareBooksActivity.this)
+				.setTitle("连接成功，提交")
+				.setMessage(text)
+				.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						//返回主界面
+						goMainView();
+					}
+				}).show();
 			}
-		}).show();
+		});
+		
 	}
 	
-	void onFailure(Exception e){
-		new AlertDialog.Builder(this).setMessage(e.getMessage()).show();
+	void onFailure(final Exception e){
+		runOnUiThread(new Runnable() {
+			
+			@Override
+			public void run() {
+				new AlertDialog.Builder(ShareBooksActivity.this)
+				.setTitle("连接，提交失败")
+				.setMessage(e.getMessage())
+				.show();
+			}
+		});
+		
 	}
 	void goMainView(){
 

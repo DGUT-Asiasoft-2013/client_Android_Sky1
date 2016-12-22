@@ -16,6 +16,7 @@ import android.graphics.Rect;
 import android.graphics.Shader.TileMode;
 import android.os.Handler;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -67,6 +68,7 @@ public class BookAvatarView extends View{
 }
 	public void load(String url){
 
+		Log.d("bookAvatar", url);
 		OkHttpClient client = Servelet.getOkHttpClient();
 		Request request = new Request.Builder()
 				.url(url)
@@ -119,7 +121,7 @@ public class BookAvatarView extends View{
 			float scaleY = srcHeight / dstHeight;
 			canvas.scale(1/scaleX, 1/scaleY);
 			//画矩形，起点坐标，终点坐标
-			Rect rect = new Rect(0,0,200,200);
+			Rect rect = new Rect(0,0,50,50);
 			canvas.drawRect(rect, paint);
 			
 			canvas.restore();	

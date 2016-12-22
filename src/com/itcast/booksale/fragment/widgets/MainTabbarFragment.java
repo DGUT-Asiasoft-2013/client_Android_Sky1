@@ -11,31 +11,32 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 public class MainTabbarFragment extends Fragment{
-	View tabHome,tabSubscribes,tabShoppingCar,tabMyself,tabInformation;//Ê×Ò³£¬¶©ÔÄ£¬¹ºÎï³µ£¬ÎÒµÄ£¬·¢ËÍÉÌÆ·ĞÅÏ¢
-	View[] tabs;//±êÇ©Ñ¡Ïî¿¨
+	View tabHome,tabSubscribes,tabShoppingCar,tabMyself,tabInformation;//é¦–é¡µï¼Œè®¢é˜…ï¼Œè´­ç‰©è½¦ï¼Œæˆ‘çš„ï¼Œå‘é€å•†å“ä¿¡æ¯
+
+	View[] tabs;//æ ‡ç­¾é€‰é¡¹å¡
 	TextView tabTvShoppingcar;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View view=inflater.inflate(R.layout.fragment_main_tabbar, null);//¼ÓÔØ²¼¾Ö
+		View view=inflater.inflate(R.layout.fragment_main_tabbar, null);//åŠ è½½å¸ƒå±€
 
-		tabHome=view.findViewById(R.id.tab_home);//Ê×Ò³
-		tabSubscribes=view.findViewById(R.id.tab_subscribes);//¶©ÔÄ
-		tabShoppingCar=view.findViewById(R.id.tab_shoppingCar);//¹ºÎï³µ
-		tabMyself=view.findViewById(R.id.tab_myself);//ÎÒµÄ
-		tabInformation=view.findViewById(R.id.tab_information);//·¢ËÍÉÌÆ·ĞÅÏ¢
+		tabHome=view.findViewById(R.id.tab_home);//é¦–é¡µ
+		tabSubscribes=view.findViewById(R.id.tab_subscribes);//è®¢é˜…
+		tabShoppingCar=view.findViewById(R.id.tab_shoppingCar);//è´­ç‰©è½¦ï³µ
+		tabMyself=view.findViewById(R.id.tab_myself);//æˆ‘çš„
+		tabInformation=view.findViewById(R.id.tab_information);//å‘é€å•†å“ä¿¡æ¯
 		
-		tabTvShoppingcar=(TextView) view.findViewById(R.id.tab_tv_shoppingcar);//¹ºÎï³µµÄÎÄ×Ö
+		tabTvShoppingcar=(TextView) view.findViewById(R.id.tab_tv_shoppingcar);//è´­ç‰©è½¦çš„æ–‡å­—
 		
 		if (tabTvShoppingcar.isSelected()) {
 			tabTvShoppingcar.setTextColor(Color.GREEN);
 			
 		}
 				
-		tabs=new View[]{//Ñ¡Ïî¿¨Êı×é
+		tabs=new View[]{//é€‰é¡¹å¡æ•°ç»„
 				tabHome,tabSubscribes,tabShoppingCar,tabMyself};
 		
-		for(final View tab:tabs){//ÎªÑ¡Ïî¿¨ÉèÖÃµã»÷¼àÌıÊÂ¼ş
+		for(final View tab:tabs){//ä¸ºé€‰é¡¹å¡è®¾ç½®ç‚¹å‡»ç›‘å¬äº‹ä»¶
 			tab.setOnClickListener(new View.OnClickListener() {
 				
 				@Override
@@ -45,7 +46,8 @@ public class MainTabbarFragment extends Fragment{
 			});
 		}
 		
-		tabInformation.setOnClickListener(new View.OnClickListener() {//Îª·¢ËÍĞÅÏ¢ÉèÖÃµã»÷¼àÌıÊÂ¼ş
+		tabInformation.setOnClickListener(new View.OnClickListener() {//ä¸ºå‘é€ä¿¡æ¯è®¾ç½®ç‚¹å‡»ç›‘å¬äº‹ä»¶
+
 			
 			@Override
 			public void onClick(View v) {
@@ -55,7 +57,7 @@ public class MainTabbarFragment extends Fragment{
 		return view;
 	}
 	
-	public static interface OnTabSelectedListener{//½Ó¿ÚÀà
+	public static interface OnTabSelectedListener{//æ¥å£ç±»
 		void onTabSelected(int index);
 	}
 
@@ -66,12 +68,12 @@ public class MainTabbarFragment extends Fragment{
 	}
 	
 	public void setSelectedItem(int index){
-		if(index>=0&&index<tabs.length){//µ±index´óÓÚ0²¢ÇÒĞ¡ÓÚÑ¡Ïî¿¨×ÜÊıÄ¿
+		if(index>=0&&index<tabs.length){//å½“indexå¤§äº0å¹¶ä¸”å°äºé€‰é¡¹å¡æ€»æ•°ç›®
 			onTabClicked(tabs[index]);
 		}
 	}
 	
-	public int getSelectedItem(){//»ñÈ¡¿ÉÑ¡ÔñµÄÑ¡Ïî¿¨ÊıÄ¿
+	public int getSelectedItem(){//è·å–å¯é€‰æ‹©çš„é€‰é¡¹å¡æ•°ç›®
 		return tabs.length;
 	}
 	
@@ -82,6 +84,7 @@ public class MainTabbarFragment extends Fragment{
 			View otherTab=tabs[i];
 			
 			if(otherTab==tab){
+				//é€‰ä¸­
 				otherTab.setSelected(true);
 				selectedIndex=i;
 			}else{
