@@ -126,7 +126,6 @@ public class LoginActivity extends Activity {
 					public void run() {
 						User user;
 						progressDialog.dismiss();//进度条消失
-							
 						try {
 							String stirng = arg1.body().string();
 							//Toast.makeText(LoginActivity.this, "进来了", Toast.LENGTH_SHORT).show();
