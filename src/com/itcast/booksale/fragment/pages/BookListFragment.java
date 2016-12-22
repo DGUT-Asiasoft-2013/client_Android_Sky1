@@ -9,6 +9,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.itcast.booksale.BooksContentActivity;
 import com.itcast.booksale.entity.Book;
 import com.itcast.booksale.entity.Page;
+import com.itcast.booksale.entity.User;
 import com.itcast.booksale.fragment.widgets.AvatarView;
 import com.itcast.booksale.servelet.Servelet;
 
@@ -36,7 +37,7 @@ public class BookListFragment extends Fragment {
 	List<Book> booksData;
 	ListView bookListView;
 	int page = 0;
-
+	User saler;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
