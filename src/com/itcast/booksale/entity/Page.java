@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-
+//此处应该跟网络上的一样，网上下载的网页中
 //泛型
 @JsonIgnoreProperties(ignoreUnknown=true)
 public class Page<T> {

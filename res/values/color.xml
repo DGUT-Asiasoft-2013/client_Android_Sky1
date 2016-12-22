@@ -2,4 +2,6 @@
 <resources>
     <drawable name="bg_btn_focused">#073a05</drawable>  
     <drawable name="bg_btn_normal">#749057</drawable> 
+    <color name="tab_text_pressed">#0f6c2a</color>
+    <color name="tab_text_normal">#090b09</color>
 </resources>

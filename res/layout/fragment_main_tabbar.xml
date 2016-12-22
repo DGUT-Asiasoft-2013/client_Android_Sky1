@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="60dp"
+    android:background="@android:color/transparent"
+    android:orientation="horizontal" >
+
+    <!-- 首页标签 -->
+    <LinearLayout
+        android:id="@+id/tab_home"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="#ffffff"
+        android:gravity="center"
+        android:orientation="vertical" >
+
+        <ImageView
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:scaleType="fitCenter"         
+            android:src="@drawable/tab_image_home" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="首页"
+            android:textColor="@color/tab_text_normal"/>
+    </LinearLayout>
+
+    <!-- 订阅 -->
+    <LinearLayout
+        android:id="@+id/tab_subscribes"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="#ffffff"
+        android:gravity="center"
+        android:orientation="vertical" >
+
+        <ImageView
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/tab_image_booking" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="订阅"
+            android:textColor="@color/tab_text_normal"/>
+    </LinearLayout>
+
+    <!-- 发送商品信息 -->
+    <Button
+        android:id="@+id/tab_information"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:text="+" />
+
+    <!-- 购物车 -->
+    <LinearLayout
+        android:id="@+id/tab_shoppingCar"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:background="#ffffff"
+        android:orientation="vertical" >
+
+        <ImageView
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/tab_image_shoppingcar" />
+
+        <TextView
+            android:id="@+id/tab_tv_shoppingcar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/tab_text_normal"
+            android:text="购物车" />
+    </LinearLayout>
+
+    <!-- 我的-->
+    <LinearLayout
+        android:id="@+id/tab_myself"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="#ffffff"
+        android:gravity="center"
+        android:orientation="vertical" >
+
+        <ImageView
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/tab_image_myself" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="我的"
+            android:textColor="@color/tab_text_normal"/>
+    </LinearLayout>
+
+</LinearLayout>

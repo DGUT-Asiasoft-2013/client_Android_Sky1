@@ -6,7 +6,8 @@
     android:layout_marginTop="4dp"
     android:orientation="vertical"
     android:padding="8dp" >
-<!-- 选择图片的控件 -->
+
+    <!-- 选择图片的控件 -->
 
     <TextView
         android:id="@+id/label"
@@ -26,8 +27,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:textColor="@android:color/white"
-            android:text="请选择图片" />
+            android:textColor="@android:color/white" />
 
         <ImageView
             android:id="@+id/image"

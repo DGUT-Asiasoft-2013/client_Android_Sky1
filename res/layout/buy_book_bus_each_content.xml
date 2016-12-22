@@ -83,7 +83,7 @@
                 android:layout_height="25dp"
                 android:gravity="center"
                 android:background="@drawable/text_angle_normal"
-                android:text="-" />
+                android:text="1" />
             
             
               <!-- 增加物品 -->

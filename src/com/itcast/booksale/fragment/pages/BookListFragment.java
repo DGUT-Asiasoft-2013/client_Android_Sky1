@@ -88,7 +88,7 @@ public class BookListFragment extends Fragment {
 			TextView bookCellTitle = (TextView)view.findViewById(R.id.cell_title);//书名
 			TextView bookSummary = (TextView)view.findViewById(R.id.text_about_book);//作者
 			TextView bookPrice = (TextView)view.findViewById(R.id.book_price);//售价
-			AvatarView bookAvatar = (AvatarView)view.findViewById(R.id.book_avatar);//封面
+//			AvatarView bookAvatar = (AvatarView)view.findViewById(R.id.book_avatar);//封面
 
 			Book book = booksData.get(position);
 			

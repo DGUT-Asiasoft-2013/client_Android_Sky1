@@ -83,7 +83,7 @@ public class ShareBooksActivity extends Activity{
 				.addFormDataPart("publisher", bookPublisher)
 				.addFormDataPart("summary", bookSummary)
 				.addFormDataPart("tag", bookTag)
-				.addFormDataPart("isbn", ISBN)
+				.addFormDataPart("book_isbn", ISBN)
 				.addFormDataPart("text", text);
 		
 		//----------------
@@ -96,7 +96,7 @@ public class ShareBooksActivity extends Activity{
 		}
 		//创建新载体
 		RequestBody newBookBody = bookBody.build();
-		Request request = Servelet.requestuildApi("books")
+		Request request = Servelet.requestuildApi("sellbooks")
 				.post(newBookBody)
 				.build();
 		
