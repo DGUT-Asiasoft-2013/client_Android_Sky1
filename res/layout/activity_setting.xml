@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="设置"
+        android:textColor="@color/black_deep"
+        android:textSize="20sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@android:color/black" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="16dp"
+        android:background="#d8e698"
+        android:orientation="vertical" >
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@android:color/black" />
+
+    <LinearLayout
+        android:id="@+id/line_btn_login"
+        style="@style/userbaselayout" >
+
+        <TextView
+            style="@style/usertext"
+            android:text="登录" />
+
+        <ImageView style="@style/usertext_img" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@android:color/black" />
+
+    <LinearLayout
+        android:id="@+id/line_btn_register"
+        style="@style/userbaselayout" >
+
+        <TextView
+            style="@style/usertext"
+            android:text="注册" />
+
+        <ImageView style="@style/usertext_img" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@android:color/black" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="16dp"
+        android:background="#d8e698"
+        android:orientation="vertical" >
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@android:color/black" />
+
+    <LinearLayout
+        android:id="@+id/line_btn_back"
+        style="@style/userbaselayout" >
+
+        <TextView
+            style="@style/usertext"
+            android:text="退出登录" />
+
+        <ImageView style="@style/usertext_img" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@android:color/black" />
+
+</LinearLayout>

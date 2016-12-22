@@ -11,19 +11,24 @@ import com.itcast.booksale.entity.Book;
 import com.itcast.booksale.entity.Page;
 import com.itcast.booksale.entity.User;
 import com.itcast.booksale.fragment.widgets.AvatarView;
+import com.itcast.booksale.fragment.widgets.BookAvatarView;
 import com.itcast.booksale.servelet.Servelet;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import okhttp3.Call;
@@ -45,7 +50,6 @@ public class BookListFragment extends Fragment {
 			booksView = inflater.inflate(R.layout.fragment_page_books_list, null);
 
 			bookListView = (ListView) booksView.findViewById(R.id.books_list);
-			bookListView.setAdapter(bookListAdapter);
 
 			bookListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -56,6 +60,7 @@ public class BookListFragment extends Fragment {
 
 			});
 
+			bookListView.setAdapter(bookListAdapter);
 
 		}
 		return booksView;
@@ -89,7 +94,18 @@ public class BookListFragment extends Fragment {
 			TextView bookCellTitle = (TextView)view.findViewById(R.id.cell_title);//书名
 			TextView bookSummary = (TextView)view.findViewById(R.id.text_about_book);//作者
 			TextView bookPrice = (TextView)view.findViewById(R.id.book_price);//售价
-			AvatarView bookAvatar = (AvatarView)view.findViewById(R.id.book_avatar);//封面
+			Button xiangtao_btn=(Button) view.findViewById(R.id.book_purchase);
+			//AvatarView bookAvatar = (AvatarView)view.findViewById(R.id.book_avatar);//封面
+			xiangtao_btn.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+//					Intent intent=new Intent(getActivity(), Buy_book_bus_fragment.class);
+//					startActivity(intent);
+				}
+				
+			});
+			BookAvatarView bookAvatar = (BookAvatarView)view.findViewById(R.id.book_avatar);//封面
 
 			Book book = booksData.get(position);
 			
@@ -101,12 +117,17 @@ public class BookListFragment extends Fragment {
 			bookCellTitle.setText(book.getTitle()+"--"+book.getAuthor());
 			bookSummary.setText(book.getSummary());
 			bookPrice.setText(book.getPrice()+" 元");
+			bookAvatar.load(Servelet.urlstring + book.getBookavatar());
 			//书的封面暂不设
 
+			
+			
 
 
 			return view;
 		}
+
+		
 
 
 		@Override
@@ -125,6 +146,7 @@ public class BookListFragment extends Fragment {
 		}
 	};
 
+	//转到书本详情页面
 	void goBookIntroduction(int position){
 		Book book = booksData.get(position);
 

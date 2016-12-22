@@ -10,6 +10,7 @@ import com.itcast.booksale.entity.Book;
 import com.itcast.booksale.entity.Comment;
 import com.itcast.booksale.entity.User;
 import com.itcast.booksale.fragment.widgets.AvatarView;
+import com.itcast.booksale.fragment.widgets.BookAvatarView;
 import com.itcast.booksale.fragment.widgets.Comment_Listfragment;
 import com.itcast.booksale.servelet.Servelet;
 
@@ -17,6 +18,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
@@ -34,7 +36,7 @@ public class BooksContentActivity extends Activity {
 	List<Comment> comments;
 	int page = 0;
 	Comment_Listfragment fragComment;            //Comment_Listfragment是用于展示图书的评论的
-	//	Article commentMess;
+
 	private Book book;
 	ListView commentListView;              //
 	
@@ -47,11 +49,13 @@ public class BooksContentActivity extends Activity {
 	private TextView bookUserPhone;           //卖家电话号码
 	private TextView bookUserQQ;              //卖家qq
 	private TextView bookUserText;            //卖家备注
-	private TextView bookSummaryText;  
+	private TextView bookSummaryText;
 	
-	private AvatarView bookUserAvatar;           //图书照片
 	private boolean issubscribe;
 
+	private AvatarView bookUserAvatar;           //图书卖家照片
+	private BookAvatarView bookAvatar;             //图书照片
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 
@@ -77,6 +81,9 @@ public class BooksContentActivity extends Activity {
 		bookUserQQ.setText(book.getUser().getQq());
 		bookUserText.setText(book.getText());
 		bookSummaryText.setText("   "+book.getSummary());
+		
+		bookUserAvatar.load(Servelet.urlstring + book.getUser().getAvatar());
+		bookAvatar.load(Servelet.urlstring + book.getBookavatar());
 		
 		//设置书籍id给评论用
 		fragComment.setBookId(book.getId().toString());//(book.getId().toString());
@@ -122,6 +129,7 @@ public class BooksContentActivity extends Activity {
 		 bookSummaryText = (TextView) findViewById(R.id.text_about_book);//内容简介
 		
 		 bookUserAvatar = (AvatarView) findViewById(R.id.user_avatar);//卖家头像
+		 bookAvatar = (BookAvatarView) findViewById(R.id.book_avatar);//图书照片		 
 		 
 		 btn_subscribe=(Button) findViewById(R.id.btn_subscribe);             //订阅按钮
 		 btn_massage=(Button) findViewById(R.id.btn_massage);             //私信按钮
@@ -273,8 +281,10 @@ public class BooksContentActivity extends Activity {
 	void goMassageHim(){
 		Book book = (Book) getIntent().getSerializableExtra("data");
 		User user = (User) book.getUser();//把user信息传过去
-		Intent itnt = new Intent(this,HelloWorldActivity.class);            //!!!--------跳转到私信的活动页面
-		itnt.putExtra("data", user);
+Log.d("user", user.getAccount());
+		Intent itnt = new Intent(this,SendPrivateMessageActivity.class);            //!!!--------跳转到私信的活动页面
+
+		itnt.putExtra("sendToReceiver", user);
 		startActivity(itnt);
 	}
 }

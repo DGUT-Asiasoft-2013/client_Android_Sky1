@@ -10,39 +10,35 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.BitmapShader;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.DashPathEffect;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.graphics.Shader.TileMode;
 import android.os.Handler;
-import android.text.BidiFormatter;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
-
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class AvatarView extends View {
-
-	
-	public AvatarView(Context context) {
+//用于创建矩形的图片
+public class BookAvatarView extends View{
+	public BookAvatarView(Context context) {
 		super(context);
 	}
 
-	public AvatarView(Context context, AttributeSet attrs) {
+	public BookAvatarView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 	}
 
-	public AvatarView(Context context, AttributeSet attrs, int defStyleAttr) {
+	public BookAvatarView(Context context, AttributeSet attrs, int defStyleAttr) {
 		super(context, attrs, defStyleAttr);
 	}
-
+	
 	Paint paint;
-	float radius;
 	float srcWidth, srcHeight;
 
 	Handler mainThreadHandler = new Handler();;
@@ -58,7 +54,8 @@ public class AvatarView extends View {
 			paint = new Paint();
 			paint.setShader(new BitmapShader(bmp, TileMode.REPEAT, TileMode.REPEAT));
 			paint.setAntiAlias(true);
-	
+
+			
 			srcWidth = bmp.getWidth();
 			srcHeight = bmp.getHeight();	
 		}
@@ -71,7 +68,7 @@ public class AvatarView extends View {
 }
 	public void load(String url){
 
-
+		Log.d("bookAvatar", url);
 		OkHttpClient client = Servelet.getOkHttpClient();
 		Request request = new Request.Builder()
 				.url(url)
@@ -118,19 +115,17 @@ public class AvatarView extends View {
 		super.draw(canvas);
 		if(paint != null){
 			canvas.save();
-
 			float dstWidth = getWidth();
 			float dstHeight = getHeight();
-
 			float scaleX = srcWidth / dstWidth;
 			float scaleY = srcHeight / dstHeight;
-
 			canvas.scale(1/scaleX, 1/scaleY);
-			canvas.drawCircle(srcWidth/2, srcHeight/2, srcHeight/2, paint);//画一个圆
+			//画矩形，起点坐标，终点坐标
+			Rect rect = new Rect(0,0,50,50);
+			canvas.drawRect(rect, paint);
 			
 			canvas.restore();	
 		}
 	}
-
-
+	
 }
