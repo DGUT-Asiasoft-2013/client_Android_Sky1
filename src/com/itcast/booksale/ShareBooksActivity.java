@@ -5,6 +5,7 @@ import java.io.IOException;
 import com.example.booksale.R;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.itcast.booksale.entity.Book;
+import com.itcast.booksale.inputcells.PictureInputCellFragment;
 import com.itcast.booksale.servelet.Servelet;
 
 import android.app.Activity;
@@ -17,9 +18,11 @@ import android.widget.EditText;
 
 import okhttp3.Call;
 import okhttp3.Callback;
+import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 
 /**
@@ -31,7 +34,8 @@ public class ShareBooksActivity extends Activity{
 
 	//图书信息(8个)
 	EditText editBookTitle,editBookAuthor,editPrice,editBookPublisher,editISBN,editTag,editBookSummary,editText;
-
+	PictureInputCellFragment fragInputBookAvatar;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -46,7 +50,9 @@ public class ShareBooksActivity extends Activity{
 		editISBN = (EditText) findViewById(R.id.input_book_isbn);//ISBN
 		editBookSummary = (EditText) findViewById(R.id.input_book_summary);//图书摘要
 		editText = (EditText) findViewById(R.id.input_user_text);//卖家留言
-
+		fragInputBookAvatar = (PictureInputCellFragment) getFragmentManager().findFragmentById(R.id.input_share_picture);
+		
+		
 	    //确定出售
 		findViewById(R.id.btn_share_book).setOnClickListener(new View.OnClickListener() {
 			
@@ -70,7 +76,7 @@ public class ShareBooksActivity extends Activity{
 		String text = editText.getText().toString();
 		String ISBN = editISBN.getText().toString();
 		  
-		MultipartBody bookBody = new MultipartBody.Builder()
+		MultipartBody.Builder bookBody = new MultipartBody.Builder()
 				.addFormDataPart("title", bookTitle)
 				.addFormDataPart("author", bookAuthor)
 				.addFormDataPart("price", bookPrice)
@@ -78,11 +84,20 @@ public class ShareBooksActivity extends Activity{
 				.addFormDataPart("summary", bookSummary)
 				.addFormDataPart("tag", bookTag)
 				.addFormDataPart("isbn", ISBN)
-				.addFormDataPart("text", text)
-				.build();
+				.addFormDataPart("text", text);
 		
+		//----------------
+		//创建存储图片
+		byte[] pngData = fragInputBookAvatar.getPngData();
+		if (pngData != null){
+			RequestBody fileBody = RequestBody.create(MediaType.parse("image.png"), pngData);
+			bookBody.addFormDataPart("bookavatar", "bookavatar.png", fileBody);
+			
+		}
+		//创建新载体
+		RequestBody newBookBody = bookBody.build();
 		Request request = Servelet.requestuildApi("books")
-				.post(bookBody)
+				.post(newBookBody)
 				.build();
 		
 		Servelet.getOkHttpClient().newCall(request).enqueue(new Callback() {

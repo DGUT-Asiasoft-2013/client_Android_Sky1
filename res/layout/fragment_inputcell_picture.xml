@@ -19,7 +19,7 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="120dp"
-        android:background="#ccc" >
+        android:background="@drawable/addpicture" >
 
         <TextView
             android:id="@+id/hint"

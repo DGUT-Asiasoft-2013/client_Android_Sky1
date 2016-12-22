@@ -13,7 +13,7 @@
         android:layout_height="65dp"
         android:orientation="vertical" >
 <!-- 这里后期改动 -->
-        <com.itcast.booksale.fragment.widgets.AvatarView
+        <com.itcast.booksale.fragment.widgets.BookAvatarView
             android:id="@+id/book_avatar"
             android:layout_width="50dp"
             android:layout_height="65dp"

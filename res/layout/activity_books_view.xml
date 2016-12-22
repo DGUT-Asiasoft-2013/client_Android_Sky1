@@ -22,7 +22,8 @@
                 android:gravity="center"
                 android:text="书名" />
 
-            <ImageView
+            <com.itcast.booksale.fragment.widgets.BookAvatarView
+                android:id="@+id/book_avatar"
                 android:layout_width="160dp"
                 android:layout_height="160dp"
                 android:layout_gravity="center"
