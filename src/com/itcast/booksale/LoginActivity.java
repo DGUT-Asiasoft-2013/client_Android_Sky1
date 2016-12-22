@@ -97,6 +97,10 @@ public class LoginActivity extends Activity {
 		String current_user=fragAccount.getText();//获取当前用户的账号
 		String current_password=fragPassword.getText();//获取当前用户的密码
 		
+		if(current_password.length()==0 || current_user.length()==0){
+			Toast.makeText(LoginActivity.this, "请输入账户或密码", Toast.LENGTH_SHORT).show();
+			return;
+		}
 		//生成请求体
 		MultipartBody.Builder requestBodyBuilder=new MultipartBody.Builder().setType(MultipartBody.FORM)
 				.addFormDataPart("num", current_user)  //添加当前用户的账号
@@ -131,6 +135,7 @@ public class LoginActivity extends Activity {
 							//Toast.makeText(LoginActivity.this, "进来了", Toast.LENGTH_SHORT).show();
 							ObjectMapper objectMapper=new ObjectMapper();
 							user=objectMapper.readValue(stirng, User.class);//读取值
+							
 							
 							new AlertDialog.Builder(LoginActivity.this).setTitle("成功")
 							.setMessage(user.getName()+","+user.getAccount())

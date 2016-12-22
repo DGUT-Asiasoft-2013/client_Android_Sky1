@@ -46,9 +46,11 @@
        
    </LinearLayout>
    
+   <!-- 个人资料 -->
     <View style="@style/user_line"/>
 	<LinearLayout
-	    style="@style/userbaselayout">
+	    style="@style/userbaselayout"
+	    android:id="@+id/view_personal">
 	    <TextView 
 	        style="@style/usertext"
 	        android:text="个人资料"/>
@@ -57,9 +59,11 @@
 	        style="@style/usertext_img"/>
 	</LinearLayout>	    
 	
+	<!-- 总资产 -->
 	<View style="@style/user_line"/>
 	<LinearLayout 
-	    style="@style/userbaselayout">
+	    style="@style/userbaselayout"
+	    android:id="@+id/view_sum_money">
 	    
 	    <TextView 
 	        style="@style/usertext"
@@ -69,9 +73,11 @@
 	        style="@style/usertext_img"/>
 	</LinearLayout>	
 	
+	<!-- 订单 -->
 	<View style="@style/user_line"/>
 	<LinearLayout 
-	    style="@style/userbaselayout">
+	    style="@style/userbaselayout"
+	    android:id="@+id/view_order">
 	    
 	    <TextView 
 	        style="@style/usertext"
@@ -92,7 +98,8 @@
    </LinearLayout>
    
     <LinearLayout 
-	    style="@style/userbaselayout">
+	    style="@style/userbaselayout"
+	    android:id="@+id/view_setting">
 	    
 	    <TextView 
 	        style="@style/usertext"
@@ -112,27 +119,5 @@
        
    </LinearLayout>
    
-	<LinearLayout 
-	    android:layout_width="match_parent"
-	    android:layout_height="wrap_content"
-	    android:orientation="horizontal"
-	    android:weightSum="2">
-	    
-	    <Button 
-	        android:id="@+id/login"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:layout_weight="1"
-	        android:text="登录"
-	        android:textColor="#749057"/>
-	    
-	    <Button 
-	        android:id="@+id/register"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:layout_weight="1"
-	        android:text="注册"
-	        android:textColor="#749057"/>
-	</LinearLayout>
 	
 </LinearLayout>
