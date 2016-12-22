@@ -22,37 +22,43 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class RegisterActivity extends Activity {
-	SimpleTextInputCellFragment fragInputCellAccount;//用户的账号
-	SimpleTextInputCellFragment fragInputCellName;//用户的昵称
-	SimpleTextInputCellFragment fragInputCellPassword;//用户的密码
-	SimpleTextInputCellFragment fragInputCellPasswordRepeat;//重复密码
-	SimpleTextInputCellFragment fragInputCellEmail;//用户的邮箱地址
-	SimpleTextInputCellFragment fragInputCellPhone;//用户的电话号码
-	SimpleTextInputCellFragment fragInputCellQq;//用户的QQ
-	
-	
-	PictureInputCellFragment fragImage;//头像
+/**
+ * 注册
+ * @author Administrator
+ *
+ */
 
-	ProgressDialog ProgressDialog;//进度对话框
+public class RegisterActivity extends Activity {
+	SimpleTextInputCellFragment fragInputCellAccount;//鐢ㄦ埛鐨勮处鍙�
+	SimpleTextInputCellFragment fragInputCellName;//鐢ㄦ埛鐨勬樀绉�
+	SimpleTextInputCellFragment fragInputCellPassword;//鐢ㄦ埛鐨勫瘑鐮�
+	SimpleTextInputCellFragment fragInputCellPasswordRepeat;//閲嶅瀵嗙爜
+	SimpleTextInputCellFragment fragInputCellEmail;//鐢ㄦ埛鐨勯偖绠卞湴鍧�
+	SimpleTextInputCellFragment fragInputCellPhone;//鐢ㄦ埛鐨勭數璇濆彿鐮�
+	SimpleTextInputCellFragment fragInputCellQq;//鐢ㄦ埛鐨凲Q
+	
+	
+	PictureInputCellFragment fragImage;//澶村儚
+
+	ProgressDialog ProgressDialog;//杩涘害瀵硅瘽妗�
 
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_register);//加载布局
+		setContentView(R.layout.activity_register);//鍔犺浇甯冨眬
 		
-		fragInputCellAccount=(SimpleTextInputCellFragment) getFragmentManager().findFragmentById(R.id.input_account);//加载账号account
-		fragInputCellName=(SimpleTextInputCellFragment) getFragmentManager().findFragmentById(R.id.input_name);//加载昵称name
-		fragInputCellPassword=(SimpleTextInputCellFragment) getFragmentManager().findFragmentById(R.id.input_password);//加载密码password
-		fragInputCellPasswordRepeat=(SimpleTextInputCellFragment) getFragmentManager().findFragmentById(R.id.input_password_repeat);//加载重复密码
-		fragInputCellEmail=(SimpleTextInputCellFragment) getFragmentManager().findFragmentById(R.id.input_email);//加载邮箱Emai
-		fragInputCellPhone=(SimpleTextInputCellFragment) getFragmentManager().findFragmentById(R.id.input_phone);//加载电话号码Phone
-		fragInputCellQq=(SimpleTextInputCellFragment) getFragmentManager().findFragmentById(R.id.input_qq);//加载QQ
+		fragInputCellAccount=(SimpleTextInputCellFragment) getFragmentManager().findFragmentById(R.id.input_account);//鍔犺浇璐﹀彿account
+		fragInputCellName=(SimpleTextInputCellFragment) getFragmentManager().findFragmentById(R.id.input_name);//鍔犺浇鏄电Оname
+		fragInputCellPassword=(SimpleTextInputCellFragment) getFragmentManager().findFragmentById(R.id.input_password);//鍔犺浇瀵嗙爜password
+		fragInputCellPasswordRepeat=(SimpleTextInputCellFragment) getFragmentManager().findFragmentById(R.id.input_password_repeat);//鍔犺浇閲嶅瀵嗙爜
+		fragInputCellEmail=(SimpleTextInputCellFragment) getFragmentManager().findFragmentById(R.id.input_email);//鍔犺浇閭Emai
+		fragInputCellPhone=(SimpleTextInputCellFragment) getFragmentManager().findFragmentById(R.id.input_phone);//鍔犺浇鐢佃瘽鍙风爜Phone
+		fragInputCellQq=(SimpleTextInputCellFragment) getFragmentManager().findFragmentById(R.id.input_qq);//鍔犺浇QQ
 		
-		fragImage=(PictureInputCellFragment) getFragmentManager().findFragmentById(R.id.input_avatar);//加载头像avatar
+		fragImage=(PictureInputCellFragment) getFragmentManager().findFragmentById(R.id.input_avatar);//鍔犺浇澶村儚avatar
 		
-		findViewById(R.id.btn_submit).setOnClickListener(new View.OnClickListener() {//设置按钮btn_submit的点击事件
+		findViewById(R.id.btn_submit).setOnClickListener(new View.OnClickListener() {//璁剧疆鎸夐挳btn_submit鐨勭偣鍑讳簨浠�
 			
 			@Override
 			public void onClick(View v) {
@@ -63,37 +69,37 @@ public class RegisterActivity extends Activity {
 
 
 	@Override
-		protected void onResume() {//初始化控件
+		protected void onResume() {//鍒濆鍖栨帶浠�
 			// TODO Auto-generated method stub
 			super.onResume();
 			
-			fragInputCellAccount.setLabelText("账号:");//账号
+			fragInputCellAccount.setLabelText("账号:");//璐﹀彿
 			{
 				fragInputCellAccount.setHintText("请输入账号");
 			}
 			
-			fragInputCellName.setLabelText("昵称:");//昵称
+			fragInputCellName.setLabelText("昵称:");//鏄电О
 			{
 				fragInputCellName.setHintText("请输入昵称");
 			}
 			
-			fragInputCellPassword.setLabelText("密码:");//密码
+			fragInputCellPassword.setLabelText("密码:");//瀵嗙爜
 			{
 				fragInputCellPassword.setHintText("请输入密码");
 			}
 			
-			fragInputCellPasswordRepeat.setLabelText("重复密码:");//重复密码
+			fragInputCellPasswordRepeat.setLabelText("重复密码:");//閲嶅瀵嗙爜
 			{
 				fragInputCellPasswordRepeat.setHintText("请再次输入密码");
 			}
 			
-			fragInputCellEmail.setLabelText("邮箱:");//邮箱
+			fragInputCellEmail.setLabelText("邮箱:");//閭
 			{
-				fragInputCellEmail.setHintText("请输入邮箱");
+				fragInputCellEmail.setHintText("请输入绑定邮箱");
 				fragInputCellEmail.setIsEmail(true);
 			}
 			
-			fragInputCellPhone.setLabelText("电话:");//电话
+			fragInputCellPhone.setLabelText("电话:");//鐢佃瘽
 			{
 				fragInputCellPhone.setHintText("请输入电话号码");
 				fragInputCellPhone.setIsPhone(true);
@@ -101,31 +107,31 @@ public class RegisterActivity extends Activity {
 			
 			fragInputCellQq.setLabelText("QQ:");//QQ
 			{
-				fragInputCellQq.setHintText("请输入QQ号码");
+				fragInputCellQq.setHintText("请输入QQ");
 				fragInputCellQq.setIsNumber(true);
 			}
 		}
 	
-	protected void Submit() {  //定义提交按钮的方法
-		String password=fragInputCellPassword.getText();//获取输入的密码
-		String passwordRepeat=fragInputCellPasswordRepeat.getText();//获取输入的重复密码
+	protected void Submit() {  //瀹氫箟鎻愪氦鎸夐挳鐨勬柟娉�
+		String password=fragInputCellPassword.getText();//鑾峰彇杈撳叆鐨勫瘑鐮�
+		String passwordRepeat=fragInputCellPasswordRepeat.getText();//鑾峰彇杈撳叆鐨勯噸澶嶅瘑鐮�
 		
-		if(!password.equals(passwordRepeat)){//判断两次输的密码是否一样，若不一样则弹出对话提示框
+		if(!password.equals(passwordRepeat)){//鍒ゆ柇涓ゆ杈撶殑瀵嗙爜鏄惁涓�鏍凤紝鑻ヤ笉涓�鏍峰垯寮瑰嚭瀵硅瘽鎻愮ず妗�
 			new AlertDialog.Builder(RegisterActivity.this)
-			.setMessage("两次输入的密码不一样")
-			.setNegativeButton("好", null)
-			.show();//显示对话框
+			.setMessage("两次输入的密码不正确")
+			.setNegativeButton("濂�", null)
+			.show();//鏄剧ず瀵硅瘽妗�
 			
 			return;
 		}
 		
-		String account=fragInputCellAccount.getText();//获取输入的账户
-		String name=fragInputCellName.getText();//获取输入的昵称
-		String email=fragInputCellEmail.getText();//获取输入的邮箱
-		String phone=fragInputCellPhone.getText();//获取输入的电话
-		String qq=fragInputCellQq.getText();//获取输入的QQ
+		String account=fragInputCellAccount.getText();//鑾峰彇杈撳叆鐨勮处鎴�
+		String name=fragInputCellName.getText();//鑾峰彇杈撳叆鐨勬樀绉�
+		String email=fragInputCellEmail.getText();//鑾峰彇杈撳叆鐨勯偖绠�
+		String phone=fragInputCellPhone.getText();//鑾峰彇杈撳叆鐨勭數璇�
+		String qq=fragInputCellQq.getText();//鑾峰彇杈撳叆鐨凲Q
 	
-		MultipartBody.Builder requestBodyBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM)//生成请求体
+		MultipartBody.Builder requestBodyBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM)//鐢熸垚璇锋眰浣�
 				.addFormDataPart("num", account)
 				.addFormDataPart("name", name)
 				.addFormDataPart("email", email)
@@ -133,34 +139,34 @@ public class RegisterActivity extends Activity {
 				.addFormDataPart("phoneNumb", phone)
 				.addFormDataPart("qq", qq);
 		
-		if(fragImage.getPngData()!=null){//若头像不为空时，获取头像
+		if(fragImage.getPngData()!=null){//鑻ュご鍍忎笉涓虹┖鏃讹紝鑾峰彇澶村儚
 			requestBodyBuilder.addFormDataPart("avatar", "avatar",RequestBody.create(MediaType.parse("image/png")
 					, fragImage.getPngData()));
 		}
 		
-		//发起请求
+		//鍙戣捣璇锋眰
 		Request request=Servelet.requestuildApi("register")
 								.method("post", null)
 								.post(requestBodyBuilder.build())
 								.build();
 		
-		//进度条
+		//杩涘害鏉�
 		final ProgressDialog progressDialog = new ProgressDialog(RegisterActivity.this);
 		progressDialog.setMessage("请稍后");
 		progressDialog.setCancelable(false);
 		progressDialog.setCanceledOnTouchOutside(false);
 		progressDialog.show();
 		
-		//客户端连接服务器
+		//瀹㈡埛绔繛鎺ユ湇鍔″櫒
 		Servelet.getOkHttpClient().newCall(request).enqueue(new Callback() {
 			
 			@Override
-			public void onResponse(final Call arg0, final Response arg1) throws IOException {//可以连接服务器时
+			public void onResponse(final Call arg0, final Response arg1) throws IOException {//鍙互杩炴帴鏈嶅姟鍣ㄦ椂
 				runOnUiThread(new Runnable() {
 					String ar=arg1.body().toString();
 					@Override
 					public void run() {
-						progressDialog.dismiss();//进度条消失						
+						progressDialog.dismiss();//杩涘害鏉℃秷澶�						
 						
 						RegisterActivity.this.onResponse(arg0, ar);		
 					}
@@ -175,7 +181,7 @@ public class RegisterActivity extends Activity {
 
 					@Override
 					public void run() {
-						progressDialog.dismiss();// 使ProgressDialog消失
+						progressDialog.dismiss();// 浣縋rogressDialog娑堝け
 
 						RegisterActivity.this.onFailure(arg0, arg1);
 					}
@@ -185,20 +191,20 @@ public class RegisterActivity extends Activity {
 	}
 
 
-	protected void onFailure(Call arg0, Exception arg1) {//无法连接服务器时
-		new AlertDialog.Builder(this).setTitle("请求失败").setMessage(arg1.getLocalizedMessage())
+	protected void onFailure(Call arg0, Exception arg1) {//鏃犳硶杩炴帴鏈嶅姟鍣ㄦ椂
+		new AlertDialog.Builder(this).setTitle("失败").setMessage(arg1.getLocalizedMessage())
 		.setNegativeButton("好", null).show();
 	}
 
 
-	protected void onResponse(Call arg0, String ar) {//成功
+	protected void onResponse(Call arg0, String ar) {//鎴愬姛
 		try {
-			new AlertDialog.Builder(this).setTitle("请求成功").setMessage("您的请求成功")
+			new AlertDialog.Builder(this).setTitle("成功").setMessage("注册成功")
 			.setPositiveButton("确定", new DialogInterface.OnClickListener(){
 				
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
-					Intent intent=new Intent(RegisterActivity.this,LoginActivity.class);//跳转到登陆页面
+					Intent intent=new Intent(RegisterActivity.this,LoginActivity.class);//璺宠浆鍒扮櫥闄嗛〉闈�
 					startActivity(intent);
 				}
 			})

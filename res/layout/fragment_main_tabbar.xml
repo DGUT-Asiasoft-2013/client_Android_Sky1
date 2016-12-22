@@ -45,6 +45,7 @@
             android:src="@drawable/tab_image_booking" />
 
         <TextView
+            android:id="@+id/tab_tv_booking"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="订阅"
@@ -100,6 +101,7 @@
             android:src="@drawable/tab_image_myself" />
 
         <TextView
+            android:id="@+id/tab_tv_myself"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="我的"
