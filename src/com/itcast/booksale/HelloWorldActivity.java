@@ -15,13 +15,13 @@ import android.content.Intent;
 import android.os.Bundle;
 
 public class HelloWorldActivity extends Activity {
-	BookListFragment Home = new BookListFragment();// Ê×Ò³
-	SubscribeListUserFragment booking = new SubscribeListUserFragment();// ¶©ÔÄ
-	Buy_book_bus_fragment shoppingcar = new Buy_book_bus_fragment();// ¹ºÎï³µ
-	MyselfFragment myself = new MyselfFragment();// ÎÒµÄ
+	BookListFragment Home = new BookListFragment();// ï¿½ï¿½Ò³
+	SubscribeListUserFragment booking = new SubscribeListUserFragment();// ï¿½ï¿½ï¿½ï¿½
+	Buy_book_bus_fragment shoppingcar = new Buy_book_bus_fragment();// ï¿½ï¿½ï¿½ï³µ
+	MyselfFragment myself = new MyselfFragment();// ï¿½Òµï¿½
 
 	
-	MainTabbarFragment tabbar;// Õû¸ötabbar
+	MainTabbarFragment tabbar;// ï¿½ï¿½ï¿½ï¿½tabbar
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -34,12 +34,12 @@ public class HelloWorldActivity extends Activity {
 
 			@Override
 			public void onTabSelected(int index) {
-				changeFragment(index);// ×ª»»fragment
+				changeFragment(index);// ×ªï¿½ï¿½fragment
 
 			}
 		});
 
-		tabbar.setOnNewClickedListener(new OnNewClickedListener() {//¼ÓºÅµÄ¼àÌýÊÂ¼þ
+		tabbar.setOnNewClickedListener(new OnNewClickedListener() {//ï¿½ÓºÅµÄ¼ï¿½ï¿½ï¿½ï¿½Â¼ï¿½
 
 			@Override
 			public void onNewClicked() {
@@ -50,7 +50,7 @@ public class HelloWorldActivity extends Activity {
 	}
 
 	@Override
-	protected void onResume() {// ³õÊ¼»¯
+	protected void onResume() {// ï¿½ï¿½Ê¼ï¿½ï¿½
 		// TODO Auto-generated method stub
 		super.onResume();
 
@@ -64,19 +64,19 @@ public class HelloWorldActivity extends Activity {
 
 		switch (index) {
 		case 0:
-			newFrag = Home;// Ê×Ò³
+			newFrag = Home;// ï¿½ï¿½Ò³
 			break;
 
 		case 1:
-			newFrag = booking;// ¶©ÔÄ
+			newFrag = booking;// ï¿½ï¿½ï¿½ï¿½
 			break;
 
 		case 2:
-			newFrag = shoppingcar;// ¹ºÎï³µ
+			newFrag = shoppingcar;// ï¿½ï¿½ï¿½ï³µ
 			break;
 
 		case 3:
-			newFrag = myself;// ÎÒµÄ
+			newFrag = myself;// ï¿½Òµï¿½
 			break;
 			
 		default:
@@ -85,14 +85,12 @@ public class HelloWorldActivity extends Activity {
 
 		if(newFrag==null)  return;
 		
-		getFragmentManager().beginTransaction().replace(R.id.content, newFrag).commit();//´úÌæ²¼¾Ö
+		getFragmentManager().beginTransaction().replace(R.id.content, newFrag).commit();//ï¿½ï¿½ï¿½æ²¼ï¿½ï¿½
 	}
 
 	protected void bringUpEditor() {
 		Intent intent=new Intent(HelloWorldActivity.this,ShareBooksActivity.class);
 		startActivity(intent);
-		finish();
-
 	}
 
 }

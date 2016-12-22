@@ -74,7 +74,6 @@
             android:layout_width="50dp"
             android:layout_height="35dp"
             android:focusable="false"
-            android:clickable="false"
             android:focusableInTouchMode="false"
             android:layout_weight="0.5"
             android:text="想淘"

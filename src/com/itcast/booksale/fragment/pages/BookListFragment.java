@@ -17,19 +17,24 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.inputmethod.InputMethodManager;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Request;
@@ -40,6 +45,7 @@ public class BookListFragment extends Fragment {
 	View booksView;
 	List<Book> booksData;
 	ListView bookListView;
+	EditText keyword;//搜索关键字
 	int page = 0;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -48,6 +54,7 @@ public class BookListFragment extends Fragment {
 			booksView = inflater.inflate(R.layout.fragment_page_books_list, null);
 
 			bookListView = (ListView) booksView.findViewById(R.id.books_list);
+			keyword = (EditText) booksView.findViewById(R.id.search_keyword);
 
 			bookListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -60,6 +67,12 @@ public class BookListFragment extends Fragment {
 
 			bookListView.setAdapter(bookListAdapter);
 
+			//搜索功能(在OnResume中实现)
+			//设置原始列表
+			Request request = Servelet.requestuildApi("books")
+					.get()
+					.build();
+			reload(request);//获取书籍数据
 		}
 		return booksView;
 	}
@@ -95,18 +108,18 @@ public class BookListFragment extends Fragment {
 			Button xiangtao_btn=(Button) view.findViewById(R.id.book_purchase);
 			//AvatarView bookAvatar = (AvatarView)view.findViewById(R.id.book_avatar);//封面
 			xiangtao_btn.setOnClickListener(new OnClickListener() {
-				
+
 				@Override
 				public void onClick(View v) {
-//					Intent intent=new Intent(getActivity(), Buy_book_bus_fragment.class);
-//					startActivity(intent);
+					//					Intent intent=new Intent(getActivity(), Buy_book_bus_fragment.class);
+					//					startActivity(intent);
 				}
-				
+
 			});
 			BookAvatarView bookAvatar = (BookAvatarView)view.findViewById(R.id.book_avatar);//封面
 
 			Book book = booksData.get(position);
-			
+
 			String list_createDate = DateFormat
 					.format("yyyy-MM-dd hh:mm",
 							booksData.get(position).getCreateDate()).toString();
@@ -118,14 +131,14 @@ public class BookListFragment extends Fragment {
 			bookAvatar.load(Servelet.urlstring + book.getBookavatar());
 			//书的封面暂不设
 
-			
-			
+
+
 
 
 			return view;
 		}
 
-		
+
 
 
 		@Override
@@ -157,14 +170,43 @@ public class BookListFragment extends Fragment {
 	@Override
 	public void onResume() {
 		super.onResume();
-		reload();//获取书籍数据
+
+
+		booksView.findViewById(R.id.btn_search).setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				searchByKeyword();
+
+			}
+		});
+
 	}
 
-	void reload(){
+	void searchByKeyword(){
+		String keywords = keyword.getText().toString();
+		if(keywords.length() == 0){
+			Toast.makeText(getActivity(),
+					"请输入关键字", Toast.LENGTH_LONG);
+			Request request = Servelet.requestuildApi("books")
+					.get()
+					.build();
+			reload(request);
+		}else{
+			Editable edittext = keyword.getText();
+			InputMethodManager inputMethodManager = (InputMethodManager)getActivity()
+					.getSystemService(Context.INPUT_METHOD_SERVICE);
+			inputMethodManager.hideSoftInputFromInputMethod(keyword.getWindowToken(), 0);
 
-		Request request = Servelet.requestuildApi("books")
-				.get()
-				.build();
+			Request request = Servelet.requestuildApi("/book/s/"+keywords)
+					.get()
+					.build();
+			reload(request);
+		}
+	}
+
+
+	void reload(Request request){
 
 		Servelet.getOkHttpClient().newCall(request).enqueue(new Callback() {
 
