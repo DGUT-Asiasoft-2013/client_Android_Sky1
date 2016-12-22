@@ -9,6 +9,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.itcast.booksale.BooksContentActivity;
 import com.itcast.booksale.entity.Book;
 import com.itcast.booksale.entity.Page;
+import com.itcast.booksale.entity.User;
 import com.itcast.booksale.fragment.widgets.AvatarView;
 import com.itcast.booksale.fragment.widgets.BookAvatarView;
 import com.itcast.booksale.fragment.widgets.Buy_book_bus_fragment;
@@ -44,6 +45,7 @@ public class BookListFragment extends Fragment {
 	ListView bookListView;
 	int page = 0;
 	Buy_book_bus_fragment bookbus=new Buy_book_bus_fragment();          //购物车页面
+	User saler;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -164,6 +166,7 @@ public class BookListFragment extends Fragment {
 
 	//下载书
 	void reload(){
+
 
 		Request request = Servelet.requestuildApi("books")
 				.get()
