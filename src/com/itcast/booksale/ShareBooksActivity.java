@@ -123,7 +123,7 @@ public class ShareBooksActivity extends Activity{
 	void goMainView(){
 
 
-		Intent itnt = new Intent(this,主界面.class);
+		Intent itnt = new Intent(this,SendPrivateMessage.class);
 		startActivity(itnt);
 
 		finish();

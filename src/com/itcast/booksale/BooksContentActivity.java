@@ -128,7 +128,7 @@ public class BooksContentActivity extends Activity {
 	void goMassageHim(){
 		Book book = (Book) getIntent().getSerializableExtra("data");
 		User user = (User) book.getUser();//把user信息传过去
-		Intent itnt = new Intent(this,私信的活动页面.class);
+		Intent itnt = new Intent(this,SendPrivateMessage.class);
 		itnt.putExtra("data", user);
 		startActivity(itnt);
 	}
