@@ -87,7 +87,8 @@ public class ShareBooksActivity extends Activity{
 				.addFormDataPart("booknumber", booknumber)
 				.build();
 		
-		Request request = Servelet.requestuildApi("books")
+		Request request = Servelet.requestuildApi("sellbooks")
+				.method("post", null)
 				.post(bookBody)
 				.build();
 		
@@ -116,20 +117,39 @@ public class ShareBooksActivity extends Activity{
 		});
 	}
 	
-	void onSucceed(String text){
-		new AlertDialog.Builder(this).setMessage(text)
-		.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-
+	void onSucceed(final String text){
+		runOnUiThread(new Runnable() {
+			
 			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				//返回主界面
-				goMainView();
+			public void run() {
+				new AlertDialog.Builder(ShareBooksActivity.this)
+				.setTitle("连接成功，提交")
+				.setMessage(text)
+				.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						//返回主界面
+						goMainView();
+					}
+				}).show();
 			}
-		}).show();
+		});
+		
 	}
 	
-	void onFailure(Exception e){
-		new AlertDialog.Builder(this).setMessage(e.getMessage()).show();
+	void onFailure(final Exception e){
+		runOnUiThread(new Runnable() {
+			
+			@Override
+			public void run() {
+				new AlertDialog.Builder(ShareBooksActivity.this)
+				.setTitle("连接，提交失败")
+				.setMessage(e.getMessage())
+				.show();
+			}
+		});
+		
 	}
 	void goMainView(){
 
