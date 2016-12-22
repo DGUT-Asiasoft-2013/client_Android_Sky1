@@ -49,11 +49,11 @@
                     android:layout_height="65dp"
                     android:orientation="vertical" >
 
-                    <com.example.helloworld.fragments.widgets.AvatarView
+                 <!--   <com.example.helloworld.fragments.widgets.AvatarView
                         android:id="@+id/user_avatar"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
-                        android:background="@android:color/white" />
+                        android:background="@android:color/white" />-->  
 
                     <TextView
                         android:id="@+id/user_name"

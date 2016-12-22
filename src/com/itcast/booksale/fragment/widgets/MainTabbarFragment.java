@@ -3,6 +3,7 @@ package com.itcast.booksale.fragment.widgets;
 import com.example.booksale.R;
 
 import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -111,5 +112,31 @@ public class MainTabbarFragment extends Fragment{
 		if(onNewClickedListener!=null)
 			onNewClickedListener.onNewClicked();
 	}
+	
+	//定义一个页面切换
+	public Fragment chageFragment(Fragment currentFragment
+			,Fragment chooseFragment
+			,FragmentTransaction ft)
+	{
+		if (currentFragment!=chooseFragment) {
+			//如果当前页面不等于选择的页面,隐藏当前页面
+			ft.hide(currentFragment);
+			if (chooseFragment.isAdded()) {
+				//如果选择的页面已经被选择了，则显示其
+				ft.show(chooseFragment);
+				
+			}
+			else {
+				ft.add(R.id.tab_shoppingCar, chooseFragment);
+			}
+			
+			
+		}
+		ft.commitAllowingStateLoss();
+		return chooseFragment;
+	}
+	
+	//切换页面
+	
 
 }

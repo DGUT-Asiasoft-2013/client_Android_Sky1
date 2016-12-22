@@ -40,7 +40,7 @@ public class BooksContentActivity extends Activity {
 	private TextView bookUserText;            //卖家备注
 	private TextView bookSummaryText;  
 	
-	private AvatarView bookUserAvatar;           //图书照片
+//	private AvatarView bookUserAvatar;           //图书照片
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -111,7 +111,7 @@ public class BooksContentActivity extends Activity {
 		 bookUserText = (TextView) findViewById(R.id.user_sell_text);//卖家留言
 		 bookSummaryText = (TextView) findViewById(R.id.text_about_book);//内容简介
 		
-		 bookUserAvatar = (AvatarView) findViewById(R.id.user_avatar);//卖家头像
+//		 bookUserAvatar = (AvatarView) findViewById(R.id.user_avatar);//卖家头像
 		 
 		 btn_subscribe=(Button) findViewById(R.id.btn_subscribe);             //订阅按钮
 		 btn_massage=(Button) findViewById(R.id.btn_massage);             //私信按钮
