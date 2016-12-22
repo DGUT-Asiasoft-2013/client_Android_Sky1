@@ -141,9 +141,9 @@ public class BooksContentActivity extends Activity {
 		Book book = (Book) getIntent().getSerializableExtra("data");
 		User user = (User) book.getUser();//把user信息传过去
 
-		Intent itnt = new Intent(this,HelloWorldActivity.class);            //!!!--------跳转到私信的活动页面
+		Intent itnt = new Intent(this,SendPrivateMessage.class);            //!!!--------跳转到私信的活动页面
 
-		itnt.putExtra("data", user);
+		itnt.putExtra("sendToReceiver", user);
 		startActivity(itnt);
 	}
 }
