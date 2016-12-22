@@ -37,7 +37,8 @@
             android:layout_height="32dip"
             android:layout_marginLeft="5dip"
             android:layout_marginRight="7dip"
-            android:layout_weight="0.8" />
+            android:layout_weight="0.8" 
+            android:background="@drawable/bg_edittext"/>
 
         <Button
             android:id="@+id/chat_bottom_sendbutton"

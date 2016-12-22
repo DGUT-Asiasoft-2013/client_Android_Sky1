@@ -13,6 +13,7 @@ import com.itcast.booksale.servelet.Servelet;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -24,6 +25,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.MultipartBody;
@@ -36,24 +38,29 @@ public class SendPrivateMessage extends Activity {
 	List<PrivateMessage> privateMessageData;
 	EditText editPrivateMessage;
 	String privateMessgeDetail;// 私信信息
-	User pivateMessageReceiver;// 私信接收者
+	public User privateMessageReceiver;// 私信接收者
 	final String chatType[] = { "send", "receive" };// 消息的类型,"send"表示是发送的,"receive"表示是接收的
-	ListView chatListView;
+	ListView chatListView;// 私信列表
 	TextView chat_text;
-	TextView textConnectToSb;
+	TextView textConnectToSb;// 抬头提示框
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_send_private_messge);
-
+		// 绑定各组件
 		Button chatSendButton = (Button) findViewById(R.id.chat_bottom_sendbutton);
 		editPrivateMessage = (EditText) findViewById(R.id.chat_bottom_edittext);
 		textConnectToSb = (TextView) findViewById(R.id.chat_contact_name);
 
 		chatListView = (ListView) findViewById(R.id.chat_list);
 		chatListView.setAdapter(adapter);
+
+		// 一些数据的初始化
+		Intent itnt = new Intent();
+		privateMessageReceiver = (User) itnt.getSerializableExtra("sendToReceiver");
+		textConnectToSb.setText("给  " + privateMessageReceiver.getName() + " 发私信");
 
 		chatSendButton.setOnClickListener(new OnClickListener() {
 
@@ -64,13 +71,13 @@ public class SendPrivateMessage extends Activity {
 		});
 	}
 
-	class ViewHolder1 {
-		//public ImageView imageView = null;// 头像在右
+	class ViewHolderMe {
+		// public ImageView imageView = null;// 头像在右
 		public TextView textView = null;
 	}
 
-	class ViewHolder2 {
-		//public ImageView imageView = null;// 头像在左
+	class ViewHolderOthers {
+		// public ImageView imageView = null;// 头像在左
 		public TextView textView = null;
 	}
 
@@ -86,37 +93,37 @@ public class SendPrivateMessage extends Activity {
 			PrivateMessage data = privateMessageData.get(position);
 			int type = getItemViewType(position);
 			Log.d("rr1", data.getPrivateText());
-			ViewHolder1 holder1 = null;
-			ViewHolder2 holder2 = null;
+			ViewHolderMe holder1 = null;
+			ViewHolderOthers holder2 = null;
 			if (view == null) {
 				switch (type) {
 				case TYPE1:// 如果穿回来的数据中接受者是Intent中的接收者,那么就加载chat_listitem_me,即,是我发送的
 					view = LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_listitem_me, null);
-					 holder1 = new ViewHolder1();
-						holder1.textView = (TextView) view.findViewById(R.id.chatlist_text_me);
-						holder1.textView.setText(data.getPrivateText());
-					  view.setTag(holder1);
+					holder1 = new ViewHolderMe();
+					holder1.textView = (TextView) view.findViewById(R.id.chatlist_text_me);
+					holder1.textView.setText(data.getPrivateMessageSender().getName()+" : "+data.getPrivateText());
+					view.setTag(holder1);
 					break;
 				case TYPE2:// 如果穿回来的数据中接受者是Intent中的接收者,那么就加载chat_listitem_me,即,是别人发送的
 					view = LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_listitem_other, null);
-					holder2 = new ViewHolder2();
+					holder2 = new ViewHolderOthers();
 					holder2.textView = (TextView) view.findViewById(R.id.chatlist_text_other);
-					holder2.textView.setText(data.getPrivateText());
+					holder2.textView.setText(data.getPrivateMessageSender().getName()+" : "+data.getPrivateText());
 					view.setTag(holder2);
 					break;
 				}
 			} else {
 				switch (type) {
 				case TYPE1:
-					holder1 = (ViewHolder1) view.getTag();
+					holder1 = (ViewHolderMe) view.getTag();
 					holder1.textView = (TextView) view.findViewById(R.id.chatlist_text_me);
-					holder1.textView.setText(data.getPrivateText());
+					holder1.textView.setText(data.getPrivateMessageSender().getName()+" : "+data.getPrivateText());
 					break;
 
 				case TYPE2:
-					holder2 = (ViewHolder2) view.getTag();
+					holder2 = (ViewHolderOthers) view.getTag();
 					holder2.textView = (TextView) view.findViewById(R.id.chatlist_text_other);
-					holder2.textView.setText(data.getPrivateText());
+					holder2.textView.setText(data.getPrivateMessageSender().getName()+" : "+data.getPrivateText());
 					break;
 				}
 			}
@@ -132,7 +139,7 @@ public class SendPrivateMessage extends Activity {
 
 		@Override
 		public Object getItem(int position) {
-			// TODO Auto-generated method stub
+	
 			return privateMessageData.get(position);
 		}
 
@@ -151,16 +158,15 @@ public class SendPrivateMessage extends Activity {
 
 		@Override
 		public int getItemViewType(int position) {
-	
-				PrivateMessage data = privateMessageData.get(position);
-				Log.d("rr2", data.getPrivateText());
-				if (data.getPrivateMessageReceiver().getAccount().equals("hh")) {
-					return TYPE1;
-				} else {
-					return TYPE2;
-				}
 
-		
+			PrivateMessage data = privateMessageData.get(position);
+			Log.d("rr2", data.getPrivateText());
+			if (data.getPrivateMessageReceiver().getAccount().equals(privateMessageReceiver.getAccount())) {//如果消息的接收者等于要接收的人,那么这条信息就是我发送的
+				return TYPE1;
+			} else {
+				return TYPE2;
+			}
+
 		};
 
 	};
@@ -173,8 +179,11 @@ public class SendPrivateMessage extends Activity {
 		 * null，这时调用toString()会有异常！所以这里必须在后面加上一个""隐式转换成String实例 ，并且不能发送空消息。
 		 */
 		privateMessgeDetail = (editPrivateMessage.getText() + "").toString();// 获得私信的内容
-		if (privateMessgeDetail.length() == 0)
+		if (privateMessgeDetail.length() == 0){
+			Toast.makeText(this, "消息不能为空", Toast.LENGTH_SHORT).show();
 			return;
+		}
+			
 		OkHttpClient client = Servelet.getOkHttpClient();
 		MultipartBody body = new MultipartBody.Builder().addFormDataPart("privateText", privateMessgeDetail)
 				.addFormDataPart("receiverAccount", "hh").addFormDataPart("chatType", chatType[0]).build();
@@ -191,9 +200,8 @@ public class SendPrivateMessage extends Activity {
 					public void run() {
 						/*
 						 * 更新数据列表，
-						 */						
+						 */
 						reload();
-					
 
 					}
 				});
@@ -211,7 +219,7 @@ public class SendPrivateMessage extends Activity {
 
 	public void reload() {
 		OkHttpClient client = Servelet.getOkHttpClient();
-		Request request = Servelet.requestuildApi("findPrivateMessage" + "/1").get().build();
+		Request request = Servelet.requestuildApi("findPrivateMessage/" + privateMessageReceiver.getId()).get().build();
 		client.newCall(request).enqueue(new Callback() {
 
 			@Override
@@ -229,15 +237,14 @@ public class SendPrivateMessage extends Activity {
 						@Override
 						public void run() {
 							SendPrivateMessage.this.page = pageData.getNumber();
-							//反转数据,使得最新的消息在最后
+							// 反转数据,使得最新的消息在最后
 							List<PrivateMessage> lst = new ArrayList<>();
 							List<PrivateMessage> source = pageData.getContent();
-							for(int i=source.size()-1; i>=0; i--){
+							for (int i = source.size() - 1; i >= 0; i--) {
 								lst.add(source.get(i));
 							}
-							
+
 							SendPrivateMessage.this.privateMessageData = lst;
-							
 
 							adapter.notifyDataSetInvalidated();
 						}
@@ -265,6 +272,7 @@ public class SendPrivateMessage extends Activity {
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
+
 		reload();
 	}
 

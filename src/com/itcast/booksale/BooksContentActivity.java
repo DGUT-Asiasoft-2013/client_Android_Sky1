@@ -150,7 +150,7 @@ public class BooksContentActivity extends Activity {
 
 		Intent itnt = new Intent(this,SendPrivateMessage.class);            //!!!--------跳转到私信的活动页面
 
-		itnt.putExtra("data", user);
+		itnt.putExtra("sendToReceiver", user);
 		startActivity(itnt);
 	}
 }
