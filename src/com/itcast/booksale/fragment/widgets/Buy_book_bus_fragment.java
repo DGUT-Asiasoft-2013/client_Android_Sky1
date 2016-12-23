@@ -3,7 +3,7 @@ package com.itcast.booksale.fragment.widgets;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.example.booksale.R;
+import com.itcast.booksale.R;
 import com.itcast.booksale.entity.Book;
 
 import android.app.AlertDialog;

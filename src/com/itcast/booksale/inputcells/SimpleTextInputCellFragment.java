@@ -1,6 +1,6 @@
 package com.itcast.booksale.inputcells;
 
-import com.example.booksale.R;
+import com.itcast.booksale.R;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
