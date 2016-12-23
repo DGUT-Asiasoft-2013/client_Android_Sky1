@@ -170,6 +170,6 @@ TextView fragTextMyself;
 		progressBar.setVisibility(View.GONE);
 		user_name.setVisibility(View.VISIBLE);
 		user_name.setTextColor(Color.RED);
-		user_name.setText(e.getMessage());
+		//user_name.setText(e.getMessage());
 	}
 }
