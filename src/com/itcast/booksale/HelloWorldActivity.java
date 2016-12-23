@@ -91,8 +91,6 @@ public class HelloWorldActivity extends Activity {
 	protected void bringUpEditor() {
 		Intent intent=new Intent(HelloWorldActivity.this,ShareBooksActivity.class);
 		startActivity(intent);
-		finish();
-
 	}
 
 }

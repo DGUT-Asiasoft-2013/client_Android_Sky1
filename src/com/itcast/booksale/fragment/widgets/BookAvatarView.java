@@ -13,6 +13,7 @@ import android.graphics.Canvas;
 import android.graphics.DashPathEffect;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.graphics.RectF;
 import android.graphics.Shader.TileMode;
 import android.os.Handler;
 import android.util.AttributeSet;
@@ -121,8 +122,8 @@ public class BookAvatarView extends View{
 			float scaleY = srcHeight / dstHeight;
 			canvas.scale(1/scaleX, 1/scaleY);
 			//画矩形，起点坐标，终点坐标
-			Rect rect = new Rect(0,0,50,50);
-			canvas.drawRect(rect, paint);
+			Rect rect = new Rect(0,0,200,200);
+			canvas.drawRect(rect,paint);
 			
 			canvas.restore();	
 		}
