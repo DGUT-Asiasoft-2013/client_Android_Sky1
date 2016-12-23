@@ -19,7 +19,10 @@
             android:gravity="center"
             android:text="和某人聊天中"
             android:textColor="@android:color/black"
-            android:textSize="8pt" />
+            android:textSize="8pt"
+            android:alpha="80"
+            android:background="#f0f0f0"
+             />
     </LinearLayout>
 
     <LinearLayout
@@ -29,7 +32,8 @@
         android:layout_alignParentBottom="true"
         android:orientation="horizontal"
         android:paddingBottom="5dp"
-        android:paddingTop="5dp" >
+        android:paddingTop="5dp" 
+        android:alpha="80">
 
         <EditText
             android:id="@+id/chat_bottom_edittext"
@@ -37,7 +41,7 @@
             android:layout_height="match_parent"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
-            android:layout_weight="0.74"
+            android:layout_weight="0.8"
             android:background="@drawable/bg_edittext"
             android:inputType="textMultiLine" />
 
@@ -45,9 +49,10 @@
             android:id="@+id/chat_bottom_sendbutton"
             android:layout_width="0dp"
             android:layout_height="50dp"
-            android:layout_weight="0.2"
-            android:text="发送"
-            android:textColor="@android:color/black"/>
+            android:layout_weight="0.19"
+            android:background="@drawable/btn_send_private_message2"
+            android:textColor="@android:color/black" />
+
     </LinearLayout>
 
     <ListView

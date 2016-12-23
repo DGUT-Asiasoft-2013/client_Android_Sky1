@@ -15,7 +15,8 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="16dp"/>
+            android:layout_marginTop="16dp"
+            android:background="@drawable/avatar_not_login"/>
    
     
         <!-- 用户名 -->
@@ -25,7 +26,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="10dp"
-        android:text="用户名"
+        android:text="未登录"
         />
     
      <ProgressBar 

@@ -1,6 +1,6 @@
 package com.itcast.booksale.fragment.widgets;
 
-import com.example.booksale.R;
+import com.itcast.booksale.R;
 
 import android.app.Fragment;
 import android.app.FragmentTransaction;
