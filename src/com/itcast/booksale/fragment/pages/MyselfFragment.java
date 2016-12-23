@@ -2,7 +2,7 @@ package com.itcast.booksale.fragment.pages;
 
 import java.io.IOException;
 
-import com.example.booksale.R;
+import com.itcast.booksale.R;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.itcast.booksale.LoginActivity;
 import com.itcast.booksale.RegisterActivity;
@@ -33,11 +33,11 @@ import okhttp3.Response;
 
 public class MyselfFragment extends Fragment{
 View view;
-View view_setting,view_personal,view_sum_money,view_order;//ÉèÖÃ,¸öÈË×ÊÁÏ
+View view_setting,view_personal,view_sum_money,view_order;//ï¿½ï¿½ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
-TextView user_name;//ÓÃ»§Ãû
-ProgressBar progressBar;//½ø¶ÈÌõ
-AvatarView avatar;//ÓÃ»§Í·Ïñ
+TextView user_name;//ï¿½Ã»ï¿½ï¿½ï¿½
+ProgressBar progressBar;//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+AvatarView avatar;//ï¿½Ã»ï¿½Í·ï¿½ï¿½
 
 TextView fragTextMyself;
 
@@ -46,20 +46,20 @@ TextView fragTextMyself;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		if(view==null){
-			view=inflater.inflate(R.layout.fragment_myself, null);//¼ÓÔØ²¼¾Ö
+			view=inflater.inflate(R.layout.fragment_myself, null);//ï¿½ï¿½ï¿½Ø²ï¿½ï¿½ï¿½
 
-     		user_name=(TextView) view.findViewById(R.id.current_user);//ÓÃ»§Ãû
-			progressBar=(ProgressBar) view.findViewById(R.id.progress);//½ø¶ÈÌõ
-			avatar=(AvatarView) view.findViewById(R.id.avatar);//Í·Ïñ
+     		user_name=(TextView) view.findViewById(R.id.current_user);//ï¿½Ã»ï¿½ï¿½ï¿½
+			progressBar=(ProgressBar) view.findViewById(R.id.progress);//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+			avatar=(AvatarView) view.findViewById(R.id.avatar);//Í·ï¿½ï¿½
 			
 			fragTextMyself=(TextView) view.findViewById(R.id.tab_tv_myself);
 	
-			view_setting=view.findViewById(R.id.view_setting);//ÉèÖÃµÄ°´Å¥
-			view_personal=view.findViewById(R.id.view_personal);//¸öÈË×ÊÁÏ°´Å¥
-			view_sum_money=view.findViewById(R.id.view_sum_money);//×Ü×Ê²úµÄ°´Å¥
-			view_order=view.findViewById(R.id.view_order);//¶©µ¥µÄ°´Å¥
+			view_setting=view.findViewById(R.id.view_setting);//ï¿½ï¿½ï¿½ÃµÄ°ï¿½Å¥
+			view_personal=view.findViewById(R.id.view_personal);//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½Å¥
+			view_sum_money=view.findViewById(R.id.view_sum_money);//ï¿½ï¿½ï¿½Ê²ï¿½ï¿½Ä°ï¿½Å¥
+			view_order=view.findViewById(R.id.view_order);//ï¿½ï¿½ï¿½ï¿½ï¿½Ä°ï¿½Å¥
 			
-			view_setting.setOnClickListener(new View.OnClickListener() {//ÎªÉèÖÃ°´Å¥Ìí¼Óµã»÷¼àÌýÊÂ¼þ
+			view_setting.setOnClickListener(new View.OnClickListener() {//Îªï¿½ï¿½ï¿½Ã°ï¿½Å¥ï¿½ï¿½Óµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â¼ï¿½
 				
 				@Override
 				public void onClick(View v) {
@@ -68,7 +68,7 @@ TextView fragTextMyself;
 				}
 			});
 			
-			view_personal.setOnClickListener(new View.OnClickListener() {//Îª¸öÈË×ÊÁÏÉèÖÃµã»÷¼àÌýÊÂ¼þ
+			view_personal.setOnClickListener(new View.OnClickListener() {//Îªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â¼ï¿½
 				
 				@Override
 				public void onClick(View v) {
@@ -77,7 +77,7 @@ TextView fragTextMyself;
 				}
 			});
 			
-			view_sum_money.setOnClickListener(new View.OnClickListener() {//Îª×Ü×Ê²ú°´Å¥ÉèÖÃµã»÷¼àÌýÊÂ¼þ
+			view_sum_money.setOnClickListener(new View.OnClickListener() {//Îªï¿½ï¿½ï¿½Ê²ï¿½ï¿½ï¿½Å¥ï¿½ï¿½ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â¼ï¿½
 				
 				@Override
 				public void onClick(View v) {
@@ -170,6 +170,6 @@ TextView fragTextMyself;
 		progressBar.setVisibility(View.GONE);
 		user_name.setVisibility(View.VISIBLE);
 		user_name.setTextColor(Color.RED);
-		user_name.setText(e.getMessage());
+		//user_name.setText(e.getMessage());
 	}
 }

@@ -6,6 +6,7 @@ import android.app.Fragment;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.Bitmap.CompressFormat;
 import android.os.Bundle;
 import android.preference.PreferenceManager.OnActivityResultListener;
@@ -19,7 +20,7 @@ import android.widget.TextView;
 
 import java.io.ByteArrayOutputStream;
 
-import com.example.booksale.R;;
+import com.itcast.booksale.R;;
 
 /**
  * 照片选择
@@ -33,13 +34,13 @@ public class PictureInputCellFragment extends Fragment {
 	ImageView imageView;//鍥剧墖
 	TextView labelText;//鏍囩
 	TextView hintText;//鎻愮ず
-	
+	View view;
 	byte[] pngData;//瀛楃鍨嬫暟缁�
 	
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.fragment_inputcell_picture, container);
+		 view = inflater.inflate(R.layout.fragment_inputcell_picture, container);
 
 		imageView = (ImageView) view.findViewById(R.id.image);//鑾峰彇ImageView鎺т欢image
 		labelText = (TextView) view.findViewById(R.id.label);//鑾峰彇TextView鎺т欢label
@@ -68,11 +69,13 @@ public class PictureInputCellFragment extends Fragment {
 			public void onClick(DialogInterface dialog, int which) {  //item鐨勭偣鍑婚�夋嫨
 				switch (which){
 				case 0:
-					takePhoto();//鎷嶇収
+					takePhoto();//鎷嶇収 
+					view.findViewById(R.id.bg_picture).setBackgroundColor(Color.WHITE);
 					break;
 					
 				case 1:
 					pickFromAlbum();//鐩稿唽
+					view.findViewById(R.id.bg_picture).setBackgroundColor(Color.WHITE);
 					break;
 					
 				default:
@@ -81,6 +84,7 @@ public class PictureInputCellFragment extends Fragment {
 			}
 		}).setNegativeButton("确定", null)//璁剧疆涓�涓彇娑堟寜閽�
 		  .show();
+		
 		
 	}
 

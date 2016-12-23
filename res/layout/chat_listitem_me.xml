@@ -19,7 +19,7 @@
        />
     -->
 
-    <com.itcast.booksale.fragment.widgets.AvatarView
+    <com.itcast.booksale.fragment.widgets.AvatarViewPrivateMessage
         android:id="@+id/chatlist_avatar_me"
         android:layout_width="50dip"
         android:layout_height="50dip"

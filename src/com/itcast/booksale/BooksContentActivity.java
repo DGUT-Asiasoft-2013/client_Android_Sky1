@@ -4,10 +4,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.example.booksale.R;
+
+import com.itcast.booksale.R;
 import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.core.type.TypeReference;import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.itcast.booksale.entity.Book;
 import com.itcast.booksale.entity.Comment;
@@ -31,7 +32,9 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
-import okhttp3.Call;import okhttp3.Callback;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
 import okhttp3.MultipartBody;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -414,7 +417,7 @@ public class BooksContentActivity extends Activity {
 	void goMassageHim() {
 		Book book = (Book) getIntent().getSerializableExtra("data");
 		User user = (User) book.getUser();// 把user信息传过去
-		Log.d("user", user.getAccount());
+		//Log.d("user", user.getAccount());
 		Intent itnt = new Intent(this, SendPrivateMessageActivity.class); // !!!--------跳转到私信的活动页面
 
 		itnt.putExtra("sendToReceiver", user);

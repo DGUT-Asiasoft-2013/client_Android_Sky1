@@ -1,160 +1,157 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical" >
 
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="fill_parent"
+        android:layout_weight="1"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/book_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="书名" />
+
+        <com.itcast.booksale.fragment.widgets.BookAvatarView
+            android:id="@+id/book_avatar"
+            android:layout_width="160dp"
+            android:layout_height="160dp"
+            android:layout_gravity="center" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="fill_parent"
-            android:layout_weight="1"
-            android:orientation="vertical" >
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="4dp"
+            android:background="@android:color/white"
+            android:orientation="horizontal"
+            android:padding="8dp" >
 
-            <TextView
-                android:id="@+id/book_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="书名" />
+            <LinearLayout
+                android:layout_width="50dp"
+                android:layout_height="65dp"
+                android:orientation="vertical" >
 
-            <com.itcast.booksale.fragment.widgets.BookAvatarView
-                android:id="@+id/book_avatar"
-                android:layout_width="160dp"
-                android:layout_height="160dp"
-                android:layout_gravity="center" />
+                <com.itcast.booksale.fragment.widgets.AvatarView
+                    android:id="@+id/user_avatar"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@android:color/white" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@android:color/darker_gray" />
+                <TextView
+                    android:id="@+id/user_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="15dp"
+                    android:gravity="center"
+                    android:text="昵称" />
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="4dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="4dp"
-                android:background="@android:color/white"
-                android:orientation="horizontal"
-                android:padding="8dp" >
+                android:layout_height="65dp"
+                android:layout_weight="0.5"
+                android:orientation="vertical" >
 
-                <LinearLayout
-                    android:layout_width="50dp"
-                    android:layout_height="65dp"
-                    android:orientation="vertical" >
-
-                    <com.itcast.booksale.fragment.widgets.AvatarView
-                        android:id="@+id/user_avatar"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:background="@android:color/white" />
-
-
-                    <TextView
-                        android:id="@+id/user_name"
-                        android:layout_width="match_parent"
-                        android:layout_height="15dp"
-                        android:gravity="center"
-                        android:text="昵称" />
-                </LinearLayout>
-
-                <LinearLayout
+                <TextView
+                    android:id="@+id/book_user_phone"
                     android:layout_width="match_parent"
-                    android:layout_height="65dp"
-                    android:layout_weight="0.5"
-                    android:orientation="vertical" >
+                    android:layout_height="20dp"
+                    android:layout_gravity="left"
+                    android:layout_marginLeft="10dp"
+                    android:singleLine="true"
+                    android:text="联系电话"
+                    android:textColor="@android:color/darker_gray" />
 
-                    <TextView
-                        android:id="@+id/book_user_phone"
-                        android:layout_width="match_parent"
-                        android:layout_height="20dp"
-                        android:layout_gravity="left"
-                        android:layout_marginLeft="10dp"
-                        android:singleLine="true"
-                        android:text="联系电话"
-                        android:textColor="@android:color/darker_gray" />
+                <TextView
+                    android:id="@+id/book_user_qq"
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"
+                    android:layout_gravity="left"
+                    android:layout_marginLeft="10dp"
+                    android:singleLine="true"
+                    android:text="qq"
+                    android:textColor="@android:color/darker_gray" />
 
-                    <TextView
-                        android:id="@+id/book_user_qq"
-                        android:layout_width="match_parent"
-                        android:layout_height="20dp"
-                        android:layout_gravity="left"
-                        android:layout_marginLeft="10dp"
-                        android:singleLine="true"
-                        android:text="qq"
-                        android:textColor="@android:color/darker_gray" />
-
-                    <TextView
-                        android:id="@+id/user_sell_text"
-                        android:layout_width="match_parent"
-                        android:layout_height="20dp"
-                        android:layout_marginLeft="10dp"
-                        android:gravity="left"
-                        android:text="卖家的话"
-                        android:textColor="@android:color/holo_blue_dark" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="65dp"
-                    android:orientation="vertical" >
-
-                    <Button
-                        android:id="@+id/btn_subscribe"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.5"
-                        android:text="订阅"
-                        android:textSize="15sp" />
-
-                    <Button
-                        android:id="@+id/btn_massage"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.5"
-                        android:text="私信"
-                        android:textSize="15sp" />
-                </LinearLayout>
+                <TextView
+                    android:id="@+id/user_sell_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="left"
+                    android:text="卖家的话"
+                    android:textColor="@android:color/holo_blue_dark" />
             </LinearLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@android:color/darker_gray" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="65dp"
+                android:orientation="vertical" >
 
-            <TextView
-                android:id="@+id/text_about_book"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
-                android:text="内容简介" />
+                <Button
+                    android:id="@+id/btn_subscribe"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:text="订阅"
+                    android:textSize="15sp" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@android:color/darker_gray" />
+                <Button
+                    android:id="@+id/btn_massage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:text="私信"
+                    android:textSize="15sp" />
+            </LinearLayout>
+        </LinearLayout>
 
-           
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray" />
+
+        <TextView
+            android:id="@+id/text_about_book"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:text="内容简介" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray" />
+
+        
+
             <ListView
                 android:id="@+id/comment_listview"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" >
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="35dp" >
             </ListView>
 
-            <Button
-                android:id="@+id/btn_comment"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="评论"
-                android:textSize="15sp" />
-        </LinearLayout>
-    </ScrollView>
+    </LinearLayout>
+        <Button
+            android:id="@+id/btn_comment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="评论"
+            android:textSize="15sp"
+            android:layout_alignParentBottom="true" />
 
-</LinearLayout>
+</RelativeLayout>
