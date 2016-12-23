@@ -1,11 +1,13 @@
 package com.itcast.booksale;
 
-import java.io.IOException;<<<<<<<HEAD import java.util.ArrayList;=======>>>>>>>branch'master'of https://github.com/DGUT-Asiasoft-2013/client_Android_Sky1.git
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
-import com.example.booksale.R;<<<<<<<HEAD
+import com.example.booksale.R;
 import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.core.type.TypeReference;import com.fasterxml.jackson.databind.JsonMappingException;=======import com.fasterxml.jackson.core.type.TypeReference;>>>>>>>branch'master'of https://github.com/DGUT-Asiasoft-2013/client_Android_Sky1.git
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.itcast.booksale.entity.Book;
 import com.itcast.booksale.entity.Comment;
@@ -18,16 +20,20 @@ import com.itcast.booksale.servelet.Servelet;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
-import android.graphics.Color;import android.os.Bundle;<<<<<<<HEAD
+import android.graphics.Color;
+import android.os.Bundle;
 import android.text.format.DateFormat;
-import android.util.Log;import android.view.LayoutInflater;=======import android.util.Log;>>>>>>>branch'master'of https://github.com/DGUT-Asiasoft-2013/client_Android_Sky1.git
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
-import okhttp3.Call;import okhttp3.Callback;<<<<<<<HEAD import okhttp3.OkHttpClient;=======import okhttp3.MultipartBody;>>>>>>>branch'master'of https://github.com/DGUT-Asiasoft-2013/client_Android_Sky1.git
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.MultipartBody;
 import okhttp3.Request;
 import okhttp3.Response;
 
@@ -410,7 +416,7 @@ public class BooksContentActivity extends Activity {
 	void goMassageHim() {
 		Book book = (Book) getIntent().getSerializableExtra("data");
 		User user = (User) book.getUser();// 把user信息传过去
-		Log.d("user", user.getAccount());
+		//Log.d("user", user.getAccount());
 		Intent itnt = new Intent(this, SendPrivateMessageActivity.class); // !!!--------跳转到私信的活动页面
 
 		itnt.putExtra("sendToReceiver", user);

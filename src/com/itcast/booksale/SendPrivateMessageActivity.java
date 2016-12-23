@@ -8,13 +8,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.itcast.booksale.entity.Page;
 import com.itcast.booksale.entity.PrivateMessage;
 import com.itcast.booksale.entity.User;
-import com.itcast.booksale.fragment.widgets.AvatarView;
+import com.itcast.booksale.fragment.widgets.AvatarViewPrivateMessage;
 import com.itcast.booksale.servelet.Servelet;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -49,7 +48,6 @@ public class SendPrivateMessageActivity extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_send_private_messge);
 		// 绑定各组件
@@ -78,13 +76,13 @@ public class SendPrivateMessageActivity extends Activity {
 
 	class ViewHolderMe {
 		// public ImageView imageView = null;// 头像在右
-		AvatarView avatar = null;
+		AvatarViewPrivateMessage avatar = null;
 		public TextView textView = null;
 	}
 
 	class ViewHolderOthers {
 		// public ImageView imageView = null;// 头像在左
-		AvatarView avatar = null;
+		AvatarViewPrivateMessage avatar = null;
 		public TextView textView = null;
 	}
 
@@ -99,7 +97,7 @@ public class SendPrivateMessageActivity extends Activity {
 
 			PrivateMessage data = privateMessageData.get(position);
 			int type = getItemViewType(position);
-			Log.d("rr1", data.getPrivateText());
+			//Log.d("rr1", data.getPrivateText());
 			ViewHolderMe holder1 = null;
 			ViewHolderOthers holder2 = null;
 			if (view == null) {
@@ -108,7 +106,7 @@ public class SendPrivateMessageActivity extends Activity {
 					view = LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_listitem_me, null);
 					holder1 = new ViewHolderMe();
 					holder1.textView = (TextView) view.findViewById(R.id.chatlist_text_me);
-					holder1.avatar=(AvatarView) view.findViewById(R.id.chatlist_avatar_me);
+					holder1.avatar=(AvatarViewPrivateMessage) view.findViewById(R.id.chatlist_avatar_me);
 					holder1.textView.setText(data.getPrivateMessageSender().getName()+" : "+data.getPrivateText());
 					holder1.avatar.load(data.getPrivateMessageSender());
 					view.setTag(holder1);
@@ -117,7 +115,7 @@ public class SendPrivateMessageActivity extends Activity {
 					view = LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_listitem_other, null);
 					holder2 = new ViewHolderOthers();
 					holder2.textView = (TextView) view.findViewById(R.id.chatlist_text_other);
-					holder2.avatar = (AvatarView) view.findViewById(R.id.chatlist_avatar_other);
+					holder2.avatar = (AvatarViewPrivateMessage) view.findViewById(R.id.chatlist_avatar_other);
 					holder2.textView.setText(data.getPrivateMessageSender().getName()+" : "+data.getPrivateText());
 					holder2.avatar.load(data.getPrivateMessageSender());
 					view.setTag(holder2);
@@ -128,7 +126,7 @@ public class SendPrivateMessageActivity extends Activity {
 				case TYPE1:
 					holder1 = (ViewHolderMe) view.getTag();
 					holder1.textView = (TextView) view.findViewById(R.id.chatlist_text_me);
-					holder1.avatar=(AvatarView) view.findViewById(R.id.chatlist_avatar_me);
+					holder1.avatar=(AvatarViewPrivateMessage) view.findViewById(R.id.chatlist_avatar_me);
 					holder1.textView.setText(data.getPrivateMessageSender().getName()+" : "+data.getPrivateText());
 					holder1.avatar.load(data.getPrivateMessageSender());
 					break;
@@ -136,7 +134,7 @@ public class SendPrivateMessageActivity extends Activity {
 				case TYPE2:
 					holder2 = (ViewHolderOthers) view.getTag();
 					holder2.textView = (TextView) view.findViewById(R.id.chatlist_text_other);
-					holder2.avatar=(AvatarView) view.findViewById(R.id.chatlist_avatar_other);
+					holder2.avatar=(AvatarViewPrivateMessage) view.findViewById(R.id.chatlist_avatar_other);
 					holder2.textView.setText(data.getPrivateMessageSender().getName()+" : "+data.getPrivateText());
 					holder2.avatar.load(data.getPrivateMessageSender());
 					break;
@@ -224,7 +222,7 @@ public class SendPrivateMessageActivity extends Activity {
 
 			@Override
 			public void onFailure(Call arg0, IOException e) {
-				Log.d("privateRF", e.getMessage());
+				e.printStackTrace();
 
 			}
 		});
@@ -244,7 +242,7 @@ public class SendPrivateMessageActivity extends Activity {
 
 				try {
 					String rr = arg1.body().string();
-					Log.d("rr", rr);
+				//	Log.d("rr", rr);
 					final Page<PrivateMessage> pageData = new ObjectMapper().readValue(rr,
 							new TypeReference<Page<PrivateMessage>>() {
 							});
