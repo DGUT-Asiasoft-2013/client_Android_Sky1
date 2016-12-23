@@ -2,7 +2,7 @@ package com.itcast.booksale.myself;
 
 import java.io.IOException;
 
-import com.example.booksale.R;
+import com.itcast.booksale.R;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.itcast.booksale.entity.User;
 import com.itcast.booksale.fragment.widgets.AvatarView;
@@ -17,14 +17,14 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 /**
- * ¸öÈË×ÊÁÏ
+ * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
  * @author Administrator
  *
  */
 public class PersonalActivity extends Activity{
 
-AvatarView avatar;//Í·Ïñ
-TextView p_account,p_email,p_name,p_phone,p_qq;//ÕËºÅ£¬ÓÊÏä£¬êÇ³Æ£¬µç»°£¬QQ
+AvatarView avatar;//Í·ï¿½ï¿½
+TextView p_account,p_email,p_name,p_phone,p_qq;//ï¿½ËºÅ£ï¿½ï¿½ï¿½ï¿½ä£¬ï¿½Ç³Æ£ï¿½ï¿½ç»°ï¿½ï¿½QQ
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -32,12 +32,12 @@ TextView p_account,p_email,p_name,p_phone,p_qq;//ÕËºÅ£¬ÓÊÏä£¬êÇ³Æ£¬µç»°£¬QQ
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_personal);
 		
-		avatar=(AvatarView) findViewById(R.id.avatar);//Í·Ïñ
+		avatar=(AvatarView) findViewById(R.id.avatar);//Í·ï¿½ï¿½
 		
-		p_account=(TextView) findViewById(R.id.personal_account);//ÕË»§
-		p_email=(TextView) findViewById(R.id.personal_email);//ÓÊÏä
-		p_name=(TextView) findViewById(R.id.personal_name);//êÇ³Æ
-		p_phone=(TextView) findViewById(R.id.personal_phone);//µç»°ºÅÂë
+		p_account=(TextView) findViewById(R.id.personal_account);//ï¿½Ë»ï¿½
+		p_email=(TextView) findViewById(R.id.personal_email);//ï¿½ï¿½ï¿½ï¿½
+		p_name=(TextView) findViewById(R.id.personal_name);//ï¿½Ç³ï¿½
+		p_phone=(TextView) findViewById(R.id.personal_phone);//ï¿½ç»°ï¿½ï¿½ï¿½ï¿½
 		p_qq=(TextView) findViewById(R.id.personal_qq);//QQ
 	}
 	

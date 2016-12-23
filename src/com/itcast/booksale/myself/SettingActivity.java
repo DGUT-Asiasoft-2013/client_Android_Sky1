@@ -1,6 +1,6 @@
 package com.itcast.booksale.myself;
 
-import com.example.booksale.R;
+import com.itcast.booksale.R;
 import com.itcast.booksale.LoginActivity;
 import com.itcast.booksale.RegisterActivity;
 
@@ -10,7 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 
 /**
- * ÉèÖÃµÄActivity
+ * ï¿½ï¿½ï¿½Ãµï¿½Activity
  * @author Administrator
  *
  */
@@ -24,11 +24,11 @@ public class SettingActivity extends Activity{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_setting);
 		
-		s_login=findViewById(R.id.line_btn_login);//µÇÂ¼°´Å¥
-		s_register=findViewById(R.id.line_btn_register);//×¢²á°´Å¥
-		s_back=findViewById(R.id.line_btn_back);//ÍË³öµÇÂ¼
+		s_login=findViewById(R.id.line_btn_login);//ï¿½ï¿½Â¼ï¿½ï¿½Å¥
+		s_register=findViewById(R.id.line_btn_register);//×¢ï¿½á°´Å¥
+		s_back=findViewById(R.id.line_btn_back);//ï¿½Ë³ï¿½ï¿½ï¿½Â¼
 		
-		s_login.setOnClickListener(new View.OnClickListener() {//ÎªµÇÂ¼°´Å¥Ìí¼Óµã»÷¼àÌýÊÂ¼þ
+		s_login.setOnClickListener(new View.OnClickListener() {//Îªï¿½ï¿½Â¼ï¿½ï¿½Å¥ï¿½ï¿½Óµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â¼ï¿½
 			
 			@Override
 			public void onClick(View v) {

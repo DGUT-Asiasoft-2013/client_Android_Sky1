@@ -2,7 +2,7 @@ package com.itcast.booksale;
 
 import java.io.IOException;
 
-import com.example.booksale.R;
+import com.itcast.booksale.R;
 import com.itcast.booksale.servelet.Servelet;
 
 import android.app.Activity;

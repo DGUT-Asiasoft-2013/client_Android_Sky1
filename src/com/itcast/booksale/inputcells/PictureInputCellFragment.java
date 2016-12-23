@@ -19,7 +19,7 @@ import android.widget.TextView;
 
 import java.io.ByteArrayOutputStream;
 
-import com.example.booksale.R;;
+import com.itcast.booksale.R;;
 
 /**
  * 照片选择

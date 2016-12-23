@@ -1,6 +1,6 @@
 package com.itcast.booksale.myself;
 
-import com.example.booksale.R;
+import com.itcast.booksale.R;
 
 import android.app.Activity;
 import android.os.Bundle;
