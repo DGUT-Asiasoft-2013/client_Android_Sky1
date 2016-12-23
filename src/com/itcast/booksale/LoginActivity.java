@@ -138,8 +138,8 @@ public class LoginActivity extends Activity {
 
 						User user;
 						progressDialog.dismiss();//进度条消失
-
 						try {
+
 							if(TextUtils.isEmpty(string)){//判断解析出来的是否为空字符串（如果为空，则数据库中没有此用户）
 								Toast.makeText(LoginActivity.this, "密码错误", Toast.LENGTH_SHORT).show();
 							}

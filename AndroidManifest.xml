@@ -48,6 +48,14 @@
         </activity>
         <activity android:name="com.itcast.booksale.myself.SumMoneyActivity">
         </activity>
+        <activity android:name="com.itcast.booksale.myself.ChangeNameActivity">
+        </activity>
+        <activity android:name="com.itcast.booksale.myself.ChangeEmailActivity">
+        </activity>
+        <activity android:name="com.itcast.booksale.myself.ChangePhoneActivity">
+        </activity>
+        <activity android:name="com.itcast.booksale.myself.ChangeQqActivity">
+        </activity>
     </application>
 
 </manifest>
