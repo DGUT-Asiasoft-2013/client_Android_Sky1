@@ -11,7 +11,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
  * @author Administrator
  *
  */
-@JsonIgnoreProperties(ignoreUnknown = true)
+
 public class Book implements Serializable {
 	// 用户
 	User user;

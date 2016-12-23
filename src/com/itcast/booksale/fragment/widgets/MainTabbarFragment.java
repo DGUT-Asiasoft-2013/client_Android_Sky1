@@ -113,7 +113,7 @@ public class MainTabbarFragment extends Fragment{
 	}
 	
 	//定义一个页面切换
-	public Fragment chageFragment(Fragment currentFragment
+	public static Fragment chageFragment(Fragment currentFragment
 			,Fragment chooseFragment
 			,FragmentTransaction ft)
 	{

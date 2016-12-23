@@ -39,7 +39,7 @@
         </activity>
         <activity android:name="com.itcast.booksale.ShareBooksActivity" >
         </activity>
-        <activity android:name="com.itcast.booksale.SendPrivateMessage" >
+        <activity android:name="com.itcast.booksale.SendPrivateMessageActivity" >
         </activity>
         <activity android:name="com.itcast.booksale.myself.SettingActivity">       
         </activity>

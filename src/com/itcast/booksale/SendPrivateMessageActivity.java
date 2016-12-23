@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.itcast.booksale.entity.Page;
 import com.itcast.booksale.entity.PrivateMessage;
 import com.itcast.booksale.entity.User;
+import com.itcast.booksale.fragment.widgets.AvatarView;
 import com.itcast.booksale.servelet.Servelet;
 
 import android.annotation.SuppressLint;
@@ -15,6 +16,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,15 +36,16 @@ import okhttp3.Request;
 import okhttp3.Response;
 import java.util.*;
 
-public class SendPrivateMessage extends Activity {
+public class SendPrivateMessageActivity extends Activity {
 	List<PrivateMessage> privateMessageData;
 	EditText editPrivateMessage;
 	String privateMessgeDetail;// 私信信息
 	public User privateMessageReceiver;// 私信接收者
-	final String chatType[] = { "send", "receive" };// 消息的类型,"send"表示是发送的,"receive"表示是接收的
 	ListView chatListView;// 私信列表
 	TextView chat_text;
 	TextView textConnectToSb;// 抬头提示框
+	
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -58,10 +61,12 @@ public class SendPrivateMessage extends Activity {
 		chatListView.setAdapter(adapter);
 
 		// 一些数据的初始化
-		Intent itnt = new Intent();
-		privateMessageReceiver = (User) itnt.getSerializableExtra("sendToReceiver");
+	
+		privateMessageReceiver = (User) getIntent().getSerializableExtra("sendToReceiver");
 		textConnectToSb.setText("给  " + privateMessageReceiver.getName() + " 发私信");
 
+		//设置刷新线程启动
+	
 		chatSendButton.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -73,11 +78,13 @@ public class SendPrivateMessage extends Activity {
 
 	class ViewHolderMe {
 		// public ImageView imageView = null;// 头像在右
+		AvatarView avatar = null;
 		public TextView textView = null;
 	}
 
 	class ViewHolderOthers {
 		// public ImageView imageView = null;// 头像在左
+		AvatarView avatar = null;
 		public TextView textView = null;
 	}
 
@@ -101,14 +108,18 @@ public class SendPrivateMessage extends Activity {
 					view = LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_listitem_me, null);
 					holder1 = new ViewHolderMe();
 					holder1.textView = (TextView) view.findViewById(R.id.chatlist_text_me);
+					holder1.avatar=(AvatarView) view.findViewById(R.id.chatlist_avatar_me);
 					holder1.textView.setText(data.getPrivateMessageSender().getName()+" : "+data.getPrivateText());
+					holder1.avatar.load(data.getPrivateMessageSender());
 					view.setTag(holder1);
 					break;
 				case TYPE2:// 如果穿回来的数据中接受者是Intent中的接收者,那么就加载chat_listitem_me,即,是别人发送的
 					view = LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_listitem_other, null);
 					holder2 = new ViewHolderOthers();
 					holder2.textView = (TextView) view.findViewById(R.id.chatlist_text_other);
+					holder2.avatar = (AvatarView) view.findViewById(R.id.chatlist_avatar_other);
 					holder2.textView.setText(data.getPrivateMessageSender().getName()+" : "+data.getPrivateText());
+					holder2.avatar.load(data.getPrivateMessageSender());
 					view.setTag(holder2);
 					break;
 				}
@@ -117,13 +128,17 @@ public class SendPrivateMessage extends Activity {
 				case TYPE1:
 					holder1 = (ViewHolderMe) view.getTag();
 					holder1.textView = (TextView) view.findViewById(R.id.chatlist_text_me);
+					holder1.avatar=(AvatarView) view.findViewById(R.id.chatlist_avatar_me);
 					holder1.textView.setText(data.getPrivateMessageSender().getName()+" : "+data.getPrivateText());
+					holder1.avatar.load(data.getPrivateMessageSender());
 					break;
 
 				case TYPE2:
 					holder2 = (ViewHolderOthers) view.getTag();
 					holder2.textView = (TextView) view.findViewById(R.id.chatlist_text_other);
+					holder2.avatar=(AvatarView) view.findViewById(R.id.chatlist_avatar_other);
 					holder2.textView.setText(data.getPrivateMessageSender().getName()+" : "+data.getPrivateText());
+					holder2.avatar.load(data.getPrivateMessageSender());
 					break;
 				}
 			}
@@ -186,7 +201,7 @@ public class SendPrivateMessage extends Activity {
 			
 		OkHttpClient client = Servelet.getOkHttpClient();
 		MultipartBody body = new MultipartBody.Builder().addFormDataPart("privateText", privateMessgeDetail)
-				.addFormDataPart("receiverAccount", "hh").addFormDataPart("chatType", chatType[0]).build();
+				.addFormDataPart("receiverAccount", privateMessageReceiver.getAccount()).build();
 
 		Request request = Servelet.requestuildApi("privateMessage").method("POST", body).build();
 		client.newCall(request).enqueue(new Callback() {
@@ -217,6 +232,8 @@ public class SendPrivateMessage extends Activity {
 		editPrivateMessage.setText("");
 	}
 
+	
+	//重新加载数据接口
 	public void reload() {
 		OkHttpClient client = Servelet.getOkHttpClient();
 		Request request = Servelet.requestuildApi("findPrivateMessage/" + privateMessageReceiver.getId()).get().build();
@@ -236,7 +253,7 @@ public class SendPrivateMessage extends Activity {
 
 						@Override
 						public void run() {
-							SendPrivateMessage.this.page = pageData.getNumber();
+							SendPrivateMessageActivity.this.page = pageData.getNumber();
 							// 反转数据,使得最新的消息在最后
 							List<PrivateMessage> lst = new ArrayList<>();
 							List<PrivateMessage> source = pageData.getContent();
@@ -244,7 +261,7 @@ public class SendPrivateMessage extends Activity {
 								lst.add(source.get(i));
 							}
 
-							SendPrivateMessage.this.privateMessageData = lst;
+							SendPrivateMessageActivity.this.privateMessageData = lst;
 
 							adapter.notifyDataSetInvalidated();
 						}
@@ -261,19 +278,43 @@ public class SendPrivateMessage extends Activity {
 
 					@Override
 					public void run() {
-						new AlertDialog.Builder(SendPrivateMessage.this).setMessage(e.getMessage()).show();
+						new AlertDialog.Builder(SendPrivateMessageActivity.this).setMessage(e.getMessage()).show();
 					}
 				});
 			}
 		});
 	}
-
+//使用handler类来实现定时刷新
+	Handler handler = new Handler();
+	boolean isVisible = false;//此标志为发送窗口是否可见
+	
 	@Override
 	protected void onResume() {
-		// TODO Auto-generated method stub
 		super.onResume();
-
-		reload();
+		isVisible = true;//当为onResume时,将isVisible 设为true表示该窗口可见
+		refresh();
 	}
-
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		isVisible = false;//当Activity状态改为onPause时,窗口不可见
+	}
+	
+	/*
+	 * 2016年12月22日 18:58:21
+	 * 函数功能:使用handler,将消息定时刷新
+	 */
+	void refresh(){
+		
+		reload();
+		
+		if(isVisible)
+		handler.postDelayed(new Runnable() {
+			@Override
+			public void run() {
+				refresh();
+			}
+		}, 3000);
+	}
 }

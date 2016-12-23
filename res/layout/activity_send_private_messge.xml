@@ -25,7 +25,7 @@
     <LinearLayout
         android:id="@+id/chat_bottom_linear"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:orientation="horizontal"
         android:paddingBottom="5dp"
@@ -34,11 +34,12 @@
         <EditText
             android:id="@+id/chat_bottom_edittext"
             android:layout_width="0dp"
-            android:layout_height="32dip"
-            android:layout_marginLeft="5dip"
-            android:layout_marginRight="7dip"
-            android:layout_weight="0.8" 
-            android:background="@drawable/bg_edittext"/>
+            android:layout_height="match_parent"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_weight="0.74"
+            android:background="@drawable/bg_edittext"
+            android:inputType="textMultiLine" />
 
         <Button
             android:id="@+id/chat_bottom_sendbutton"

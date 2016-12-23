@@ -1,7 +1,7 @@
 package com.itcast.booksale.fragment.widgets;
 
 import com.example.booksale.R;
-import com.itcast.booksale.SendPrivateMessage;
+import com.itcast.booksale.SendPrivateMessageActivity;
 import com.itcast.booksale.servelet.Servelet;
 
 import android.app.Fragment;
@@ -52,7 +52,7 @@ public class EditPrivateMessageFragment extends Fragment {
 		
 		
 		
-		Intent itnt = new Intent(getActivity(), SendPrivateMessage.class);
+		Intent itnt = new Intent(getActivity(), SendPrivateMessageActivity.class);
 		itnt.putExtra("privateMessageDetail", privateMessgeDetail);
 		editPrivateMessage.setText("");
 	}

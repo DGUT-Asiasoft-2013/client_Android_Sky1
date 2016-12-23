@@ -3,9 +3,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-
+<!-- 显示订阅过的卖家 -->
     <ListView
-        android:id="@+id/list_subscribe"
+        android:id="@+id/list_subscribe_user"
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
     </ListView>

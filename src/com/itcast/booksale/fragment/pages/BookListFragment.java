@@ -9,8 +9,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.itcast.booksale.BooksContentActivity;
 import com.itcast.booksale.entity.Book;
 import com.itcast.booksale.entity.Page;
+import com.itcast.booksale.entity.User;
 import com.itcast.booksale.fragment.widgets.AvatarView;
 import com.itcast.booksale.fragment.widgets.BookAvatarView;
+import com.itcast.booksale.fragment.widgets.Buy_book_bus_fragment;
+import com.itcast.booksale.fragment.widgets.MainTabbarFragment;
 import com.itcast.booksale.servelet.Servelet;
 
 import android.annotation.SuppressLint;
@@ -47,6 +50,10 @@ public class BookListFragment extends Fragment {
 	ListView bookListView;
 	EditText keyword;//搜索关键字
 	int page = 0;
+	String keywords;
+	
+	Buy_book_bus_fragment bookbus=new Buy_book_bus_fragment();          //购物车页面
+	User saler;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -69,10 +76,7 @@ public class BookListFragment extends Fragment {
 
 			//搜索功能(在OnResume中实现)
 			//设置原始列表
-			Request request = Servelet.requestuildApi("books")
-					.get()
-					.build();
-			reload(request);//获取书籍数据
+			getBooksListByAll();//获取书籍数据
 		}
 		return booksView;
 	}
@@ -106,13 +110,13 @@ public class BookListFragment extends Fragment {
 			TextView bookSummary = (TextView)view.findViewById(R.id.text_about_book);//作者
 			TextView bookPrice = (TextView)view.findViewById(R.id.book_price);//售价
 			Button xiangtao_btn=(Button) view.findViewById(R.id.book_purchase);
-			//AvatarView bookAvatar = (AvatarView)view.findViewById(R.id.book_avatar);//封面
 			xiangtao_btn.setOnClickListener(new OnClickListener() {
 
 				@Override
 				public void onClick(View v) {
-					//					Intent intent=new Intent(getActivity(), Buy_book_bus_fragment.class);
-					//					startActivity(intent);
+
+					FragmentTransaction ft=getFragmentManager().beginTransaction(); 
+					MainTabbarFragment.chageFragment(new BookListFragment(), bookbus, ft);         //跳转页面
 				}
 
 			});
@@ -128,11 +132,8 @@ public class BookListFragment extends Fragment {
 			bookCellTitle.setText(book.getTitle()+"--"+book.getAuthor());
 			bookSummary.setText(book.getSummary());
 			bookPrice.setText(book.getPrice()+" 元");
-			bookAvatar.load(Servelet.urlstring + book.getBookavatar());
-			//书的封面暂不设
-
-
-
+			bookAvatar.load(Servelet.urlstring + book.getBookavatar());//书的封面
+			
 
 
 			return view;
@@ -162,7 +163,7 @@ public class BookListFragment extends Fragment {
 		Book book = booksData.get(position);
 
 		Intent itnt = new Intent(getActivity(), BooksContentActivity.class);
-		itnt.putExtra("data", book);
+		itnt.putExtra("data", book);             //传书的内容给BooksContentActivity
 
 		startActivity(itnt);
 	}
@@ -182,31 +183,42 @@ public class BookListFragment extends Fragment {
 		});
 
 	}
+	
+	//生成得到所有书的连接
+	void getBooksListByAll(){
+		Request request = Servelet.requestuildApi("books")
+				.get()
+				.build();
+		reload(request);
+	}
+
+	//生成得到搜索书籍的书单
+	void getBooksListByKeyword(){
+		Request request = Servelet.requestuildApi("/book/s/"+keywords)
+				.get()
+				.build();
+		reload(request);
+	}
 
 	void searchByKeyword(){
-		String keywords = keyword.getText().toString();
+		keywords = keyword.getText().toString();
 		if(keywords.length() == 0){
 			Toast.makeText(getActivity(),
 					"请输入关键字", Toast.LENGTH_LONG);
-			Request request = Servelet.requestuildApi("books")
-					.get()
-					.build();
-			reload(request);
+			getBooksListByAll();
 		}else{
 			Editable edittext = keyword.getText();
 			InputMethodManager inputMethodManager = (InputMethodManager)getActivity()
 					.getSystemService(Context.INPUT_METHOD_SERVICE);
 			inputMethodManager.hideSoftInputFromInputMethod(keyword.getWindowToken(), 0);
-
-			Request request = Servelet.requestuildApi("/book/s/"+keywords)
-					.get()
-					.build();
-			reload(request);
+			getBooksListByKeyword();
+			
 		}
 	}
 
 
 	void reload(Request request){
+
 
 		Servelet.getOkHttpClient().newCall(request).enqueue(new Callback() {
 

@@ -25,24 +25,17 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.welcome_view);
-
-		
 	}
 
-	
-	
 	@Override
 	protected void onResume() {
 		super.onResume();
-
 		//创建客户端连接
 		OkHttpClient client=Servelet.getOkHttpClient();
 		//创建请求
 		Request request=Servelet.requestuildApi("hello")
 				.method("get", null)
 				.build();
-		
-		
 		//客户端发起请求
 		client.newCall(request)
 		.enqueue(new Callback() {
@@ -61,7 +54,7 @@ public class MainActivity extends Activity {
 						.show();
 						
 						//跳转到主界面
-						Intent intent = new Intent(MainActivity.this, HelloWorldActivity.class);
+						Intent intent = new Intent(MainActivity.this, LoginActivity.class);
 						startActivity(intent);
 						finish();
 					}
@@ -73,8 +66,5 @@ public class MainActivity extends Activity {
 				Toast.makeText(MainActivity.this, "对不起你没有连接上", Toast.LENGTH_SHORT).show();
 			}
 		});
-		
 	}
-
-	
 }
