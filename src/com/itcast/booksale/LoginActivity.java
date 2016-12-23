@@ -135,10 +135,9 @@ public class LoginActivity extends Activity {
 
 						try {
 
-							String stirng = arg1.body().string();
 							//Toast.makeText(LoginActivity.this, "进来了", Toast.LENGTH_SHORT).show();
 							ObjectMapper objectMapper=new ObjectMapper();
-							user=objectMapper.readValue(stirng, User.class);//读取值
+							user=objectMapper.readValue(string, User.class);//读取值
 							
 							
 							new AlertDialog.Builder(LoginActivity.this).setTitle("成功")

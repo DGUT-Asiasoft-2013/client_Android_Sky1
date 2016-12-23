@@ -8,11 +8,8 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.itcast.booksale.SubscribeListBookActivity;
 import com.itcast.booksale.entity.Book;
-<<<<<<< HEAD
 import com.itcast.booksale.entity.Page;
-=======
 import com.itcast.booksale.entity.Subscribe;
->>>>>>> branch 'master' of https://github.com/DGUT-Asiasoft-2013/client_Android_Sky1.git
 import com.itcast.booksale.entity.User;
 import com.itcast.booksale.fragment.widgets.AvatarView;
 import com.itcast.booksale.servelet.Servelet;
