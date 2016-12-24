@@ -1,11 +1,12 @@
 package com.itcast.booksale.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties(ignoreUnknown=true)
 
-public class PrivateMessage {
+public class PrivateMessage implements Serializable{
 	User privateMessageSender;//发送者
 	User privateMessageReceiver;//接收者
 	Date createDate;//发送时间

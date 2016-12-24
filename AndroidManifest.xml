@@ -48,6 +48,8 @@
         </activity>
         <activity android:name="com.itcast.booksale.myself.SumMoneyActivity">
         </activity>
+   <activity android:name="com.itcast.booksale.PrivateMessageListActivity">
+        </activity>
     </application>
 
 </manifest>
