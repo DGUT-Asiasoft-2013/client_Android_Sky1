@@ -103,7 +103,7 @@ public class SubscribeListBookActivity extends  Activity{
 					public void onClick(View v) {
 
 						FragmentTransaction ft=getFragmentManager().beginTransaction(); 
-						MainTabbarFragment.chageFragment(new BookListFragment(), bookbus, ft);         //跳转页面
+//						MainTabbarFragment.chageFragment(new BookListFragment(), bookbus, ft);         //跳转页面
 					}
 
 				});
