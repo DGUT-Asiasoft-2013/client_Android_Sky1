@@ -14,6 +14,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.MediaType;
@@ -33,8 +34,8 @@ public class RegisterActivity extends Activity {
 	SimpleTextInputCellFragment fragInputCellName;//鐢ㄦ埛鐨勬樀绉�
 	SimpleTextInputCellFragment fragInputCellPassword;//鐢ㄦ埛鐨勫瘑鐮�
 	SimpleTextInputCellFragment fragInputCellPasswordRepeat;//閲嶅瀵嗙爜
-	SimpleTextInputCellFragment fragInputCellEmail;//鐢ㄦ埛鐨勯偖绠卞湴鍧�
 	SimpleTextInputCellFragment fragInputCellPhone;//鐢ㄦ埛鐨勭數璇濆彿鐮�
+	SimpleTextInputCellFragment fragInputCellEmail;//鐢ㄦ埛鐨勯偖绠卞湴鍧�
 	SimpleTextInputCellFragment fragInputCellQq;//鐢ㄦ埛鐨凲Q
 	
 	
@@ -52,8 +53,8 @@ public class RegisterActivity extends Activity {
 		fragInputCellName=(SimpleTextInputCellFragment) getFragmentManager().findFragmentById(R.id.input_name);//鍔犺浇鏄电Оname
 		fragInputCellPassword=(SimpleTextInputCellFragment) getFragmentManager().findFragmentById(R.id.input_password);//鍔犺浇瀵嗙爜password
 		fragInputCellPasswordRepeat=(SimpleTextInputCellFragment) getFragmentManager().findFragmentById(R.id.input_password_repeat);//鍔犺浇閲嶅瀵嗙爜
-		fragInputCellEmail=(SimpleTextInputCellFragment) getFragmentManager().findFragmentById(R.id.input_email);//鍔犺浇閭Emai
 		fragInputCellPhone=(SimpleTextInputCellFragment) getFragmentManager().findFragmentById(R.id.input_phone);//鍔犺浇鐢佃瘽鍙风爜Phone
+		fragInputCellEmail=(SimpleTextInputCellFragment) getFragmentManager().findFragmentById(R.id.input_email);//鍔犺浇閭Emai
 		fragInputCellQq=(SimpleTextInputCellFragment) getFragmentManager().findFragmentById(R.id.input_qq);//鍔犺浇QQ
 		
 		fragImage=(PictureInputCellFragment) getFragmentManager().findFragmentById(R.id.input_avatar);//鍔犺浇澶村儚avatar
@@ -73,36 +74,36 @@ public class RegisterActivity extends Activity {
 			// TODO Auto-generated method stub
 			super.onResume();
 			
-			fragInputCellAccount.setLabelText("账号:");//璐﹀彿
+			fragInputCellAccount.setLabelText("账号*:");//璐﹀彿
 			{
-				fragInputCellAccount.setHintText("请输入账号");
+				fragInputCellAccount.setHintText("请输入账号(必填)");
 			}
 			
-			fragInputCellName.setLabelText("昵称:");//鏄电О
+			fragInputCellName.setLabelText("昵称*:");//鏄电О
 			{
-				fragInputCellName.setHintText("请输入昵称");
+				fragInputCellName.setHintText("请输入昵称(必填)");
 			}
 			
-			fragInputCellPassword.setLabelText("密码:");//瀵嗙爜
+			fragInputCellPassword.setLabelText("密码*:");//瀵嗙爜
 			{
-				fragInputCellPassword.setHintText("请输入密码");
+				fragInputCellPassword.setHintText("请输入密码(必填)");
 			}
 			
-			fragInputCellPasswordRepeat.setLabelText("重复密码:");//閲嶅瀵嗙爜
+			fragInputCellPasswordRepeat.setLabelText("重复密码*:");//閲嶅瀵嗙爜
 			{
-				fragInputCellPasswordRepeat.setHintText("请再次输入密码");
+				fragInputCellPasswordRepeat.setHintText("请再次输入密码(必填)");
+			}
+			
+			fragInputCellPhone.setLabelText("手机号码*:");//鐢佃瘽
+			{
+				fragInputCellPhone.setHintText("请输入11位手机号码(必填)");
+				fragInputCellPhone.setIsPhone(true);
 			}
 			
 			fragInputCellEmail.setLabelText("邮箱:");//閭
 			{
 				fragInputCellEmail.setHintText("请输入绑定邮箱");
 				fragInputCellEmail.setIsEmail(true);
-			}
-			
-			fragInputCellPhone.setLabelText("电话:");//鐢佃瘽
-			{
-				fragInputCellPhone.setHintText("请输入电话号码");
-				fragInputCellPhone.setIsPhone(true);
 			}
 			
 			fragInputCellQq.setLabelText("QQ:");//QQ
@@ -131,6 +132,43 @@ public class RegisterActivity extends Activity {
 		String phone=fragInputCellPhone.getText();//鑾峰彇杈撳叆鐨勭數璇�
 		String qq=fragInputCellQq.getText();//鑾峰彇杈撳叆鐨凲Q
 	
+		if(account.length()==0){
+			Toast.makeText(RegisterActivity.this,"账户不能为空", Toast.LENGTH_SHORT).show();
+			return;
+		}else if (password.length()==0) {
+			Toast.makeText(RegisterActivity.this,"密码不能为空", Toast.LENGTH_SHORT).show();
+			return;
+		}else if (passwordRepeat.length()==0) {
+			Toast.makeText(RegisterActivity.this,"密码不能为空", Toast.LENGTH_SHORT).show();
+			return;
+		}else if (name.length()==0) {
+			Toast.makeText(RegisterActivity.this,"昵称不能为空", Toast.LENGTH_SHORT).show();
+			return;
+		}else if(phone.length()==0) {
+			Toast.makeText(RegisterActivity.this,"电话号码不能为空", Toast.LENGTH_SHORT).show();
+			return;
+		}
+		
+		if(email.length()!=0&&!SimpleTextInputCellFragment.isEmail(email)){
+			Toast.makeText(RegisterActivity.this,"邮箱地址输入错误，请重新输入", Toast.LENGTH_SHORT).show();
+			return;
+		}
+		
+		if(phone.length()!=11){
+			Toast.makeText(RegisterActivity.this,"手机号码输入错误，请输入11位手机号码", Toast.LENGTH_SHORT).show();
+			return;
+		}
+		
+		if(!SimpleTextInputCellFragment.isMobileNO(phone)){
+			Toast.makeText(RegisterActivity.this,"手机号码输入错误，请重新输入", Toast.LENGTH_SHORT).show();
+			return;
+		}
+		
+		if(qq.length()!=0&&!SimpleTextInputCellFragment.isQQ(qq)){
+			Toast.makeText(RegisterActivity.this,"QQ号码输入错误，请重新输入", Toast.LENGTH_SHORT).show();
+			return;
+		}
+		
 		MultipartBody.Builder requestBodyBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM)//鐢熸垚璇锋眰浣�
 				.addFormDataPart("num", account)
 				.addFormDataPart("name", name)
@@ -199,7 +237,7 @@ public class RegisterActivity extends Activity {
 
 	protected void onResponse(Call arg0, String ar) {//鎴愬姛
 		try {
-			new AlertDialog.Builder(this).setTitle("成功").setMessage("注册成功")
+			/*new AlertDialog.Builder(this).setTitle("成功").setMessage("注册成功")
 			.setPositiveButton("确定", new DialogInterface.OnClickListener(){
 				
 				@Override
@@ -208,7 +246,10 @@ public class RegisterActivity extends Activity {
 					startActivity(intent);
 				}
 			})
-			.show();
+			.show();*/
+			Toast.makeText(RegisterActivity.this, "注册成功", Toast.LENGTH_SHORT).show();
+			Intent intent=new Intent(RegisterActivity.this,LoginActivity.class);
+			startActivity(intent);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

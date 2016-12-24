@@ -54,17 +54,17 @@
                 class="com.itcast.booksale.inputcells.SimpleTextInputCellFragment"
                 tools:layout="@layout/fragment_inputcell_simpletext" />
 
-            <!-- 用户邮箱 -->
+             <!-- 用户电话号码 -->
             <fragment
-                android:id="@+id/input_email"
+                android:id="@+id/input_phone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 class="com.itcast.booksale.inputcells.SimpleTextInputCellFragment"
                 tools:layout="@layout/fragment_inputcell_simpletext" />
-
-            <!-- 用户电话号码 -->
+            
+            <!-- 用户邮箱 -->
             <fragment
-                android:id="@+id/input_phone"
+                android:id="@+id/input_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 class="com.itcast.booksale.inputcells.SimpleTextInputCellFragment"
