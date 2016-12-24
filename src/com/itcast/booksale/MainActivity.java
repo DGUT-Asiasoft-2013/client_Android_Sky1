@@ -63,7 +63,6 @@ public class MainActivity extends Activity {
 			
 			@Override
 			public void onFailure(Call arg0, IOException arg1) {
-				Toast.makeText(MainActivity.this, "对不起你没有连接上", Toast.LENGTH_SHORT).show();
 			}
 		});
 	}

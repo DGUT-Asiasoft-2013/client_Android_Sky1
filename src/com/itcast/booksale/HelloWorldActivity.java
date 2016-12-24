@@ -11,6 +11,7 @@ import com.itcast.booksale.fragment.widgets.MainTabbarFragment.OnTabSelectedList
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -54,17 +55,21 @@ public class HelloWorldActivity extends Activity {
 		// TODO Auto-generated method stub
 		super.onResume();
 
-		if (tabbar.getSelectedItem() < 0) {
+		/*if (tabbar.getSelectedItem() < 0) {
 			tabbar.setSelectedItem(0);
-		}
+		}*/
+		tabbar.setSelectedItem(0);
 	}
 
 	protected void changeFragment(int index) {
+		FragmentTransaction fTransaction=getFragmentManager().beginTransaction();
 		Fragment newFrag = null;
 
+		String tag=null;
 		switch (index) {
 		case 0:
 			newFrag = Home;// ��ҳ
+//			tag="home";
 			break;
 
 		case 1:
@@ -84,13 +89,45 @@ public class HelloWorldActivity extends Activity {
 		}
 
 		if(newFrag==null)  return;
-		
-		getFragmentManager().beginTransaction().replace(R.id.content, newFrag).commit();//���沼��
+//		newFrag=chageFragment(newFrag, chooseFragment, fTransaction);
+		getFragmentManager().beginTransaction().replace(R.id.content, newFrag).commit();//装换fragment
 	}
 
 	protected void bringUpEditor() {
 		Intent intent=new Intent(HelloWorldActivity.this,ShareBooksActivity.class);
 		startActivity(intent);
 	}
+	
+	   /*//定义一个页面切换
+		public static Fragment chageFragment(Fragment currentFragment
+				,Fragment chooseFragment
+				,FragmentTransaction ft)
+		{
+			if (currentFragment!=chooseFragment) {
+				//如果当前页面不等于选择的页面,隐藏当前页面
+				ft.hide(currentFragment);
+				if (chooseFragment.isAdded()) {
+					//如果选择的页面已经被判断是否被添加到了Activity里面去了，则显示其
+					ft.show(chooseFragment);
+					
+				}
+				else {
+					ft.add(R.id.content, chooseFragment);
+					ft.hide(currentFragment);
+				}
+				
+				
+			}
+			ft.commitAllowingStateLoss();
+			return chooseFragment;
+		}
+		
+		//切换至选择页面
+		public void ChangetoChooseFragment() {
+			//获得FragmentTransaction对象
+			FragmentTransaction fTransaction=getFragmentManager().beginTransaction()
+			
+			
+		}*/
 
 }

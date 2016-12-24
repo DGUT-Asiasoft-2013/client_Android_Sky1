@@ -3,11 +3,9 @@ package com.itcast.booksale.entity;
 import java.io.Serializable;
 import java.util.Date;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 /**
  * 书
- * 
+ * on this 
  * @author Administrator
  *
  */

@@ -9,6 +9,7 @@ import com.itcast.booksale.servelet.Servelet;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -57,6 +58,7 @@ public class CommentActivity extends Activity {
 		@Override
 		public void onClick(View v) {
 			AddComment();
+			
 		}
 
 	}
@@ -83,6 +85,7 @@ public class CommentActivity extends Activity {
 					String ar = arg1.body().string();// String ar = arg1.body().string();为后台运行的，不能再前台运行，所以把它放在前面来
 
 					CommentActivity.this.onResponse(arg0, ar);
+					
 				} catch (final Exception e) {
 					runOnUiThread(new Runnable() {
 
@@ -119,8 +122,13 @@ public class CommentActivity extends Activity {
 							@Override
 							public void onClick(DialogInterface dialog, int which) {
 								add_comment_text.setText("");
+//								Intent intent=new Intent(CommentActivity.this, BooksContentActivity.class);
+//								startActivity(intent);
+								finish();
 							}
 						}).show();
+				
+				
 			}
 		});
 

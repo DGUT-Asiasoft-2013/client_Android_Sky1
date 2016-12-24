@@ -1,11 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="60dp"
+    android:layout_height="61dp"
     android:background="@android:color/transparent"
-    android:orientation="horizontal" >
+    android:orientation="vertical" >
 
-    <!-- 首页标签 -->
+   <View 
+       android:layout_width="match_parent"
+       android:layout_height="1px"
+       android:background="#0f6c2a"/> 
+       
+        
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@android:color/transparent"
+        android:orientation="horizontal">
+        
+         <!-- 首页标签 -->
     <LinearLayout
         android:id="@+id/tab_home"
         android:layout_width="0dp"
@@ -105,7 +117,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="我的"
-            android:textColor="@color/tab_text_normal"/>
+            android:textColor="@color/black_deep"/>
     </LinearLayout>
+    
+    </LinearLayout>
+   
 
 </LinearLayout>

@@ -73,15 +73,24 @@
                 android:hint="出售价格"
                 android:inputType="textMultiLine" />
 
-            <EditText
-                android:id="@+id/input_book_tag"
-                android:layout_width="match_parent"
+            <LinearLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.1"
-                android:background="@android:drawable/edit_text"
-                android:gravity="left"
-                android:hint="图书标签"
-                android:inputType="textMultiLine" />
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="5dp"
+                    android:text="图书类型:"
+                    android:textSize="15sp" />
+
+                <Spinner
+                    android:id="@+id/spinner_book_tag"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp" />
+            </LinearLayout>
 
             <EditText
                 android:id="@+id/input_book_summary"
@@ -92,9 +101,8 @@
                 android:gravity="left"
                 android:hint="图书摘要"
                 android:inputType="textMultiLine" >
-
             </EditText>
-            
+
             <EditText
                 android:id="@+id/input_book_number"
                 android:layout_width="match_parent"
@@ -104,7 +112,6 @@
                 android:gravity="left"
                 android:hint="图书数量"
                 android:inputType="textMultiLine" >
-
             </EditText>
 
             <EditText

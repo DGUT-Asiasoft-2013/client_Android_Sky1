@@ -1,5 +1,8 @@
 package com.itcast.booksale.inputcells;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import com.itcast.booksale.R;
 
 import android.os.Bundle;
@@ -10,28 +13,28 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
 
-//定义一些编辑框的格式
+//瀹氫箟涓�浜涚紪杈戞鐨勬牸寮�
 public class SimpleTextInputCellFragment extends BaseInputCellFragment{
-	TextView label;//标签
-	EditText edit;//编辑
+	TextView label;//鏍囩
+	EditText edit;//缂栬緫
 	
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {//fragment加载视图
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {//fragment鍔犺浇瑙嗗浘
 
-		View view=inflater.inflate(R.layout.fragment_inputcell_simpletext, container);//得到加载view
-		label=(TextView) view.findViewById(R.id.label);//获取TextView控件label
-		edit=(EditText) view.findViewById(R.id.edit);//获取EditView控件edit
+		View view=inflater.inflate(R.layout.fragment_inputcell_simpletext, container);//寰楀埌鍔犺浇view
+		label=(TextView) view.findViewById(R.id.label);//鑾峰彇TextView鎺т欢label
+		edit=(EditText) view.findViewById(R.id.edit);//鑾峰彇EditView鎺т欢edit
 		
 		return view;
 	}
 	
 	
 	@Override
-	public void setLabelText(String labelText) {//重写抽象类的方法 
+	public void setLabelText(String labelText) {//閲嶅啓鎶借薄绫荤殑鏂规硶 
 		label.setText(labelText);
 	}
 
-	public String getText() {  //获取编辑框edit的字符串
+	public String getText() {  //鑾峰彇缂栬緫妗唀dit鐨勫瓧绗︿覆
 		return edit.getText().toString();
 	}
 	
@@ -40,7 +43,7 @@ public class SimpleTextInputCellFragment extends BaseInputCellFragment{
 		edit.setHint(hintText);
 	}
 	
-	public void setIsPassword(boolean isPassword){//必须为设置密码
+	public void setIsPassword(boolean isPassword){//蹇呴』涓鸿缃瘑鐮�
 		if(isPassword){
 			edit.setInputType(EditorInfo.TYPE_CLASS_TEXT|EditorInfo.TYPE_TEXT_VARIATION_PASSWORD);	
 		}else{
@@ -48,7 +51,12 @@ public class SimpleTextInputCellFragment extends BaseInputCellFragment{
 		}		
 	}
 	
-	public void setIsEmail(boolean isEmail){//设置必须为邮箱地址
+	 public static final String REGEX_EMAIL = "^([a-z0-9A-Z]+[-|\\.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}$";
+	 public static boolean isEmail(String email) {
+	        return Pattern.matches(REGEX_EMAIL, email);
+	    }
+	 
+	public void setIsEmail(boolean isEmail){//璁剧疆蹇呴』涓洪偖绠卞湴鍧�
 		if(isEmail){
 			edit.setInputType(EditorInfo.TYPE_CLASS_TEXT|EditorInfo.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);	
 		}else{
@@ -56,7 +64,7 @@ public class SimpleTextInputCellFragment extends BaseInputCellFragment{
 		}		
 	}
 	
-	public void setIsNumber(boolean isNumber){//设置必须为邮箱地址
+	public void setIsNumber(boolean isNumber){//璁剧疆蹇呴』涓洪偖绠卞湴鍧�
 		if(isNumber){
 			edit.setInputType(EditorInfo.TYPE_CLASS_TEXT|EditorInfo.TYPE_CLASS_NUMBER);	
 		}else{
@@ -64,11 +72,23 @@ public class SimpleTextInputCellFragment extends BaseInputCellFragment{
 		}		
 	}
 	
-	public void setIsPhone(boolean isPhone){//设置必须为电话号码
+	public static boolean isMobileNO(String mobiles){//判断是否为真的手机号码
+		Pattern p=Pattern.compile("^((13[0-9])|(14[5|7])|(15[0-9])|(17[0-9])|(18[0-9]))\\d{8}$");
+		Matcher m=p.matcher(mobiles);
+		return m.matches();
+	}
+	
+	public void setIsPhone(boolean isPhone){//璁剧疆蹇呴』涓虹數璇濆彿鐮�
 		if(isPhone){
-			edit.setInputType(EditorInfo.TYPE_CLASS_TEXT|EditorInfo.TYPE_CLASS_PHONE);	
+			edit.setInputType(EditorInfo.TYPE_CLASS_TEXT|EditorInfo.TYPE_CLASS_PHONE);
+			edit.setFadingEdgeLength(11);
 		}else{
 			edit.setInputType(EditorInfo.TYPE_CLASS_TEXT);
 		}		
 	}
+	
+	 public static final String REGEX_QQ = "^[1-9][0-9]{3,11}";
+	 public static boolean isQQ(String QQ) {
+	        return Pattern.matches(REGEX_QQ, QQ);
+	    }
 }

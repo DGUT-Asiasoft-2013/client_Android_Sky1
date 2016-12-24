@@ -27,12 +27,14 @@
     <!-- 头像 -->
 
     <LinearLayout
+        android:id="@+id/p_change_avatar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:weightSum="5" >
 
         <TextView
+            android:id="@+id/avatar_none"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
@@ -68,6 +70,7 @@
     <View style="@style/line_black" />
     
      <LinearLayout
+         android:id="@+id/p_change_acount"
         style="@style/userbaselayout">
 
         <TextView
@@ -98,7 +101,8 @@
         android:background="@android:color/black" />
 
     <LinearLayout
-        style="@style/userbaselayout" >
+        style="@style/userbaselayout" 
+        android:id="@+id/p_change_name">
 
         <TextView
             style="@style/persontext"
@@ -128,6 +132,7 @@
         android:background="@android:color/black" />
      
     <LinearLayout
+        android:id="@+id/p_change_email"
         style="@style/userbaselayout" >
 
         <TextView
@@ -157,6 +162,7 @@
         android:background="@android:color/black" />
 
     <LinearLayout
+        android:id="@+id/p_change_phone"
         style="@style/userbaselayout" >
 
         <TextView
@@ -186,6 +192,7 @@
         android:background="@android:color/black" />
      
          <LinearLayout
+             android:id="@+id/p_change_qq"
         style="@style/userbaselayout" >
 
         <TextView
