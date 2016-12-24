@@ -122,7 +122,7 @@ public class BookAvatarView extends View{
 			float scaleY = srcHeight / dstHeight;
 			canvas.scale(1/scaleX, 1/scaleY);
 			//画矩形，起点坐标，终点坐标
-			Rect rect = new Rect(0,0,200,200);
+			Rect rect = new Rect(0,0,800,800);
 			canvas.drawRect(rect,paint);
 			
 			canvas.restore();	

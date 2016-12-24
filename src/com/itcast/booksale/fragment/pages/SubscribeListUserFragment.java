@@ -95,7 +95,7 @@ public class SubscribeListUserFragment extends Fragment {
 
 			User saler = data.get(position).getId().getSaler();
 			avatar.load(saler);
-			textUser.setText(saler.getName());
+			textUser.setText("卖家："+saler.getName());
 			return view;
 		}
 
