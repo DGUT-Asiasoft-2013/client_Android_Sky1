@@ -6,6 +6,7 @@ import com.itcast.booksale.R;
 import com.itcast.booksale.R.drawable;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.itcast.booksale.LoginActivity;
+import com.itcast.booksale.PrivateMessageListActivity;
 import com.itcast.booksale.RegisterActivity;
 import com.itcast.booksale.entity.User;
 import com.itcast.booksale.fragment.widgets.AvatarView;
@@ -35,7 +36,7 @@ import okhttp3.Response;
 
 public class MyselfFragment extends Fragment{
 View view;
-View view_setting,view_personal,view_sum_money,view_order;//锟斤拷锟斤拷,锟斤拷锟斤拷锟斤拷锟斤拷
+View view_setting,view_personal,view_sum_money,view_order,view_private_message;//锟斤拷锟斤拷,锟斤拷锟斤拷锟斤拷锟斤拷
 
 TextView user_name;//锟矫伙拷锟斤拷
 ProgressBar progressBar;//锟斤拷锟斤拷锟斤拷
@@ -60,6 +61,7 @@ TextView fragTextMyself;
 			view_personal=view.findViewById(R.id.view_personal);//锟斤拷锟斤拷锟斤拷锟较帮拷钮
 			view_sum_money=view.findViewById(R.id.view_sum_money);//锟斤拷锟绞诧拷锟侥帮拷钮
 			view_order=view.findViewById(R.id.view_order);//锟斤拷锟斤拷锟侥帮拷钮
+			view_private_message=view.findViewById(R.id.view_private_message);
 			
 			view_setting.setOnClickListener(new View.OnClickListener() {//为锟斤拷锟矫帮拷钮锟斤拷拥锟斤拷锟斤拷锟斤拷锟铰硷拷
 				
@@ -93,6 +95,15 @@ TextView fragTextMyself;
 				@Override
 				public void onClick(View v) {
 					Intent intent=new Intent(getActivity(), OrderActivity.class);
+					startActivity(intent);
+				}
+			});
+			
+			view_private_message.setOnClickListener(new View.OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					Intent intent=new Intent(getActivity(), PrivateMessageListActivity.class);
 					startActivity(intent);
 				}
 			});
