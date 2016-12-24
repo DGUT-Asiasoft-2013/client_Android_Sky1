@@ -3,7 +3,6 @@ package com.itcast.booksale;
 import java.io.IOException;
 
 import com.itcast.booksale.R;
-import com.itcast.booksale.R.layout;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -138,15 +137,19 @@ public class LoginActivity extends Activity {
 
 						User user;
 						progressDialog.dismiss();//进度条消失
-
 						try {
+
 							if(TextUtils.isEmpty(string)){//判断解析出来的是否为空字符串（如果为空，则数据库中没有此用户）
 								Toast.makeText(LoginActivity.this, "密码错误", Toast.LENGTH_SHORT).show();
 							}
 
 							ObjectMapper objectMapper=new ObjectMapper();
 							user=objectMapper.readValue(string, User.class);//读取值
-							new AlertDialog.Builder(LoginActivity.this).setTitle("成功")
+							Toast.makeText(LoginActivity.this, "登录成功", Toast.LENGTH_SHORT).show();
+							
+							Intent itnt = new Intent(LoginActivity.this, HelloWorldActivity.class);//跳转的页面
+							startActivity(itnt);
+							/*new AlertDialog.Builder(LoginActivity.this).setTitle("成功")
 							.setMessage(user.getName()+","+user.getAccount())
 							.setPositiveButton("确定", new DialogInterface.OnClickListener() {
 
@@ -155,7 +158,7 @@ public class LoginActivity extends Activity {
 									Intent itnt = new Intent(LoginActivity.this, HelloWorldActivity.class);//跳转的页面
 									startActivity(itnt);	
 								}
-							}).show();	
+							}).show();	*/
 						} catch (JsonParseException e) {
 							e.printStackTrace();
 						} catch (JsonMappingException e) {
