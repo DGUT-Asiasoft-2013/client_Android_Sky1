@@ -7,7 +7,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.itcast.booksale.BooksContentActivity;
 import com.itcast.booksale.R;
@@ -388,7 +390,14 @@ public class BookListFragment extends Fragment {
 
 						}
 					});
-				} catch (final Exception e) {
+				}catch (JsonParseException e) {
+					e.printStackTrace();
+					
+				} catch (JsonMappingException e) {
+					e.printStackTrace();
+					
+				}
+				catch (final Exception e) {
 					getActivity().runOnUiThread(new Runnable() {
 
 						@Override

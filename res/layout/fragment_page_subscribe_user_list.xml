@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" 
-    android:background="@drawable/beijing"
+    android:background="#f2f2ff"
     android:theme="@android:style/Theme.Translucent" >
     <!-- 显示订阅过的卖家 -->
 

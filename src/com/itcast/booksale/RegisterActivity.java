@@ -159,6 +159,7 @@ public class RegisterActivity extends Activity {
 			return;
 		}
 		
+		//need to start at 13 or 17 or other normal telnum
 		if(!SimpleTextInputCellFragment.isMobileNO(phone)){
 			Toast.makeText(RegisterActivity.this,"手机号码输入错误，请重新输入", Toast.LENGTH_SHORT).show();
 			return;

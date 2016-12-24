@@ -3,8 +3,6 @@ package com.itcast.booksale.entity;
 import java.io.Serializable;
 import java.util.Date;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 public class Bookbus {
 
 	public static class Bus_Key implements Serializable {
