@@ -1,6 +1,8 @@
 package com.itcast.booksale;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.example.booksale.R;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -14,8 +16,11 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
-
+import android.widget.Spinner;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.MediaType;
@@ -32,11 +37,17 @@ import okhttp3.Response;
  */
 public class ShareBooksActivity extends Activity{
 
+	
 	//图书信息(8个)
 	EditText editBookTitle,editBookAuthor
 	,editPrice,editBookPublisher,editISBN
-	,editTag,editBookSummary,editText,editBookNumber;
+	,editBookSummary,editText,editBookNumber;
     PictureInputCellFragment fragInputBookAvatar;//图书照片
+    //图书分类(标签)
+    private Spinner bookTagSpinner;
+    private List<String> bookTag_list;
+    private ArrayAdapter<String> booksTag_adapter;
+    String bookTag_text;
     
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -44,18 +55,10 @@ public class ShareBooksActivity extends Activity{
 
 		setContentView(R.layout.activity_share_books);
 		
-		editBookTitle = (EditText) findViewById(R.id.input_book_title);//图书名称
-		editBookAuthor = (EditText) findViewById(R.id.input_book_author);//图书作者
-		editPrice = (EditText) findViewById(R.id.input_book_price);//出售价格
-		editBookPublisher = (EditText) findViewById(R.id.input_book_publisher);//出版社
-		editTag = (EditText) findViewById(R.id.input_book_tag);//图书标签
-		editISBN = (EditText) findViewById(R.id.input_book_isbn);//ISBN
-		editBookSummary = (EditText) findViewById(R.id.input_book_summary);//图书摘要
-		editText = (EditText) findViewById(R.id.input_user_text);//卖家留言
-		//添加图片
-		fragInputBookAvatar = (PictureInputCellFragment) getFragmentManager().findFragmentById(R.id.input_share_picture);		
-		editBookNumber=(EditText) findViewById(R.id.input_book_number);
-
+		//初始化定义
+		init();
+		
+	
 	    //确定出售
 		findViewById(R.id.btn_share_book).setOnClickListener(new View.OnClickListener() {
 			
@@ -67,6 +70,53 @@ public class ShareBooksActivity extends Activity{
 		});
 	}
 	
+	//初始化
+	void init(){
+		editBookTitle = (EditText) findViewById(R.id.input_book_title);//图书名称
+		editBookAuthor = (EditText) findViewById(R.id.input_book_author);//图书作者
+		editPrice = (EditText) findViewById(R.id.input_book_price);//出售价格
+		editBookPublisher = (EditText) findViewById(R.id.input_book_publisher);//出版社
+		editISBN = (EditText) findViewById(R.id.input_book_isbn);//ISBN
+		editBookSummary = (EditText) findViewById(R.id.input_book_summary);//图书摘要
+		editText = (EditText) findViewById(R.id.input_user_text);//卖家留言
+		//添加图片
+		fragInputBookAvatar = (PictureInputCellFragment) getFragmentManager().findFragmentById(R.id.input_share_picture);		
+		editBookNumber=(EditText) findViewById(R.id.input_book_number);
+		//图书分类下拉框
+		bookTagSpinner = (Spinner) findViewById(R.id.spinner_book_tag);//图书分类(标签)
+		//添加下拉框数据
+		bookTag_list = new ArrayList<String>();
+		bookTag_list.add("教科书");
+		bookTag_list.add("文学");
+		bookTag_list.add("童书");
+		bookTag_list.add("艺术");
+		bookTag_list.add("科技");
+		bookTag_list.add("生活");
+		bookTag_list.add("计算机");
+		//适配器
+		booksTag_adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,bookTag_list);
+		//设置样式
+		booksTag_adapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
+	    //加载适配器
+		bookTagSpinner.setAdapter(booksTag_adapter);
+		
+		bookTagSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+			@Override
+			public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+				ArrayAdapter<String> adapter = (ArrayAdapter<String>) parent.getAdapter();
+				//选中下拉框后设置类型
+				bookTag_text= adapter.getItem(position);
+				
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> parent) {
+				
+			}
+		});
+	}
+	
 	void sendContent(){
 		
 		//获取图书信息
@@ -74,7 +124,7 @@ public class ShareBooksActivity extends Activity{
 		String bookAuthor = editBookAuthor.getText().toString();
 		String bookPrice = editPrice.getText().toString();
 		String bookPublisher = editBookPublisher.getText().toString();
-		String bookTag = editTag.getText().toString();
+		String bookTag = bookTag_text;//改成下拉选择框
 		String bookSummary = editBookSummary.getText().toString();
 		String text = editText.getText().toString();
 		String ISBN = editISBN.getText().toString();

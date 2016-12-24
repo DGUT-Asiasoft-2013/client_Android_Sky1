@@ -40,7 +40,6 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="4dp"
-                android:background="@android:color/white"
                 android:orientation="horizontal"
                 android:padding="8dp" >
 
@@ -52,16 +51,15 @@
                     <com.itcast.booksale.fragment.widgets.AvatarView
                         android:id="@+id/user_avatar"
                         android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:background="@android:color/white" />
-
+                        android:layout_height="50dp" />
 
                     <TextView
                         android:id="@+id/user_name"
                         android:layout_width="match_parent"
                         android:layout_height="15dp"
                         android:gravity="center"
-                        android:text="昵称" />
+                        android:text="昵称"
+                        android:textSize="10sp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -141,11 +139,10 @@
                 android:layout_height="1dp"
                 android:background="@android:color/darker_gray" />
 
-           
             <ListView
                 android:id="@+id/comment_listview"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" >
+                android:layout_height="match_parent" >
             </ListView>
 
             <Button
