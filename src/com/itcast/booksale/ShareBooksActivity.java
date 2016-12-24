@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.example.booksale.R;
+import com.itcast.booksale.R;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.itcast.booksale.entity.Book;
 import com.itcast.booksale.inputcells.PictureInputCellFragment;

@@ -3,7 +3,7 @@ package com.itcast.booksale.fragment.pages;
 import java.io.IOException;
 import java.util.List;
 
-import com.example.booksale.R;
+import com.itcast.booksale.R;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.itcast.booksale.SubscribeListBookActivity;
@@ -95,7 +95,7 @@ public class SubscribeListUserFragment extends Fragment {
 
 			User saler = data.get(position).getId().getSaler();
 			avatar.load(saler);
-			textUser.setText(saler.getName());
+			textUser.setText("卖家："+saler.getName());
 			return view;
 		}
 

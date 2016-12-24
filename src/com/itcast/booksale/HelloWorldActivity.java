@@ -1,6 +1,6 @@
 package com.itcast.booksale;
 
-import com.example.booksale.R;
+import com.itcast.booksale.R;
 import com.itcast.booksale.fragment.pages.BookListFragment;
 import com.itcast.booksale.fragment.pages.MyselfFragment;
 import com.itcast.booksale.fragment.pages.SubscribeListUserFragment;

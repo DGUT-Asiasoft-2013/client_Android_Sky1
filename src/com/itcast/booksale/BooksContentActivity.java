@@ -4,7 +4,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.example.booksale.R;
+
+import com.itcast.booksale.R;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -20,7 +21,8 @@ import com.itcast.booksale.servelet.Servelet;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
-import android.graphics.Color;import android.os.Bundle;
+import android.graphics.Color;
+import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -32,6 +34,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import okhttp3.Call;
 import okhttp3.Callback;
+import okhttp3.OkHttpClient;
 import okhttp3.MultipartBody;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -60,7 +63,7 @@ public class BooksContentActivity extends Activity {
 	private TextView bookUserText; // 卖家备注
 	private TextView bookSummaryText;
 
-	private boolean issubscribe;
+	private Boolean issubscribe;
 
 	private AvatarView bookUserAvatar; // 图书卖家照片
 	private BookAvatarView bookAvatar; // 图书照片
@@ -283,12 +286,12 @@ public class BooksContentActivity extends Activity {
 
 	void goSubscribeActivity() {
 		// 订阅的方法
-		MultipartBody body = new MultipartBody.Builder().addFormDataPart("subscribe", String.valueOf(!issubscribe))
+		MultipartBody body = new MultipartBody.Builder()
+				.addFormDataPart("subscribe", String.valueOf(!issubscribe))
 				.build();
-
-		Request request = Servelet.requestuildApi("saler/" + book.getUser().getName() + "/subscribe").post(body)
+		Request request = Servelet.requestuildApi("saler/"+book.getUser().getId()+"/subscribe")
+				.post(body)
 				.build();
-
 		Servelet.getOkHttpClient().newCall(request).enqueue(new Callback() {
 
 			@Override
@@ -304,7 +307,7 @@ public class BooksContentActivity extends Activity {
 			public void onFailure(Call arg0, IOException arg1) {
 				runOnUiThread(new Runnable() {
 					public void run() {
-						reload();
+//						reload();
 					}
 				});
 			}
@@ -312,12 +315,12 @@ public class BooksContentActivity extends Activity {
 	}
 
 	void reload() {
-		reloadSubscribe();
-		checkLiked();
+		reloadSubscribe();//返回多少个人订阅该卖家
+		checkSubscribe();//检查你是否订阅过该卖家
 	}
 
 	void reloadSubscribe(){
-		Request request = Servelet.requestuildApi("saler/"+book.getUser().getName()+"/subscribe")
+		Request request = Servelet.requestuildApi("saler/"+book.getUser().getId()+"/subscribe")
 				.get().build();
 
 		Servelet.getOkHttpClient().newCall(request).enqueue(new Callback() {
@@ -331,7 +334,7 @@ public class BooksContentActivity extends Activity {
 					runOnUiThread(new Runnable() {
 						@Override
 						public void run() {
-							onReloadLikesResult(count);
+							onReloadSubscribeResult(count);
 						}
 					});
 				}catch (Exception e) {
@@ -339,7 +342,7 @@ public class BooksContentActivity extends Activity {
 					runOnUiThread(new Runnable() {
 						@Override
 						public void run() {
-							onReloadLikesResult(0);
+							onReloadSubscribeResult(0);
 						}
 					});
 				}
@@ -352,14 +355,14 @@ public class BooksContentActivity extends Activity {
 		runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
-				onReloadLikesResult(0);
+				onReloadSubscribeResult(0);
 			}
 		});
 	}
 
 	});}
 
-	void onReloadLikesResult(int count) {
+	void onReloadSubscribeResult(int count) {
 		if (count > 0) {
 			btn_subscribe.setText("订阅数(" + count + ")");
 		} else {
@@ -367,24 +370,23 @@ public class BooksContentActivity extends Activity {
 		}
 	}
 
-	void onCheckLikedResult(boolean result) {
+	void onCheckSubscribeResult(boolean result) {
 		issubscribe = result;
 		btn_subscribe.setTextColor(result ? Color.RED : Color.BLACK);
 	}
 
-	void checkLiked(){
-		Request request = Servelet.requestuildApi("saler/"+book.getUser().getName()+"/issubscribe").get().build();
+	void checkSubscribe(){
+		Request request = Servelet.requestuildApi("saler/"+book.getUser().getId()+"/issubscribe").get().build();
 		Servelet.getOkHttpClient().newCall(request).enqueue(new Callback() {
 			@Override
 			public void onResponse(Call arg0, Response arg1) throws IOException {
 				try{
 					final String responseString = arg1.body().string();
 					final Boolean result = new ObjectMapper().readValue(responseString, Boolean.class);
-
 					runOnUiThread(new Runnable() {
 						@Override
 						public void run() {
-							onCheckLikedResult(result);
+							onCheckSubscribeResult(result);
 						}
 					});
 				}catch(final Exception e){
@@ -392,7 +394,7 @@ public class BooksContentActivity extends Activity {
 					runOnUiThread(new Runnable() {
 						@Override
 						public void run() {
-							onCheckLikedResult(false);
+							onCheckSubscribeResult(false);
 						}
 					});
 				}
@@ -405,7 +407,7 @@ public class BooksContentActivity extends Activity {
 		runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
-				onCheckLikedResult(false);
+				onCheckSubscribeResult(false);
 			}
 		});
 	}
@@ -415,7 +417,7 @@ public class BooksContentActivity extends Activity {
 	void goMassageHim() {
 		Book book = (Book) getIntent().getSerializableExtra("data");
 		User user = (User) book.getUser();// 把user信息传过去
-		Log.d("user", user.getAccount());
+		//Log.d("user", user.getAccount());
 		Intent itnt = new Intent(this, SendPrivateMessageActivity.class); // !!!--------跳转到私信的活动页面
 
 		itnt.putExtra("sendToReceiver", user);

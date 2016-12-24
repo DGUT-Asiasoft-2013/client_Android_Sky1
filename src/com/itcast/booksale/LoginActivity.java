@@ -2,8 +2,8 @@ package com.itcast.booksale;
 
 import java.io.IOException;
 
-import com.example.booksale.R;
-import com.example.booksale.R.layout;
+import com.itcast.booksale.R;
+import com.itcast.booksale.R.layout;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -11,12 +11,14 @@ import com.itcast.booksale.entity.User;
 import com.itcast.booksale.inputcells.SimpleTextInputCellFragment;
 import com.itcast.booksale.servelet.Servelet;
 
+import android.R.string;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -96,9 +98,12 @@ public class LoginActivity extends Activity {
 	protected void goLogin() {//定义登录方法
 		String current_user=fragAccount.getText();//获取当前用户的账号
 		String current_password=fragPassword.getText();//获取当前用户的密码
-
-		if(current_password.length()==0 || current_user.length()==0){
-			Toast.makeText(LoginActivity.this, "请输入账户或密码", Toast.LENGTH_SHORT).show();
+		
+		if(current_password.length()==0){
+			Toast.makeText(LoginActivity.this, "请输入密码", Toast.LENGTH_SHORT).show();
+			return;    
+		}else if (current_user.length()==0) {
+			Toast.makeText(LoginActivity.this, "请输入账户", Toast.LENGTH_SHORT).show();
 			return;
 		}
 		//生成请求体
@@ -133,10 +138,11 @@ public class LoginActivity extends Activity {
 
 						User user;
 						progressDialog.dismiss();//进度条消失
-
 						try {
 
-							//Toast.makeText(LoginActivity.this, "进来了", Toast.LENGTH_SHORT).show();
+							if(TextUtils.isEmpty(string)){//判断解析出来的是否为空字符串（如果为空，则数据库中没有此用户）
+								Toast.makeText(LoginActivity.this, "密码错误", Toast.LENGTH_SHORT).show();
+							}
 
 							ObjectMapper objectMapper=new ObjectMapper();
 							user=objectMapper.readValue(string, User.class);//读取值

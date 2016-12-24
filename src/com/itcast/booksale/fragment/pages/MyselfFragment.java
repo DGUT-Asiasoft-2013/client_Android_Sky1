@@ -2,7 +2,8 @@ package com.itcast.booksale.fragment.pages;
 
 import java.io.IOException;
 
-import com.example.booksale.R;
+import com.itcast.booksale.R;
+import com.itcast.booksale.R.drawable;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.itcast.booksale.LoginActivity;
 import com.itcast.booksale.RegisterActivity;
@@ -20,6 +21,7 @@ import android.app.Fragment;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,11 +35,11 @@ import okhttp3.Response;
 
 public class MyselfFragment extends Fragment{
 View view;
-View view_setting,view_personal,view_sum_money,view_order;//����,��������
+View view_setting,view_personal,view_sum_money,view_order;//锟斤拷锟斤拷,锟斤拷锟斤拷锟斤拷锟斤拷
 
-TextView user_name;//�û���
-ProgressBar progressBar;//������
-AvatarView avatar;//�û�ͷ��
+TextView user_name;//锟矫伙拷锟斤拷
+ProgressBar progressBar;//锟斤拷锟斤拷锟斤拷
+AvatarView avatar;//锟矫伙拷头锟斤拷
 
 TextView fragTextMyself;
 
@@ -46,20 +48,20 @@ TextView fragTextMyself;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		if(view==null){
-			view=inflater.inflate(R.layout.fragment_myself, null);//���ز���
+			view=inflater.inflate(R.layout.fragment_myself, null);//锟斤拷锟截诧拷锟斤拷
 
-     		user_name=(TextView) view.findViewById(R.id.current_user);//�û���
-			progressBar=(ProgressBar) view.findViewById(R.id.progress);//������
-			avatar=(AvatarView) view.findViewById(R.id.avatar);//ͷ��
+     		user_name=(TextView) view.findViewById(R.id.current_user);//锟矫伙拷锟斤拷
+			progressBar=(ProgressBar) view.findViewById(R.id.progress);//锟斤拷锟斤拷锟斤拷
+			avatar=(AvatarView) view.findViewById(R.id.avatar);//头锟斤拷
 			
 			fragTextMyself=(TextView) view.findViewById(R.id.tab_tv_myself);
 	
-			view_setting=view.findViewById(R.id.view_setting);//���õİ�ť
-			view_personal=view.findViewById(R.id.view_personal);//�������ϰ�ť
-			view_sum_money=view.findViewById(R.id.view_sum_money);//���ʲ��İ�ť
-			view_order=view.findViewById(R.id.view_order);//�����İ�ť
+			view_setting=view.findViewById(R.id.view_setting);//锟斤拷锟矫的帮拷钮
+			view_personal=view.findViewById(R.id.view_personal);//锟斤拷锟斤拷锟斤拷锟较帮拷钮
+			view_sum_money=view.findViewById(R.id.view_sum_money);//锟斤拷锟绞诧拷锟侥帮拷钮
+			view_order=view.findViewById(R.id.view_order);//锟斤拷锟斤拷锟侥帮拷钮
 			
-			view_setting.setOnClickListener(new View.OnClickListener() {//Ϊ���ð�ť���ӵ�������¼�
+			view_setting.setOnClickListener(new View.OnClickListener() {//为锟斤拷锟矫帮拷钮锟斤拷拥锟斤拷锟斤拷锟斤拷锟铰硷拷
 				
 				@Override
 				public void onClick(View v) {
@@ -68,7 +70,7 @@ TextView fragTextMyself;
 				}
 			});
 			
-			view_personal.setOnClickListener(new View.OnClickListener() {//Ϊ�����������õ�������¼�
+			view_personal.setOnClickListener(new View.OnClickListener() {//为锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷锟矫碉拷锟斤拷锟斤拷锟斤拷录锟�
 				
 				@Override
 				public void onClick(View v) {
@@ -77,7 +79,7 @@ TextView fragTextMyself;
 				}
 			});
 			
-			view_sum_money.setOnClickListener(new View.OnClickListener() {//Ϊ���ʲ���ť���õ�������¼�
+			view_sum_money.setOnClickListener(new View.OnClickListener() {//为锟斤拷锟绞诧拷锟斤拷钮锟斤拷锟矫碉拷锟斤拷锟斤拷锟斤拷录锟�
 				
 				@Override
 				public void onClick(View v) {
@@ -159,6 +161,9 @@ TextView fragTextMyself;
 
 	protected void onReponse(Call arg0, User user) {
 		progressBar.setVisibility(View.GONE);
+		if(TextUtils.isEmpty(user.getAvatar())){
+			avatar.setBackgroundResource(R.drawable.avatar_not_login);
+		}
 		avatar.load(user);
 		user_name.setVisibility(View.VISIBLE);
 		user_name.setTextColor(Color.BLACK);
@@ -170,6 +175,7 @@ TextView fragTextMyself;
 		progressBar.setVisibility(View.GONE);
 		user_name.setVisibility(View.VISIBLE);
 		user_name.setTextColor(Color.RED);
-		user_name.setText(e.getMessage());
+		//user_name.setText(e.getMessage());
+		avatar.setBackgroundResource(R.drawable.avatar_not_login);//设置未登录的图片
 	}
 }

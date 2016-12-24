@@ -20,7 +20,7 @@ import android.widget.TextView;
 
 import java.io.ByteArrayOutputStream;
 
-import com.example.booksale.R;;
+import com.itcast.booksale.R;;
 
 /**
  * 照片选择
@@ -82,7 +82,7 @@ public class PictureInputCellFragment extends Fragment {
 					break;
 				}	
 			}
-		}).setNegativeButton("确定", null)//璁剧疆涓�涓彇娑堟寜閽�
+		}).setNegativeButton("取消", null)//璁剧疆涓�涓彇娑堟寜閽�
 		  .show();
 		
 		

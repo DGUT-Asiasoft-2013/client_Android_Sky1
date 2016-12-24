@@ -2,7 +2,7 @@ package com.itcast.booksale;
 
 import java.io.IOException;
 
-import com.example.booksale.R;
+import com.itcast.booksale.R;
 import com.itcast.booksale.servelet.Servelet;
 
 import android.app.Activity;
@@ -63,7 +63,6 @@ public class MainActivity extends Activity {
 			
 			@Override
 			public void onFailure(Call arg0, IOException arg1) {
-				Toast.makeText(MainActivity.this, "对不起你没有连接上", Toast.LENGTH_SHORT).show();
 			}
 		});
 	}
