@@ -41,7 +41,7 @@
 
         <!-- 这是图书的图片 -->
 
-        <ImageView
+        <com.itcast.booksale.fragment.widgets.BookAvatarView
             android:id="@+id/book_image"
             android:layout_width="85dp"
             android:layout_height="85dp"
