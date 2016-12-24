@@ -15,9 +15,7 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="16dp"
-            />
-   
+            android:layout_marginTop="16dp"/>
     
         <!-- 用户名 -->
     <TextView

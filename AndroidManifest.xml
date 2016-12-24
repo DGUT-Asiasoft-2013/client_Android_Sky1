@@ -10,7 +10,6 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
 
-
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
@@ -25,30 +24,39 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        
-        <activity android:name="com.itcast.booksale.BooksContentActivity" ></activity>
-        <activity android:name="com.itcast.booksale.CommentActivity" >  </activity>
-        <activity android:name="com.itcast.booksale.LoginActivity"></activity>
-        <activity android:name="com.itcast.booksale.HelloWorldActivity"></activity>
-        <activity android:name="com.itcast.booksale.PasswordRecoverActivity"></activity>
+        <activity android:name="com.itcast.booksale.BooksContentActivity" >
+        </activity>
+        <activity android:name="com.itcast.booksale.CommentActivity" >
+        </activity>
+        <activity android:name="com.itcast.booksale.LoginActivity" >
+        </activity>
+        <activity android:name="com.itcast.booksale.HelloWorldActivity" >
+        </activity>
+        <activity android:name="com.itcast.booksale.PasswordRecoverActivity" >
+        </activity>
         <activity android:name="com.itcast.booksale.RegisterActivity" >
         </activity>
         <activity android:name="com.itcast.booksale.ShareBooksActivity" >
         </activity>
         <activity android:name="com.itcast.booksale.SendPrivateMessageActivity" >
         </activity>
-        
-        
-        <activity android:name="com.itcast.booksale.myself.SettingActivity">       
+        <activity android:name="com.itcast.booksale.myself.SettingActivity" >
         </activity>
-        <activity android:name="com.itcast.booksale.myself.PersonalActivity">
+        <activity android:name="com.itcast.booksale.myself.PersonalActivity" >
         </activity>
-        <activity android:name="com.itcast.booksale.myself.OrderActivity">
+        <activity android:name="com.itcast.booksale.myself.OrderActivity" >
         </activity>
-        <activity android:name="com.itcast.booksale.myself.SumMoneyActivity">
+        <activity android:name="com.itcast.booksale.myself.SumMoneyActivity" >
         </activity>
-        <activity android:name="com.itcast.booksale.SubscribeListBookActivity">
+        <activity android:name="com.itcast.booksale.SubscribeListBookActivity" >
+        </activity>
+        <activity android:name="com.itcast.booksale.myself.ChangeNameActivity" >
+        </activity>
+        <activity android:name="com.itcast.booksale.myself.ChangeEmailActivity" >
+        </activity>
+        <activity android:name="com.itcast.booksale.myself.ChangePhoneActivity" >
+        </activity>
+        <activity android:name="com.itcast.booksale.myself.ChangeQqActivity" >
         </activity>
     </application>
 

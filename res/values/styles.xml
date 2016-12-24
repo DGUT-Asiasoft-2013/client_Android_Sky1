@@ -71,4 +71,9 @@
         <item name="android:background">@color/black_deep</item>
     </style>
 
+    <style name="tab_textcolor" parent="@android:style/Widget.Button">
+        <item name="android:textSize">18.0sp</item>
+        <item name="android:textColor">@drawable/tab_text_color</item>
+    </style>
+
 </resources>
