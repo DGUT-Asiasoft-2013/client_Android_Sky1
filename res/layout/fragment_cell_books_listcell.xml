@@ -30,7 +30,7 @@
         <TextView
             android:id="@+id/cell_title"
             android:layout_width="match_parent"
-            android:layout_height="30dp"
+            android:layout_height="20dp"
             android:layout_gravity="center"
             android:layout_marginLeft="10dp"
             android:text="书籍名称--作者"
