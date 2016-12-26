@@ -154,6 +154,7 @@
             android:layout_height="wrap_content"
             android:text="评论"
             android:textSize="15sp"
+            android:background="@android:color/holo_green_light"
             android:layout_alignParentBottom="true" />
 
 </RelativeLayout>

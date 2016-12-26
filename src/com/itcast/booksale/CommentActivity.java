@@ -116,7 +116,7 @@ public class CommentActivity extends Activity {
 
 			@Override
 			public void run() {
-				new AlertDialog.Builder(CommentActivity.this).setTitle("提交成功").setMessage(arg1.toString())
+				new AlertDialog.Builder(CommentActivity.this).setTitle("提交成功").setMessage("评论成功!")
 						.setPositiveButton("确定", new DialogInterface.OnClickListener() {
 
 							@Override
