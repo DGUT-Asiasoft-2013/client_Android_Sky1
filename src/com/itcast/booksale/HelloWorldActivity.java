@@ -53,10 +53,10 @@ public class HelloWorldActivity extends Activity {
 	protected void onResume() {// ��ʼ��
 		// TODO Auto-generated method stub
 		super.onResume();
-
-		if (tabbar.getSelectedItem() < 0) {
-			tabbar.setSelectedItem(0);
-		}
+		tabbar.setSelectedItem(0);
+//		if (tabbar.getSelectedItem() < 0) {
+//			tabbar.setSelectedItem(0);
+//		}
 	}
 
 	protected void changeFragment(int index) {
