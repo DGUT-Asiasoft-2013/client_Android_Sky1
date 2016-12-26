@@ -220,20 +220,31 @@ public class BookListFragment extends Fragment {
 
 			@Override
 			public void onResponse(Call arg0, Response arg1) throws IOException {
-				final String string = arg1.body().string();
-				getActivity().runOnUiThread(new Runnable() {
-					public void run() {
-						getActivity().runOnUiThread(new Runnable() {
+				try {
+					
+					final String string = arg1.body().string();
+					getActivity().runOnUiThread(new Runnable() {
+						public void run() {
+							
+							new AlertDialog
+							.Builder(getActivity())
+							.setTitle("success to add bookbus")
+							.setMessage(string)
+							.setPositiveButton("ok", null)
+							.show();
+							
+						}
+					});
+				} catch (Exception e) {
+					getActivity().runOnUiThread(new Runnable() {
+						
+						@Override
+						public void run() {
 
-							@Override
-							public void run() {
-								new AlertDialog.Builder(getActivity()).setTitle("success to add bookbus")
-										.setMessage(string).setPositiveButton("ok", null).show();
-
-							}
-						});
-					}
-				});
+							Toast.makeText(getActivity(), "上传购物车失败", Toast.LENGTH_SHORT).show();
+						}
+					});
+				}
 			}
 
 			@Override
@@ -244,7 +255,7 @@ public class BookListFragment extends Fragment {
 
 							@Override
 							public void run() {
-								new AlertDialog.Builder(getActivity()).setTitle("success to add bookbus")
+								new AlertDialog.Builder(getActivity()).setTitle("failed to add bookbus")
 										.setMessage(arg1.toString())
 										.setPositiveButton("ok", null)
 										.show();
@@ -398,13 +409,16 @@ public class BookListFragment extends Fragment {
 					
 				}
 				catch (final Exception e) {
-					getActivity().runOnUiThread(new Runnable() {
+					/*getActivity().runOnUiThread(new Runnable() {
 
 						@Override
 						public void run() {
-							new AlertDialog.Builder(getActivity()).setMessage(e.getMessage()).show();
+							new AlertDialog.Builder(getActivity())
+							.setTitle("reload错误")
+							.setMessage(e.getMessage()).show();
 						}
-					});
+					});*/
+					Toast.makeText(getActivity(), "reload错误", Toast.LENGTH_SHORT).show();
 				}
 			}
 
@@ -412,7 +426,9 @@ public class BookListFragment extends Fragment {
 			public void onFailure(Call arg0, final IOException e) {
 				getActivity().runOnUiThread(new Runnable() {
 					public void run() {
-						new AlertDialog.Builder(getActivity()).setMessage(e.getMessage()).show();
+						new AlertDialog.Builder(getActivity())
+						.setTitle("reload onFailure")
+						.setMessage(e.getMessage()).show();
 					}
 				});
 

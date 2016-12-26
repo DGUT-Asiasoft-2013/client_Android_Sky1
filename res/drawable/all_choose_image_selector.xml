@@ -2,7 +2,7 @@
 <!-- 购物车底部全选按钮的背景选择 -->
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <item android:drawable="@drawable/choose_all" android:state_checked="true"></item>
     <item android:drawable="@drawable/normal_choose_all"></item>
-    <item android:drawable="@drawable/choose_all" android:state_selected="true"></item>
 
 </selector>
