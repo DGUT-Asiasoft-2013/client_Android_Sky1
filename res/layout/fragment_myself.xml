@@ -118,5 +118,19 @@
        
    </LinearLayout>
    
+    <LinearLayout 
+	    style="@style/userbaselayout"
+	    android:id="@+id/view_private_message">
+	    
+	    <TextView 
+	        style="@style/usertext"
+	        android:text="私信"/>
+	    
+	    <ImageView 
+	        style="@style/usertext_img"/>
+	</LinearLayout>	
+	<View style="@style/user_line"/>
+	
+	
 	
 </LinearLayout>

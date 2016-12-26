@@ -72,7 +72,8 @@ public class BookListFragment extends Fragment {
 
 
 
-//	Buy_book_bus_fragment bookbus = new Buy_book_bus_fragment(); // 购物车页面
+
+	//	Buy_book_bus_fragment bookbus = new Buy_book_bus_fragment(); // 购物车页面
 	User saler;
 
 	@Override
@@ -106,8 +107,11 @@ public class BookListFragment extends Fragment {
 					case 1:
 						loadmoreBooksListByKeyword();
 						break;
-					default:
+					case 2:
 						loadmoreBooksListByTag(bookTag_text);
+						break;
+					default:
+						loadmoreBookListByKeywordAndType();
 						break;
 					}
 
@@ -288,12 +292,12 @@ public class BookListFragment extends Fragment {
 			@Override
 			public void onClick(View v) {
 				searchByKeyword();
-				
+
 			}
 		});
 
 		//分类按钮
-		
+
 		bookTagSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
 
 			@Override
@@ -301,19 +305,25 @@ public class BookListFragment extends Fragment {
 				ArrayAdapter<String> adapter = (ArrayAdapter<String>) parent.getAdapter();
 				//选中下拉框后设置类型
 				bookTag_text= adapter.getItem(position);
-				if(bookTag_text.equals("全部")){
+				keywords = keyword.getText().toString();
+				textLoadMore.setText("加载更多");
+				if(bookTag_text.equals("全部") && keywords.length()==0){
 					getBooksListByAll();
-				}else{
+				}else if(keywords.length()==0){
 					getBooksListByTag(bookTag_text);
+				}else if(bookTag_text.equals("全部") && keywords.length()!=0){
+					getBooksListByKeyword();
+				}else {
+					getBookListByKeywordAndType(keywords,bookTag_text);
 				}
-				
-				 try {
-				        Field field =       AdapterView.class.getDeclaredField("mOldSelectedPosition");
-				                field.setAccessible(true);  //设置mOldSelectedPosition可访问
-				                field.setInt(bookTagSpinner, AdapterView.INVALID_POSITION); //设置mOldSelectedPosition的值
-				    } catch (Exception e) {
-				                e.printStackTrace();
-				    }
+
+				try {
+					Field field =       AdapterView.class.getDeclaredField("mOldSelectedPosition");
+					field.setAccessible(true);  //设置mOldSelectedPosition可访问
+					field.setInt(bookTagSpinner, AdapterView.INVALID_POSITION); //设置mOldSelectedPosition的值
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			}
 
 			@Override
@@ -321,7 +331,7 @@ public class BookListFragment extends Fragment {
 
 			}
 		});
-		
+
 	}
 
 
@@ -338,12 +348,18 @@ public class BookListFragment extends Fragment {
 
 	//生成得到搜索书籍的书单
 	void getBooksListByKeyword(){
-		loadmoreSelect = 1;//1为搜索的加载更多	
-		Request request = Servelet.requestuildApi("/book/s/"+keywords)
-				.get()
-				.build();
+		loadmoreSelect = 1;//1为搜索的加载更多
+		//判断类型有无选择		
+		if(bookTag_text.equals("全部")){
+			Request request = Servelet.requestuildApi("/book/s/"+keywords)
+					.get()
+					.build();
 
-		reload(request);
+			reload(request);
+		}else{
+			getBookListByKeywordAndType(keywords,bookTag_text);
+		}
+
 	}
 
 
@@ -351,15 +367,27 @@ public class BookListFragment extends Fragment {
 	void getBooksListByTag(String tag){
 		loadmoreSelect = 2;//2为分类的加载更多
 		bookTag_text = tag;
+
 		Request request = Servelet.requestuildApi("/books/"+tag+"/class")
 				.get()
 				.build();
 		reload(request);
 	}
 
+	//生成得到搜索书籍并带有分类的书单
+	void getBookListByKeywordAndType(String key,String tag){
+		loadmoreSelect = 3;//3为搜索加分类的加载更多
+		keywords = key;
+		bookTag_text = tag;
+		Request request = Servelet.requestuildApi("/books/"+keywords+"/and/"+bookTag_text+"/class")
+				.get()
+				.build();
+
+		reload(request);
+	}
+
 	//搜索关键字
 	void searchByKeyword(){
-
 		keywords = keyword.getText().toString();
 		if(keywords.length() == 0){
 			Toast.makeText(getActivity(),
@@ -403,10 +431,10 @@ public class BookListFragment extends Fragment {
 					});
 				}catch (JsonParseException e) {
 					e.printStackTrace();
-					
+
 				} catch (JsonMappingException e) {
 					e.printStackTrace();
-					
+
 				}
 				catch (final Exception e) {
 					/*getActivity().runOnUiThread(new Runnable() {
@@ -447,15 +475,28 @@ public class BookListFragment extends Fragment {
 
 	//搜索列表的加载更多
 	void loadmoreBooksListByKeyword(){
-		Request request = Servelet.requestuildApi("/book/s/"+keywords+"/"+(page+1))
-				.get()
-				.build();
-		loadmore(request);
+		//判断类型有无选择
+		if(bookTag_text.equals("全部")){
+			Request request = Servelet.requestuildApi("/book/s/"+keywords+"/"+(page+1))
+					.get()
+					.build();
+			loadmore(request);
+		}else{
+			loadmoreBookListByKeywordAndType();
+		}
 	}
 
 	//生成得到搜索书籍分类的加载更多
 	void loadmoreBooksListByTag(String tag){
 		Request request = Servelet.requestuildApi("/books/"+tag+"/class/"+(page+1))
+				.get()
+				.build();
+		loadmore(request);
+	}
+
+	//生成得到搜索书籍并分类的加载更多
+	void loadmoreBookListByKeywordAndType(){
+		Request request = Servelet.requestuildApi("/books/"+keywords+"/and/"+bookTag_text+"/class"+(page+1))
 				.get()
 				.build();
 		loadmore(request);
@@ -503,12 +544,13 @@ public class BookListFragment extends Fragment {
 
 						@Override
 						public void run() {
-							// TODO Auto-generated method stub
-							new AlertDialog.Builder(getActivity())
-							.setTitle("获取失败")
-							.setMessage(e.getLocalizedMessage())
-							.setPositiveButton("ok",null)
-							.show();
+							textLoadMore.setText("没有更多了");
+							bookListAdapter.notifyDataSetChanged();
+//							new AlertDialog.Builder(getActivity())
+//							.setTitle("获取失败")
+//							.setMessage(e.getLocalizedMessage())
+//							.setPositiveButton("ok",null)
+//							.show();
 						}
 					});
 				}
