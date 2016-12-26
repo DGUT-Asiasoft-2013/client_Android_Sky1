@@ -27,7 +27,9 @@ public class Servelet {
 	public static OkHttpClient getOkHttpClient() {
 		
 		return client;
-	}	
+
+
+	}
 	public static String urlstring="http://172.27.15.12:8080/membercenter/";
 
 	//建立请求

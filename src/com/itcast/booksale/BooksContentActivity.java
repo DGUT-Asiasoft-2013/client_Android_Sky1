@@ -276,12 +276,13 @@ public class BooksContentActivity extends Activity {
 
 	}
 
+	//go to the CommentActivity() which add the comment
 	void goCommentActivity() {
 
 		Intent itnt = new Intent(this, CommentActivity.class);
 		itnt.putExtra("data", book); // 把书的信息传给添加评论界面
 		startActivity(itnt);
-		finish();
+		
 	}
 
 	void goSubscribeActivity() {

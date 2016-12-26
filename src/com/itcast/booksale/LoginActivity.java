@@ -3,7 +3,6 @@ package com.itcast.booksale;
 import java.io.IOException;
 
 import com.itcast.booksale.R;
-import com.itcast.booksale.R.layout;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -146,16 +145,20 @@ public class LoginActivity extends Activity {
 
 							ObjectMapper objectMapper=new ObjectMapper();
 							user=objectMapper.readValue(string, User.class);//读取值
-							new AlertDialog.Builder(LoginActivity.this).setTitle("成功")
+							Toast.makeText(LoginActivity.this, "登录成功", Toast.LENGTH_SHORT).show();
+							
+							Intent itnt = new Intent(LoginActivity.this, HelloWorldActivity.class);//跳转的页面
+							startActivity(itnt);
+							/*new AlertDialog.Builder(LoginActivity.this).setTitle("成功")
 							.setMessage(user.getName()+","+user.getAccount())
 							.setPositiveButton("确定", new DialogInterface.OnClickListener() {
 
 								@Override
 								public void onClick(DialogInterface dialog, int which) {
 									Intent itnt = new Intent(LoginActivity.this, HelloWorldActivity.class);//跳转的页面
-									startActivity(itnt);	
+									startActivity(itnt);
 								}
-							}).show();	
+							}).show();	*/
 						} catch (JsonParseException e) {
 							e.printStackTrace();
 						} catch (JsonMappingException e) {

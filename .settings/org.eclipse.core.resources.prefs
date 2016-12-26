@@ -1,5 +1,6 @@
 eclipse.preferences.version=1
 encoding//src/com/itcast/booksale/CommentActivity.java=UTF-8
+encoding//src/com/itcast/booksale/HelloWorldActivity.java=UTF-8
 encoding//src/com/itcast/booksale/LoginActivity.java=UTF-8
 encoding//src/com/itcast/booksale/PasswordRecoverActivity.java=UTF-8
 encoding//src/com/itcast/booksale/RegisterActivity.java=UTF-8
@@ -12,4 +13,5 @@ encoding//src/com/itcast/booksale/fragment/widgets/MainTabbarFragment.java=UTF-8
 encoding//src/com/itcast/booksale/fragment/widgets/PasswordRecoverStep1Fragment.java=UTF-8
 encoding//src/com/itcast/booksale/fragment/widgets/PasswordRecoverStep2Fragment.java=UTF-8
 encoding//src/com/itcast/booksale/inputcells/PictureInputCellFragment.java=UTF-8
+encoding//src/com/itcast/booksale/inputcells/SimpleTextInputCellFragment.java=UTF-8
 encoding//src/com/itcast/booksale/myself/PersonalActivity.java=UTF-8

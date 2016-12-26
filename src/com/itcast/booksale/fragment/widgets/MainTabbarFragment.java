@@ -112,30 +112,6 @@ public class MainTabbarFragment extends Fragment{
 			onNewClickedListener.onNewClicked();
 	}
 	
-	//定义一个页面切换
-	public static Fragment chageFragment(Fragment currentFragment
-			,Fragment chooseFragment
-			,FragmentTransaction ft)
-	{
-		if (currentFragment!=chooseFragment) {
-			//如果当前页面不等于选择的页面,隐藏当前页面
-			ft.hide(currentFragment);
-			if (chooseFragment.isAdded()) {
-				//如果选择的页面已经被选择了，则显示其
-				ft.show(chooseFragment);
-				
-			}
-			else {
-				ft.add(R.id.tab_shoppingCar, chooseFragment);
-			}
-			
-			
-		}
-		ft.commitAllowingStateLoss();
-		return chooseFragment;
-	}
-	
-	//切换页面
 	
 
 }

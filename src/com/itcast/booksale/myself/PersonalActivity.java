@@ -124,6 +124,7 @@ protected void onChangeAvatar() {
 	String[] items={"拍照","相册"};
 	
 	new AlertDialog.Builder(this)
+	.setTitle("修改头像")
 	.setItems(items, new DialogInterface.OnClickListener() {
 		
 		@Override
