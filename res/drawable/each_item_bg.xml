@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <!-- 画一个只有描边的长方形shape -->
+    <item>
+        <shape
+            android:dither="true"
+            android:shape="rectangle" >
+            <corners android:radius="5dp" />
+
+            <stroke
+                android:width="2dp"
+                android:color="#ccc" />
+        </shape>
+    </item>
+
+    <!-- 让底部显示出灰色的描边，其余的地方都应该是白色的，所以写一个白色的shape -->
+    <item android:bottom="2dp">
+        <shape
+            android:dither="true"
+            android:shape="rectangle" >
+            <corners android:radius="5dp" />
+
+            <solid android:color="@android:color/white" />
+        </shape>
+    </item>
+
+</layer-list>
