@@ -13,6 +13,7 @@ import com.itcast.booksale.entity.Bookbus;
 import com.itcast.booksale.entity.Page;
 import com.itcast.booksale.servelet.Servelet;
 
+import android.R.integer;
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.DialogInterface;
@@ -29,8 +30,10 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Request;
@@ -47,11 +50,14 @@ public class Buy_book_bus_fragment extends Fragment {
 	View bottom_view; // 购物车底端的按钮布局
 	private ListView lv_shopping_bus; // 购物车的列表
 	private List<Bookbus> list_shopping_bus = new ArrayList<Bookbus>();
+	
+	
 
 	private CheckBox AllChoose_Btn; // 底部按钮栏的全选圆圈按钮
 	private TextView count_money_tv; // 底部按钮栏的钱的总数
-
 	private Button btn_count_all_bus; // 底部按钮栏的最右边 的结算按钮
+	private LinearLayout iLayout_buttom_money;//底部按钮的购物车和合计的布局
+	private Button delete_book_from_bookbus;//底部删除按钮
 
 	int page;
 
@@ -63,6 +69,8 @@ public class Buy_book_bus_fragment extends Fragment {
 	private int totalPrice; // 定义总价
 
 	private BookAvatarView bookAvatar; // 图书照片
+
+	private boolean isDelete; // 是否可删除模式
 
 	/**
 	 * 批量模式下用来记录当前选中状态
@@ -76,73 +84,145 @@ public class Buy_book_bus_fragment extends Fragment {
 			bottom_view = inflater.inflate(R.layout.buy_book_bus_bottom_btn, null); // 加载购物车底部按钮的布局
 			top_view = inflater.inflate(R.layout.buy_bus_top_view_normal, null); // 加载购物车顶部按钮的布局
 
-			// 获得购物车的界面的listview列表
-			lv_shopping_bus = (ListView) view.findViewById(R.id.listview_shopping_bus);
-
-			/**
-			 * 顶部的实现
-			 */
-			back_btn = (ImageView) top_view.findViewById(R.id.back); // 顶部的返回按钮
-			edit = (TextView) top_view.findViewById(R.id.subtitle); // 顶部的“编辑”
-
-			/**
-			 * 底部的实现
-			 */
-			// 底部全选的圆圈按钮
-			AllChoose_Btn = (CheckBox) bottom_view.findViewById(R.id.isAllChoose_check);
-			// 为底部全选圆圈按钮添加监听器
-			AllchooseOnClickListener cAllchooseOnClickListener = new AllchooseOnClickListener();
-			AllChoose_Btn.setOnClickListener(cAllchooseOnClickListener);
-
-			// 底部按钮栏的钱的总数
-			count_money_tv = (TextView) bottom_view.findViewById(R.id.count_money);
-			// 底部按钮栏的最右边 的"结算"按钮
-			btn_count_all_bus = (Button) bottom_view.findViewById(R.id.count_all_bus);
-			// 添加监听器
-			CountAllBusMoneyOnClickListener clickListener = new CountAllBusMoneyOnClickListener();
-			btn_count_all_bus.setOnClickListener(clickListener);
-
-			// 把顶部按钮栏加载在listview的底部，此必须在setAdapter()前
-			lv_shopping_bus.addHeaderView(top_view);
-			// 把底部按钮栏加载在listview的底部，此必须在setAdapter()前
-			lv_shopping_bus.addFooterView(bottom_view);
-
-			lv_shopping_bus.setAdapter(adapter); // 为lv_shopping_bus设置适配器
+			initView();        //initialization
+			lv_shopping_bus.setAdapter(adapter); // set Listener for lv_shopping_bus
 			lv_shopping_bus.setOnItemClickListener(adapter);
 		}
 		return view;
 	}
 	
+	public void initView() {
+		// 获得购物车的界面的listview列表
+					lv_shopping_bus = (ListView) view.findViewById(R.id.listview_shopping_bus);
+
+					/**
+					 * 顶部的实现
+					 */
+					back_btn = (ImageView) top_view.findViewById(R.id.back); // 顶部的返回按钮
+					edit = (TextView) top_view.findViewById(R.id.subtitle);// 顶部的“编辑”
+					EditOnClickListener listener = new EditOnClickListener();
+					edit.setOnClickListener(listener);
+
+					/**
+					 * 底部的实现
+					 */
+					// 底部全选的圆圈按钮
+					AllChoose_Btn = (CheckBox) bottom_view.findViewById(R.id.isAllChoose_check);
+					// 为底部全选圆圈按钮添加监听器
+					AllchooseOnClickListener cAllchooseOnClickListener = new AllchooseOnClickListener();
+					AllChoose_Btn.setOnClickListener(cAllchooseOnClickListener);
+
+					// 底部按钮栏的钱的总数
+					count_money_tv = (TextView) bottom_view.findViewById(R.id.count_money);
+					// 底部按钮栏的最右边 的"结算"按钮
+					btn_count_all_bus = (Button) bottom_view.findViewById(R.id.count_all_bus);
+					// 添加监听器
+					CountAllBusMoneyOnClickListener clickListener = new CountAllBusMoneyOnClickListener();
+					btn_count_all_bus.setOnClickListener(clickListener);
+					//底部按钮的购物车和合计的布局
+					iLayout_buttom_money=(LinearLayout) bottom_view.findViewById(R.id.layout_buttom_money);
+					//底部删除书的按键
+					delete_book_from_bookbus= (Button) bottom_view.findViewById(R.id.delete_book_from_bookbus);
+					DeletebookFromBookbusListener deletebookFromBookbusListener=new DeletebookFromBookbusListener();
+					delete_book_from_bookbus.setOnClickListener(deletebookFromBookbusListener);
+					
+					
+					
+					// top's btn lan add to listview's bottom，this must before setAdapter()
+					lv_shopping_bus.addHeaderView(top_view);
+					// bottom's btn lan add to listview's top，this must before setAdapter()
+					lv_shopping_bus.addFooterView(bottom_view);
+
+	}
 	
+	//get the seleted id
+	public List<Integer> getSeletedId() {
+		ArrayList<Integer> seletedId=new ArrayList<Integer>();
+		for (int i = 0; i < mSelectedState.size(); i++) {
+			//Circular traversal the mSelectedState,sure which is it at
+			if (mSelectedState.valueAt(i)) {
+				//if it at position--i,seletedId add this id
+				seletedId.add(mSelectedState.keyAt(i));
+				
+			}
+			
+		}
+		return seletedId;
+	}
+	/**
+	 * delete_book_from_bookbus‘s listener
+	 * @author Administrator
+	 *
+	 */
+	class DeletebookFromBookbusListener implements OnClickListener
+	{
+
+		@Override
+		public void onClick(View v) {
+			if (isDelete) {
+				//if it can delete，get this id
+				List<Integer> ids=getSeletedId();
+				onDeleted(ids);             //delete id
+			}
+			else {
+				Toast.makeText(getActivity(), "there is nothing to delete", Toast.LENGTH_SHORT).show();
+			}
+		}
+		
+	}
+
+	/**
+	 * top's“edit” 's ClickListener
+	 */
+	class EditOnClickListener implements OnClickListener {
+
+		@Override
+		public void onClick(View v) {
+			isDelete=!isDelete;           //design the model 
+			if (isDelete) {
+				// if it is delete model
+				edit.setText("完成");
+				iLayout_buttom_money.setVisibility(View.GONE);	//design layout as INVISIBLE
+				delete_book_from_bookbus.setVisibility(view.VISIBLE);        //design delete as VISIBLE
+			}
+			else {
+				edit.setText("编辑");
+				iLayout_buttom_money.setVisibility(View.VISIBLE);	//design layout as INVISIBLE
+				delete_book_from_bookbus.setVisibility(view.GONE);        //design delete as VISIBLE
+			}
+			
+		}
+
+	}
+
 	/**
 	 * delete way
 	 */
-	
+
 	public void onDeleted(List<Integer> lt) {
 		for (int i = 0; i < list_shopping_bus.size(); i++) {
-			//get the book_id
-			long id=list_shopping_bus.get(i).getId().getBook().getId();
+			// get the book_id
+			long id = list_shopping_bus.get(i).getId().getBook().getId();
 			for (int j = 0; j < lt.size(); j++) {
-				//get the deleteId
+				// get the deleteId
 				int deleteId = lt.get(j);
-				if (id==deleteId) {
+				if (id == deleteId) {
 					list_shopping_bus.remove(i);
 					i--;
 					lt.remove(j);
 					j--;
-					
+
 				}
-				
-				
+
 			}
 		}
-		
+
 		adapter.notifyDataSetChanged();
 		mSelectedState.clear();
 		totalPrice = 0;
 		count_money_tv.setText("￥" + 0.00 + "元");
 		AllChoose_Btn.setChecked(false);
-		
+
 	}
 
 	@Override
@@ -301,11 +381,6 @@ public class Buy_book_bus_fragment extends Fragment {
 			}
 		}
 	}
-	
-	
-	
-	
-	
 
 	/**
 	 * 下面为购物车的列表lv_shopping_bus的是适配器
@@ -454,8 +529,9 @@ public class Buy_book_bus_fragment extends Fragment {
 		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 			if (list_shopping_bus != null) {
 				int listSize = list_shopping_bus.size();
-				
-				//because have the addHeaderView,so each item will position+1,so should reduce 1
+
+				// because have the addHeaderView,so each item will
+				// position+1,so should reduce 1
 				position--;
 				final Bookbus bookbus = list_shopping_bus.get(position); // 获得对应的购物车信息
 				ViewHolder holder = (ViewHolder) view.getTag();
