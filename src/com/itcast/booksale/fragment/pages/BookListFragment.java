@@ -16,6 +16,7 @@ import com.itcast.booksale.R;
 import com.itcast.booksale.entity.Book;
 import com.itcast.booksale.entity.Page;
 import com.itcast.booksale.entity.User;
+import com.itcast.booksale.fragment.widgets.AvatarView;
 import com.itcast.booksale.fragment.widgets.BookAvatarView;
 import com.itcast.booksale.servelet.Servelet;
 
@@ -160,13 +161,18 @@ public class BookListFragment extends Fragment {
 			}
 
 			// 设置数据，并获取
-
+			
 			TextView textDate = (TextView) view.findViewById(R.id.edit_date);// 编写日期
-			TextView bookCellTitle = (TextView) view.findViewById(R.id.cell_title);// 书名
-			TextView bookSummary = (TextView) view.findViewById(R.id.text_about_book);// 作者
+			BookAvatarView bookAvatar = (BookAvatarView) view.findViewById(R.id.book_avatar);// 封面
+			TextView bookCellTitle = (TextView) view.findViewById(R.id.book_title);// 书名
+			TextView bookAuthor = (TextView) view.findViewById(R.id.book_author);// 作者
+			TextView bookSummary = (TextView) view.findViewById(R.id.text_about_book);//简介
 			TextView bookPrice = (TextView) view.findViewById(R.id.book_price);// 售价
 			Button xiangtao_btn = (Button) view.findViewById(R.id.book_purchase);
+			
+			
 			final Book book = booksData.get(position);
+			
 			// add ClickListener for the xiangtao_btn
 			xiangtao_btn.setOnClickListener(new OnClickListener() {
 
@@ -178,17 +184,16 @@ public class BookListFragment extends Fragment {
 				}
 
 			});
-			BookAvatarView bookAvatar = (BookAvatarView) view.findViewById(R.id.book_avatar);// 封面
-
 			String list_createDate = DateFormat.format("yyyy-MM-dd hh:mm", booksData.get(position).getCreateDate())
 					.toString();
 
 			textDate.setText(list_createDate);
-			bookCellTitle.setText(book.getTitle() + "--" + book.getAuthor());
+			bookAvatar.load(Servelet.urlstring + book.getBookavatar());//书的封面
+			bookCellTitle.setText(book.getTitle());
+			bookAuthor.setText(book.getAuthor());
 			bookSummary.setText(book.getSummary());
 			bookPrice.setText(book.getPrice()+" 元");
-			bookAvatar.load(Servelet.urlstring + book.getBookavatar());//书的封面
-
+						
 
 			return view;
 		}

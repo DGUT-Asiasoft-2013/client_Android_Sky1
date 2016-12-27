@@ -3,11 +3,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-   <!-- 显示订阅的卖家的书 -->
+
+    <!-- 显示订阅的卖家的书 -->
+
     <ListView
         android:id="@+id/list_book"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="match_parent"
+        android:paddingBottom="2dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="2dp" >
     </ListView>
 
 </LinearLayout>
