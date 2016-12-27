@@ -55,7 +55,7 @@ public class HelloWorldActivity extends Activity {
 		// TODO Auto-generated method stub
 		super.onResume();
 
-		if (tabbar.getSelectedItem() < 0) {
+		if (tabbar.getSelectedIndex() < 0) {
 			tabbar.setSelectedItem(0);
 		}
 //		tabbar.setSelectedItem(0);

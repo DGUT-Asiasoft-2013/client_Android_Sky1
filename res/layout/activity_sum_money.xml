@@ -2,12 +2,60 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="center" >
-    
-    <TextView 
+    android:gravity="center"
+    android:orientation="vertical" >
+
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="对不起！总资产功能尚未实现"
-        android:textColor="@color/black_deep"/>
+        android:layout_gravity="center_horizontal"
+        android:text="总资产"
+        android:textColor="@color/black_deep"
+        android:textSize="20sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@android:color/black" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_btn_normal"
+        android:orientation="vertical" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="账户余额（元）" />
+
+        <TextView
+            android:id="@+id/sum_money"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.00"
+            android:textSize="40sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <LinearLayout
+            android:id="@+id/line_btn_recharge"
+            style="@style/userbaselayout" >
+
+            <TextView
+                style="@style/usertext"
+                android:text="充值" />
+
+            <ImageView style="@style/usertext_img" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@android:color/black" />
+    </LinearLayout>
+
 </LinearLayout>
