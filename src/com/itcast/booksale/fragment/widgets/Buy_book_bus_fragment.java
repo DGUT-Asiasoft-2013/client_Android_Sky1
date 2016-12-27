@@ -83,7 +83,8 @@ public class Buy_book_bus_fragment extends Fragment {
 			top_view = inflater.inflate(R.layout.buy_bus_top_view_normal, null); // 加载购物车顶部按钮的布局
 
 			initView(); // initialization
-			lv_shopping_bus.setAdapter(adapter); // set Listener for lv_shopping_bus
+			lv_shopping_bus.setAdapter(adapter); // set Listener for
+													// lv_shopping_bus
 		}
 		return abView;
 	}
@@ -177,12 +178,21 @@ public class Buy_book_bus_fragment extends Fragment {
 			if (isDelete) {
 				// if it is delete model
 				edit.setText("完成");
-				iLayout_buttom_money.setVisibility(View.GONE); // design layout as INVISIBLE
-				delete_book_from_bookbus.setVisibility(abView.VISIBLE); // design delete as VISIBLE
+				iLayout_buttom_money.setVisibility(View.GONE); // design layout
+																// as INVISIBLE
+				delete_book_from_bookbus.setVisibility(abView.VISIBLE); // design
+																		// delete
+																		// as
+																		// VISIBLE
 			} else {
 				edit.setText("编辑");
-				iLayout_buttom_money.setVisibility(View.VISIBLE); // design layout as INVISIBLE
-				delete_book_from_bookbus.setVisibility(abView.GONE); // design delete as VISIBLE
+				iLayout_buttom_money.setVisibility(View.VISIBLE); // design
+																	// layout as
+																	// INVISIBLE
+				delete_book_from_bookbus.setVisibility(abView.GONE); // design
+																		// delete
+																		// as
+																		// VISIBLE
 			}
 
 		}
@@ -430,7 +440,7 @@ public class Buy_book_bus_fragment extends Fragment {
 																	// bookname
 			String price = String.valueOf(bookbus.getId().getBook().getPrice());
 			each_bookprice.setText(price); // design price
-//			Log.i("--------------检测----------", "-------+号运行中");
+			// Log.i("--------------检测----------", "-------+号运行中");
 
 			/**
 			 * number's “+” 's ClickListener
@@ -442,13 +452,13 @@ public class Buy_book_bus_fragment extends Fragment {
 					// 获得id
 					int id = bookbus.getId().getBook().getId();
 					boolean selected = mSelectedState.get(id, false);
-					// 设置数量
+					// set number
 					String add_number = String.valueOf(bookbus.getId().getBook().getBooknumber() + 1);
 					each_item_num.setText(add_number);
 
-					// Backstage's booknumber-1
+					// because client add 1,so Backstage's booknumber-1
 					bookbus.getId().getBook().setBooknumber(bookbus.getId().getBook().getBooknumber() - 1);
-					notifyDataSetChanged(); // 刷新
+					notifyDataSetChanged(); // notify
 					if (!selected) {
 						// 选中了
 						totalPrice += bookbus.getId().getBook().getPrice();
@@ -481,7 +491,7 @@ public class Buy_book_bus_fragment extends Fragment {
 					String reduce_number = String.valueOf(bookbus.getId().getBook().getBooknumber() - 1);
 					each_item_num.setText(reduce_number);
 
-					//because client reduce 1,so Backstage's booknumber+1
+					// because client reduce 1,so Backstage's booknumber+1
 					bookbus.getId().getBook().setBooknumber(bookbus.getId().getBook().getBooknumber() + 1);
 					notifyDataSetChanged(); // 刷新
 
@@ -523,19 +533,21 @@ public class Buy_book_bus_fragment extends Fragment {
 							// if selected is true,array--mSelectedState design
 							// as true
 							mSelectedState.put(each_item_id, true);
-							totalPrice += list_shopping_bus.get(position).getId().getBook().getBooknumber()
-									* list_shopping_bus.get(position).getId().getBook().getPrice();
+							// 获得选择的数量
+							int selectednumber=Integer.parseInt(each_item_num.getText().toString());
+							totalPrice += selectednumber * list_shopping_bus.get(position).getId().getBook().getPrice();
 						} else {
 							// delete this item
 							mSelectedState.delete(each_item_id);
+							// 获得选择的数量
+							int selectednumber=Integer.parseInt(each_item_num.getText().toString());
 							// reduce the totalPrice
-							totalPrice -= list_shopping_bus.get(position).getId().getBook().getBooknumber()
-									* list_shopping_bus.get(position).getId().getBook().getPrice();
+							totalPrice -= selectednumber * list_shopping_bus.get(position).getId().getBook().getPrice();
 						}
 
 						count_money_tv.setText("￥" + totalPrice + "");
 
-						if (mSelectedState.size() == list_shopping_bus.size()) {
+						if (mSelectedState.size() == listSize) {
 							/**
 							 * if Array's SelectedState--mSelectedState's size
 							 * ==list_shopping_bus.size(),to design buttom
