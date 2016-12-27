@@ -58,7 +58,9 @@
         </activity>
         <activity android:name="com.itcast.booksale.myself.ChangeQqActivity" >
         </activity>
-   <activity android:name="com.itcast.booksale.PrivateMessageListActivity">
+        <activity android:name="com.itcast.booksale.PrivateMessageListActivity">
+        </activity>
+        <activity android:name="com.itcast.booksale.myself.RechargeActivity">
         </activity>
     </application>
 
