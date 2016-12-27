@@ -457,12 +457,12 @@ public class Buy_book_bus_fragment extends Fragment {
 					each_item_num.setText(add_number);
 
 					// because client add 1,so Backstage's booknumber-1
-					bookbus.getId().getBook().setBooknumber(bookbus.getId().getBook().getBooknumber() - 1);
+					bookbus.getId().getBook().setBooknumber(bookbus.getId().getBook().getBooknumber()+1);
 					notifyDataSetChanged(); // notify
 					if (!selected) {
 						// 选中了
 						totalPrice += bookbus.getId().getBook().getPrice();
-						count_money_tv.setText("￥" + totalPrice + "元"); // 设置总钱数
+						count_money_tv.setText("￥" + (totalPrice+bookbus.getId().getBook().getPrice()) + "元"); // 设置总钱数
 
 					} else {
 						totalPrice = 0; // 钱的总数为0
@@ -492,13 +492,13 @@ public class Buy_book_bus_fragment extends Fragment {
 					each_item_num.setText(reduce_number);
 
 					// because client reduce 1,so Backstage's booknumber+1
-					bookbus.getId().getBook().setBooknumber(bookbus.getId().getBook().getBooknumber() + 1);
+					bookbus.getId().getBook().setBooknumber(bookbus.getId().getBook().getBooknumber()-1);
 					notifyDataSetChanged(); // 刷新
 
 					if (!selected) {
 						// 选中了
 						totalPrice -= bookbus.getId().getBook().getPrice();
-						count_money_tv.setText("￥" + totalPrice + "元"); // 设置总钱数
+						count_money_tv.setText("￥" + (totalPrice+bookbus.getId().getBook().getPrice()) + "元"); // 设置总钱数
 
 					} else {
 						totalPrice = 0; // 钱的总数为0
