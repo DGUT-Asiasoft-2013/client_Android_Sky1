@@ -37,6 +37,9 @@
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="10dp"
             android:button="@drawable/all_choose_image_selector"
+            android:clickable="false"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <!-- 这是图书的图片 -->

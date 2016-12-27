@@ -11,5 +11,6 @@
     <string name="commit">提交</string>
     <string name="allchoose">全选</string>
     <string name="count">合计:</string>
+    <string name="move">移除购物车</string>
 
 </resources>
