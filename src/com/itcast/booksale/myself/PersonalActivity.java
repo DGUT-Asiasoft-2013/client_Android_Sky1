@@ -14,6 +14,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.StaticLayout;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -30,6 +31,7 @@ import okhttp3.Response;
  *
  */
 public class PersonalActivity extends Activity{
+static Activity instance;//销毁Activity的一个静态亮
 
 private static final int REQUESTCODE_CAMERA = 0;
 private static final int REQUESTCODE_ALBUM = 0;
@@ -44,6 +46,7 @@ TextView avatar_none;//没头像
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
+		instance = this;
 		setContentView(R.layout.activity_personal);
 		
 		avatar_none=(TextView) findViewById(R.id.avatar_none);//头像的文字
