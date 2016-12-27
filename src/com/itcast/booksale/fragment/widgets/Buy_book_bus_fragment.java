@@ -446,8 +446,8 @@ public class Buy_book_bus_fragment extends Fragment {
 					String add_number = String.valueOf(bookbus.getId().getBook().getBooknumber() + 1);
 					each_item_num.setText(add_number);
 
-					// Backstage's booknumber+1
-					bookbus.getId().getBook().setBooknumber(bookbus.getId().getBook().getBooknumber() + 1);
+					// Backstage's booknumber-1
+					bookbus.getId().getBook().setBooknumber(bookbus.getId().getBook().getBooknumber() - 1);
 					notifyDataSetChanged(); // 刷新
 					if (!selected) {
 						// 选中了
@@ -481,8 +481,8 @@ public class Buy_book_bus_fragment extends Fragment {
 					String reduce_number = String.valueOf(bookbus.getId().getBook().getBooknumber() - 1);
 					each_item_num.setText(reduce_number);
 
-					// Backstage's booknumber+1
-					bookbus.getId().getBook().setBooknumber(bookbus.getId().getBook().getBooknumber() - 1);
+					//because client reduce 1,so Backstage's booknumber+1
+					bookbus.getId().getBook().setBooknumber(bookbus.getId().getBook().getBooknumber() + 1);
 					notifyDataSetChanged(); // 刷新
 
 					if (!selected) {
