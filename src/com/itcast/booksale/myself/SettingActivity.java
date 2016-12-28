@@ -26,7 +26,8 @@ import okhttp3.Response;
  *
  */
 public class SettingActivity extends Activity{
-
+	//public static Activity instance;
+	
 	View s_login,s_register,s_back,s_password_recover;
 	
 	User user;
@@ -97,6 +98,7 @@ public class SettingActivity extends Activity{
 						Toast.makeText(SettingActivity.this, "ÍË³öµÇÂ¼", Toast.LENGTH_SHORT).show();
 						Intent intent=new Intent(SettingActivity.this, HelloWorldActivity.class);
 						startActivity(intent);
+						finish();
 					}
 				});	
 			}

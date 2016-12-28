@@ -30,6 +30,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Request;
@@ -81,8 +82,9 @@ TextView fragTextMyself;
 				
 				@Override
 				public void onClick(View v) {
-					Intent intent=new Intent(getActivity(), PersonalActivity.class);
-					startActivity(intent);	
+					/*Intent intent=new Intent(getActivity(), PersonalActivity.class);
+					startActivity(intent);	*/
+					goPersonal();
 				}
 			});
 			
@@ -90,8 +92,9 @@ TextView fragTextMyself;
 				
 				@Override
 				public void onClick(View v) {
-					Intent intent=new Intent(getActivity(), SumMoneyActivity.class);
-					startActivity(intent);	
+					/*Intent intent=new Intent(getActivity(), SumMoneyActivity.class);
+					startActivity(intent);	*/
+					goMoney();
 				}
 			});
 			
@@ -108,8 +111,9 @@ TextView fragTextMyself;
 				
 				@Override
 				public void onClick(View v) {
-					Intent intent=new Intent(getActivity(), PrivateMessageListActivity.class);
-					startActivity(intent);
+					/*Intent intent=new Intent(getActivity(), PrivateMessageListActivity.class);
+					startActivity(intent);*/
+					goMessage();
 				}
 			});
 			
@@ -125,6 +129,187 @@ TextView fragTextMyself;
 		return view;
 	}
 	
+	protected void goMessage() {
+		// TODO Auto-generated method stub
+		Request request=Servelet.requestuildApi("me")
+				.method("get", null)
+				.build();
+		
+		Servelet.getOkHttpClient().newCall(request).enqueue(new Callback() {
+			
+			@Override
+			public void onResponse(final Call arg0, Response arg1) throws IOException {
+				String ar=arg1.body().string();
+				try{
+					final User user;
+					
+					ObjectMapper objectMapper=new ObjectMapper();
+					user=objectMapper.readValue(ar, User.class);
+					
+					getActivity().runOnUiThread(new Runnable() {
+						
+						@Override
+						public void run() {
+							MyselfFragment.this.onReponseMessage(arg0,user);
+						}
+					});
+				}catch(final Exception e){
+					getActivity().runOnUiThread(new Runnable() {
+						
+						@Override
+						public void run() {
+							MyselfFragment.this.OnFailureMyself(arg0,e);
+							
+						}
+					});
+				}
+				
+			}
+			
+			@Override
+			public void onFailure(final Call arg0, final IOException arg1) {
+				getActivity().runOnUiThread(new Runnable() {
+					
+					@Override
+					public void run() {
+						MyselfFragment.this.OnFailureMyself(arg0,arg1);
+						
+					}
+				});
+				
+			}
+		});
+	}
+
+	protected void onReponseMessage(Call arg0, User user) {
+		// TODO Auto-generated method stub
+		Intent intent=new Intent(getActivity(), PrivateMessageListActivity.class);
+		startActivity(intent);
+	}
+
+	protected void goMoney() {
+		// TODO Auto-generated method stub
+		Request request=Servelet.requestuildApi("me")
+				.method("get", null)
+				.build();
+		
+		Servelet.getOkHttpClient().newCall(request).enqueue(new Callback() {
+			
+			@Override
+			public void onResponse(final Call arg0, Response arg1) throws IOException {
+				String ar=arg1.body().string();
+				try{
+					final User user;
+					
+					ObjectMapper objectMapper=new ObjectMapper();
+					user=objectMapper.readValue(ar, User.class);
+					
+					getActivity().runOnUiThread(new Runnable() {
+						
+						@Override
+						public void run() {
+							MyselfFragment.this.onReponseMoney(arg0,user);
+						}
+					});
+				}catch(final Exception e){
+					getActivity().runOnUiThread(new Runnable() {
+						
+						@Override
+						public void run() {
+							MyselfFragment.this.OnFailureMyself(arg0,e);
+							
+						}
+					});
+				}
+				
+			}
+			
+			@Override
+			public void onFailure(final Call arg0, final IOException arg1) {
+				getActivity().runOnUiThread(new Runnable() {
+					
+					@Override
+					public void run() {
+						MyselfFragment.this.OnFailureMyself(arg0,arg1);
+						
+					}
+				});
+				
+			}
+		});
+	}
+
+
+	protected void goPersonal() {
+		// TODO Auto-generated method stub
+		Request request=Servelet.requestuildApi("me")
+				.method("get", null)
+				.build();
+		
+		Servelet.getOkHttpClient().newCall(request).enqueue(new Callback() {
+			
+			@Override
+			public void onResponse(final Call arg0, Response arg1) throws IOException {
+				String ar=arg1.body().string();
+				try{
+					final User user;
+					
+					ObjectMapper objectMapper=new ObjectMapper();
+					user=objectMapper.readValue(ar, User.class);
+					
+					getActivity().runOnUiThread(new Runnable() {
+						
+						@Override
+						public void run() {
+							MyselfFragment.this.onReponseMyself(arg0,user);
+						}
+					});
+				}catch(final Exception e){
+					getActivity().runOnUiThread(new Runnable() {
+						
+						@Override
+						public void run() {
+							MyselfFragment.this.OnFailureMyself(arg0,e);
+							
+						}
+					});
+				}
+				
+			}
+			
+			@Override
+			public void onFailure(final Call arg0, final IOException arg1) {
+				getActivity().runOnUiThread(new Runnable() {
+					
+					@Override
+					public void run() {
+						MyselfFragment.this.OnFailureMyself(arg0,arg1);
+						
+					}
+				});
+				
+			}
+		});
+	}
+
+	protected void onReponseMoney(Call arg0, User user) {
+		// TODO Auto-generated method stub
+		Intent intent=new Intent(getActivity(), SumMoneyActivity.class);
+		startActivity(intent);
+	}
+
+	protected void OnFailureMyself(Call arg0, Exception e) {
+		// TODO Auto-generated method stub
+		Toast.makeText(getActivity(), "对不起，你未登录", Toast.LENGTH_SHORT)
+		.show();
+	}
+
+	protected void onReponseMyself(Call arg0, User user) {
+		// TODO Auto-generated method stub
+		Intent intent=new Intent(getActivity(), PersonalActivity.class);
+		startActivity(intent);
+	}
+
 	@Override
 		public void onResume() {
 			// TODO Auto-generated method stub

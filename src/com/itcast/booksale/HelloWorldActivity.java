@@ -32,6 +32,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class HelloWorldActivity extends Activity {
+	
 	BookListFragment Home = new BookListFragment();// 锟斤拷页
 	SubscribeListUserFragment booking = new SubscribeListUserFragment();// 锟斤拷锟斤拷
 	Buy_book_bus_fragment shoppingcar = new Buy_book_bus_fragment();// 锟斤拷锟斤车
