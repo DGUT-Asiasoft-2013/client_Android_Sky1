@@ -331,6 +331,8 @@ public class Buy_book_bus_fragment extends Fragment {
 						if (mSelectedState.get(list_shopping_bus.get(i).getId().getBook().getId())) {
 							//if the one is seleted
 							final Bookbus bookbus=list_shopping_bus.get(i);
+							String string=bookbus.getId().getBook().getTitle();
+//							Log.i("--------------检测----------", string);
 							getActivity().runOnUiThread(new Runnable() {
 								
 								@Override
