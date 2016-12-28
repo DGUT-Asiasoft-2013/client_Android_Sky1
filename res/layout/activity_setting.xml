@@ -2,7 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:background="@drawable/radius_bg"
+    android:orientation="vertical"
+    android:padding="8dp" >
 
     <TextView
         android:layout_width="wrap_content"
@@ -83,25 +85,25 @@
 
         <ImageView style="@style/usertext_img" />
     </LinearLayout>
-   
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
         android:background="@android:color/black" />
-    
-	<LinearLayout 
-	    android:layout_width="match_parent"
-	    android:layout_height="match_parent"
-	    android:weightSum="1"
-	    android:orientation="horizontal"
-	    android:gravity="bottom">
-	    
-	    <Button 
-	        android:id="@+id/line_btn_back"
-	        android:layout_width="match_parent"
-	        android:layout_height="wrap_content"
-	        android:text="退出登录"
-	        android:background="@drawable/bg_btn_normal"/>
-	</LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="bottom"
+        android:orientation="horizontal"
+        android:weightSum="1" >
+
+        <Button
+            android:id="@+id/line_btn_back"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btn_selector"
+            android:text="退出登录" />
+    </LinearLayout>
 
 </LinearLayout>

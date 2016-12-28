@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!--
         Base application theme, dependent on API level. This theme is replaced
@@ -48,6 +48,7 @@
         <item name="android:gravity">center_vertical</item>   
          <item name="android:focusable">true</item>  
         <item name="android:clickable">true</item> 
+        <item name="android:background">@drawable/btn_line</item>
     </style>
     
     <!-- 文本右边箭头样式 -->
