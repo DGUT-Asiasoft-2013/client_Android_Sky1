@@ -152,29 +152,29 @@ public class BooksContentActivity extends Activity {
 	 * 下面这个方法为下载评论
 	 */
 	public void loadComment() {
-//		OkHttpClient client=Servelet.getOkHttpClient();       //获得客户端
+		//		OkHttpClient client=Servelet.getOkHttpClient();       //获得客户端
 		//获得请求//---获取书的Id
 		Request request=Servelet.requestuildApi("book/"+book.getId()+"/comment")
 				.get()
 				.build();
-		
+
 		Servelet.getOkHttpClient().newCall(request).enqueue(new Callback() {
-			
+
 			@Override
 			public void onResponse(Call arg0, Response arg1) throws IOException {
 				try {
-					
+
 					//此为后台进行的，所以不能放在主线程里面进行
-					 String responseString = arg1.body().string();
+					String responseString = arg1.body().string();
 					//获得page类的对象
 					final Page<Comment> pageComment;
-					
+
 					final ObjectMapper objectMapper=new ObjectMapper();
 					Log.d("loading feed list", responseString);
 					//把解析下来的东西传入pageComment中
 					pageComment=objectMapper.readValue(responseString, new TypeReference<Page<Comment>>() {});
-					
-					
+
+
 					BooksContentActivity.this.runOnUiThread(new Runnable() {
 
 						@Override
@@ -189,16 +189,16 @@ public class BooksContentActivity extends Activity {
 					});
 				}catch (JsonParseException e) {
 					e.printStackTrace();
-					
+
 				} catch (JsonMappingException e) {
 					e.printStackTrace();
-					
+
 				}catch (final Exception e) {
 					BooksContentActivity.this.runOnUiThread(new Runnable() {
-						
+
 						@Override
 						public void run() {
-							
+
 							new AlertDialog.Builder(BooksContentActivity.this)
 							.setTitle("失败ing")
 							.setMessage(e.toString())
@@ -207,14 +207,14 @@ public class BooksContentActivity extends Activity {
 					});
 				}
 
-	}
+			}
 
-	@Override
-	public void onFailure(Call arg0, IOException arg1) {
-		onFailure(arg0, arg1);
-	}
+			@Override
+			public void onFailure(Call arg0, IOException arg1) {
+				onFailure(arg0, arg1);
+			}
 
-	});}
+		});}
 
 	public void onFailure(Call arg0, final Exception arg1) {
 
@@ -282,7 +282,7 @@ public class BooksContentActivity extends Activity {
 		Intent itnt = new Intent(this, CommentActivity.class);
 		itnt.putExtra("data", book); // 把书的信息传给添加评论界面
 		startActivity(itnt);
-		
+
 	}
 
 	void goSubscribeActivity() {
@@ -308,7 +308,7 @@ public class BooksContentActivity extends Activity {
 			public void onFailure(Call arg0, IOException arg1) {
 				runOnUiThread(new Runnable() {
 					public void run() {
-//						reload();
+						//						reload();
 					}
 				});
 			}
@@ -348,20 +348,20 @@ public class BooksContentActivity extends Activity {
 					});
 				}
 
-	}
-
-	@Override
-	public void onFailure(Call arg0, IOException e) {
-		e.printStackTrace();
-		runOnUiThread(new Runnable() {
-			@Override
-			public void run() {
-				onReloadSubscribeResult(0);
 			}
-		});
-	}
 
-	});}
+			@Override
+			public void onFailure(Call arg0, IOException e) {
+				e.printStackTrace();
+				runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						onReloadSubscribeResult(0);
+					}
+				});
+			}
+
+		});}
 
 	void onReloadSubscribeResult(int count) {
 		if (count > 0) {
@@ -400,20 +400,20 @@ public class BooksContentActivity extends Activity {
 					});
 				}
 
-	}
-
-	@Override
-	public void onFailure(Call arg0, IOException e) {
-		e.printStackTrace();
-		runOnUiThread(new Runnable() {
-			@Override
-			public void run() {
-				onCheckSubscribeResult(false);
 			}
-		});
-	}
 
-	});}
+			@Override
+			public void onFailure(Call arg0, IOException e) {
+				e.printStackTrace();
+				runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						onCheckSubscribeResult(false);
+					}
+				});
+			}
+
+		});}
 
 	void goMassageHim() {
 		Book book = (Book) getIntent().getSerializableExtra("data");

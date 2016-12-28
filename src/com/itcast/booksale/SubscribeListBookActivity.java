@@ -103,15 +103,14 @@ public class SubscribeListBookActivity extends  Activity{
 			TextView bookSummary = (TextView) view.findViewById(R.id.text_about_book);//简介
 			TextView bookPrice = (TextView) view.findViewById(R.id.book_price);// 售价
 			//bookOther
-			TextView fans_btn = (TextView) view.findViewById(R.id.tv_fans);//关注量
-			TextView likes_btn = (TextView) view.findViewById(R.id.tv_likes);//点赞
+			final TextView fans_btn = (TextView) view.findViewById(R.id.tv_fans);//关注量
 			TextView comments_btn = (TextView) view.findViewById(R.id.tv_comments);//评论
 
 
 			final Book book = booksData.get(position);
 
 			// add ClickListener for the xiangtao_btn
-			
+
 			//bookuser
 			avatar.load(book.getUser());
 			userName.setText(book.getUser().getName());
@@ -125,8 +124,50 @@ public class SubscribeListBookActivity extends  Activity{
 			bookAuthor.setText(book.getAuthor());
 			bookSummary.setText(book.getSummary());
 			bookPrice.setText(book.getPrice()+" 元");
+			
+			//--------------------------------------------
+			Request request = Servelet.requestuildApi("saler/"+book.getUser().getId()+"/subscribe")
+					.get().build();
 
+			Servelet.getOkHttpClient().newCall(request).enqueue(new Callback() {
 
+				@Override
+				public void onResponse(Call arg0, Response arg1) throws IOException {
+					try{
+						String responseString = arg1.body().string();
+						final Integer count = new ObjectMapper().readValue(responseString, Integer.class);
+
+						runOnUiThread(new Runnable() {
+							@Override
+							public void run() {
+								fans_btn.setText("♥"+count);
+							}
+						});
+					}catch (Exception e) {
+						e.printStackTrace();
+						runOnUiThread(new Runnable() {
+							@Override
+							public void run() {
+								fans_btn.setText("关注量:");
+							}
+						});
+					}
+
+				}
+
+				@Override
+				public void onFailure(Call arg0, IOException e) {
+					e.printStackTrace();
+					runOnUiThread(new Runnable() {
+						@Override
+						public void run() {
+							
+						}
+					});
+				}
+
+			});
+			//---------------------------------
 
 
 
@@ -152,6 +193,11 @@ public class SubscribeListBookActivity extends  Activity{
 			return booksData==null ? 0 : booksData.size();
 		}
 	};
+
+	//----------------
+
+
+	//----------------
 
 	//转到书本详情页面
 	void goBookIntroduction(int position){

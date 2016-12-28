@@ -152,17 +152,7 @@
             android:textColor="#C2C0C5"
             android:textSize="10dp" />
 
-        <TextView
-            android:id="@+id/tv_likes"
-            android:layout_width="wrap_content"
-            android:layout_height="20dp"
-            android:layout_marginRight="5dp"
-            android:layout_toStartOf="@id/tv_comments"
-            android:focusable="false" 
-            android:gravity="center"
-            android:text="点赞(点赞数)"
-            android:textColor="#C2C0C5"
-            android:textSize="10dp" />
+  
     </RelativeLayout>
 
 </LinearLayout>
