@@ -1,6 +1,10 @@
 package com.itcast.booksale;
 
+import java.io.IOException;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.itcast.booksale.R;
+import com.itcast.booksale.entity.User;
 import com.itcast.booksale.fragment.pages.BookListFragment;
 import com.itcast.booksale.fragment.pages.MyselfFragment;
 import com.itcast.booksale.fragment.pages.SubscribeListUserFragment;
@@ -8,28 +12,41 @@ import com.itcast.booksale.fragment.widgets.Buy_book_bus_fragment;
 import com.itcast.booksale.fragment.widgets.MainTabbarFragment;
 import com.itcast.booksale.fragment.widgets.MainTabbarFragment.OnNewClickedListener;
 import com.itcast.booksale.fragment.widgets.MainTabbarFragment.OnTabSelectedListener;
+import com.itcast.booksale.servelet.Servelet;
 
+import android.R.integer;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.TextView;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class HelloWorldActivity extends Activity {
 	BookListFragment Home = new BookListFragment();// 锟斤拷页
 	SubscribeListUserFragment booking = new SubscribeListUserFragment();// 锟斤拷锟斤拷
 	Buy_book_bus_fragment shoppingcar = new Buy_book_bus_fragment();// 锟斤拷锟斤车
 	MyselfFragment myself = new MyselfFragment();// 锟揭碉拷
-
-	
+	TextView t;
+	String count;
 	MainTabbarFragment tabbar;// 锟斤拷锟斤拷tabbar
-
+	User user;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-
+		t = (TextView)(findViewById(R.id.frag_tabbar).findViewById(R.id.tab_subscribe_count));
+		getMe();
 		tabbar = (MainTabbarFragment) getFragmentManager().findFragmentById(R.id.frag_tabbar);
 		tabbar.setOnTabSelectedListener(new OnTabSelectedListener() {
 
@@ -48,17 +65,17 @@ public class HelloWorldActivity extends Activity {
 
 			}
 		});
+
+
 	}
 
 	@Override
 	protected void onResume() {// 锟斤拷始锟斤拷
 		// TODO Auto-generated method stub
 		super.onResume();
-
 		if (tabbar.getSelectedItem() < 0) {
 			tabbar.setSelectedItem(0);
 		}
-//		tabbar.setSelectedItem(0);
 	}
 
 	protected void changeFragment(int index) {
@@ -69,7 +86,7 @@ public class HelloWorldActivity extends Activity {
 		switch (index) {
 		case 0:
 			newFrag = Home;// 锟斤拷页
-//			tag="home";
+			//			tag="home";
 			break;
 
 		case 1:
@@ -83,13 +100,13 @@ public class HelloWorldActivity extends Activity {
 		case 3:
 			newFrag = myself;// 锟揭碉拷
 			break;
-			
+
 		default:
 			break;
 		}
 
 		if(newFrag==null)  return;
-//		newFrag=chageFragment(newFrag, chooseFragment, fTransaction);
+		//		newFrag=chageFragment(newFrag, chooseFragment, fTransaction);
 		getFragmentManager().beginTransaction().replace(R.id.content, newFrag).commit();//瑁呮崲fragment
 	}
 
@@ -97,37 +114,80 @@ public class HelloWorldActivity extends Activity {
 		Intent intent=new Intent(HelloWorldActivity.this,ShareBooksActivity.class);
 		startActivity(intent);
 	}
-	
-	   /*//瀹氫箟涓�涓〉闈㈠垏鎹�
-		public static Fragment chageFragment(Fragment currentFragment
-				,Fragment chooseFragment
-				,FragmentTransaction ft)
-		{
-			if (currentFragment!=chooseFragment) {
-				//濡傛灉褰撳墠椤甸潰涓嶇瓑浜庨�夋嫨鐨勯〉闈�,闅愯棌褰撳墠椤甸潰
-				ft.hide(currentFragment);
-				if (chooseFragment.isAdded()) {
-					//濡傛灉閫夋嫨鐨勯〉闈㈠凡缁忚鍒ゆ柇鏄惁琚坊鍔犲埌浜咥ctivity閲岄潰鍘讳簡锛屽垯鏄剧ず鍏�
-					ft.show(chooseFragment);
-					
-				}
-				else {
-					ft.add(R.id.content, chooseFragment);
-					ft.hide(currentFragment);
-				}
-				
-				
-			}
-			ft.commitAllowingStateLoss();
-			return chooseFragment;
-		}
-		
-		//鍒囨崲鑷抽�夋嫨椤甸潰
-		public void ChangetoChooseFragment() {
-			//鑾峰緱FragmentTransaction瀵硅薄
-			FragmentTransaction fTransaction=getFragmentManager().beginTransaction()
-			
-			
-		}*/
+	void getMe(){
+		Request request=Servelet.requestuildApi("me")
+				.method("get", null)
+				.build();
+		Servelet.getOkHttpClient().newCall(request).enqueue(new Callback() {
+			@Override
+			public void onResponse(final Call arg0,final Response arg1) throws IOException {
+				final String str = arg1.body().string();
+				runOnUiThread(new Runnable() {
 
+					@Override
+					public void run() {
+						try {
+							user=new ObjectMapper().readValue(str, User.class);
+							HelloWorldThread h = new HelloWorldThread(user);
+							h.start();
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+
+					}
+				});
+			}
+			@Override
+			public void onFailure(final Call arg0, final IOException arg1) {
+			}
+		});
+	}
+	public class HelloWorldThread extends Thread{
+		User user;
+		public HelloWorldThread(User user) {
+			this.user = user;
+		}
+
+		@Override
+		public void run() {
+			while(true){
+				OkHttpClient client= Servelet.getOkHttpClient();
+
+				Request request =Servelet.requestuildApi("/subscribe/"+user.getId()+"/count")
+						.method("get", null)
+						.build();
+				client.newCall(request).enqueue(new Callback() {
+
+					@Override
+					public void onResponse(Call arg0, Response arg1) throws IOException {
+						Integer i = new ObjectMapper().readValue(arg1.body().string(),Integer.class);
+						count = i.toString();
+						runOnUiThread(new Runnable() {
+							@Override
+							public void run() {
+								if(count.equals("0")){
+									t.setText("");
+								}else{
+									t.setText(count);
+								}
+								Log.d("count", count);
+							}
+						});
+					}
+					@Override
+					public void onFailure(Call arg0, IOException arg1) {
+					}
+				});
+				try {
+					Thread.sleep(5000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+
+	}
 }
+
+

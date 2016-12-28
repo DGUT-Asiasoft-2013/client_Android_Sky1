@@ -75,11 +75,11 @@ public class MainTabbarFragment extends Fragment{
 	}
 	
 	public int getSelectedItem(){//鑾峰彇鍙�夋嫨鐨勯�夐」鍗℃暟鐩�
-		return tabs.length;
+		return selectedIndex;
 	}
-	
+	int selectedIndex=-1;
 	protected void onTabClicked(View tab) {
-		int selectedIndex=-1;
+		
 		
 		for(int i=0;i<tabs.length;i++){//
 			View otherTab=tabs[i];

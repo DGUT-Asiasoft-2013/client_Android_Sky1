@@ -17,6 +17,8 @@ import com.itcast.booksale.servelet.Servelet;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Fragment;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -24,6 +26,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -41,9 +44,11 @@ public class SubscribeListUserFragment extends Fragment {
 	ListView listView;
 	View btnLoadMore;
 	TextView textLoadMore;
-
+	String text = "卖家有更新是否提醒我";
 	List<Subscribe> data;
+	Boolean b;
 	int page = 0;
+	TextView gx;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -62,6 +67,42 @@ public class SubscribeListUserFragment extends Fragment {
 				public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 					onItemClicked(position);
 				}
+
+			});
+			listView.setOnItemLongClickListener(new OnItemLongClickListener() {
+
+				@Override
+				public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
+					getActivity().runOnUiThread(new Runnable() {
+
+
+						public void run() {
+							new AlertDialog.Builder(getActivity())
+							.setTitle(text)
+							.setPositiveButton("否", new OnClickListener() {
+								@Override
+								public void onClick(DialogInterface dialog, int which) {
+									b = false;
+									gx.setText("不提醒更新");
+									User saler=data.get(position).getId().getSaler();
+									changeMode(saler);
+								}
+							})
+							.setNegativeButton("是", new OnClickListener() {
+
+								@Override
+								public void onClick(DialogInterface dialog, int which) {
+										b = true;
+										gx.setText("提醒更新");
+									User saler=data.get(position).getId().getSaler();
+									changeMode(saler);
+								}
+							})
+							.show();
+						}
+					});
+					return true;
+				}
 			});
 
 			btnLoadMore.setOnClickListener(new View.OnClickListener() {
@@ -71,9 +112,37 @@ public class SubscribeListUserFragment extends Fragment {
 					loadmore();
 				}
 			});
+
 		}
 
 		return view;
+	}
+	void changeMode(User saler){
+		OkHttpClient client= Servelet.getOkHttpClient();
+		MultipartBody body = new MultipartBody.Builder()
+				.addFormDataPart("user_id", user.getId().toString())
+				.addFormDataPart("saler_id", saler.getId().toString())
+				.addFormDataPart("b", b.toString())
+				.build();
+		Request request =Servelet.requestuildApi("/subscribe/b")
+				.post(body)
+				.build();
+
+		client.newCall(request).enqueue(new Callback() {
+
+			@Override
+			public void onFailure(Call arg0, IOException arg1) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void onResponse(Call arg0, Response arg1) throws IOException {
+				// TODO Auto-generated method stub
+
+			}
+
+		});
 	}
 
 	BaseAdapter listAdapter = new BaseAdapter() {
@@ -92,6 +161,7 @@ public class SubscribeListUserFragment extends Fragment {
 
 			TextView textUser = (TextView) view.findViewById(R.id.user);
 			AvatarView avatar = (AvatarView)view.findViewById(R.id.user_avatar);
+			gx = (TextView)view.findViewById(R.id.gx);
 
 			User saler = data.get(position).getId().getSaler();
 			avatar.load(saler);
@@ -159,7 +229,7 @@ public class SubscribeListUserFragment extends Fragment {
 
 			@Override
 			public void onFailure(final Call arg0, final IOException e) {
-				
+
 				getActivity().runOnUiThread(new Runnable() {
 					public void run() {
 						new AlertDialog.Builder(getActivity())
@@ -169,8 +239,6 @@ public class SubscribeListUserFragment extends Fragment {
 				});
 			}
 		});
-		
-		
 	}
 
 	void reload(){
@@ -238,9 +306,9 @@ public class SubscribeListUserFragment extends Fragment {
 						getActivity().runOnUiThread(new Runnable() {
 							public void run() {
 								if(data==null){
-//									data = feeds.getContent();
+									//									data = feeds.getContent();
 								}else{
-//									data.addAll(feeds.getContent());
+									//									data.addAll(feeds.getContent());
 								}
 								page = feeds.getNumber();
 
