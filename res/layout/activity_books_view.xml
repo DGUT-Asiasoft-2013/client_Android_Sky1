@@ -20,13 +20,14 @@
 
         <com.itcast.booksale.fragment.widgets.BookAvatarView
             android:id="@+id/book_avatar"
-            android:layout_width="160dp"
+            android:layout_width="130dp"
             android:layout_height="160dp"
             android:layout_gravity="center" />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
+            android:layout_marginTop="2dp"
             android:background="@android:color/darker_gray" />
 
         <LinearLayout
@@ -36,7 +37,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginTop="4dp"
-            android:background="@android:color/white"
+            android:background="@drawable/radius_bg"
             android:orientation="horizontal"
             android:padding="8dp" >
 
