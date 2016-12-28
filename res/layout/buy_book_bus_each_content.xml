@@ -1,99 +1,111 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <!-- 此为购物车类表的每一行的内容 -->
+<!-- android:padding="8dp"为整个布局跟边的距离 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical" >
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:clickable="true" >
-
-        <TextView
-            android:id="@+id/shop_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="10dp"
-            android:drawableLeft="@drawable/shop_ico"
-            android:drawablePadding="10dp"
-            android:drawableRight="@drawable/go"
-            android:text="零食小屋" />
-    </LinearLayout>
+    android:layout_height="125dp"
+    android:padding="8dp"
+    android:background="#f2f2f2" >
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#f2f2f2" >
-
-        <!-- 这是图书的左边的圆圈按钮 -->
-
-        <CheckBox
-            android:id="@+id/each_item_choose"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="10dp"
-            android:button="@drawable/all_choose_image_selector"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
-
-        <!-- 这是图书的图片 -->
-
-        <com.itcast.booksale.fragment.widgets.BookAvatarView
-            android:id="@+id/book_image"
-            android:layout_width="85dp"
-            android:layout_height="85dp"
-            android:src="@drawable/bookimage" />
-
-        <TextView
-            android:id="@+id/each_item_price"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="￥:500"
-            android:textColor="@android:color/holo_red_light" />
-
-        <!-- 添加件数的框 -->
+        android:background="@drawable/each_item_bg"
+        android:orientation="vertical" >
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="15dp"
-            android:background="@android:color/white" >
-
-            <!-- 减少物品 -->
+            android:background="#ffffff"
+            android:clickable="true" >
 
             <TextView
-                android:id="@+id/each_item_reduce"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:gravity="center"
-                android:background="@drawable/text_angle_gray"
-                android:text="-" />
-            
-            
-            <!-- 物品 数量-->
+                android:id="@+id/shop_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="10dp"
+                android:drawableLeft="@drawable/shop_ico"
+                android:drawablePadding="10dp"
+                android:drawableRight="@drawable/go"
+                android:text="零食小屋" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#FFFAF0" >
+
+            <!-- 这是图书的左边的圆圈按钮 -->
+
+            <CheckBox
+                android:id="@+id/each_item_choose"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="10dp"
+                android:button="@drawable/all_choose_image_selector"
+                android:clickable="false"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+
+            <!-- 这是图书的图片 -->
+
+            <com.itcast.booksale.fragment.widgets.BookAvatarView
+                android:id="@+id/book_image"
+                android:layout_width="85dp"
+                android:layout_height="85dp"
+                android:src="@drawable/bookimage" />
 
             <TextView
-                android:id="@+id/each_item_num"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:gravity="center"
-                android:background="@drawable/text_angle_normal"
-                android:text="1" />
-            
-            
-              <!-- 增加物品 -->
-            <TextView
-                android:id="@+id/each_item_add"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:background="@drawable/text_angle_gray"
-                android:gravity="center"
-                android:text="+" />
+                android:id="@+id/each_item_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="￥:500"
+                android:textColor="@android:color/holo_red_light" />
+
+            <!-- 添加件数的框 -->
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="15dp"
+                android:background="@android:color/white" >
+
+                <!-- 减少物品 -->
+
+                <TextView
+                    android:id="@+id/each_item_reduce"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:background="@drawable/text_angle_gray"
+                    android:gravity="center"
+                    android:text="-" />
+
+                <!-- 物品 数量 -->
+
+                <TextView
+                    android:id="@+id/each_item_num"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:background="@drawable/text_angle_normal"
+                    android:gravity="center"
+                    android:text="1" />
+
+                <!-- 增加物品 -->
+
+                <TextView
+                    android:id="@+id/each_item_add"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:background="@drawable/text_angle_gray"
+                    android:gravity="center"
+                    android:text="+" />
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 

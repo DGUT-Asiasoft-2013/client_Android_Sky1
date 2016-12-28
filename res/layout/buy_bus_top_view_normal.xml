@@ -1,6 +1,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="48dp"
+    android:layout_height="wrap_content"
     android:background="@android:color/transparent"
     android:orientation="vertical" >
     
@@ -12,7 +12,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_gravity="center_vertical"
-        android:padding="12dp"
+        android:padding="5dp"
+        android:maxHeight="5dp"
         android:src="@drawable/topbar_up" />
 
     <TextView

@@ -253,7 +253,7 @@ public class SendPrivateMessageActivity extends Activity {
 						public void run() {
 							SendPrivateMessageActivity.this.page = pageData.getNumber();
 							// 反转数据,使得最新的消息在最后
-							List<PrivateMessage> lst = new ArrayList<>();
+							List<PrivateMessage> lst = new ArrayList<PrivateMessage>();
 							List<PrivateMessage> source = pageData.getContent();
 							for (int i = source.size() - 1; i >= 0; i--) {
 								lst.add(source.get(i));
