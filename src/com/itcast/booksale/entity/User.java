@@ -20,7 +20,16 @@ public class User implements Serializable{
 	String email;
 	String phoneNumb;//电话号码
 	String qq;
+	float sumMoney;
 	
+	
+
+	public float getSumMoney() {
+		return sumMoney;
+	}
+	public void setSumMoney(float sumMoney) {
+		this.sumMoney = sumMoney;
+	}
 	public Integer getId() {
 		return id;
 	}

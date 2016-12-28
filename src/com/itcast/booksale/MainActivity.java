@@ -1,20 +1,9 @@
 package com.itcast.booksale;
 
-import java.io.IOException;
-
-import com.itcast.booksale.R;
-import com.itcast.booksale.servelet.Servelet;
-
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Toast;
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
+import android.os.Handler;
 
 /*
  * 首页，加了欢迎界面
@@ -30,7 +19,21 @@ public class MainActivity extends Activity {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		//创建客户端连接
+		
+		Handler handler=new Handler();
+		
+		handler.postDelayed(new Runnable() {
+			
+			@Override
+			public void run() {
+				Intent intent=new Intent(MainActivity.this, HelloWorldActivity.class);
+				startActivity(intent);
+				finish();
+			}
+		}, 1000);
+		
+		
+		/*//创建客户端连接
 		OkHttpClient client=Servelet.getOkHttpClient();
 		//创建请求
 		Request request=Servelet.requestuildApi("hello")
@@ -59,6 +62,6 @@ public class MainActivity extends Activity {
 			@Override
 			public void onFailure(Call arg0, IOException arg1) {
 			}
-		});
+		});*/
 	}
 }

@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" 
-    android:background="#f2f2ff"
+    android:background="#D9E6B0"
     android:theme="@android:style/Theme.Translucent" >
     <!-- 显示订阅过的卖家 -->
 
@@ -19,7 +19,12 @@
     <ListView
         android:id="@+id/list_subscribe_user"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="match_parent"
+        android:paddingLeft="10dp"  
+        android:paddingRight="10dp"  
+        android:paddingTop="2dp"  
+        android:paddingBottom="2dp"
+        android:dividerHeight="10dp" >
     </ListView>
 
 </LinearLayout>
