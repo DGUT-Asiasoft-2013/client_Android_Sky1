@@ -11,7 +11,7 @@ import com.itcast.booksale.RegisterActivity;
 import com.itcast.booksale.entity.User;
 import com.itcast.booksale.fragment.widgets.AvatarView;
 import com.itcast.booksale.fragment.widgets.MainTabbarFragment;
-import com.itcast.booksale.myself.OrderActivity;
+import com.itcast.booksale.myself.MyOrderActivity;
 import com.itcast.booksale.myself.PersonalActivity;
 import com.itcast.booksale.myself.SettingActivity;
 import com.itcast.booksale.myself.SumMoneyActivity;
@@ -102,7 +102,7 @@ TextView fragTextMyself;
 				
 				@Override
 				public void onClick(View v) {
-					Intent intent=new Intent(getActivity(), OrderActivity.class);
+					Intent intent=new Intent(getActivity(), MyOrderActivity.class);
 					startActivity(intent);
 				}
 			});
