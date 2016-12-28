@@ -40,8 +40,7 @@ public class MainActivity extends Activity {
 				.method("get", null)
 				.build();
 		//客户端发起请求
-		client.newCall(request)
-		.enqueue(new Callback() {
+		client.newCall(request).enqueue(new Callback() {
 			
 			@Override
 			public void onResponse(Call arg0, Response arg1) throws IOException {
@@ -50,11 +49,7 @@ public class MainActivity extends Activity {
 					
 					@Override
 					public void run() {
-						new AlertDialog.Builder(MainActivity.this)
-						.setTitle("登录成功")
-						.setMessage(string)
-						.setPositiveButton("确定", null)
-						.show();
+						Toast.makeText(getApplicationContext(), string, Toast.LENGTH_SHORT).show();;
 						
 						//跳转到主界面
 						Intent intent = new Intent(MainActivity.this, LoginActivity.class);

@@ -25,6 +25,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ProgressBar;
@@ -41,6 +42,8 @@ View view_setting,view_personal,view_sum_money,view_order,view_private_message;/
 TextView user_name;//锟矫伙拷锟斤拷
 ProgressBar progressBar;//锟斤拷锟斤拷锟斤拷
 AvatarView avatar;//锟矫伙拷头锟斤拷
+
+View line_login_register;
 
 TextView fragTextMyself;
 
@@ -62,6 +65,8 @@ TextView fragTextMyself;
 			view_sum_money=view.findViewById(R.id.view_sum_money);//锟斤拷锟绞诧拷锟侥帮拷钮
 			view_order=view.findViewById(R.id.view_order);//锟斤拷锟斤拷锟侥帮拷钮
 			view_private_message=view.findViewById(R.id.view_private_message);
+			
+			line_login_register=view.findViewById(R.id.line_login_register);
 			
 			view_setting.setOnClickListener(new View.OnClickListener() {//为锟斤拷锟矫帮拷钮锟斤拷拥锟斤拷锟斤拷锟斤拷锟铰硷拷
 				
@@ -104,6 +109,15 @@ TextView fragTextMyself;
 				@Override
 				public void onClick(View v) {
 					Intent intent=new Intent(getActivity(), PrivateMessageListActivity.class);
+					startActivity(intent);
+				}
+			});
+			
+			line_login_register.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					Intent intent=new Intent(getActivity(), LoginActivity.class);
 					startActivity(intent);
 				}
 			});
