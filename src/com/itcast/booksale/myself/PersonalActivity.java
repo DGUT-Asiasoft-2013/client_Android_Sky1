@@ -320,8 +320,8 @@ public class PersonalActivity extends Activity{
 	}
 
 	protected void OnFailure(Call arg0, Exception arg1) {
-		// TODO Auto-generated method stub
-
+		Toast.makeText(PersonalActivity.this, "对不起，网络错误", Toast.LENGTH_SHORT)
+		.show();
 	}
 
 	protected void OnReponse(Call arg0, User user) {
