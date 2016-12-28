@@ -4,7 +4,24 @@ import java.io.Serializable;
 import java.util.Date;
 
 
+
 public class Subscribe{
+	boolean b;
+	int count;
+	public boolean isB() {
+		return b;
+	}
+
+	public void setB(boolean b) {
+		this.b = b;
+	}
+	public int getCount() {
+		return count;
+	}
+
+	public void setCount(int count) {
+		this.count = count;
+	}
 	public static class Key implements Serializable{
 		User me;
 		User saler;
@@ -33,6 +50,8 @@ public class Subscribe{
 		public int hashCode() {
 			return saler.getId();
 		}
+		
+	
 	}
 	
 	Key id;

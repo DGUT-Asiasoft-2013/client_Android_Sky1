@@ -120,6 +120,7 @@ TextView fragTextMyself;
 			user_name.setVisibility(View.GONE);
 			progressBar.setVisibility(View.VISIBLE);
 			
+			
 			Request request=Servelet.requestuildApi("me")
 					.method("get", null)
 					.build();
@@ -173,7 +174,7 @@ TextView fragTextMyself;
 	protected void onReponse(Call arg0, User user) {
 		progressBar.setVisibility(View.GONE);
 		if(TextUtils.isEmpty(user.getAvatar())){
-			avatar.setBackgroundResource(R.drawable.avatar_not_login);
+			avatar.setBackgroundResource(R.drawable.ic_launcher);
 		}
 		avatar.load(user);
 		user_name.setVisibility(View.VISIBLE);
@@ -187,6 +188,6 @@ TextView fragTextMyself;
 		user_name.setVisibility(View.VISIBLE);
 		user_name.setTextColor(Color.RED);
 		//user_name.setText(e.getMessage());
-		avatar.setBackgroundResource(R.drawable.avatar_not_login);//设置未登录的图片
+		avatar.setBackgroundResource(R.drawable.ic_launcher);//设置未登录的图片
 	}
 }

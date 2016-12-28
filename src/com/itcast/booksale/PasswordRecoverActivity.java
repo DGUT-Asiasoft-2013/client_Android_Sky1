@@ -54,13 +54,13 @@ public class PasswordRecoverActivity extends Activity {
 	}
 
 	protected void goStep2() {//定义第二步的方法
-		getFragmentManager().beginTransaction() // 通过FragmentManager来取得FragmentTransaction的实例
+		/*getFragmentManager().beginTransaction() // 通过FragmentManager来取得FragmentTransaction的实例
 		.setCustomAnimations(R.animator.slide_in_right, R.animator.slide_out_left, R.animator.slide_in_left,
 				R.animator.slide_out_right)
 		.replace(R.id.container, step2Fragment).addToBackStack(null)// 用一个fragment代替另一个fragment
 		.commit();// 提交
-		
-		/*String fragEmail=step1Fragment.getText();
+*/		
+		String fragEmail=step1Fragment.getText();
 		
 		MultipartBody body=new MultipartBody.Builder()
 				.addFormDataPart("email", fragEmail)
@@ -74,22 +74,22 @@ public class PasswordRecoverActivity extends Activity {
 			
 			@Override
 			public void onResponse(final Call arg0, final Response arg1) throws IOException {
-				String ar=arg1.body().string();
-				ObjectMapper mapper=new ObjectMapper();
-				
+				//String ar=arg1.body().string();
+				byte[] ar=arg1.body().bytes();
 				try{
-					user=mapper.readValue(ar, User.class);
+					final Boolean succeed=new ObjectMapper().readValue(ar, Boolean.class);
 					
-					if (user!=null) {
-						runOnUiThread(new Runnable() {
-							
-							@Override
-							public void run() {
+					PasswordRecoverActivity.this.runOnUiThread(new Runnable() {
+						
+						@Override
+						public void run() {
+							if(succeed){
 								PasswordRecoverActivity.this.Step2OnReponse(arg0,arg1);
+							}else {
+								PasswordRecoverActivity.this.onFailure(arg0,new Exception("失败"));
 							}
-						});
-					}
-					
+						}
+					});
 				}catch (Exception e) {
 					e.printStackTrace();
 					runOnUiThread(new Runnable() {
@@ -120,7 +120,7 @@ public class PasswordRecoverActivity extends Activity {
 				});
 				
 			}
-		});*/
+		});
 	}
 	
 	protected void Step2OnReponse(Call arg0, Response arg1) {
@@ -162,7 +162,7 @@ public class PasswordRecoverActivity extends Activity {
 								PasswordRecoverActivity.this.onResponse(arg0, "succeed is true");
 							}else{
 								//Toast.makeText(PasswordRecoverActivity.this, "shibai",Toast.LENGTH_SHORT).show();
-								PasswordRecoverActivity.this.onFailure(arg0, new Exception("失败"));
+								PasswordRecoverActivity.this.onFailure(arg0, new Exception("此邮箱尚未注册！"));
 							}
 							
 						}
