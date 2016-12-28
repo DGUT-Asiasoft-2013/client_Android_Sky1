@@ -43,7 +43,7 @@ import okhttp3.Response;
  * 这是购物车的页面显示
  */
 public class Buy_book_bus_fragment extends Fragment {
-
+	static int count=1;
 	View abView; // 购物车的页面
 
 	View top_view; // 购物车顶部的按钮布局
@@ -452,14 +452,18 @@ public class Buy_book_bus_fragment extends Fragment {
 					// 获得id
 					int id = bookbus.getId().getBook().getId();
 					boolean selected = mSelectedState.get(id, false);
-					// set number
-					String add_number = String.valueOf(bookbus.getId().getBook().getBooknumber() + 1);
-					each_item_num.setText(add_number);
-
-					// because client add 1,so Backstage's booknumber-1
-					bookbus.getId().getBook().setBooknumber(bookbus.getId().getBook().getBooknumber()+1);
-					notifyDataSetChanged(); // notify
+//					count=0;
 					if (!selected) {
+						count++;
+						// set number
+//						String add_number = String.valueOf(bookbus.getId().getBook().getBooknumber() + 1);
+						String add_number = String.valueOf(count);
+//						 Log.i("--------------检测----------", add_number);
+						each_item_num.setText(add_number);
+						
+						// because client add 1,so Backstage's booknumber-1
+						bookbus.getId().getBook().setBooknumber(bookbus.getId().getBook().getBooknumber()+1);
+						notifyDataSetChanged(); // notify
 						// 选中了
 						totalPrice += bookbus.getId().getBook().getPrice();
 						count_money_tv.setText("￥" + (totalPrice+bookbus.getId().getBook().getPrice()) + "元"); // 设置总钱数
@@ -487,15 +491,17 @@ public class Buy_book_bus_fragment extends Fragment {
 					}
 					int reduce_id = bookbus.getId().getBook().getId(); // 获得id
 					boolean selected = mSelectedState.get(reduce_id, false);
-					// 设置数量
-					String reduce_number = String.valueOf(bookbus.getId().getBook().getBooknumber() - 1);
-					each_item_num.setText(reduce_number);
-
-					// because client reduce 1,so Backstage's booknumber+1
-					bookbus.getId().getBook().setBooknumber(bookbus.getId().getBook().getBooknumber()-1);
-					notifyDataSetChanged(); // 刷新
 
 					if (!selected) {
+						count--;
+						// 设置数量
+//						String reduce_number = String.valueOf(bookbus.getId().getBook().getBooknumber() - 1);
+						String reduce_number = String.valueOf(count);
+						each_item_num.setText(reduce_number);
+						
+						// because client reduce 1,so Backstage's booknumber+1
+						bookbus.getId().getBook().setBooknumber(bookbus.getId().getBook().getBooknumber()-1);
+						notifyDataSetChanged(); // 刷新
 						// 选中了
 						totalPrice -= bookbus.getId().getBook().getPrice();
 						count_money_tv.setText("￥" + (totalPrice+bookbus.getId().getBook().getPrice()) + "元"); // 设置总钱数
