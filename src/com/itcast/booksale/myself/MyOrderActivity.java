@@ -5,7 +5,7 @@ import com.itcast.booksale.R;
 import android.app.Activity;
 import android.os.Bundle;
 
-public class OrderActivity extends Activity{
+public class MyOrderActivity extends Activity{
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

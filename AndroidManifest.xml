@@ -44,7 +44,7 @@
         </activity>
         <activity android:name="com.itcast.booksale.myself.PersonalActivity" >
         </activity>
-        <activity android:name="com.itcast.booksale.myself.OrderActivity" >
+        <activity android:name="com.itcast.booksale.myself.MyOrderActivity" >
         </activity>
         <activity android:name="com.itcast.booksale.myself.SumMoneyActivity" >
         </activity>
