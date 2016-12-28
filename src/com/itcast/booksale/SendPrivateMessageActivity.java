@@ -289,7 +289,7 @@ public class SendPrivateMessageActivity extends Activity {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		isVisible = true;//当为onResume时,将isVisible 设为true表示该窗口可见
+		isVisible = true;//当为onResume时,将isVisible 设为true表示该窗口可见4
 		refresh();
 	}
 	

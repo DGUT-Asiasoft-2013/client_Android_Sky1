@@ -74,7 +74,6 @@ public class BookListFragment extends Fragment {
 
 
 
-	//	Buy_book_bus_fragment bookbus = new Buy_book_bus_fragment(); // 购物车页面
 	User saler;
 
 	@Override
@@ -451,7 +450,14 @@ public class BookListFragment extends Fragment {
 							.setMessage(e.getMessage()).show();
 						}
 					});*/
-					Toast.makeText(getActivity(), "reload错误", Toast.LENGTH_SHORT).show();
+					getActivity().runOnUiThread(new Runnable() {
+						
+						@Override
+						public void run() {
+							
+							Toast.makeText(getActivity(), "reload错误", Toast.LENGTH_SHORT).show();
+						}
+					});
 				}
 			}
 
