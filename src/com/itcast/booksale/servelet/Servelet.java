@@ -30,11 +30,7 @@ public class Servelet {
 
 
 	}
-
-
-	public static String urlstring="http://172.27.15.23:8080/membercenter/";
-
-
+	public static String urlstring="http://172.27.15.9:8080/membercenter/";//7
 
 	//建立请求
 	public static Request.Builder requestuildApi(String api)
