@@ -87,11 +87,13 @@ public class RegisterActivity extends Activity {
 			fragInputCellPassword.setLabelText("密码*:");//瀵嗙爜
 			{
 				fragInputCellPassword.setHintText("请输入密码(必填)");
+				fragInputCellPassword.setIsPassword(true);
 			}
 			
 			fragInputCellPasswordRepeat.setLabelText("重复密码*:");//閲嶅瀵嗙爜
 			{
 				fragInputCellPasswordRepeat.setHintText("请再次输入密码(必填)");
+				fragInputCellPasswordRepeat.setIsPassword(true);
 			}
 			
 			fragInputCellPhone.setLabelText("手机号码*:");//鐢佃瘽
