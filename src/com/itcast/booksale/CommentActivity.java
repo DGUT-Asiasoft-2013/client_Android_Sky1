@@ -68,8 +68,6 @@ public class CommentActivity extends Activity {
 
 		@Override
 		public void onClick(View v) {
-			Intent init=new Intent(CommentActivity.this, BooksContentActivity.class);
-			startActivity(init);
 			finish();
 		}
 		
