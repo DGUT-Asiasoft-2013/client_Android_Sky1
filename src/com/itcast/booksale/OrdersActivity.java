@@ -3,34 +3,28 @@ package com.itcast.booksale;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.itcast.booksale.BooksContentActivity.CommentAdapter;
-import com.itcast.booksale.entity.Book;
 import com.itcast.booksale.entity.Bookbus;
 import com.itcast.booksale.entity.OrderLists;
 import com.itcast.booksale.fragment.widgets.AvatarView;
 import com.itcast.booksale.fragment.widgets.BookAvatarView;
 import com.itcast.booksale.servelet.Servelet;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.Bundle;
-import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.View.OnClickListener;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.AdapterView.OnItemSelectedListener;
 
 public class OrdersActivity extends Activity {
-	List<OrderLists> list;
+	List<Bookbus> list;
 	ListView ordersListView;
 
 	Bookbus bookbus;//get bookbus's massage what were putted
@@ -63,7 +57,8 @@ public class OrdersActivity extends Activity {
 		setContentView(R.layout.activity_orders_view);
 		//get bookbus
 		bookbus = (Bookbus) getIntent().getSerializableExtra("bookbus");
-		Log.d("bookbussssss", bookbus.getId().getBook().getAuthor());
+		list.add(bookbus);
+//		Log.d("-------bookbussssss----------", bookbus.getId().getBook().getAuthor());
 		ordersListView = (ListView) findViewById(R.id.buy_orders);
 		AllPay = getIntent().getStringExtra("AllPay");
 		initorders(); // 初始化
@@ -122,7 +117,6 @@ public class OrdersActivity extends Activity {
 	//---------------------------
 	BaseAdapter orderListAdapter = new BaseAdapter() {
 
-		@SuppressLint("InflateParams")
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
 			View view = null;
@@ -146,15 +140,16 @@ public class OrdersActivity extends Activity {
 			books_buy_numb = (TextView) view.findViewById(R.id.books_numb);//购买数量
 			
 			
-			final OrderLists orders = list.get(position);
+			final Bookbus order = list.get(position);
 			//--
 			//设置内容
-			bookAvatar.load(Servelet.urlstring + orders.getId().getBook().getBookavatar());
-			bookTitle.setText(orders.getId().getBook().getTitle());
-			bookAuthor.setText(orders.getId().getBook().getAuthor());
-			Log.d("bookAuthor11111----",bookAuthor.toString());
-			bookSummary.setText(bookbus.getId().getBook().getSummary());
-			bookPrice.setText(String.valueOf(orders.getId().getBook().getPrice()));
+			bookAvatar.load(Servelet.urlstring + order.getId().getBook().getBookavatar());
+			bookTitle.setText(order.getId().getBook().getTitle());
+			
+			bookAuthor.setText(order.getId().getBook().getAuthor());
+//			Log.d("-----------bookAuthor11111----",order.getId().getBook().getAuthor());
+			bookSummary.setText(order.getId().getBook().getSummary());
+			bookPrice.setText(String.valueOf(order.getId().getBook().getPrice()));
 //			books_buy_numb.setText("x"+orders.getBooksAdded());
 			
 						
