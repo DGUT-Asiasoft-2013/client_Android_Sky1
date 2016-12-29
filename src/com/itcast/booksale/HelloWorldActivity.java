@@ -116,7 +116,7 @@ public class HelloWorldActivity extends Activity {
 		startActivity(intent);
 	}
 	void getMe(){
-		Request request=Servelet.requestuildApi("me")
+		Request request=Servelet.requestuildApi("/me")
 				.method("get", null)
 				.build();
 		Servelet.getOkHttpClient().newCall(request).enqueue(new Callback() {
