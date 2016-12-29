@@ -10,6 +10,7 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.itcast.booksale.OrdersActivity;
 import com.itcast.booksale.R;
 import com.itcast.booksale.entity.Bookbus;
 import com.itcast.booksale.entity.Page;
@@ -356,17 +357,18 @@ public class Buy_book_bus_fragment extends Fragment {
 										
 										@Override
 										public void onClick(DialogInterface dialog, int which) {
-											Intent intent=new Intent(getActivity(), MyOrderActivity.class);
+											Intent intent=new Intent(getActivity(), OrdersActivity.class);
 											//translate the bookbus to the OrdersActivity
 											intent.putExtra("bookbus", bookbus);
 											//get the allpay money
-											float AllPay=Float.parseFloat(count_money_tv.getText().toString());
+											String AllPay = count_money_tv.getText().toString();
 //											Log.i("--------------检测----------", count_money_tv.getText().toString());
 											//translate the AllPay to the OrdersActivity
 											intent.putExtra("AllPay", AllPay);
 											
 											//get the order_number
 											String order_number=order_letter+bookbus.getId().getBook().getTitle()+bookbus.getId().getBook().getId();
+											
 											//translate the order_number to the OrdersActivity
 											intent.putExtra("order_number", order_number);
 											startActivity(intent);
