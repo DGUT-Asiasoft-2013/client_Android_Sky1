@@ -24,10 +24,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 public class OrdersActivity extends Activity {
-	List<Bookbus> list;
-	ListView ordersListView;
-
-	Bookbus bookbus;//get bookbus's massage what were putted
+	Bookbus order;//get bookbus's massage what were putted
 
 	//ye mian shu xing
 	private AvatarView bookUserAvatar; // 图书卖家照片
@@ -56,16 +53,22 @@ public class OrdersActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_orders_view);
 		//get bookbus
-		bookbus = (Bookbus) getIntent().getSerializableExtra("bookbus");
-		list.add(bookbus);
-//		Log.d("-------bookbussssss----------", bookbus.getId().getBook().getAuthor());
-		ordersListView = (ListView) findViewById(R.id.buy_orders);
+		order = (Bookbus) getIntent().getSerializableExtra("bookbus");
 		AllPay = getIntent().getStringExtra("AllPay");
 		initorders(); // 初始化
 		//设置
-		bookUserAvatar.load(bookbus.getId().getUser());
-		bookUserName.setText(bookbus.getId().getUser().getName());
+		bookUserAvatar.load(order.getId().getUser());
+		bookUserName.setText(order.getId().getUser().getName());
 		momey_all.setText(AllPay);
+		
+		
+		//设置内容
+		bookAvatar.load(Servelet.urlstring + order.getId().getBook().getBookavatar());
+		bookTitle.setText(order.getId().getBook().getTitle());
+		
+		bookAuthor.setText(order.getId().getBook().getAuthor());
+		bookSummary.setText(order.getId().getBook().getSummary());
+		bookPrice.setText(String.valueOf(order.getId().getBook().getPrice()));
 		btn_order.setOnClickListener(new View.OnClickListener() {
 
 			@Override
@@ -74,7 +77,7 @@ public class OrdersActivity extends Activity {
 
 			}
 		});
-		ordersListView.setAdapter(orderListAdapter);
+//		Log.i("------------检测----------", "----------------lalaa-----------");
 		
 
 	}
@@ -89,6 +92,15 @@ public class OrdersActivity extends Activity {
 		payType_list = new ArrayList<String>();
 		payType_list.add("在线交易");
 		payType_list.add("私下交易");
+		
+		//获取订单
+		
+		bookAvatar = (BookAvatarView) findViewById(R.id.book_avatar);
+		bookTitle = (TextView) findViewById(R.id.book_title); // 图书标题
+		bookAuthor = (TextView) findViewById(R.id.book_author);//图书作者
+		bookSummary = (TextView) findViewById(R.id.text_about_book); //图书简介
+		bookPrice = (TextView) findViewById(R.id.book_price);// 售价
+		books_buy_numb = (TextView) findViewById(R.id.books_numb);//购买数量
 		
 		
 		//适配器
@@ -114,63 +126,7 @@ public class OrdersActivity extends Activity {
 			}
 		});
 	}
-	//---------------------------
-	BaseAdapter orderListAdapter = new BaseAdapter() {
-
-		@Override
-		public View getView(int position, View convertView, ViewGroup parent) {
-			View view = null;
-
-			if (convertView == null) {
-				LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-				view = inflater.inflate(R.layout.activity_orders_view_listcell, null);
-			} else {
-				view = convertView;
-			}
-
-			// 设置数据，并获取
-			//-----------
-			//获取订单
 	
-			bookAvatar = (BookAvatarView) view.findViewById(R.id.book_avatar);
-			bookTitle = (TextView) view.findViewById(R.id.book_title); // 图书标题
-			bookAuthor = (TextView) view.findViewById(R.id.book_author);//图书作者
-			bookSummary = (TextView) view.findViewById(R.id.text_about_book); //图书简介
-			bookPrice = (TextView) view.findViewById(R.id.book_price);// 售价
-			books_buy_numb = (TextView) view.findViewById(R.id.books_numb);//购买数量
-			
-			
-			final Bookbus order = list.get(position);
-			//--
-			//设置内容
-			bookAvatar.load(Servelet.urlstring + order.getId().getBook().getBookavatar());
-			bookTitle.setText(order.getId().getBook().getTitle());
-			
-			bookAuthor.setText(order.getId().getBook().getAuthor());
-//			Log.d("-----------bookAuthor11111----",order.getId().getBook().getAuthor());
-			bookSummary.setText(order.getId().getBook().getSummary());
-			bookPrice.setText(String.valueOf(order.getId().getBook().getPrice()));
-//			books_buy_numb.setText("x"+orders.getBooksAdded());
-			
-						
+	
 
-			return view;
-		}
-
-		@Override
-		public long getItemId(int position) {
-			return position;
-		}
-
-		@Override
-		public Object getItem(int position) {
-			return list.get(position);
-		}
-
-		@Override
-		public int getCount() {
-			return list == null ? 0 : list.size();
-		}
-	};
-	//-----------------------------
 }

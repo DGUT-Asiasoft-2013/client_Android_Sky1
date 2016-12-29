@@ -360,9 +360,9 @@ public class Buy_book_bus_fragment extends Fragment {
 											Intent intent=new Intent(getActivity(), OrdersActivity.class);
 											//translate the bookbus to the OrdersActivity
 											intent.putExtra("bookbus", bookbus);
+											
 											//get the allpay money
 											String AllPay = count_money_tv.getText().toString();
-//											Log.i("--------------检测----------", count_money_tv.getText().toString());
 											//translate the AllPay to the OrdersActivity
 											intent.putExtra("AllPay", AllPay);
 											
@@ -372,6 +372,7 @@ public class Buy_book_bus_fragment extends Fragment {
 											//translate the order_number to the OrdersActivity
 											intent.putExtra("order_number", order_number);
 											startActivity(intent);
+//											Log.i("------------检测----------", "----------------啦啦啦啦啦-----------");
 										}
 									})
 									.setNegativeButton("不了，我再想想", null)
