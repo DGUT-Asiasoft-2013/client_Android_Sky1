@@ -48,7 +48,9 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.50"
             android:text="注册"
-            android:textColor="#749057"/>
+            android:background="@drawable/btn_selector"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"/>
 
         <Button
             android:id="@+id/btn_login"
@@ -56,7 +58,10 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.50"
             android:text="登录"
-            android:textColor="#749057" />
+            android:background="@drawable/btn_selector"
+            android:padding="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"/>
 
     </LinearLayout>
 

@@ -2,9 +2,13 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
-<!-- 注册界面 -->
+    android:layout_height="match_parent"
+    android:background="@drawable/radius_bg"
+    android:padding="8dp" >
+
+    <!-- 注册界面 -->
     <!-- 在项目中，一进入一个页面, EditText默认就会自动获取焦点。此View是设置不自动寻找焦点的 -->
+
     <View
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -12,6 +16,7 @@
         android:focusableInTouchMode="true" />
 
     <!-- 可滚动的视图 -->
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
@@ -23,6 +28,7 @@
             android:orientation="vertical" >
 
             <!-- 用户账号 -->
+
             <fragment
                 android:id="@+id/input_account"
                 android:layout_width="match_parent"
@@ -31,6 +37,7 @@
                 tools:layout="@layout/fragment_inputcell_simpletext" />
 
             <!-- 用户昵称 -->
+
             <fragment
                 android:id="@+id/input_name"
                 android:layout_width="match_parent"
@@ -39,6 +46,7 @@
                 tools:layout="@layout/fragment_inputcell_simpletext" />
 
             <!-- 用户密码 -->
+
             <fragment
                 android:id="@+id/input_password"
                 android:layout_width="match_parent"
@@ -47,6 +55,7 @@
                 tools:layout="@layout/fragment_inputcell_simpletext" />
 
             <!-- 再次重复密码 -->
+
             <fragment
                 android:id="@+id/input_password_repeat"
                 android:layout_width="match_parent"
@@ -54,15 +63,17 @@
                 class="com.itcast.booksale.inputcells.SimpleTextInputCellFragment"
                 tools:layout="@layout/fragment_inputcell_simpletext" />
 
-             <!-- 用户电话号码 -->
+            <!-- 用户电话号码 -->
+
             <fragment
                 android:id="@+id/input_phone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 class="com.itcast.booksale.inputcells.SimpleTextInputCellFragment"
                 tools:layout="@layout/fragment_inputcell_simpletext" />
-            
+
             <!-- 用户邮箱 -->
+
             <fragment
                 android:id="@+id/input_email"
                 android:layout_width="match_parent"
@@ -71,6 +82,7 @@
                 tools:layout="@layout/fragment_inputcell_simpletext" />
 
             <!-- 用户QQ -->
+
             <fragment
                 android:id="@+id/input_qq"
                 android:layout_width="match_parent"
@@ -79,6 +91,7 @@
                 tools:layout="@layout/fragment_inputcell_simpletext" />
 
             <!-- 用户头像 -->
+
             <fragment
                 android:id="@+id/input_avatar"
                 android:layout_width="match_parent"
@@ -87,10 +100,12 @@
                 tools:layout="@layout/fragment_inputcell_picture" />
 
             <!-- 提交按钮 -->
+
             <Button
                 android:id="@+id/btn_submit"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="40dp"
+                android:background="@drawable/btn_selector"
                 android:text="注册" />
         </LinearLayout>
     </ScrollView>
