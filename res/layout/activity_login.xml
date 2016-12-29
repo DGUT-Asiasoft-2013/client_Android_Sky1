@@ -28,14 +28,34 @@
         class="com.itcast.booksale.inputcells.SimpleTextInputCellFragment"
         tools:layout="@layout/fragment_inputcell_simpletext" />
 
-    <TextView
-        android:id="@+id/btn_forgot_password"
-        android:layout_width="wrap_content"
+    <RelativeLayout 
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="right"
-        android:padding="2dp"
-        android:text="忘记密码"
-        android:textColor="#749057" />
+       >
+        
+     <CheckBox
+         android:id="@+id/cb_auto_login"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:padding="2dp"
+         android:text="记住密码"
+         android:textSize="16sp"
+         android:layout_marginLeft="10dp"
+         android:textColor="#749057" />
+
+     <TextView
+         android:id="@+id/btn_forgot_password"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_alignParentRight="true"
+         android:paddingRight="10dp"
+         android:layout_centerHorizontal="false"
+         android:layout_centerVertical="true"
+         android:text="忘记密码"
+         android:textColor="#749057"
+         android:textSize="16sp" />
+    
+    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
