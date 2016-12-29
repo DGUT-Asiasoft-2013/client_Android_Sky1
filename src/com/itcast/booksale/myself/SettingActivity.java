@@ -57,7 +57,7 @@ public class SettingActivity extends Activity{
 			
 			@Override
 			public void onClick(View v) {
-				Intent intent =new Intent(SettingActivity.this, RegisterFirstActivity.class);
+				Intent intent =new Intent(SettingActivity.this, RegisterActivity.class);
 				startActivity(intent);		
 			}
 		});	
