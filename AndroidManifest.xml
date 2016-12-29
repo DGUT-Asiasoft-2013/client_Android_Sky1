@@ -65,6 +65,7 @@
         <activity android:name="com.itcast.booksale.RegisterFirstActivity">
         </activity>
         <activity android:name="com.itcast.booksale.OrdersActivity"></activity>
+        <activity android:name="com.itcast.booksale.PayMoneyActivity"></activity>
     </application>
 
 </manifest>
