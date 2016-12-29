@@ -90,7 +90,8 @@ public class LoginActivity extends Activity {
 	}
 
 	protected void goRegister() {  //跳转到RegisterActivity
-		Intent intent=new Intent(this,RegisterActivity.class);
+		//Intent intent=new Intent(this,RegisterFirstActivity.class);
+		Intent intent=new Intent(this, RegisterActivity.class);
 		startActivity(intent);
 	}
 

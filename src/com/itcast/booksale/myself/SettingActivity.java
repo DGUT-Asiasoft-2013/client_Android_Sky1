@@ -7,6 +7,7 @@ import com.itcast.booksale.LoginActivity;
 import com.itcast.booksale.PasswordRecoverActivity;
 import com.itcast.booksale.R;
 import com.itcast.booksale.RegisterActivity;
+import com.itcast.booksale.RegisterFirstActivity;
 import com.itcast.booksale.entity.User;
 import com.itcast.booksale.servelet.Servelet;
 
@@ -56,7 +57,7 @@ public class SettingActivity extends Activity{
 			
 			@Override
 			public void onClick(View v) {
-				Intent intent =new Intent(SettingActivity.this, RegisterActivity.class);
+				Intent intent =new Intent(SettingActivity.this, RegisterFirstActivity.class);
 				startActivity(intent);		
 			}
 		});	
