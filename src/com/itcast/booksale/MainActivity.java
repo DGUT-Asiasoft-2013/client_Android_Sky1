@@ -26,7 +26,7 @@ public class MainActivity extends Activity {
 			
 			@Override
 			public void run() {
-				Intent intent=new Intent(MainActivity.this, HelloWorldActivity.class);
+				Intent intent=new Intent(MainActivity.this, LoginActivity.class);
 				startActivity(intent);
 				finish();
 			}
