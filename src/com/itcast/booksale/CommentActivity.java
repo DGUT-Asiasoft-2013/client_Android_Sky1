@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.MultipartBody;
@@ -33,7 +34,11 @@ public class CommentActivity extends Activity {
 	
 	private EditText add_comment_text; // 用户添加的评论
 	private Button btn_comment_commit;           //提交按钮
+	
+	private TextView comment_user_name;           //用户名
+	private Button btn_cancel;              //取消按钮
 
+	CancelOnClickListener cancelOnClickListener=new CancelOnClickListener();
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -42,12 +47,32 @@ public class CommentActivity extends Activity {
 		//接收BooksContentActivity传过来的book信息
 		book=(Book) getIntent().getSerializableExtra("data");          
 		btn_comment_commit.setOnClickListener(new CommitClickListener());
+		comment_user_name.setText(book.getUser().getName());
+		btn_cancel.setOnClickListener(cancelOnClickListener);
 	}
 
 	public void init() {
 		add_comment_text = (EditText) findViewById(R.id.add_comment_content);
 		btn_comment_commit = (Button) findViewById(R.id.add_btn_comment);
 
+		comment_user_name=(TextView) findViewById(R.id.comment_user_name);
+		btn_cancel=(Button) findViewById(R.id.btn_cancel);
+		
+	}
+	
+	/*
+	 * 取消按钮的监听器
+	 */
+	class CancelOnClickListener implements OnClickListener
+	{
+
+		@Override
+		public void onClick(View v) {
+			Intent init=new Intent(CommentActivity.this, BooksContentActivity.class);
+			startActivity(init);
+			finish();
+		}
+		
 	}
 
 	/*
