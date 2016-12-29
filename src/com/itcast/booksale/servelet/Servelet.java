@@ -36,6 +36,7 @@ public class Servelet {
 
 
 
+
 	//建立请求
 	public static Request.Builder requestuildApi(String api)
 	{
