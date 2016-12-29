@@ -55,6 +55,8 @@
                 android:gravity="left"
                 android:text="昵称"
                 android:textColor="#00838B" />
+
+
         </RelativeLayout>
 
         <ListView
@@ -83,7 +85,7 @@
             <Spinner
                 android:id="@+id/spinner_pay_tag"
                 android:layout_width="wrap_content"
-                android:layout_height="25dp" />
+                android:layout_height="wrap_content" />
         </LinearLayout>
 
         <RelativeLayout
@@ -103,6 +105,7 @@
                 android:textSize="15sp" />
 
             <TextView
+                android:id="@+id/buy_books_numb"
                 android:layout_width="wrap_content"
                 android:layout_height="25dp"
                 android:layout_marginLeft="5dp"

@@ -87,11 +87,13 @@ public class RegisterActivity extends Activity {
 			fragInputCellPassword.setLabelText("密码*:");//瀵嗙爜
 			{
 				fragInputCellPassword.setHintText("请输入密码(必填)");
+				fragInputCellPassword.setIsPassword(true);
 			}
 			
 			fragInputCellPasswordRepeat.setLabelText("重复密码*:");//閲嶅瀵嗙爜
 			{
 				fragInputCellPasswordRepeat.setHintText("请再次输入密码(必填)");
+				fragInputCellPasswordRepeat.setIsPassword(true);
 			}
 			
 			fragInputCellPhone.setLabelText("手机号码*:");//鐢佃瘽
@@ -132,6 +134,7 @@ public class RegisterActivity extends Activity {
 		String phone=fragInputCellPhone.getText();//鑾峰彇杈撳叆鐨勭數璇�
 		String qq=fragInputCellQq.getText();//鑾峰彇杈撳叆鐨凲Q
 	
+		
 		if(account.length()==0){
 			Toast.makeText(RegisterActivity.this,"账户不能为空", Toast.LENGTH_SHORT).show();
 			return;
@@ -170,6 +173,13 @@ public class RegisterActivity extends Activity {
 			return;
 		}
 		
+		//新的功能未能验证
+		/*Intent intent=getIntent();
+		Bundle bundle=intent.getExtras();
+		String phone=bundle.getString("phone");*/
+		
+		Toast.makeText(RegisterActivity.this , phone, Toast.LENGTH_SHORT)
+		.show();
 		MultipartBody.Builder requestBodyBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM)//鐢熸垚璇锋眰浣�
 				.addFormDataPart("num", account)
 				.addFormDataPart("name", name)

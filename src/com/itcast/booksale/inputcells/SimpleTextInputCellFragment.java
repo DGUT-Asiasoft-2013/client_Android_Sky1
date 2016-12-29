@@ -38,6 +38,10 @@ public class SimpleTextInputCellFragment extends BaseInputCellFragment{
 		return edit.getText().toString();
 	}
 	
+	public void setText(String text){
+		edit.setText(text);
+	}
+	
 	@Override
 	public void setHintText(String hintText) {
 		edit.setHint(hintText);

@@ -14,14 +14,18 @@ import android.R.string;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.CheckBox;
 import android.widget.Toast;
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -36,15 +40,30 @@ import okhttp3.Response;
  */
 public class LoginActivity extends Activity {
 	SimpleTextInputCellFragment fragAccount,fragPassword;//账号和密码
-
+	 private static final String FILE_NAME="saveUserNamePwd";
+	CheckBox autoLogin;
+	
+	SharedPreferences sharedPreferences;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);//加载布局
-
+		
 		fragAccount=(SimpleTextInputCellFragment) getFragmentManager().findFragmentById(R.id.input_account);//加载控件账号
 		fragPassword=(SimpleTextInputCellFragment) getFragmentManager().findFragmentById(R.id.input_password);//加载控件密码
 
+		autoLogin=(CheckBox) findViewById(R.id.cb_auto_login);
+		
+	       SharedPreferences sharedPreferences = getSharedPreferences(FILE_NAME, Context.MODE_PRIVATE);
+	        //从文件中获取保存的数据
+	        String usernameContent = sharedPreferences.getString("username", "");
+	        String passwordContent = sharedPreferences.getString("password", "");
+	        //判断是否有数据存在，并进行相应处理
+	        if(usernameContent != null && !"".equals(usernameContent))
+	        	fragAccount.setText(usernameContent);
+	        if(passwordContent != null && !"".equals(passwordContent))
+	        	fragPassword.setText(passwordContent);
+			
 		findViewById(R.id.btn_register).setOnClickListener(new View.OnClickListener() {  //设置按钮注册的点击监听事件
 
 			@Override
@@ -58,7 +77,9 @@ public class LoginActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				goLogin();
-
+				if (autoLogin.isChecked()){
+					onSaveContent();
+				}
 			}
 		});
 
@@ -70,6 +91,7 @@ public class LoginActivity extends Activity {
 
 			}
 		});
+		
 	}
 
 
@@ -88,9 +110,26 @@ public class LoginActivity extends Activity {
 			fragPassword.setIsPassword(true);
 		}
 	}
+	
+    protected void onSaveContent() {
+        super.onStop();
+        String usernameContent = fragAccount.getText();
+        String passwordContent = fragPassword.getText();
+        //获取SharedPreferences时，需要设置两参数
+        //第一个是保存的文件的名称，第二个参数是保存的模式（是否只被本应用使用）
+        SharedPreferences sharedPreferences =
+                getSharedPreferences(FILE_NAME, Context.MODE_PRIVATE);
+        Editor editor = sharedPreferences.edit();
+        //添加要保存的数据
+        editor.putString("username", usernameContent);
+        editor.putString("password", passwordContent);
+        //确认保存
+        editor.commit();
+    }
 
 	protected void goRegister() {  //跳转到RegisterActivity
-		Intent intent=new Intent(this,RegisterActivity.class);
+		//Intent intent=new Intent(this,RegisterFirstActivity.class);
+		Intent intent=new Intent(this, RegisterActivity.class);
 		startActivity(intent);
 	}
 

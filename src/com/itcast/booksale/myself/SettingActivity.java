@@ -7,6 +7,7 @@ import com.itcast.booksale.LoginActivity;
 import com.itcast.booksale.PasswordRecoverActivity;
 import com.itcast.booksale.R;
 import com.itcast.booksale.RegisterActivity;
+import com.itcast.booksale.RegisterFirstActivity;
 import com.itcast.booksale.entity.User;
 import com.itcast.booksale.servelet.Servelet;
 

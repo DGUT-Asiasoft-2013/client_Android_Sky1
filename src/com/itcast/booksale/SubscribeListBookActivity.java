@@ -110,6 +110,10 @@ public class SubscribeListBookActivity extends  Activity{
 			final Book book = booksData.get(position);
 
 			// add ClickListener for the xiangtao_btn
+			String countOfLikes = "saler/"+book.getUser().getId()+"/subscribe";
+			String countOfComments = "/count/"+book.getId()+"/comments";
+			getCountOfSomething(book,fans_btn,countOfLikes,0);
+			getCountOfSomething(book, comments_btn, countOfComments,1);
 
 			//bookuser
 			avatar.load(book.getUser());
@@ -124,59 +128,12 @@ public class SubscribeListBookActivity extends  Activity{
 			bookAuthor.setText(book.getAuthor());
 			bookSummary.setText(book.getSummary());
 			bookPrice.setText(book.getPrice()+" 元");
-			
+
 			//--------------------------------------------
-			Request request = Servelet.requestuildApi("saler/"+book.getUser().getId()+"/subscribe")
-					.get().build();
-
-			Servelet.getOkHttpClient().newCall(request).enqueue(new Callback() {
-
-				@Override
-				public void onResponse(Call arg0, Response arg1) throws IOException {
-					try{
-						String responseString = arg1.body().string();
-						final Integer count = new ObjectMapper().readValue(responseString, Integer.class);
-
-						runOnUiThread(new Runnable() {
-							@Override
-							public void run() {
-								fans_btn.setText("♥"+count);
-							}
-						});
-					}catch (Exception e) {
-						e.printStackTrace();
-						runOnUiThread(new Runnable() {
-							@Override
-							public void run() {
-								fans_btn.setText("关注量:");
-							}
-						});
-					}
-
-				}
-
-				@Override
-				public void onFailure(Call arg0, IOException e) {
-					e.printStackTrace();
-					runOnUiThread(new Runnable() {
-						@Override
-						public void run() {
-							
-						}
-					});
-				}
-
-			});
-			//---------------------------------
-
-
 
 
 			return view;
 		}
-
-
-
 
 		@Override
 		public long getItemId(int position) {
@@ -194,9 +151,59 @@ public class SubscribeListBookActivity extends  Activity{
 		}
 	};
 
-	//----------------
+	//----------------显示关注量和评论数
+	void getCountOfSomething(Book book,final TextView textView,String url,final int some){
+		Request request = Servelet.requestuildApi(url)
+				.get().build();
 
+		Servelet.getOkHttpClient().newCall(request).enqueue(new Callback() {
 
+			@Override
+			public void onResponse(Call arg0, Response arg1) throws IOException {
+				try{
+					String responseString = arg1.body().string();
+					final Integer count = new ObjectMapper().readValue(responseString, Integer.class);
+
+					runOnUiThread(new Runnable() {
+						@Override
+						public void run() {
+							if(some == 0){
+								textView.setText("♥"+count);
+							}else{
+								textView.setText("评论("+count+")");
+							}
+						}
+					});
+				}catch (Exception e) {
+					e.printStackTrace();
+					runOnUiThread(new Runnable() {
+						@Override
+						public void run() {
+							if(some == 0){
+								textView.setText("♥");
+							}else{
+								textView.setText("评论("+0+")");
+							}
+							
+						}
+					});
+				}
+
+			}
+
+			@Override
+			public void onFailure(Call arg0, IOException e) {
+				e.printStackTrace();
+				runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+
+					}
+				});
+			}
+
+		});
+	}
 	//----------------
 
 	//转到书本详情页面
