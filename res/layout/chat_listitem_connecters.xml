@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="50dp"
-    android:orientation="horizontal" >
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="5dp" >
 
     <LinearLayout
         android:layout_width="0dp"
@@ -21,7 +22,8 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="4"
-        android:orientation="vertical" >
+        android:orientation="vertical"
+        android:paddingLeft="5dp" >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -46,26 +48,24 @@
                 android:text="12月23日 16:48"
                 android:textColor="@android:color/darker_gray"
                 android:textSize="5pt" />
-
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:orientation="vertical"
             android:gravity="center"
-             >
+            android:orientation="vertical"
+            android:paddingLeft="5dp" >
 
             <TextView
                 android:id="@+id/chatlist_text"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="我爱你哦,你爱我吗?你好谁啊刷卡积分卡了"
-                android:textColor="@android:color/darker_gray"
                 android:gravity="left|center"
+                android:text="这是私信的内容"
+                android:textColor="@android:color/darker_gray"
                 android:textSize="5pt" />
-
         </LinearLayout>
     </LinearLayout>
 
