@@ -62,7 +62,18 @@ public class RegisterFirstActivity extends Activity {
 			return;
 		}
 		
-		MultipartBody.Builder requestBodyBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM)//鐢熸垚璇锋眰浣�
+		
+		Toast.makeText(RegisterFirstActivity.this, "验证码已发送到该手机上，请注意查收！", Toast.LENGTH_SHORT)
+		.show();
+		
+		//String phone=fragInputCellPhone.getText();
+		Intent intent=new Intent(RegisterFirstActivity.this,RegisterActivity.class);
+		
+		intent.putExtra("phone", phone);
+		
+		startActivity(intent);
+		
+		/*MultipartBody.Builder requestBodyBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM)//鐢熸垚璇锋眰浣�
 				.addFormDataPart("phone", phone);
 		
 		Request request=Servelet.requestuildApi("phone")
@@ -96,7 +107,7 @@ public class RegisterFirstActivity extends Activity {
 					}
 				});
 			}
-		});
+		});*/
 	}
 	
 	protected void onFailure(Call arg0, Exception arg1) {//鏃犳硶杩炴帴鏈嶅姟鍣ㄦ椂
@@ -109,7 +120,7 @@ public class RegisterFirstActivity extends Activity {
 	
 	protected void onResponse(Call arg0, String ar) {//鎴愬姛
 		try {
-			Toast.makeText(RegisterFirstActivity.this, "此手机号码可用", Toast.LENGTH_SHORT)
+			Toast.makeText(RegisterFirstActivity.this, "验证码已发送到该手机上，请注意查收！", Toast.LENGTH_SHORT)
 			.show();
 			
 			String phone=fragInputCellPhone.getText();
