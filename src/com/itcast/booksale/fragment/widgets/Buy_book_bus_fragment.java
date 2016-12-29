@@ -345,7 +345,9 @@ public class Buy_book_bus_fragment extends Fragment {
 										@Override
 										public void onClick(DialogInterface dialog, int which) {
 											Intent intent=new Intent(getActivity(), MyOrderActivity.class);
+											float AllPay=Float.parseFloat(count_money_tv.getText().toString());
 											intent.putExtra("bookbus", bookbus);
+											intent.putExtra("AllPay", AllPay);
 											startActivity(intent);
 										}
 									})
