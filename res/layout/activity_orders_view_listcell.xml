@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="4dp"
+    android:layout_marginTop="4dp"
+    android:background="@drawable/radius_bg"
+    android:orientation="horizontal"
+    android:padding="8dp" >
+
+    <LinearLayout
+        android:layout_width="50dp"
+        android:layout_height="65dp"
+        android:orientation="vertical" >
+
+        <!-- 这里后期改动 -->
+
+        <com.itcast.booksale.fragment.widgets.BookAvatarView
+            android:id="@+id/book_avatar"
+            android:layout_width="50dp"
+            android:layout_height="65dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:layout_weight="0.5"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/book_title"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_gravity="left"
+            android:layout_marginLeft="10dp"
+            android:text="书籍名称"
+            android:textColor="@android:color/black"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/book_author"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_gravity="left"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="10dp"
+            android:gravity="right"
+            android:paddingTop="2dp"
+            android:text="作者"
+            android:textColor="@android:color/black"
+            android:textSize="10sp" />
+
+        <TextView
+            android:id="@+id/text_about_book"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_gravity="left"
+            android:layout_marginLeft="15dp"
+            android:singleLine="true"
+            android:text="内容简介"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="10sp" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="15dp" >
+            <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="15dp"
+            android:layout_gravity="left"
+            android:layout_marginLeft="15dp"
+            android:singleLine="true"
+            android:text="n元"
+            android:textColor="@android:color/holo_orange_dark"
+            android:textSize="12sp" />
+             <TextView
+            android:id="@+id/books_numb"
+            android:layout_width="match_parent"
+            android:layout_height="15dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="5dp"
+            android:gravity="right"
+            android:text="x1"
+            android:textColor="@android:color/black"
+            android:textSize="12sp" />
+        </RelativeLayout>
+
+       
+    </LinearLayout>
+
+</LinearLayout>

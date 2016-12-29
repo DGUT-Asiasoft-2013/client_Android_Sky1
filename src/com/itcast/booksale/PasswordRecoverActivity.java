@@ -60,13 +60,13 @@ public class PasswordRecoverActivity extends Activity {
 		.replace(R.id.container, step2Fragment).addToBackStack(null)// 用一个fragment代替另一个fragment
 		.commit();// 提交
 */		
-		String fragEmail=step1Fragment.getText();
+		String fragPhone=step1Fragment.getText();
 		
 		MultipartBody body=new MultipartBody.Builder()
-				.addFormDataPart("email", fragEmail)
+				.addFormDataPart("phone", fragPhone)
 				.build();
 		
-		Request request=Servelet.requestuildApi("email")
+		Request request=Servelet.requestuildApi("phone")
 				.post(body)
 				.build();
 		
@@ -84,9 +84,11 @@ public class PasswordRecoverActivity extends Activity {
 						@Override
 						public void run() {
 							if(succeed){
+								Toast.makeText(PasswordRecoverActivity.this, "验证码已发送，请注意查收信息", Toast.LENGTH_SHORT)
+								.show();
 								PasswordRecoverActivity.this.Step2OnReponse(arg0,arg1);
 							}else {
-								PasswordRecoverActivity.this.onFailure(arg0,new Exception("失败"));
+								PasswordRecoverActivity.this.onFailure(arg0,new Exception("此手机未注册过"));
 							}
 						}
 					});
@@ -96,7 +98,7 @@ public class PasswordRecoverActivity extends Activity {
 						
 						@Override
 						public void run() {
-							Toast.makeText(PasswordRecoverActivity.this, "数据解析异常11", Toast.LENGTH_SHORT).show();
+							Toast.makeText(PasswordRecoverActivity.this, "网络错误", Toast.LENGTH_SHORT).show();
 							
 						}
 					});
@@ -133,12 +135,12 @@ public class PasswordRecoverActivity extends Activity {
 	}
 
 	protected void goSubmit() {
-		String fragEmail=step1Fragment.getText();//获得邮箱
+		String fragPhone=step1Fragment.getText();//获得邮箱
 		String fragPassword=step2Fragment.getText();//获得密码
 		
 		//生成请求体
 		MultipartBody body=new MultipartBody.Builder()
-				.addFormDataPart("email", fragEmail)//添加邮箱
+				.addFormDataPart("phone", fragPhone)//添加邮箱
 				.addFormDataPart("passwordHash", fragPassword)//添加密码
 				.build();	
 		

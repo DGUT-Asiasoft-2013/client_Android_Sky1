@@ -3,7 +3,7 @@ package com.itcast.booksale.entity;
 import java.io.Serializable;
 import java.util.Date;
 
-public class Bookbus {
+public class Bookbus implements Serializable{
 
 	public static class Bus_Key implements Serializable {
 		// 用户

@@ -149,6 +149,7 @@ public class LoginActivity extends Activity {
 							
 							Intent itnt = new Intent(LoginActivity.this, HelloWorldActivity.class);//跳转的页面
 							startActivity(itnt);
+							finish();
 							/*new AlertDialog.Builder(LoginActivity.this).setTitle("成功")
 							.setMessage(user.getName()+","+user.getAccount())
 							.setPositiveButton("确定", new DialogInterface.OnClickListener() {

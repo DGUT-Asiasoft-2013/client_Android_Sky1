@@ -5,9 +5,12 @@
     android:orientation="vertical" >
 
     <LinearLayout
+        android:id="@+id/line_login_register"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical" >
+        android:orientation="vertical" 
+        android:padding="8dp"
+        android:background="@drawable/radius_bg">
 
         <!-- 头像 -->
 

@@ -2,7 +2,9 @@ package com.itcast.booksale.fragment.widgets;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -11,13 +13,16 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.itcast.booksale.R;
 import com.itcast.booksale.entity.Bookbus;
 import com.itcast.booksale.entity.Page;
+import com.itcast.booksale.myself.MyOrderActivity;
 import com.itcast.booksale.servelet.Servelet;
 
 import android.R.integer;
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
@@ -36,6 +41,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 import okhttp3.Call;
 import okhttp3.Callback;
+import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
@@ -69,7 +76,8 @@ public class Buy_book_bus_fragment extends Fragment {
 	private BookAvatarView bookAvatar; // 图书照片
 
 	private boolean isDelete; // 是否可删除模式
-
+	
+	
 	/**
 	 * 批量模式下用来记录当前选中状态
 	 */
@@ -302,6 +310,8 @@ public class Buy_book_bus_fragment extends Fragment {
 			}
 		});
 	}
+	
+	int[] books_id;
 
 	/*
 	 * 这是底部按钮栏的最右边的"结算"按钮的监听器
@@ -311,34 +321,57 @@ public class Buy_book_bus_fragment extends Fragment {
 		@Override
 		public void onClick(View v) {
 			// 获得书的信息
-			if (btn_count_all_bus.isSelected()) {
+			if (btn_count_all_bus.isClickable()) {
+//				Log.i("--------------检测----------", "--------结算按钮的显示1----------");
 				// 如果这个按钮被按了,则弹出一个提示框，显示买的东西
 				if (count_money_tv != null) {
-					getActivity().runOnUiThread(new Runnable() {
-
-						@Override
-						public void run() {
-							new AlertDialog.Builder(getActivity()).setTitle("结算").setMessage("您购买了,需要多少钱")
-									.setPositiveButton("确认付款", new DialogInterface.OnClickListener() {
-
+	
+					for (int i = 0; i < list_shopping_bus.size(); i++) {
+						//Circular traversal the list_shopping_bus
+						if (mSelectedState.get(list_shopping_bus.get(i).getId().getBook().getId())) {
+							//if the one is seleted
+							final Bookbus bookbus=list_shopping_bus.get(i);
+							String string=bookbus.getId().getBook().getTitle();
+//							Log.i("--------------检测----------", string);
+							getActivity().runOnUiThread(new Runnable() {
+								
+								@Override
+								public void run() {
+									
+									new AlertDialog.Builder(getActivity())
+									.setTitle("提交订单")
+									.setMessage("您于"+bookbus.getId().getBook().getEditDate()
+											+"想要购买"+bookbus.getId().getBook().getTitle())
+									.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+										
 										@Override
 										public void onClick(DialogInterface dialog, int which) {
-											/**
-											 * 付款操作
-											 */
+											Intent intent=new Intent(getActivity(), MyOrderActivity.class);
+											intent.putExtra("bookbus", bookbus);
+											startActivity(intent);
 										}
-									}).show();
+									})
+									.setNegativeButton("不了，我再想想", null)
+									.show();
+								}
+							});
+							
 						}
-					});
+					}
+					
 
 				} else {
 					// 取消订单
+					Toast.makeText(getActivity(), "您已经取消了订单", Toast.LENGTH_SHORT).show();
 
 				}
 			}
 		}
 
+
 	}
+	
+
 
 	/*
 	 * 这是底部全选圆圈按钮的监听器
@@ -429,7 +462,9 @@ public class Buy_book_bus_fragment extends Fragment {
 			TextView each_item_add = (TextView) abView.findViewById(R.id.each_item_add); // number's“+”
 
 			final Bookbus bookbus = list_shopping_bus.get(position); // 获得对应的购物车信息
+			
 
+			
 			int each_book_id = list_shopping_bus.get(position).getId().getBook().getId(); // 获得对应的id
 			boolean selected = mSelectedState.get(each_book_id, false); // 标记其的id的选择状态
 			each_item_choose_btn.setChecked(selected); // 设置每行选择按钮的选择状态
@@ -441,6 +476,7 @@ public class Buy_book_bus_fragment extends Fragment {
 			String price = String.valueOf(bookbus.getId().getBook().getPrice());
 			each_bookprice.setText(price); // design price
 			// Log.i("--------------检测----------", "-------+号运行中");
+			 
 
 			/**
 			 * number's “+” 's ClickListener
