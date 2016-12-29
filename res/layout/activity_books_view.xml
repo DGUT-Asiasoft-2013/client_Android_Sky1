@@ -62,11 +62,9 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-
                 android:layout_height="65dp"
                 android:layout_weight="0.5"
                 android:orientation="vertical" >
-
 
                 <TextView
                     android:id="@+id/book_user_phone"
@@ -100,23 +98,29 @@
 
             <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="65dp"
+                android:layout_height="80dp"
                 android:orientation="vertical" >
 
                 <Button
                     android:id="@+id/btn_subscribe"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.5"
+                    android:layout_width="85dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/button_fillet"
+                    android:drawableLeft="@drawable/subscription"
                     android:text="订阅"
+                    android:textColor="@android:color/white"
                     android:textSize="15sp" />
 
                 <Button
                     android:id="@+id/btn_massage"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.5"
+                    android:layout_width="85dp"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/button_fillet"
+                    android:drawableLeft="@drawable/private_letter"
+                    android:paddingTop="5dp"
                     android:text="私信"
+                    android:textColor="@android:color/white"
                     android:textSize="15sp" />
             </LinearLayout>
         </LinearLayout>
@@ -139,23 +143,21 @@
             android:layout_height="1dp"
             android:background="@android:color/darker_gray" />
 
-        
-
-            <ListView
-                android:id="@+id/comment_listview"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="35dp" >
-            </ListView>
-
-    </LinearLayout>
-        <Button
-            android:id="@+id/btn_comment"
+        <ListView
+            android:id="@+id/comment_listview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="评论"
-            android:textSize="15sp"
-            android:background="@android:color/holo_green_light"
-            android:layout_alignParentBottom="true" />
+            android:layout_marginBottom="35dp" >
+        </ListView>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_comment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@android:color/holo_green_light"
+        android:text="评论"
+        android:textSize="15sp" />
 
 </RelativeLayout>

@@ -10,6 +10,7 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.itcast.booksale.OrdersActivity;
 import com.itcast.booksale.R;
 import com.itcast.booksale.entity.Bookbus;
 import com.itcast.booksale.entity.Page;
@@ -82,6 +83,10 @@ public class Buy_book_bus_fragment extends Fragment {
 	 * 批量模式下用来记录当前选中状态
 	 */
 	private SparseArray<Boolean> mSelectedState = new SparseArray<Boolean>();
+	
+	String[] ab=new String[] {"A","B","C","D","E","F",
+			"G","H","I","J","K","L","M","N","O","P"
+			,"Q","R","S","T","U","V","W","X","Y","Z"};
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -332,6 +337,12 @@ public class Buy_book_bus_fragment extends Fragment {
 							//if the one is seleted
 							final Bookbus bookbus=list_shopping_bus.get(i);
 							String string=bookbus.getId().getBook().getTitle();
+							
+							//get the random ab's character
+							Random random=new Random();
+							int index=random.nextInt(ab.length);
+							final String order_letter=ab[index];
+							
 //							Log.i("--------------检测----------", string);
 							getActivity().runOnUiThread(new Runnable() {
 								
@@ -346,9 +357,22 @@ public class Buy_book_bus_fragment extends Fragment {
 										
 										@Override
 										public void onClick(DialogInterface dialog, int which) {
-											Intent intent=new Intent(getActivity(), MyOrderActivity.class);
+											Intent intent=new Intent(getActivity(), OrdersActivity.class);
+											//translate the bookbus to the OrdersActivity
 											intent.putExtra("bookbus", bookbus);
+											
+											//get the allpay money
+											String AllPay = count_money_tv.getText().toString();
+											//translate the AllPay to the OrdersActivity
+											intent.putExtra("AllPay", AllPay);
+											
+											//get the order_number
+											String order_number=order_letter+bookbus.getId().getBook().getTitle()+bookbus.getId().getBook().getId();
+											
+											//translate the order_number to the OrdersActivity
+											intent.putExtra("order_number", order_number);
 											startActivity(intent);
+//											Log.i("------------检测----------", "----------------啦啦啦啦啦-----------");
 										}
 									})
 									.setNegativeButton("不了，我再想想", null)

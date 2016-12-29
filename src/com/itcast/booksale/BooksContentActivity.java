@@ -106,6 +106,16 @@ public class BooksContentActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				goSubscribeActivity();// 前往订阅
+				/*if (btn_subscribe.isClickable()) {
+					btn_subscribe.setText("已订阅");
+					btn_subscribe.setTextColor(Color.RED);
+					btn_subscribe.setBackgroundColor(Color.WHITE);
+				}
+				else {
+					btn_subscribe.setText("订阅");
+					btn_subscribe.setTextColor(Color.WHITE);
+					btn_subscribe.setBackgroundColor(Color.RED);
+				}*/
 			}
 		});
 
@@ -366,8 +376,14 @@ public class BooksContentActivity extends Activity {
 	void onReloadSubscribeResult(int count) {
 		if (count > 0) {
 			btn_subscribe.setText("订阅数(" + count + ")");
+			btn_subscribe.setTextColor(Color.RED);
+			btn_subscribe.setBackgroundColor(Color.WHITE);
+			btn_subscribe.setTextSize(13);
 		} else {
 			btn_subscribe.setText("订阅");
+			btn_subscribe.setTextColor(Color.WHITE);
+			btn_subscribe.setBackgroundColor(Color.RED);
+			btn_subscribe.setTextSize(13);
 		}
 	}
 

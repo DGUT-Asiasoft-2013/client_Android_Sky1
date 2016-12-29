@@ -34,7 +34,7 @@ public class RegisterActivity extends Activity {
 	SimpleTextInputCellFragment fragInputCellName;//鐢ㄦ埛鐨勬樀绉�
 	SimpleTextInputCellFragment fragInputCellPassword;//鐢ㄦ埛鐨勫瘑鐮�
 	SimpleTextInputCellFragment fragInputCellPasswordRepeat;//閲嶅瀵嗙爜
-	SimpleTextInputCellFragment fragInputCellPhone;//鐢ㄦ埛鐨勭數璇濆彿鐮�
+	//SimpleTextInputCellFragment fragInputCellPhone;//鐢ㄦ埛鐨勭數璇濆彿鐮�
 	SimpleTextInputCellFragment fragInputCellEmail;//鐢ㄦ埛鐨勯偖绠卞湴鍧�
 	SimpleTextInputCellFragment fragInputCellQq;//鐢ㄦ埛鐨凲Q
 	
@@ -53,7 +53,7 @@ public class RegisterActivity extends Activity {
 		fragInputCellName=(SimpleTextInputCellFragment) getFragmentManager().findFragmentById(R.id.input_name);//鍔犺浇鏄电Оname
 		fragInputCellPassword=(SimpleTextInputCellFragment) getFragmentManager().findFragmentById(R.id.input_password);//鍔犺浇瀵嗙爜password
 		fragInputCellPasswordRepeat=(SimpleTextInputCellFragment) getFragmentManager().findFragmentById(R.id.input_password_repeat);//鍔犺浇閲嶅瀵嗙爜
-		fragInputCellPhone=(SimpleTextInputCellFragment) getFragmentManager().findFragmentById(R.id.input_phone);//鍔犺浇鐢佃瘽鍙风爜Phone
+		//fragInputCellPhone=(SimpleTextInputCellFragment) getFragmentManager().findFragmentById(R.id.input_phone);//鍔犺浇鐢佃瘽鍙风爜Phone
 		fragInputCellEmail=(SimpleTextInputCellFragment) getFragmentManager().findFragmentById(R.id.input_email);//鍔犺浇閭Emai
 		fragInputCellQq=(SimpleTextInputCellFragment) getFragmentManager().findFragmentById(R.id.input_qq);//鍔犺浇QQ
 		
@@ -87,18 +87,20 @@ public class RegisterActivity extends Activity {
 			fragInputCellPassword.setLabelText("密码*:");//瀵嗙爜
 			{
 				fragInputCellPassword.setHintText("请输入密码(必填)");
+				fragInputCellPassword.setIsPassword(true);
 			}
 			
 			fragInputCellPasswordRepeat.setLabelText("重复密码*:");//閲嶅瀵嗙爜
 			{
 				fragInputCellPasswordRepeat.setHintText("请再次输入密码(必填)");
+				fragInputCellPasswordRepeat.setIsPassword(true);
 			}
 			
-			fragInputCellPhone.setLabelText("手机号码*:");//鐢佃瘽
+			/*fragInputCellPhone.setLabelText("手机号码*:");//鐢佃瘽
 			{
 				fragInputCellPhone.setHintText("请输入11位手机号码(必填)");
 				fragInputCellPhone.setIsPhone(true);
-			}
+			}*/
 			
 			fragInputCellEmail.setLabelText("邮箱:");//閭
 			{
@@ -129,9 +131,10 @@ public class RegisterActivity extends Activity {
 		String account=fragInputCellAccount.getText();//鑾峰彇杈撳叆鐨勮处鎴�
 		String name=fragInputCellName.getText();//鑾峰彇杈撳叆鐨勬樀绉�
 		String email=fragInputCellEmail.getText();//鑾峰彇杈撳叆鐨勯偖绠�
-		String phone=fragInputCellPhone.getText();//鑾峰彇杈撳叆鐨勭數璇�
+		//String phone=fragInputCellPhone.getText();//鑾峰彇杈撳叆鐨勭數璇�
 		String qq=fragInputCellQq.getText();//鑾峰彇杈撳叆鐨凲Q
 	
+		
 		if(account.length()==0){
 			Toast.makeText(RegisterActivity.this,"账户不能为空", Toast.LENGTH_SHORT).show();
 			return;
@@ -144,32 +147,39 @@ public class RegisterActivity extends Activity {
 		}else if (name.length()==0) {
 			Toast.makeText(RegisterActivity.this,"昵称不能为空", Toast.LENGTH_SHORT).show();
 			return;
-		}else if(phone.length()==0) {
+		}/*else if(phone.length()==0) {
 			Toast.makeText(RegisterActivity.this,"电话号码不能为空", Toast.LENGTH_SHORT).show();
 			return;
-		}
+		}*/
 		
 		if(email.length()!=0&&!SimpleTextInputCellFragment.isEmail(email)){
 			Toast.makeText(RegisterActivity.this,"邮箱地址输入错误，请重新输入", Toast.LENGTH_SHORT).show();
 			return;
 		}
 		
-		if(phone.length()!=11){
+		/*if(phone.length()!=11){
 			Toast.makeText(RegisterActivity.this,"手机号码输入错误，请输入11位手机号码", Toast.LENGTH_SHORT).show();
 			return;
-		}
+		}*/
 		
 		//need to start at 13 or 17 or other normal telnum
-		if(!SimpleTextInputCellFragment.isMobileNO(phone)){
+		/*if(!SimpleTextInputCellFragment.isMobileNO(phone)){
 			Toast.makeText(RegisterActivity.this,"手机号码输入错误，请重新输入", Toast.LENGTH_SHORT).show();
 			return;
-		}
+		}*/
 		
 		if(qq.length()!=0&&!SimpleTextInputCellFragment.isQQ(qq)){
 			Toast.makeText(RegisterActivity.this,"QQ号码输入错误，请重新输入", Toast.LENGTH_SHORT).show();
 			return;
 		}
 		
+		//新的功能未能验证
+		Intent intent=getIntent();
+		Bundle bundle=intent.getExtras();
+		String phone=bundle.getString("phone");
+		
+		Toast.makeText(RegisterActivity.this , phone, Toast.LENGTH_SHORT)
+		.show();
 		MultipartBody.Builder requestBodyBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM)//鐢熸垚璇锋眰浣�
 				.addFormDataPart("num", account)
 				.addFormDataPart("name", name)
