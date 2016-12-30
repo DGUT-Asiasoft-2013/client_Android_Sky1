@@ -387,7 +387,7 @@ public class BooksContentActivity extends Activity {
 
 	void onCheckSubscribeResult(boolean result) {
 		issubscribe = result;
-		btn_subscribe.setTextColor(result ? Color.RED : Color.WHITE);
+		btn_subscribe.setTextColor(result ? Color.BLACK : Color.WHITE);
 	}
 
 	void checkSubscribe(){
