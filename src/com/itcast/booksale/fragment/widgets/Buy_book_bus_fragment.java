@@ -367,7 +367,7 @@ public class Buy_book_bus_fragment extends Fragment {
 											intent.putExtra("AllPay", AllPay);
 											
 											//get the order_number
-											String order_number=order_letter+bookbus.getId().getBook().getTitle()+bookbus.getId().getBook().getId();
+											String order_number=order_letter+bookbus.getId().getBook().getIsbn()+bookbus.getId().getBook().getId();
 											
 											//translate the order_number to the OrdersActivity
 											intent.putExtra("order_number", order_number);

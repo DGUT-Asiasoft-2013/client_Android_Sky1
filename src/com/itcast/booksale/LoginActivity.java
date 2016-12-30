@@ -51,6 +51,8 @@ import okhttp3.Response;
  *
  */
 public class LoginActivity extends Activity {
+	static Activity instance;
+	
 	SimpleTextInputCellFragment fragAccount,fragPassword;//账号和密码
 	 private static final String FILE_NAME="saveUserNamePwd";
 	CheckBox autoLogin;

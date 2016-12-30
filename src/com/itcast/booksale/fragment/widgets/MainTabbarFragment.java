@@ -15,7 +15,7 @@ public class MainTabbarFragment extends Fragment{
 
 	View tabHome,tabSubscribes,tabShoppingCar,tabMyself,tabInformation;//首页，订阅，购物车，我的，发送商品信息
 	View[] tabs;//标签选项卡
-	TextView tabTvShoppingcar,tabTvMyself;
+	TextView tabTvHome,tabTvSubscribes,tabTvShoppingcar,tabTvMyself;
 
 	
 	@Override
@@ -31,7 +31,8 @@ public class MainTabbarFragment extends Fragment{
 
 		tabTvShoppingcar=(TextView) view.findViewById(R.id.tab_tv_shoppingcar);//购物车的文字
 		tabTvMyself=(TextView) view.findViewById(R.id.tab_tv_myself);//我的
-
+		tabTvHome=(TextView) view.findViewById(R.id.tab_tv_home);
+		tabTvSubscribes=(TextView) view.findViewById(R.id.tab_tv_booking);
 		
 				
 		tabs=new View[]{//閫夐」鍗℃暟缁�
@@ -87,8 +88,29 @@ public class MainTabbarFragment extends Fragment{
 			if(otherTab==tab){//选中
 				otherTab.setSelected(true);
 				selectedIndex=i;
+				
+				if(otherTab==tabs[0]){
+					tabTvHome.setTextColor(getResources().getColor(R.color.tab_text_pressed));
+				}else if (otherTab==tabs[1]) {
+					tabTvSubscribes.setTextColor(getResources().getColor(R.color.tab_text_pressed));
+				}else if (otherTab==tabs[2]) {
+					tabTvShoppingcar.setTextColor(getResources().getColor(R.color.tab_text_pressed));
+				}else if(otherTab==tabs[3]){
+					tabTvMyself.setTextColor(getResources().getColor(R.color.tab_text_pressed));
+				}
+				//otherTab.setBackgroundColor(Color.RED);
 			}else{
 				otherTab.setSelected(false);
+				
+				if(otherTab==tabs[0]){
+					tabTvHome.setTextColor(Color.BLACK);
+				}else if (otherTab==tabs[1]) {
+					tabTvSubscribes.setTextColor(Color.BLACK);
+				}else if (otherTab==tabs[2]) {
+					tabTvShoppingcar.setTextColor(Color.BLACK);
+				}else if(otherTab==tabs[3]){
+					tabTvMyself.setTextColor(Color.BLACK);
+				}
 			}
 		}
 		
