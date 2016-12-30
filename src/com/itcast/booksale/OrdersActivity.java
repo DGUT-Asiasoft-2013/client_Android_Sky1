@@ -156,6 +156,7 @@ public class OrdersActivity extends Activity {
 	//支付页面
 	void goPayActivity(){
 		Intent itnt = new Intent(this,PayMoneyActivity.class);
+		itnt.putExtra("ordersId", orderNumber);
 		startActivity(itnt);
 	}
 

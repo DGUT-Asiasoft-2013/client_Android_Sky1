@@ -72,7 +72,7 @@ public class Buy_book_bus_fragment extends Fragment {
 
 	ShoppingBusAdapter adapter = new ShoppingBusAdapter();
 
-	private int totalPrice; // 定义总价
+	private float totalPrice; // 定义总价
 
 	private BookAvatarView bookAvatar; // 图书照片
 
@@ -367,7 +367,7 @@ public class Buy_book_bus_fragment extends Fragment {
 											intent.putExtra("AllPay", AllPay);
 											
 											//get the order_number
-											String order_number=order_letter+bookbus.getId().getBook().getTitle()+bookbus.getId().getBook().getId();
+											String order_number=order_letter+bookbus.getId().getBook().getIsbn()+bookbus.getId().getBook().getId();
 											
 											//translate the order_number to the OrdersActivity
 											intent.putExtra("order_number", order_number);
@@ -611,7 +611,7 @@ public class Buy_book_bus_fragment extends Fragment {
 							totalPrice -= selectednumber * list_shopping_bus.get(position).getId().getBook().getPrice();
 						}
 
-						count_money_tv.setText("￥" + totalPrice + "");
+						count_money_tv.setText("￥" + totalPrice + "元");
 
 						if (mSelectedState.size() == listSize) {
 							/**
