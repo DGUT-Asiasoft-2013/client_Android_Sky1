@@ -13,7 +13,7 @@
         <TextView
             android:id="@+id/chat_contact_name"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
             android:gravity="center"
@@ -62,7 +62,7 @@
         android:layout_height="wrap_content"
         android:layout_above="@id/chat_bottom_linear"
         android:layout_below="@id/chat_title"
-        android:background="#f0f0f0"
+        android:background="@drawable/card_bk"
         android:divider="#aaaaaa"
         android:dividerHeight="1px"
         android:fadingEdge="none"

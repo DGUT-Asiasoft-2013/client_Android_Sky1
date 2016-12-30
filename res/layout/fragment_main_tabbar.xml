@@ -34,6 +34,7 @@
                 android:src="@drawable/tab_image_home" />
 
             <TextView
+                android:id="@+id/tab_tv_home"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="9sp"

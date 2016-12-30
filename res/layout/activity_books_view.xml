@@ -156,7 +156,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="@android:color/holo_green_light"
+        android:background="@drawable/comment_button_fillet"
         android:text="评论"
         android:textSize="15sp" />
 

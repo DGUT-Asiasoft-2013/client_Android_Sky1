@@ -35,6 +35,11 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+/**
+ * 订单详情页面
+ * @author Administrator
+ *
+ */
 public class OrdersActivity extends Activity {
 	Bookbus order;//get bookbus's massage what were putted
 
