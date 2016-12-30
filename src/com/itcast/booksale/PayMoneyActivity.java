@@ -95,7 +95,19 @@ public class PayMoneyActivity extends Activity{
 
 			@Override
 			public void onResponse(Call arg0, Response arg1) throws IOException {
-				gobackHelloword();
+//				gobackHelloword();
+				PayMoneyActivity.this.runOnUiThread(new Runnable() {
+					
+					@Override
+					public void run() {
+						new AlertDialog.Builder(PayMoneyActivity.this)
+						.setTitle("成功付款")
+						.setMessage("您已经成功购买了该商品，请注意查收")
+						.setPositiveButton("确定", null)
+						.show();
+						
+					}
+				});
 			}
 
 			@Override
@@ -166,11 +178,11 @@ public class PayMoneyActivity extends Activity{
 		//异步，传回时间比程序运行时间晚，所以得不到数据
 	}
 
-	void gobackHelloword(){
+	/*void gobackHelloword(){
 		Intent itnt = new Intent(this,HelloWorldActivity.class);
 		startActivity(itnt);
 		finish();
 		OrdersActivity.temp.finish();
-	}
+	}*/
 
 }
