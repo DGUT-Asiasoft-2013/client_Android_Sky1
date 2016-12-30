@@ -65,10 +65,13 @@ public class OrdersActivity extends Activity {
 	private ArrayAdapter<String> payType_adapter;
 	String payType_text;
 
+	//----
+	public static OrdersActivity temp = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		temp = this;
 		setContentView(R.layout.activity_orders_view);
 		//get bookbus
 		order = (Bookbus) getIntent().getSerializableExtra("bookbus");

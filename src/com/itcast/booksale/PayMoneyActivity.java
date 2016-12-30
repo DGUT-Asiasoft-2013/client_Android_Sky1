@@ -10,6 +10,7 @@ import com.itcast.booksale.servelet.Servelet;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -27,7 +28,7 @@ public class PayMoneyActivity extends Activity{
 	private TextView momeyPay;//总金额
 	private TextView userMomey;//余额
 	private TextView btn_pay;//付款
-	
+
 	String balanceMoney;//余额
 	String ordersId;
 
@@ -56,21 +57,22 @@ public class PayMoneyActivity extends Activity{
 	void payMoney(){
 		float user_money = Float.valueOf(userMomey.getText().toString());
 		String temp = momeyPay.getText().toString();
-		float pay_money = Float.valueOf(temp.substring(0,temp.length()));
+		float pay_money = Float.valueOf(temp.substring(1,temp.length()-1));
+		Log.d("------money------------",temp.substring(1,temp.length()-1) );
 		if(user_money < pay_money){
 			new AlertDialog.Builder(this)
 			.setTitle("余额不足")
 			.setMessage("您的余额不足，请尽快充值")
 			.setNegativeButton("好", null)
 			.show();
-			
+
 		}else{
 			balanceMoney = String.valueOf(pay_money);
 			new AlertDialog.Builder(this)
 			.setTitle("确认付款")
 			.setMessage("确定付款吗？")
 			.setNegativeButton("确定", new DialogInterface.OnClickListener() {
-				
+
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
 					linDataBase(balanceMoney);					
@@ -80,30 +82,29 @@ public class PayMoneyActivity extends Activity{
 			.show();
 		}
 	}
-	
+
 	void linDataBase(String balanceMoney){
 		MultipartBody Money = new MultipartBody.Builder()
 				.addFormDataPart("useMoney",balanceMoney).build();
-		
+
 		Request request=Servelet.requestuildApi("/me/recharge/use")
 				.post(Money)
 				.build();
 		//"/me/recharge/use"
 		Servelet.getOkHttpClient().newCall(request).enqueue(new Callback() {
-			
+
 			@Override
 			public void onResponse(Call arg0, Response arg1) throws IOException {
-				
-				
+				gobackHelloword();
 			}
-			
+
 			@Override
 			public void onFailure(Call arg0, IOException arg1) {
 				// TODO Auto-generated method stub
-				
+
 			}
 		});
-		
+
 	}
 
 	void initPayList(){
@@ -163,6 +164,13 @@ public class PayMoneyActivity extends Activity{
 		//获取服务器数据
 		getOrdersMassage(ordersId);
 		//异步，传回时间比程序运行时间晚，所以得不到数据
+	}
+
+	void gobackHelloword(){
+		Intent itnt = new Intent(this,HelloWorldActivity.class);
+		startActivity(itnt);
+		finish();
+		OrdersActivity.temp.finish();
 	}
 
 }
