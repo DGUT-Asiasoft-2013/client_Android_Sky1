@@ -11,6 +11,13 @@ import com.itcast.booksale.inputcells.SimpleTextInputCellFragment;
 import com.itcast.booksale.servelet.Servelet;
 
 import android.R.string;
+import android.animation.Animator;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
+import android.animation.PropertyValuesHolder;
+import android.animation.ValueAnimator;
+import android.animation.Animator.AnimatorListener;
+import android.animation.ValueAnimator.AnimatorUpdateListener;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -24,8 +31,13 @@ import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup.MarginLayoutParams;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -43,7 +55,13 @@ public class LoginActivity extends Activity {
 	 private static final String FILE_NAME="saveUserNamePwd";
 	CheckBox autoLogin;
 	
+	private float mWidth, mHeight;
+	
+	private LinearLayout input_layout;
+	private Button btn_login;
+	
 	SharedPreferences sharedPreferences;
+	private View progress;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -51,6 +69,9 @@ public class LoginActivity extends Activity {
 		
 		fragAccount=(SimpleTextInputCellFragment) getFragmentManager().findFragmentById(R.id.input_account);//加载控件账号
 		fragPassword=(SimpleTextInputCellFragment) getFragmentManager().findFragmentById(R.id.input_password);//加载控件密码
+		input_layout=(LinearLayout) findViewById(R.id.input_layout);
+		btn_login=(Button) findViewById(R.id.btn_login);
+		progress=findViewById(R.id.progress_layout);
 
 		autoLogin=(CheckBox) findViewById(R.id.cb_auto_login);
 		
@@ -76,6 +97,8 @@ public class LoginActivity extends Activity {
 
 			@Override
 			public void onClick(View v) {
+				mWidth=btn_login.getMeasuredWidth();
+				mHeight=btn_login.getMeasuredHeight();
 				goLogin();
 				if (autoLogin.isChecked()){
 					onSaveContent();
@@ -92,6 +115,74 @@ public class LoginActivity extends Activity {
 			}
 		});
 		
+	}
+	
+	private void inputAnimator(final View view, float w, float h) {
+
+		AnimatorSet set = new AnimatorSet();
+
+		ValueAnimator animator = ValueAnimator.ofFloat(0, w);
+		animator.addUpdateListener(new AnimatorUpdateListener() {
+
+			@Override
+			public void onAnimationUpdate(ValueAnimator animation) {
+				float value = (Float) animation.getAnimatedValue();
+				ViewGroup.MarginLayoutParams params = (MarginLayoutParams) view
+						.getLayoutParams();
+				params.leftMargin = (int) value;
+				params.rightMargin = (int) value;
+				view.setLayoutParams(params);
+			}
+		});
+
+		ObjectAnimator animator2 = ObjectAnimator.ofFloat(input_layout,
+				"scaleX", 1f, 0.5f);
+		set.setDuration(1000);
+		set.setInterpolator(new AccelerateDecelerateInterpolator());
+		set.playTogether(animator, animator2);
+		set.start();
+		set.addListener(new AnimatorListener() {
+
+			@Override
+			public void onAnimationStart(Animator animation) {
+
+			}
+
+			@Override
+			public void onAnimationRepeat(Animator animation) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void onAnimationEnd(Animator animation) {
+
+				progress.setVisibility(View.VISIBLE);
+				progressAnimator(progress);
+				input_layout.setVisibility(View.INVISIBLE);
+
+			}
+
+			@Override
+			public void onAnimationCancel(Animator animation) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
+	}
+
+	private void progressAnimator(final View view) {
+		PropertyValuesHolder animator = PropertyValuesHolder.ofFloat("scaleX",
+				0.5f, 1f);
+		PropertyValuesHolder animator2 = PropertyValuesHolder.ofFloat("scaleY",
+				0.5f, 1f);
+		ObjectAnimator animator3 = ObjectAnimator.ofPropertyValuesHolder(view,
+				animator, animator2);
+		animator3.setDuration(1000);
+		animator3.setInterpolator(new JellyInterpolator());
+		animator3.start();
+
 	}
 
 
