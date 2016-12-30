@@ -1,5 +1,4 @@
 package com.itcast.booksale;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -406,6 +405,12 @@ public class BooksContentActivity extends Activity {
 							onCheckSubscribeResult(result);
 						}
 					});
+				}catch (JsonParseException e) {
+					e.printStackTrace();
+
+				} catch (JsonMappingException e) {
+					e.printStackTrace();
+
 				}catch(final Exception e){
 					e.printStackTrace();
 					runOnUiThread(new Runnable() {

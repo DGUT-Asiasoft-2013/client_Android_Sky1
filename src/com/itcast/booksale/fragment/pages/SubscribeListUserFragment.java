@@ -4,7 +4,9 @@ import java.io.IOException;
 import java.util.List;
 
 import com.itcast.booksale.R;
+import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.itcast.booksale.SubscribeListBookActivity;
 import com.itcast.booksale.entity.Book;
@@ -14,12 +16,15 @@ import com.itcast.booksale.entity.User;
 import com.itcast.booksale.fragment.widgets.AvatarView;
 import com.itcast.booksale.servelet.Servelet;
 
+import android.R.color;
+import android.R.integer;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -48,7 +53,7 @@ public class SubscribeListUserFragment extends Fragment {
 	List<Subscribe> data;
 	Boolean b;
 	int page = 0;
-	TextView gx;
+
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -83,19 +88,21 @@ public class SubscribeListUserFragment extends Fragment {
 								@Override
 								public void onClick(DialogInterface dialog, int which) {
 									b = false;
-									gx.setText("不提醒更新");
+									//									gx.setText("不提醒更新");
 									User saler=data.get(position).getId().getSaler();
 									changeMode(saler);
+									reload();
 								}
 							})
 							.setNegativeButton("是", new OnClickListener() {
 
 								@Override
 								public void onClick(DialogInterface dialog, int which) {
-										b = true;
-										gx.setText("提醒更新");
+									b = true;
+									//										gx.setText("提醒更新");
 									User saler=data.get(position).getId().getSaler();
 									changeMode(saler);
+									reload();
 								}
 							})
 							.show();
@@ -161,9 +168,9 @@ public class SubscribeListUserFragment extends Fragment {
 
 			TextView textUser = (TextView) view.findViewById(R.id.user);
 			AvatarView avatar = (AvatarView)view.findViewById(R.id.user_avatar);
-			gx = (TextView)view.findViewById(R.id.gx);
-
+			TextView gx = (TextView)view.findViewById(R.id.gx);
 			User saler = data.get(position).getId().getSaler();
+			setCount(gx,user.getId(),saler.getId());
 			avatar.load(saler);
 			textUser.setText("卖家："+saler.getName());
 			return view;
@@ -188,7 +195,23 @@ public class SubscribeListUserFragment extends Fragment {
 	};
 
 	void onItemClicked(int position){
+
 		User saler = data.get(position).getId().getSaler();
+		OkHttpClient client= Servelet.getOkHttpClient();
+		Request request =Servelet.requestuildApi("/subscribe/"+user.getId()+"/"+saler.getId())
+				.method("get", null)
+				.build();
+		client.newCall(request).enqueue(new Callback() {
+			@Override
+			public void onResponse(Call arg0, Response arg1) throws IOException {
+
+			}
+
+			@Override
+			public void onFailure(Call arg0, IOException arg1) {
+
+			}
+		});
 
 		Intent itnt = new Intent(getActivity(), SubscribeListBookActivity.class);
 		itnt.putExtra("data", saler);
@@ -196,6 +219,50 @@ public class SubscribeListUserFragment extends Fragment {
 		startActivity(itnt);
 	}
 
+	protected void setCount(final TextView gx2, Integer user_id, Integer saler_id) {
+		OkHttpClient client= Servelet.getOkHttpClient();
+		Request request =Servelet.requestuildApi("/subscribe/"+user_id+"/"+saler_id+"/count")
+				.method("get", null)
+				.build();
+
+		client.newCall(request).enqueue(new Callback() {
+
+			@Override
+			public void onResponse(Call arg0, final Response arg1) throws IOException {
+				final String str = arg1.body().string();
+				getActivity().runOnUiThread(new Runnable() {
+
+					@Override
+					public void run() {
+						int count = 0;
+						try {
+							count = new ObjectMapper().readValue(str, Integer.class);
+						} catch (JsonParseException e) {
+							e.printStackTrace();
+						} catch (JsonMappingException e) {
+							e.printStackTrace();
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+						if(count==0){
+							gx2.setTextColor(Color.BLACK);
+							gx2.setText("暂无更新");
+						}else{
+							gx2.setTextColor(Color.RED);
+							gx2.setText(count+"个更新");
+						}
+					}
+				});
+
+			}
+
+			@Override
+			public void onFailure(Call arg0, IOException arg1) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+	}
 	@Override
 	public void onResume() {
 		super.onResume();
@@ -253,10 +320,11 @@ public class SubscribeListUserFragment extends Fragment {
 			@Override
 			public void onResponse(Call arg0, Response arg1) throws IOException {
 				try{					
-					data =  new ObjectMapper().readValue(arg1.body().string(),new TypeReference<List<Subscribe>>(){});
+					final List<Subscribe> data =  new ObjectMapper().readValue(arg1.body().string(),new TypeReference<List<Subscribe>>(){});
 
 					getActivity().runOnUiThread(new Runnable() {
 						public void run() {
+							SubscribeListUserFragment.this.data = data;
 							listAdapter.notifyDataSetInvalidated();
 						}
 					});
