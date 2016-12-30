@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.itcast.booksale.LoginActivity;
 import com.itcast.booksale.PrivateMessageListActivity;
 import com.itcast.booksale.RegisterActivity;
+import com.itcast.booksale.SpendingBillsActivity;
 import com.itcast.booksale.entity.User;
 import com.itcast.booksale.fragment.widgets.AvatarView;
 import com.itcast.booksale.fragment.widgets.MainTabbarFragment;
@@ -102,7 +103,7 @@ TextView fragTextMyself;
 				
 				@Override
 				public void onClick(View v) {
-					Intent intent=new Intent(getActivity(), MyOrderActivity.class);
+					Intent intent=new Intent(getActivity(), SpendingBillsActivity.class);
 					startActivity(intent);
 				}
 			});

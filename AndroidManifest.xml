@@ -58,15 +58,22 @@
         </activity>
         <activity android:name="com.itcast.booksale.myself.ChangeQqActivity" >
         </activity>
-        <activity android:name="com.itcast.booksale.PrivateMessageListActivity">
+        <activity android:name="com.itcast.booksale.PrivateMessageListActivity" >
         </activity>
-        <activity android:name="com.itcast.booksale.myself.RechargeActivity">
+        <activity android:name="com.itcast.booksale.myself.RechargeActivity" >
         </activity>
-        <activity android:name="com.itcast.booksale.RegisterFirstActivity">
+        <activity android:name="com.itcast.booksale.RegisterFirstActivity" >
         </activity>
-        <activity android:name="com.itcast.booksale.OrdersActivity"></activity>
-        <activity android:name="com.itcast.booksale.PayMoneyActivity"></activity>
-        <activity android:name="com.itcast.booksale.pay.PayActivity"></activity>
+        <activity android:name="com.itcast.booksale.OrdersActivity" >
+        </activity>
+        <activity android:name="com.itcast.booksale.PayMoneyActivity" >
+        </activity>
+        <activity android:name="com.itcast.booksale.SpendingBillsActivity" >
+        </activity>
+        <activity android:name="com.itcast.booksale.pay.PayActivity" >
+        </activity>
+        <activity android:name="com.itcast.booksale.BillDetailActivity" >
+        </activity>
     </application>
 
 </manifest>
