@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="50dp"
     android:orientation="horizontal"
-    android:padding="2dp" >
+    android:padding="5dp" >
 
     <TextView
         android:id="@+id/text_bills_date"
@@ -61,6 +61,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
+            android:paddingLeft="4dp"
             android:gravity="start|center_vertical"
             android:text="今日在显卡声卡设计开发店购买好卡建行卡很快就登录器"
             android:textColor="@android:color/darker_gray"

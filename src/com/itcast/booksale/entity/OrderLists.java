@@ -3,7 +3,7 @@ package com.itcast.booksale.entity;
 import java.io.Serializable;
 import java.util.Date;
 
-public class OrderLists {
+public class OrderLists implements Serializable{
 
 	//	public static class orders_Key implements Serializable {
 	//		// 用户

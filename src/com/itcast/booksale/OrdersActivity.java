@@ -108,7 +108,7 @@ public class OrdersActivity extends Activity {
 	//保存order到数据库
 	void saveOrdersList(Bookbus order,String AllPay,String orderNumber,String payType_text){
 		int book_id = order.getId().getBook().getId();
-		Log.d("-----AllPay-----", order.getId().getBook().getAuthor());
+//		Log.d("-----AllPay-----", order.getId().getBook().getAuthor());
 		MultipartBody orderbody = new MultipartBody.Builder()
 				.addFormDataPart("orderId",orderNumber)
 				.addFormDataPart("payMoney", AllPay)
@@ -166,6 +166,7 @@ public class OrdersActivity extends Activity {
 		Intent itnt = new Intent(this,PayMoneyActivity.class);
 		itnt.putExtra("ordersId", orderNumber);
 		startActivity(itnt);
+		finish();
 	}
 
 	void initorders() {
