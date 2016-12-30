@@ -84,14 +84,14 @@ public class SpendingBillsActivity extends Activity {
 
 			// 为各个Item设定数值
 			textDate.setText(DateFormat.format("MM-dd", listData.getCreateDate()));
-			avatar.load(listData.getId().getUser());
+			avatar.load(listData.getUser());
 			textMonery.setText(String.valueOf(listData.getPayMoney()));
 
 			// 判断订单详情长度是否大于某值,大于则截取
-			if (listData.getId().getBook().getSummary().length() > 12) {
-				textDetail.setText(listData.getId().getBook().getSummary().subSequence(0, 12) + "...");
+			if (listData.getBook().getSummary().length() > 12) {
+				textDetail.setText(listData.getBook().getSummary().subSequence(0, 12) + "...");
 			} else {
-				textDetail.setText(listData.getId().getBook().getSummary());
+				textDetail.setText(listData.getBook().getSummary());
 			}
 /*
 			// 判断不同的订单状态
