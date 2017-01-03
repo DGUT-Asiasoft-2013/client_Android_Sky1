@@ -16,7 +16,7 @@
         android:id="@+id/list_bills_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="5dp"
+        android:padding="5dp"
         android:divider="@android:color/darker_gray"
         android:dividerHeight="1px"
         
