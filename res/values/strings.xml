@@ -16,5 +16,5 @@
      <string name="pay_sure">确认支付</string>
      <string name="pay_cancel">取消</string>
     <string name="pay_content">消费金额：34.50元</string>
-
+    <string name="menu_settings">Settings</string>
 </resources>

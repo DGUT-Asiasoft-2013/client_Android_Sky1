@@ -74,6 +74,10 @@
         </activity>
         <activity android:name="com.itcast.booksale.BillDetailActivity" >
         </activity>
+        <activity android:name="com.itcast.booksale.myself.RechargeListActivity">
+        </activity>
+        <activity android:name="com.itcast.booksale.ViewPageActivity">
+        </activity>
     </application>
 
 </manifest>
