@@ -5,7 +5,7 @@
     android:background="#D9E6B0"
     android:orientation="vertical" >
 
-
+    
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -26,8 +26,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="44dp"
                 android:layout_gravity="center"
-                android:layout_weight="0.8"
                 android:layout_marginLeft="15dp"
+                android:layout_weight="0.8"
                 android:background="@drawable/bg_edittext"
                 android:gravity="center"
                 android:hint="搜索ISBN"
@@ -42,11 +42,89 @@
                 android:background="@drawable/search2" />
         </LinearLayout>
 
+        <FrameLayout
+            android:id="@+id/view_page"
+            android:layout_width="wrap_content"
+            android:layout_height="150dip" 
+            android:layout_below="@id/lin_first">
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/viewpager"
+                android:layout_width="match_parent"
+                android:layout_height="fill_parent" >
+            </android.support.v4.view.ViewPager>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="30dip"
+                android:layout_gravity="bottom|center_horizontal"
+                android:background="#33000000"
+                android:gravity="center"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="图片之间的切换内容"
+                    android:textColor="@android:color/white" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dip"
+                    android:orientation="horizontal" >
+
+                    <!-- 五个点，使用shape画五个点 -->
+
+                    <View
+                        android:id="@+id/dop_0"
+                        android:layout_width="5dip"
+                        android:layout_height="5dip"
+                        android:layout_marginLeft="2dip"
+                        android:layout_marginRight="2dip"
+                        android:background="@drawable/dot_focused" />
+
+                    <View
+                        android:id="@+id/dop_1"
+                        android:layout_width="5dip"
+                        android:layout_height="5dip"
+                        android:layout_marginLeft="2dip"
+                        android:layout_marginRight="2dip"
+                        android:background="@drawable/dot_normal" />
+
+                    <View
+                        android:id="@+id/dop_2"
+                        android:layout_width="5dip"
+                        android:layout_height="5dip"
+                        android:layout_marginLeft="2dip"
+                        android:layout_marginRight="2dip"
+                        android:background="@drawable/dot_normal" />
+
+                    <View
+                        android:id="@+id/dop_3"
+                        android:layout_width="5dip"
+                        android:layout_height="5dip"
+                        android:layout_marginLeft="2dip"
+                        android:layout_marginRight="2dip"
+                        android:background="@drawable/dot_normal" />
+
+                    <View
+                        android:id="@+id/dop_4"
+                        android:layout_width="5dip"
+                        android:layout_height="5dip"
+                        android:layout_marginLeft="2dip"
+                        android:layout_marginRight="2dip"
+                        android:background="@drawable/dot_normal" />
+                </LinearLayout>
+            </LinearLayout>
+        </FrameLayout>
+
         <RelativeLayout
             android:id="@+id/lin_sec"
-            android:layout_below="@id/lin_first"
             android:layout_width="match_parent"
             android:layout_height="50dp"
+            android:layout_below="@id/view_page"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
             android:background="#D9E6B0"
@@ -57,19 +135,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="0.7"
-                android:text="图书分类:"
                 android:gravity="center"
-                android:textSize="16sp"
-                 />
+                android:text="图书分类:"
+                android:textSize="16sp" />
             <!-- 书籍分类 -->
 
             <Spinner
                 android:id="@+id/spinner_book_tag_select"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_weight="0.3"
-                
-                android:layout_toRightOf="@id/tv_first" />
+                android:layout_toRightOf="@id/tv_first"
+                android:layout_weight="0.3" />
         </RelativeLayout>
     </RelativeLayout>
 
@@ -85,14 +161,14 @@
         android:id="@+id/books_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:divider="@android:color/transparent"
         android:descendantFocusability="blocksDescendants"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="10dp"
         android:footerDividersEnabled="true"
-        android:paddingLeft="10dp"  
-        android:paddingRight="10dp"  
-        android:paddingTop="2dp"  
         android:paddingBottom="2dp"
-        android:dividerHeight="10dp" >
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="2dp" >
     </ListView>
 
 </LinearLayout>
