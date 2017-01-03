@@ -13,6 +13,9 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.itcast.booksale.BooksContentActivity;
 import com.itcast.booksale.R;
+import com.itcast.booksale.effects.MyListener;
+import com.itcast.booksale.effects.PullToRefreshLayout;
+import com.itcast.booksale.effects.PullableListView;
 import com.itcast.booksale.entity.Book;
 import com.itcast.booksale.entity.Page;
 import com.itcast.booksale.entity.User;
@@ -55,14 +58,15 @@ public class BookListFragment extends Fragment {
 	// 首页
 	View booksView;
 	List<Book> booksData;
-	ListView bookListView;
+//	ListView bookListView;
+	PullableListView bookListView;
 	EditText keyword;// 搜索关键字
 	int page = 0;
 	String keywords;
 
 	//加载更多
-	View btn_loadmore;
-	TextView textLoadMore;
+//	View btn_loadmore;//可以不要了
+//	TextView textLoadMore;
 	int loadmoreSelect;//用于区分各个书单列表的加载更多
 
 	//图书分类(标签)
@@ -71,7 +75,10 @@ public class BookListFragment extends Fragment {
 	private ArrayAdapter<String> booksTag_adapter;
 	String bookTag_text;
 
-
+	//--------
+	//上拉刷新和下拉加载
+	PullToRefreshLayout pullToRefresh;
+	//----------
 
 
 	User saler;
@@ -81,20 +88,57 @@ public class BookListFragment extends Fragment {
 
 		if (booksView == null) {
 			booksView = inflater.inflate(R.layout.fragment_page_books_list, null);
-			btn_loadmore = inflater.inflate(R.layout.widget_load_more_button, null);
-			textLoadMore = (TextView) btn_loadmore.findViewById(R.id.text);
+//			btn_loadmore = inflater.inflate(R.layout.widget_load_more_button, null);
+//			textLoadMore = (TextView) btn_loadmore.findViewById(R.id.text);
 
-			bookListView = (ListView) booksView.findViewById(R.id.books_list);
+			bookListView = (PullableListView) booksView.findViewById(R.id.content_view);
 			keyword = (EditText) booksView.findViewById(R.id.search_keyword);
 
 			//图书分类
 			bookTagSpinner = (Spinner) booksView.findViewById(R.id.spinner_book_tag_select);
 			initData();//初始化
+			
+			//-----------------------------==========================================
+			//设置上拉和下拉的监听
+			pullToRefresh =(PullToRefreshLayout) booksView.findViewById(R.id.refresh_view);
+			pullToRefresh.setOnRefreshListener(new MyListener(){
+				//刷新后的操作
+				@Override
+				public void onRefresh(PullToRefreshLayout pullToRefreshLayout) {
+					super.onRefresh(pullToRefreshLayout);
+					pullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
+				}
+				//下拉加载后的操作
+				@Override
+				public void onLoadMore(PullToRefreshLayout pullToRefreshLayout) {
+					super.onLoadMore(pullToRefreshLayout);
+					switch (loadmoreSelect) {
+					case 0:
+						loadmoreBooksListByAll();
+						break;
+					case 1:
+						loadmoreBooksListByKeyword();
+						break;
+					case 2:
+						loadmoreBooksListByTag(bookTag_text);
+						break;
+					default:
+						loadmoreBookListByKeywordAndType();
+						break;
+					}
+					pullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
+				}
+				
+			});
+			
+	
+			//---------------------------=============================================
 
 
 
 			//加载更多
-			bookListView.addFooterView(btn_loadmore);
+//			bookListView.addFooterView(btn_loadmore);
+			/*
 			btn_loadmore.setOnClickListener(new OnClickListener() {
 
 				@Override
@@ -117,7 +161,7 @@ public class BookListFragment extends Fragment {
 
 
 				}
-			});
+			});  */
 
 			bookListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -310,7 +354,7 @@ public class BookListFragment extends Fragment {
 				//选中下拉框后设置类型
 				bookTag_text= adapter.getItem(position);
 				keywords = keyword.getText().toString();
-				textLoadMore.setText("加载更多");
+//				textLoadMore.setText("加载更多");
 				if(bookTag_text.equals("全部") && keywords.length()==0){
 					getBooksListByAll();
 				}else if(keywords.length()==0){
@@ -429,7 +473,8 @@ public class BookListFragment extends Fragment {
 							BookListFragment.this.page = data.getNumber();// 放进主线程进行，确保数据部位空
 							BookListFragment.this.booksData = data.getContent();
 
-							bookListAdapter.notifyDataSetInvalidated();
+							bookListView.requestLayout();
+							bookListAdapter.notifyDataSetChanged();
 
 						}
 					});
@@ -441,15 +486,6 @@ public class BookListFragment extends Fragment {
 
 				}
 				catch (final Exception e) {
-					/*getActivity().runOnUiThread(new Runnable() {
-
-						@Override
-						public void run() {
-							new AlertDialog.Builder(getActivity())
-							.setTitle("reload错误")
-							.setMessage(e.getMessage()).show();
-						}
-					});*/
 					getActivity().runOnUiThread(new Runnable() {
 						
 						@Override
@@ -515,8 +551,8 @@ public class BookListFragment extends Fragment {
 
 	//加载更多
 	void loadmore(Request request){
-		btn_loadmore.setEnabled(false);
-		textLoadMore.setText("努力加载中...");
+//		btn_loadmore.setEnabled(false);
+//		textLoadMore.setText("努力加载中...");
 
 		Servelet.getOkHttpClient().newCall(request).enqueue(new Callback() {
 
@@ -526,26 +562,30 @@ public class BookListFragment extends Fragment {
 
 					@Override
 					public void run() {
-						btn_loadmore.setEnabled(true);
-						textLoadMore.setText("加载更多");
+//						btn_loadmore.setEnabled(true);
+//						textLoadMore.setText("加载更多");
 
 					}
 				});
 
 				try {
-					Page<Book> books = new ObjectMapper().readValue(arg1.body().string(),
+					final Page<Book> books = new ObjectMapper().readValue(arg1.body().string(),
 							new TypeReference<Page<Book>>() {});
 					if(books.getNumber()>page){
-						if(booksData==null){
-							booksData=books.getContent();
-						}else{
-							booksData.addAll(books.getContent());
-						}
-						page = books.getNumber();
+						
 						getActivity().runOnUiThread(new Runnable() {
 
 							@Override
 							public void run() {
+								//数据更改放到前台运行，前台不停在读数据，如果后台更改数据，那么前台读取的数据便错误了
+								if(booksData==null){
+									booksData=books.getContent();
+								}else{
+									booksData.addAll(books.getContent());
+								}
+								page = books.getNumber();
+								//--
+								bookListView.requestLayout();
 								bookListAdapter.notifyDataSetChanged();
 							}
 						});
@@ -555,7 +595,8 @@ public class BookListFragment extends Fragment {
 
 						@Override
 						public void run() {
-							textLoadMore.setText("没有更多了");
+//							textLoadMore.setText("没有更多了");
+							bookListView.requestLayout();
 							bookListAdapter.notifyDataSetChanged();
 //							new AlertDialog.Builder(getActivity())
 //							.setTitle("获取失败")
@@ -575,8 +616,8 @@ public class BookListFragment extends Fragment {
 
 					@Override
 					public void run() {
-						btn_loadmore.setEnabled(true);
-						textLoadMore.setText("加载更多");
+//						btn_loadmore.setEnabled(true);
+//						textLoadMore.setText("加载更多");
 					}
 				});
 			}
