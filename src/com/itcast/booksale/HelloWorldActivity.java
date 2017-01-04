@@ -61,6 +61,7 @@ public class HelloWorldActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		t = (TextView)(findViewById(R.id.frag_tabbar).findViewById(R.id.tab_subscribe_count));
+		
 		getMe();
 		tabbar = (MainTabbarFragment) getFragmentManager().findFragmentById(R.id.frag_tabbar);
 		tabbar.setOnTabSelectedListener(new OnTabSelectedListener() {
@@ -79,9 +80,7 @@ public class HelloWorldActivity extends Activity {
 				bringUpEditor();
 
 			}
-		});
-
-
+		});		
 	}
 
 	@Override

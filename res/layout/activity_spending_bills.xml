@@ -3,24 +3,50 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-    <TextView 
+
+    <TextView
         android:id="@+id/text_bills_title"
         android:layout_width="match_parent"
         android:layout_height="30dp"
-        android:text="账单"
-        android:textSize="10pt"
         android:gravity="center"
+        android:text="订单"
         android:textColor="@color/black_deep"
-        />
-    <ListView 
+        android:textSize="10pt" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:orientation="horizontal" >
+        
+        <TextView 
+            android:id="@+id/tv_bills_buy"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="我买到的书"
+            android:textSize="15sp"
+            android:gravity="center"
+            
+            />
+        <TextView 
+            android:id="@+id/tv_bills_sale"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="我卖出的书 "
+            android:textSize="15sp"
+            android:gravity="center"
+            
+            />
+    </LinearLayout>
+
+    <ListView
         android:id="@+id/list_bills_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="5dp"
         android:divider="@android:color/darker_gray"
         android:dividerHeight="1px"
-        
-        ></ListView>
-    
+        android:padding="5dp" >
+    </ListView>
 
 </LinearLayout>

@@ -20,7 +20,7 @@
 
         <LinearLayout
             android:id="@+id/tab_home"
-            android:layout_width="0dp"
+            android:layout_width="1dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="#ffffff"
@@ -46,7 +46,7 @@
 
         <LinearLayout
             android:id="@+id/tab_subscribes"
-            android:layout_width="0dp"
+            android:layout_width="1dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="#ffffff"
@@ -97,7 +97,7 @@
 
         <LinearLayout
             android:id="@+id/tab_shoppingCar"
-            android:layout_width="0dp"
+            android:layout_width="1dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="#ffffff"
@@ -123,7 +123,7 @@
 
         <LinearLayout
             android:id="@+id/tab_myself"
-            android:layout_width="0dp"
+            android:layout_width="1dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="#ffffff"
