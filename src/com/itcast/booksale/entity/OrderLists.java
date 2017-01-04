@@ -40,7 +40,7 @@ public class OrderLists implements Serializable{
 	//	
 	//	
 	//	orders_Key id;
-
+	Integer id;//订单主键
 	String orderId;//订单号
 
 	Book book;
@@ -54,6 +54,12 @@ public class OrderLists implements Serializable{
 
 
 
+	public Integer getId() {
+		return id;
+	}
+	public void setId(Integer id) {
+		this.id = id;
+	}
 	public Book getBook() {
 		return book;
 	}
