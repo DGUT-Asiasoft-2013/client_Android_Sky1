@@ -402,7 +402,7 @@ public class Buy_book_bus_fragment extends Fragment {
 	
 					for (int i = 0; i < list_shopping_bus.size(); i++) {
 						//Circular traversal the list_shopping_bus
-						Log.i("--------------检测----------", list_shopping_bus.get(i).getId().getBook().getText());
+//						Log.i("--------------检测----------", list_shopping_bus.get(i).getId().getBook().getText());
 						if (mSelectedState.get(list_shopping_bus.get(i).getId().getBook().getId())) {
 							
 							//if the one is seleted

@@ -50,6 +50,7 @@ public class LoginActivity extends Activity {
 	SimpleTextInputCellFragment fragAccount,fragPassword;//账号和密码
 	 private static final String FILE_NAME="saveUserNamePwd";
 	CheckBox autoLogin;
+	public static Boolean b = true;
 	
 	private float mWidth, mHeight;
 	
@@ -195,6 +196,11 @@ public class LoginActivity extends Activity {
 		{
 			fragPassword.setHintText("请输入密码");
 			fragPassword.setIsPassword(true);
+		}
+		if(b){
+			goLogin();
+		}else{
+			b=true;
 		}
 	}
 	
