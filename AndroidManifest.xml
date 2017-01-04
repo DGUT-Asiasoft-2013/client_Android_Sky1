@@ -30,7 +30,9 @@
         </activity>
         <activity android:name="com.itcast.booksale.LoginActivity" >
         </activity>
-        <activity android:name="com.itcast.booksale.HelloWorldActivity" >
+        <activity
+            android:name="com.itcast.booksale.HelloWorldActivity"
+            android:windowSoftInputMode="adjustPan" >
         </activity>
         <activity android:name="com.itcast.booksale.PasswordRecoverActivity" >
         </activity>
@@ -74,9 +76,9 @@
         </activity>
         <activity android:name="com.itcast.booksale.BillDetailActivity" >
         </activity>
-        <activity android:name="com.itcast.booksale.myself.RechargeListActivity">
+        <activity android:name="com.itcast.booksale.myself.RechargeListActivity" >
         </activity>
-        <activity android:name="com.itcast.booksale.ViewPageActivity">
+        <activity android:name="com.itcast.booksale.ViewPageActivity" >
         </activity>
     </application>
 
