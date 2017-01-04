@@ -1,11 +1,8 @@
 package com.itcast.booksale.fragment.pages;
 
 import java.io.IOException;
-import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -22,11 +19,9 @@ import com.itcast.booksale.effects.PullableListView;
 import com.itcast.booksale.entity.Book;
 import com.itcast.booksale.entity.Page;
 import com.itcast.booksale.entity.User;
-import com.itcast.booksale.fragment.widgets.AvatarView;
 import com.itcast.booksale.fragment.widgets.BookAvatarView;
 import com.itcast.booksale.servelet.Servelet;
 
-import android.R.integer;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Fragment;
@@ -47,19 +42,13 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
-import android.widget.BaseExpandableListAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ExpandableListView;
-import android.widget.LinearLayout;
 import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.Spinner;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.AdapterView.OnItemSelectedListener;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.MultipartBody;
@@ -81,12 +70,9 @@ public class BookListFragment extends Fragment implements OnClickListener {
 	//	View btn_loadmore;//可以不要了
 	//	TextView textLoadMore;
 	int loadmoreSelect;//用于区分各个书单列表的加载更多
-	/*
-	 * //图书分类(标签) private Spinner bookTagSpinner; private List<String>
-	 * bookTag_list; private ArrayAdapter<String> booksTag_adapter;
-	 */
 	String bookTag_text;
 
+	private LinearLayout layout_book_all;
 	private LinearLayout all_book_layout;
 	private LinearLayout textbook_layout;
 	private LinearLayout literature_layout;
@@ -120,11 +106,13 @@ public class BookListFragment extends Fragment implements OnClickListener {
 			//			btn_loadmore = inflater.inflate(R.layout.widget_load_more_button, null);
 			//			textLoadMore = (TextView) btn_loadmore.findViewById(R.id.text);
 
+			layout_book_all=(LinearLayout) booksView.findViewById(R.id.layout_book_all);
 			bookListView = (PullableListView) booksView.findViewById(R.id.content_view);
 			headerView = inflater.inflate(R.layout.headerview, null);
 			keyword = (EditText) booksView.findViewById(R.id.search_keyword);
 			keywords =keyword.getText().toString();
 			
+			//book classification
 			all_book_layout = (LinearLayout) booksView.findViewById(R.id.all_book_layout);
 			all_book_layout.setOnClickListener(this);
 			
@@ -148,10 +136,6 @@ public class BookListFragment extends Fragment implements OnClickListener {
 			
 			computer_layout = (LinearLayout) booksView.findViewById(R.id.computer_layout);
 			computer_layout.setOnClickListener(this);
-			// 图书分类
-			// bookTagSpinner = (Spinner)
-			// booksView.findViewById(R.id.spinner_book_tag_select);
-			// initData();//初始化
 
 			bookListView.addHeaderView(headerView);
 
@@ -269,37 +253,7 @@ public class BookListFragment extends Fragment implements OnClickListener {
 		return booksView;
 	}
 	
-	/*
-	 * //分类按钮
-	 * 
-	 * bookTagSpinner.setOnItemSelectedListener(new OnItemSelectedListener()
-	 * {
-	 * 
-	 * @Override public void onItemSelected(AdapterView<?> parent, View
-	 * view, int position, long id) { ArrayAdapter<String> adapter =
-	 * (ArrayAdapter<String>) parent.getAdapter(); //选中下拉框后设置类型
-	 * bookTag_text= adapter.getItem(position); keywords =
-	 * keyword.getText().toString(); textLoadMore.setText("加载更多");
-	 * if(bookTag_text.equals("全部") && keywords.length()==0){
-	 * //若无搜索字且分类为全部，获取全部书籍 getBooksListByAll(); 
-	 * }else if(keywords.length()==0){ //若无搜索字，选择类型，则获取该类型的所有书籍
-	 * getBooksListByTag(bookTag_text); 
-	 * }else if(bookTag_text.equals("全部") && keywords.length()!=0){ //若选择为全部，且有搜索，在全部中搜索关键字书籍
-	 * getBooksListByKeyword(); }
-	 * else { //在改类型中搜索关键字书籍
-	 * getBookListByKeywordAndType(keywords,bookTag_text); }
-	 * 
-	 * try { Field field =
-	 * AdapterView.class.getDeclaredField("mOldSelectedPosition");
-	 * field.setAccessible(true); //设置mOldSelectedPosition可访问
-	 * field.setInt(bookTagSpinner, AdapterView.INVALID_POSITION);
-	 * //设置mOldSelectedPosition的值 } catch (Exception e) {
-	 * e.printStackTrace(); } }
-	 * 
-	 * @Override public void onNothingSelected(AdapterView<?> parent) {
-	 * 
-	 * } });
-	 */
+
 	
 	public void onClick(View v) {
 		switch (v.getId()) {
