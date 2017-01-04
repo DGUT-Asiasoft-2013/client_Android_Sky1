@@ -5,6 +5,8 @@ import com.itcast.booksale.servelet.Servelet;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -75,7 +77,7 @@ public class SpendingBillsActivity extends Activity {
 			public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
 
 				deleteBillList(position);// 长按弹出删除指定订单列表功能
-				return false;
+				return true;
 			}
 		});
 
@@ -246,7 +248,16 @@ public class SpendingBillsActivity extends Activity {
 	}
 
 	public void deleteBillList(int postition) {
+		new AlertDialog.Builder(SpendingBillsActivity.this)
+		.setNegativeButton("删除", new DialogInterface.OnClickListener() {
 
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				
+				
+				
+			}
+		}).show();
 	}
 
 	void loadMore() {
