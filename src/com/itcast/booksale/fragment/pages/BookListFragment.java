@@ -53,6 +53,7 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
+import android.widget.LinearLayout;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
@@ -65,8 +66,8 @@ import okhttp3.MultipartBody;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class BookListFragment extends Fragment {
-	// 棣栭〉
+public class BookListFragment extends Fragment implements OnClickListener {
+	// 首页
 	View booksView,headerView;
 	List<Book> booksData;
 	//	ListView bookListView;
@@ -80,13 +81,20 @@ public class BookListFragment extends Fragment {
 	//	View btn_loadmore;//可以不要了
 	//	TextView textLoadMore;
 	int loadmoreSelect;//用于区分各个书单列表的加载更多
-
-	//鍥句功鍒嗙被(鏍囩)
-	private Spinner bookTagSpinner;
-	private List<String> bookTag_list;
-	private ArrayAdapter<String> booksTag_adapter;
+	/*
+	 * //图书分类(标签) private Spinner bookTagSpinner; private List<String>
+	 * bookTag_list; private ArrayAdapter<String> booksTag_adapter;
+	 */
 	String bookTag_text;
 
+	private LinearLayout all_book_layout;
+	private LinearLayout textbook_layout;
+	private LinearLayout literature_layout;
+	private LinearLayout story_book_layout;
+	private LinearLayout art_layout;
+	private LinearLayout science_layout;
+	private LinearLayout life_layout;
+	private LinearLayout computer_layout;
 	//--------
 	//上拉刷新和下拉加载
 	PullToRefreshLayout pullToRefresh;
@@ -115,10 +123,36 @@ public class BookListFragment extends Fragment {
 			bookListView = (PullableListView) booksView.findViewById(R.id.content_view);
 			headerView = inflater.inflate(R.layout.headerview, null);
 			keyword = (EditText) booksView.findViewById(R.id.search_keyword);
-			//			headerView = inflater.inflate(R.layout.headerview, null);
+			keywords =keyword.getText().toString();
+			
+			all_book_layout = (LinearLayout) booksView.findViewById(R.id.all_book_layout);
+			all_book_layout.setOnClickListener(this);
+			
+			textbook_layout = (LinearLayout) booksView.findViewById(R.id.textbook_layout);
+			textbook_layout.setOnClickListener(this);
+			
+			literature_layout = (LinearLayout) booksView.findViewById(R.id.literature_layouts);
+			literature_layout.setOnClickListener(this);
+			
+			story_book_layout = (LinearLayout) booksView.findViewById(R.id.story_book_layout);
+			story_book_layout.setOnClickListener(this);
+			
+			art_layout = (LinearLayout) booksView.findViewById(R.id.art_layout);
+			art_layout.setOnClickListener(this);
+			
+			science_layout = (LinearLayout) booksView.findViewById(R.id.science_layout);
+			science_layout.setOnClickListener(this);
+			
+			life_layout = (LinearLayout) booksView.findViewById(R.id.life_layout);
+			life_layout.setOnClickListener(this);
+			
+			computer_layout = (LinearLayout) booksView.findViewById(R.id.computer_layout);
+			computer_layout.setOnClickListener(this);
+			// 图书分类
+			// bookTagSpinner = (Spinner)
+			// booksView.findViewById(R.id.spinner_book_tag_select);
+			// initData();//初始化
 
-			bookTagSpinner = (Spinner) headerView.findViewById(R.id.spinner_book_tag_select);
-			initData();//初始化
 			bookListView.addHeaderView(headerView);
 
 			//-----------------------------==========================================
@@ -160,32 +194,8 @@ public class BookListFragment extends Fragment {
 
 			//加载更多
 			//			bookListView.addFooterView(btn_loadmore);
-			/*
 
 
-			btn_loadmore.setOnClickListener(new OnClickListener() {
-
-				@Override
-				public void onClick(View v) {
-					//鍒ゆ柇褰撳墠涓哄摢涓�绉嶅垪琛�
-					switch (loadmoreSelect) {
-					case 0:
-						loadmoreBooksListByAll();
-						break;
-					case 1:
-						loadmoreBooksListByKeyword();
-						break;
-					case 2:
-						loadmoreBooksListByTag(bookTag_text);
-						break;
-					default:
-						loadmoreBookListByKeywordAndType();
-						break;
-					}
-
-
-				}
-			});  */
 
 			bookListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -198,8 +208,9 @@ public class BookListFragment extends Fragment {
 
 			bookListView.setAdapter(bookListAdapter);
 
-			//初始化获取全部书籍
-			getBooksListByAll();
+			// 搜索功能(在OnResume中实现)
+			// 设置原始列表
+			getBooksListByAll();// 获取书籍数据
 
 			images = new Integer[] { R.drawable.a, R.drawable.b, R.drawable.c,
 					R.drawable.d, R.drawable.e };
@@ -257,6 +268,180 @@ public class BookListFragment extends Fragment {
 		}
 		return booksView;
 	}
+	
+	/*
+	 * //分类按钮
+	 * 
+	 * bookTagSpinner.setOnItemSelectedListener(new OnItemSelectedListener()
+	 * {
+	 * 
+	 * @Override public void onItemSelected(AdapterView<?> parent, View
+	 * view, int position, long id) { ArrayAdapter<String> adapter =
+	 * (ArrayAdapter<String>) parent.getAdapter(); //选中下拉框后设置类型
+	 * bookTag_text= adapter.getItem(position); keywords =
+	 * keyword.getText().toString(); textLoadMore.setText("加载更多");
+	 * if(bookTag_text.equals("全部") && keywords.length()==0){
+	 * //若无搜索字且分类为全部，获取全部书籍 getBooksListByAll(); 
+	 * }else if(keywords.length()==0){ //若无搜索字，选择类型，则获取该类型的所有书籍
+	 * getBooksListByTag(bookTag_text); 
+	 * }else if(bookTag_text.equals("全部") && keywords.length()!=0){ //若选择为全部，且有搜索，在全部中搜索关键字书籍
+	 * getBooksListByKeyword(); }
+	 * else { //在改类型中搜索关键字书籍
+	 * getBookListByKeywordAndType(keywords,bookTag_text); }
+	 * 
+	 * try { Field field =
+	 * AdapterView.class.getDeclaredField("mOldSelectedPosition");
+	 * field.setAccessible(true); //设置mOldSelectedPosition可访问
+	 * field.setInt(bookTagSpinner, AdapterView.INVALID_POSITION);
+	 * //设置mOldSelectedPosition的值 } catch (Exception e) {
+	 * e.printStackTrace(); } }
+	 * 
+	 * @Override public void onNothingSelected(AdapterView<?> parent) {
+	 * 
+	 * } });
+	 */
+	
+	public void onClick(View v) {
+		switch (v.getId()) {
+		case R.id.all_book_layout:
+			allBookLayoutClick();
+			break;
+		case R.id.textbook_layout:
+			TextBooklayoutClick();
+			break;
+			
+		case R.id.literature_layouts:
+			LiteraturelayoutClick();
+			break;
+			
+		case R.id.story_book_layout:
+			StoryBookLayoutClick();
+			break;
+			
+		case R.id.art_layout:
+			ArtLayoutClick();
+			break;
+			
+		case R.id.science_layout:
+			ScienceLayoutClick();
+			break;
+			
+		case R.id.life_layout:
+			LifeLayoutClick();
+			break;
+			
+		case R.id.computer_layout:
+			ComputerLayoutClick();
+			break;
+
+		default:
+			break;
+		}
+	}
+
+	/*
+	 * computer_layout's ClickListener
+	 */
+	public void ComputerLayoutClick() {
+		if (keywords.length()==0) {
+			getBooksListByTag("计算机");
+			
+		}
+		else {
+			getBookListByKeywordAndType(keywords,"计算机");
+		}
+	}
+
+	/*
+	 * life_layout's ClickListener
+	 */
+	public void LifeLayoutClick() {
+		if (keywords.length()==0) {
+			getBooksListByTag("生活");
+			
+		}
+		else {
+			getBookListByKeywordAndType(keywords,"生活");
+		}
+	}
+
+	/*
+	 * science_layout's ClickListener
+	 */
+	public void ScienceLayoutClick() {
+		if (keywords.length()==0) {
+			getBooksListByTag("科技");
+			
+		}
+		else {
+			getBookListByKeywordAndType(keywords,"科技");
+		}
+	}
+
+	/*
+	 * art_layout's ClickListener
+	 */
+	public void ArtLayoutClick() {
+		if (keywords.length()==0) {
+			getBooksListByTag("艺术");
+			
+		}
+		else {
+			getBookListByKeywordAndType(keywords,"艺术");
+		}
+	}
+
+	/*
+	 * story_book_layout's ClickListener
+	 */
+	public void StoryBookLayoutClick() {
+		if (keywords.length()==0) {
+			getBooksListByTag("童书");
+			
+		}
+		else {
+			getBookListByKeywordAndType(keywords,"童书");
+		}
+	}
+
+	/*
+	 * literature_layouts's ClickListener
+	 */
+	public void LiteraturelayoutClick() {
+		if (keywords.length()==0) {
+			getBooksListByTag("文学");
+			
+		}
+		else {
+			getBookListByKeywordAndType(keywords,"文学");
+		}
+	}
+
+	/*
+	 * textbook_layout's ClickListener
+	 */
+	public void TextBooklayoutClick() {
+		if (keywords.length()==0) {
+			getBooksListByTag("教科书");
+			
+		}
+		else {
+			getBookListByKeywordAndType(keywords,"教科书");
+		}
+	}
+
+	/*
+	 * all_book_layout's ClickListener
+	 */
+	public void allBookLayoutClick() {
+		if (keywords.length()==0) {
+			
+			getBooksListByAll();
+		}
+		else if (keywords.length()!=0) {
+			getBooksListByKeyword();
+		}
+	}
 
 	// -------
 	// 鍒涘缓閫傞厤鍣� BaseAdapter listAdapter
@@ -279,16 +464,15 @@ public class BookListFragment extends Fragment {
 				view = convertView;
 			}
 
-			// 璁剧疆鏁版嵁锛屽苟鑾峰彇
+			// 设置数据，并获取
 
-			TextView textDate = (TextView) view.findViewById(R.id.edit_date);// 缂栧啓鏃ユ湡
-			BookAvatarView bookAvatar = (BookAvatarView) view.findViewById(R.id.book_avatar);// 灏侀潰
-			TextView bookCellTitle = (TextView) view.findViewById(R.id.book_title);// 涔﹀悕
-			TextView bookAuthor = (TextView) view.findViewById(R.id.book_author);// 浣滆��
-			TextView bookSummary = (TextView) view.findViewById(R.id.text_about_book);//绠�浠�
-			TextView bookPrice = (TextView) view.findViewById(R.id.book_price);// 鍞环
+			TextView textDate = (TextView) view.findViewById(R.id.edit_date);// 编写日期
+			BookAvatarView bookAvatar = (BookAvatarView) view.findViewById(R.id.book_avatar);// 封面
+			TextView bookCellTitle = (TextView) view.findViewById(R.id.book_title);// 书名
+			TextView bookAuthor = (TextView) view.findViewById(R.id.book_author);// 作者
+			TextView bookSummary = (TextView) view.findViewById(R.id.text_about_book);// 简介
+			TextView bookPrice = (TextView) view.findViewById(R.id.book_price);// 售价
 			Button xiangtao_btn = (Button) view.findViewById(R.id.book_purchase);
-
 
 			final Book book = booksData.get(position);
 
@@ -410,7 +594,7 @@ public class BookListFragment extends Fragment {
 	public void onResume() {
 		super.onResume();
 
-		//搜索按钮
+		// 搜索按钮
 		booksView.findViewById(R.id.btn_search).setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -420,68 +604,27 @@ public class BookListFragment extends Fragment {
 			}
 		});
 
-		//分类按钮
-
-		bookTagSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
-
-			@Override
-			public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-				ArrayAdapter<String> adapter = (ArrayAdapter<String>) parent.getAdapter();
-				//选中下拉框后设置类型
-				bookTag_text= adapter.getItem(position);
-				keywords = keyword.getText().toString();
-				//				textLoadMore.setText("加载更多");
-				if(bookTag_text.equals("全部") && keywords.length()==0){
-					getBooksListByAll();
-				}else if(keywords.length()==0){
-					getBooksListByTag(bookTag_text);
-				}else if(bookTag_text.equals("全部") && keywords.length()!=0){
-					getBooksListByKeyword();
-				}else {
-					getBookListByKeywordAndType(keywords,bookTag_text);
-				}
-
-				try {
-					Field field =       AdapterView.class.getDeclaredField("mOldSelectedPosition");
-					field.setAccessible(true);  //璁剧疆mOldSelectedPosition鍙闂�
-					field.setInt(bookTagSpinner, AdapterView.INVALID_POSITION); //璁剧疆mOldSelectedPosition鐨勫��
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-
-			@Override
-			public void onNothingSelected(AdapterView<?> parent) {
-
-			}
-		});
 
 	}
 
-
-	//生成得到所有书的连接
-	void getBooksListByAll(){
-		loadmoreSelect = 0;//0为所有书的加载更多
-		Request request = Servelet.requestuildApi("books")
-				.get()
-				.build();
+	// 生成得到所有书的连接
+	void getBooksListByAll() {
+		loadmoreSelect = 0;// 0为所有书的加载更多
+		Request request = Servelet.requestuildApi("books").get().build();
 
 		reload(request);
 	}
 
-
-	//生成得到搜索书籍的书单
-	void getBooksListByKeyword(){
-		loadmoreSelect = 1;//1为搜索的加载更多
-		//判断类型有无选择		
-		if(bookTag_text.equals("全部")){
-			Request request = Servelet.requestuildApi("/book/s/"+keywords)
-					.get()
-					.build();
+	// 生成得到搜索书籍的书单
+	void getBooksListByKeyword() {
+		loadmoreSelect = 1;// 1为搜索的加载更多
+		// 判断类型有无选择
+		if (bookTag_text.equals("全部")) {
+			Request request = Servelet.requestuildApi("/book/s/" + keywords).get().build();
 
 			reload(request);
-		}else{
-			getBookListByKeywordAndType(keywords,bookTag_text);
+		} else {
+			getBookListByKeywordAndType(keywords, bookTag_text);
 		}
 
 	}
@@ -492,32 +635,28 @@ public class BookListFragment extends Fragment {
 		loadmoreSelect = 2;//2为分类的加载更多
 		bookTag_text = tag;
 
-		Request request = Servelet.requestuildApi("/books/"+tag+"/class")
-				.get()
-				.build();
+		Request request = Servelet.requestuildApi("/books/" + tag + "/class").get().build();
 		reload(request);
 	}
 
-	//生成得到搜索书籍并带有分类的书单
-	void getBookListByKeywordAndType(String key,String tag){
-		loadmoreSelect = 3;//3为搜索加分类的加载更多
+	// 生成得到搜索书籍并带有分类的书单
+	void getBookListByKeywordAndType(String key, String tag) {
+		loadmoreSelect = 3;// 3为搜索加分类的加载更多
 		keywords = key;
 		bookTag_text = tag;
-		Request request = Servelet.requestuildApi("/books/"+keywords+"/and/"+bookTag_text+"/class")
-				.get()
+		Request request = Servelet.requestuildApi("/books/" + keywords + "/and/" + bookTag_text + "/class").get()
 				.build();
 
 		reload(request);
 	}
 
-	//搜索关键字
-	void searchByKeyword(){
+	// 搜索关键字
+	void searchByKeyword() {
 		keywords = keyword.getText().toString();
-		if(keywords.length() == 0){
-			Toast.makeText(getActivity(),
-					"请输入关键字", Toast.LENGTH_SHORT).show();
+		if (keywords.length() == 0) {
+			Toast.makeText(getActivity(), "请输入关键字", Toast.LENGTH_SHORT).show();
 			return;
-		}else{
+		} else {
 
 			Editable edittext = keyword.getText();
 			InputMethodManager inputMethodManager = (InputMethodManager) getActivity()
@@ -528,10 +667,8 @@ public class BookListFragment extends Fragment {
 		}
 	}
 
-
-	//创建连接发送请求并传回信息
-	void reload(Request request){
-
+	// 创建连接发送请求并传回信息
+	void reload(Request request) {
 
 		Servelet.getOkHttpClient().newCall(request).enqueue(new Callback() {
 
@@ -554,7 +691,7 @@ public class BookListFragment extends Fragment {
 
 						}
 					});
-				}catch (JsonParseException e) {
+				} catch (JsonParseException e) {
 					e.printStackTrace();
 
 				} catch (JsonMappingException e) {
@@ -577,9 +714,8 @@ public class BookListFragment extends Fragment {
 			public void onFailure(Call arg0, final IOException e) {
 				getActivity().runOnUiThread(new Runnable() {
 					public void run() {
-						new AlertDialog.Builder(getActivity())
-						.setTitle("reload onFailure")
-						.setMessage(e.getMessage()).show();
+						new AlertDialog.Builder(getActivity()).setTitle("reload onFailure").setMessage(e.getMessage())
+								.show();
 					}
 				});
 
@@ -588,32 +724,26 @@ public class BookListFragment extends Fragment {
 		});
 	}
 
-	//全部书单的加载更多
-	void loadmoreBooksListByAll(){
-		Request request = Servelet.requestuildApi("/books/"+(page+1))
-				.get()
-				.build();
+	// 全部书单的加载更多
+	void loadmoreBooksListByAll() {
+		Request request = Servelet.requestuildApi("/books/" + (page + 1)).get().build();
 		loadmore(request);
 	}
 
-	//搜索列表的加载更多
-	void loadmoreBooksListByKeyword(){
-		//判断类型有无选择
-		if(bookTag_text.equals("全部")){
-			Request request = Servelet.requestuildApi("/book/s/"+keywords+"/"+(page+1))
-					.get()
-					.build();
+	// 搜索列表的加载更多
+	void loadmoreBooksListByKeyword() {
+		// 判断类型有无选择
+		if (bookTag_text.equals("全部")) {
+			Request request = Servelet.requestuildApi("/book/s/" + keywords + "/" + (page + 1)).get().build();
 			loadmore(request);
-		}else{
+		} else {
 			loadmoreBookListByKeywordAndType();
 		}
 	}
 
-	//生成得到搜索书籍分类的加载更多
-	void loadmoreBooksListByTag(String tag){
-		Request request = Servelet.requestuildApi("/books/"+tag+"/class/"+(page+1))
-				.get()
-				.build();
+	// 生成得到搜索书籍分类的加载更多
+	void loadmoreBooksListByTag(String tag) {
+		Request request = Servelet.requestuildApi("/books/" + tag + "/class/" + (page + 1)).get().build();
 		loadmore(request);
 	}
 
@@ -678,7 +808,6 @@ public class BookListFragment extends Fragment {
 					});
 				}
 
-
 			}
 
 			@Override
@@ -693,27 +822,6 @@ public class BookListFragment extends Fragment {
 				});
 			}
 		});
-	}
-
-	//初始化下拉框
-	public void initData(){
-		//添加下拉框数据
-		bookTag_list = new ArrayList<String>();
-		bookTag_list.add("全部");
-		bookTag_list.add("教科书");
-		bookTag_list.add("文学");
-		bookTag_list.add("童书");
-		bookTag_list.add("艺术");
-		bookTag_list.add("科技");
-		bookTag_list.add("生活");
-		bookTag_list.add("计算机");
-		//适配器
-		booksTag_adapter =  new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item,bookTag_list);
-		//设置样式
-		booksTag_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		//加载适配器
-		bookTagSpinner.setAdapter(booksTag_adapter);
-
 	}
 
 
