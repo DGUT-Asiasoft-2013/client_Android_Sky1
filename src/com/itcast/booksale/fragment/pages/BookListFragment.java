@@ -65,12 +65,13 @@ import okhttp3.Response;
 
 public class BookListFragment extends Fragment {
 	// 棣栭〉
-	View booksView;
+	View booksView,headerView;
 	List<Book> booksData;
 	ListView bookListView;
 	EditText keyword;// 鎼滅储鍏抽敭瀛�
 	int page = 0;
 	String keywords;
+
 
 	//鍔犺浇鏇村
 	View btn_loadmore;
@@ -108,16 +109,18 @@ public class BookListFragment extends Fragment {
 
 			
 			bookListView = (ListView) booksView.findViewById(R.id.books_list);
-			keyword = (EditText) booksView.findViewById(R.id.search_keyword);
+			headerView = inflater.inflate(R.layout.headerview, null);
+			keyword = (EditText) headerView.findViewById(R.id.search_keyword);
 
 			//鍥句功鍒嗙被
-			bookTagSpinner = (Spinner) booksView.findViewById(R.id.spinner_book_tag_select);
+			bookTagSpinner = (Spinner) headerView.findViewById(R.id.spinner_book_tag_select);
 			initData();//鍒濆鍖�
 
 
 
 			//鍔犺浇鏇村
 			bookListView.addFooterView(btn_loadmore);
+			bookListView.addHeaderView(headerView);
 			btn_loadmore.setOnClickListener(new OnClickListener() {
 
 				@Override
@@ -368,7 +371,7 @@ public class BookListFragment extends Fragment {
 		super.onResume();
 
 		//鎼滅储鎸夐挳
-		booksView.findViewById(R.id.btn_search).setOnClickListener(new OnClickListener() {
+		headerView.findViewById(R.id.btn_search).setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
