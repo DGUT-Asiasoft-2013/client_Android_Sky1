@@ -44,7 +44,7 @@ import android.widget.Toast;
  */
 public class OrdersActivity extends Activity {
 	Bookbus order;//get bookbus's massage what were putted
-	OrderLists orderlist;
+	OrderLists orderList;
 	//ye mian shu xing
 	private AvatarView bookUserAvatar; // 图书卖家照片
 	private TextView bookUserName; // 卖书卖家姓名
@@ -125,13 +125,20 @@ public class OrdersActivity extends Activity {
 		Servelet.getOkHttpClient().newCall(request).enqueue(new Callback() {
 
 			@Override
-			public void onResponse(Call arg0, Response arg1) throws IOException {
+			public void onResponse(Call arg0, final Response arg1) throws IOException {
+				
+				final String arg = arg1.body().string();
+				//把订单格式化
+				
+				ObjectMapper objectMapper=new ObjectMapper();
+				orderList = objectMapper.readValue(arg, OrderLists.class);
 				runOnUiThread(new Runnable() {
 
 					@Override
 					public void run() {
-//						ObjectMapper objectMapper=new ObjectMapper();
-//						orderlist=objectMapper.readValue(, OrderLists.class);//读取值					
+						
+						Log.d("ARG-------------------", arg);
+				
 						new AlertDialog.Builder(OrdersActivity.this)
 						.setTitle("连接成功")
 						.setMessage("提交订单成功")
@@ -180,8 +187,8 @@ public class OrdersActivity extends Activity {
 	}
 	//私下订单页面
 	void goSpedingBillActivity(){
-		Intent itnt = new Intent(this,SpendingBillsActivity.class);
-//		itnt.putExtra("order",)
+		Intent itnt = new Intent(this,BillDetailActivity.class);
+		itnt.putExtra("order",orderList);
 		startActivity(itnt);
 		finish();
 	}
