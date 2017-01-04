@@ -114,7 +114,7 @@ public class BookListFragment extends Fragment {
 
 			bookListView = (PullableListView) booksView.findViewById(R.id.content_view);
 			headerView = inflater.inflate(R.layout.headerview, null);
-			keyword = (EditText) headerView.findViewById(R.id.search_keyword);
+			keyword = (EditText) booksView.findViewById(R.id.search_keyword);
 			//			headerView = inflater.inflate(R.layout.headerview, null);
 
 			bookTagSpinner = (Spinner) headerView.findViewById(R.id.spinner_book_tag_select);
@@ -411,7 +411,7 @@ public class BookListFragment extends Fragment {
 		super.onResume();
 
 		//搜索按钮
-		headerView.findViewById(R.id.btn_search).setOnClickListener(new OnClickListener() {
+		booksView.findViewById(R.id.btn_search).setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
