@@ -65,18 +65,19 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class BookListFragment extends Fragment {
-	
-	View booksView;
+	// 棣栭〉
+	View booksView,headerView;
 	List<Book> booksData;
-//	ListView bookListView;
+	//	ListView bookListView;
 	PullableListView bookListView;
 	EditText keyword;// 搜索关键字
 	int page = 0;
 	String keywords;
 
+
 	//加载更多
-//	View btn_loadmore;//可以不要了
-//	TextView textLoadMore;
+	//	View btn_loadmore;//可以不要了
+	//	TextView textLoadMore;
 	int loadmoreSelect;//用于区分各个书单列表的加载更多
 
 	//鍥句功鍒嗙被(鏍囩)
@@ -92,8 +93,8 @@ public class BookListFragment extends Fragment {
 
 
 	User saler;
-	
-	
+
+
 	private Integer[] images;
 	private String[] titles;
 	private ArrayList<ImageView> imageviews;
@@ -107,16 +108,20 @@ public class BookListFragment extends Fragment {
 
 		if (booksView == null) {
 			booksView = inflater.inflate(R.layout.fragment_page_books_list, null);
-//			btn_loadmore = inflater.inflate(R.layout.widget_load_more_button, null);
-//			textLoadMore = (TextView) btn_loadmore.findViewById(R.id.text);
+			//			btn_loadmore = inflater.inflate(R.layout.widget_load_more_button, null);
+			//			textLoadMore = (TextView) btn_loadmore.findViewById(R.id.text);
 
 			bookListView = (PullableListView) booksView.findViewById(R.id.content_view);
 			keyword = (EditText) booksView.findViewById(R.id.search_keyword);
 
-			//鍥句功鍒嗙被
+
+			//			bookListView = (ListView) booksView.findViewById(R.id.books_list);
+			//			headerView = inflater.inflate(R.layout.headerview, null);
+			//			keyword = (EditText) headerView.findViewById(R.id.search_keyword);
+
 			bookTagSpinner = (Spinner) booksView.findViewById(R.id.spinner_book_tag_select);
 			initData();//初始化
-			
+
 			//-----------------------------==========================================
 			//设置上拉和下拉的监听
 			pullToRefresh =(PullToRefreshLayout) booksView.findViewById(R.id.refresh_view);
@@ -147,16 +152,18 @@ public class BookListFragment extends Fragment {
 					}
 					pullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
 				}
-				
-			});
-			
-	
-			//---------------------------=============================================
 
+			});
+
+
+			//---------------------------=============================================
+			//			bookListView.addHeaderView(headerView);
 
 			//加载更多
-//			bookListView.addFooterView(btn_loadmore);
+			//			bookListView.addFooterView(btn_loadmore);
 			/*
+
+
 			btn_loadmore.setOnClickListener(new OnClickListener() {
 
 				@Override
@@ -196,7 +203,7 @@ public class BookListFragment extends Fragment {
 			// 鎼滅储鍔熻兘(鍦∣nResume涓疄鐜�)
 			// 璁剧疆鍘熷鍒楄〃
 			getBooksListByAll();// 鑾峰彇涔︾睄鏁版嵁
-			
+
 			images = new Integer[] { R.drawable.a, R.drawable.b, R.drawable.c,
 					R.drawable.d, R.drawable.e };
 			titles = new String[] { "书香", "就输大甩卖",
@@ -208,7 +215,7 @@ public class BookListFragment extends Fragment {
 				iv.setBackgroundResource(images[i]);
 				imageviews.add(iv);
 			}   
-			
+
 			// 将五个点放入到集合中
 			dots = new ArrayList<View>();
 			dots.add(booksView.findViewById(R.id.dop_0));
@@ -223,13 +230,13 @@ public class BookListFragment extends Fragment {
 			// viewpager中的图片也是需要经过适配进去的
 			MyAdapter adapter = new MyAdapter();
 			viewpager.setAdapter(adapter);
-			
+
 			//添加监听事件(页面改变事件)
 			viewpager.setOnPageChangeListener(new OnPageChangeListener() {
-				
+
 				//记录原先点的位置
 				int oldposition = 0;
-				
+
 				//1-->2    1页面出去的时候启动的方法
 				@Override
 				public void onPageSelected(int position) {
@@ -242,12 +249,12 @@ public class BookListFragment extends Fragment {
 				//1 -->2  2页面进来后启动的方法 
 				@Override
 				public void onPageScrolled(int arg0, float arg1, int arg2) {
-					
+
 				}
 				//页面滑动时调用的方法 
 				@Override
 				public void onPageScrollStateChanged(int arg0) {
-					
+
 				}
 			});
 		}
@@ -276,7 +283,7 @@ public class BookListFragment extends Fragment {
 			}
 
 			// 璁剧疆鏁版嵁锛屽苟鑾峰彇
-			
+
 			TextView textDate = (TextView) view.findViewById(R.id.edit_date);// 缂栧啓鏃ユ湡
 			BookAvatarView bookAvatar = (BookAvatarView) view.findViewById(R.id.book_avatar);// 灏侀潰
 			TextView bookCellTitle = (TextView) view.findViewById(R.id.book_title);// 涔﹀悕
@@ -284,10 +291,10 @@ public class BookListFragment extends Fragment {
 			TextView bookSummary = (TextView) view.findViewById(R.id.text_about_book);//绠�浠�
 			TextView bookPrice = (TextView) view.findViewById(R.id.book_price);// 鍞环
 			Button xiangtao_btn = (Button) view.findViewById(R.id.book_purchase);
-			
-			
+
+
 			final Book book = booksData.get(position);
-			
+
 			// add ClickListener for the xiangtao_btn
 			xiangtao_btn.setOnClickListener(new OnClickListener() {
 
@@ -308,7 +315,7 @@ public class BookListFragment extends Fragment {
 			bookAuthor.setText(book.getAuthor());
 			bookSummary.setText(book.getSummary());
 			bookPrice.setText(book.getPrice()+" 鍏�");
-						
+
 
 			return view;
 		}
@@ -345,23 +352,23 @@ public class BookListFragment extends Fragment {
 			@Override
 			public void onResponse(Call arg0, Response arg1) throws IOException {
 				try {
-					
+
 					final String string = arg1.body().string();
 					getActivity().runOnUiThread(new Runnable() {
 						public void run() {
-							
+
 							new AlertDialog
 							.Builder(getActivity())
 							.setTitle("success to add bookbus")
 							.setMessage(string)
 							.setPositiveButton("ok", null)
 							.show();
-							
+
 						}
 					});
 				} catch (Exception e) {
 					getActivity().runOnUiThread(new Runnable() {
-						
+
 						@Override
 						public void run() {
 
@@ -380,9 +387,9 @@ public class BookListFragment extends Fragment {
 							@Override
 							public void run() {
 								new AlertDialog.Builder(getActivity()).setTitle("failed to add bookbus")
-										.setMessage(arg1.toString())
-										.setPositiveButton("ok", null)
-										.show();
+								.setMessage(arg1.toString())
+								.setPositiveButton("ok", null)
+								.show();
 
 							}
 						});
@@ -426,7 +433,7 @@ public class BookListFragment extends Fragment {
 				//选中下拉框后设置类型
 				bookTag_text= adapter.getItem(position);
 				keywords = keyword.getText().toString();
-//				textLoadMore.setText("加载更多");
+				//				textLoadMore.setText("加载更多");
 				if(bookTag_text.equals("全部") && keywords.length()==0){
 					getBooksListByAll();
 				}else if(keywords.length()==0){
@@ -559,10 +566,10 @@ public class BookListFragment extends Fragment {
 				}
 				catch (final Exception e) {
 					getActivity().runOnUiThread(new Runnable() {
-						
+
 						@Override
 						public void run() {
-							
+
 							Toast.makeText(getActivity(), "reload失败", Toast.LENGTH_SHORT).show();
 						}
 					});
@@ -584,7 +591,7 @@ public class BookListFragment extends Fragment {
 		});
 	}
 
-	//鍏ㄩ儴涔﹀崟鐨勫姞杞芥洿澶�
+	//全部书单的加载更多
 	void loadmoreBooksListByAll(){
 		Request request = Servelet.requestuildApi("/books/"+(page+1))
 				.get()
@@ -592,10 +599,10 @@ public class BookListFragment extends Fragment {
 		loadmore(request);
 	}
 
-	//鎼滅储鍒楄〃鐨勫姞杞芥洿澶�
+	//搜索列表的加载更多
 	void loadmoreBooksListByKeyword(){
-		//鍒ゆ柇绫诲瀷鏈夋棤閫夋嫨
-		if(bookTag_text.equals("鍏ㄩ儴")){
+		//判断类型有无选择
+		if(bookTag_text.equals("全部")){
 			Request request = Servelet.requestuildApi("/book/s/"+keywords+"/"+(page+1))
 					.get()
 					.build();
@@ -605,7 +612,7 @@ public class BookListFragment extends Fragment {
 		}
 	}
 
-	//鐢熸垚寰楀埌鎼滅储涔︾睄鍒嗙被鐨勫姞杞芥洿澶�
+	//生成得到搜索书籍分类的加载更多
 	void loadmoreBooksListByTag(String tag){
 		Request request = Servelet.requestuildApi("/books/"+tag+"/class/"+(page+1))
 				.get()
@@ -613,7 +620,7 @@ public class BookListFragment extends Fragment {
 		loadmore(request);
 	}
 
-	//鐢熸垚寰楀埌鎼滅储涔︾睄骞跺垎绫荤殑鍔犺浇鏇村
+	//生成得到搜索书籍并分类的加载更多
 	void loadmoreBookListByKeywordAndType(){
 		Request request = Servelet.requestuildApi("/books/"+keywords+"/and/"+bookTag_text+"/class"+(page+1))
 				.get()
@@ -621,10 +628,10 @@ public class BookListFragment extends Fragment {
 		loadmore(request);
 	}
 
-	//鍔犺浇鏇村
+	//加载更多
 	void loadmore(Request request){
-//		btn_loadmore.setEnabled(false);
-//		textLoadMore.setText("努力加载中...");
+		//		btn_loadmore.setEnabled(false);
+		//		textLoadMore.setText("努力加载中...");
 
 		Servelet.getOkHttpClient().newCall(request).enqueue(new Callback() {
 
@@ -634,8 +641,8 @@ public class BookListFragment extends Fragment {
 
 					@Override
 					public void run() {
-//						btn_loadmore.setEnabled(true);
-//						textLoadMore.setText("加载更多");
+						//						btn_loadmore.setEnabled(true);
+						//						textLoadMore.setText("加载更多");
 
 					}
 				});
@@ -644,7 +651,7 @@ public class BookListFragment extends Fragment {
 					final Page<Book> books = new ObjectMapper().readValue(arg1.body().string(),
 							new TypeReference<Page<Book>>() {});
 					if(books.getNumber()>page){
-						
+
 						getActivity().runOnUiThread(new Runnable() {
 
 							@Override
@@ -667,7 +674,7 @@ public class BookListFragment extends Fragment {
 
 						@Override
 						public void run() {
-//							textLoadMore.setText("没有更多了");
+							//							textLoadMore.setText("没有更多了");
 							bookListView.requestLayout();
 							bookListAdapter.notifyDataSetChanged();
 						}
@@ -683,8 +690,8 @@ public class BookListFragment extends Fragment {
 
 					@Override
 					public void run() {
-//						btn_loadmore.setEnabled(true);
-//						textLoadMore.setText("加载更多");
+						//						btn_loadmore.setEnabled(true);
+						//						textLoadMore.setText("加载更多");
 					}
 				});
 			}
@@ -711,8 +718,8 @@ public class BookListFragment extends Fragment {
 		bookTagSpinner.setAdapter(booksTag_adapter);
 
 	}
-	
-	
+
+
 	public class MyAdapter extends PagerAdapter {
 		// 代表的是当前传进来的对象，是不是要在我当前页面显示的
 		@Override
@@ -765,7 +772,7 @@ public class BookListFragment extends Fragment {
 		super.onStop();
 		scheduledExecutorService.shutdown();
 	};
-	
+
 	public class ViewPageTask implements Runnable{
 
 		@Override
@@ -773,7 +780,7 @@ public class BookListFragment extends Fragment {
 			currentItem = (currentItem+1) % images.length;
 			handler.sendEmptyMessage(0);
 		}
-		
+
 	}
 	private Handler handler = new Handler(){
 
@@ -781,7 +788,7 @@ public class BookListFragment extends Fragment {
 		public void handleMessage(Message msg) {
 			viewpager.setCurrentItem(currentItem);
 		}
-		
+
 	};
 	private ScheduledExecutorService scheduledExecutorService;
 
