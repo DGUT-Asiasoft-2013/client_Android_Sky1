@@ -26,6 +26,7 @@ import com.itcast.booksale.fragment.widgets.AvatarView;
 import com.itcast.booksale.fragment.widgets.BookAvatarView;
 import com.itcast.booksale.servelet.Servelet;
 
+import android.R.integer;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Fragment;
@@ -112,15 +113,13 @@ public class BookListFragment extends Fragment {
 			//			textLoadMore = (TextView) btn_loadmore.findViewById(R.id.text);
 
 			bookListView = (PullableListView) booksView.findViewById(R.id.content_view);
-			keyword = (EditText) booksView.findViewById(R.id.search_keyword);
-
-
-			//			bookListView = (ListView) booksView.findViewById(R.id.books_list);
+			headerView = inflater.inflate(R.layout.headerview, null);
+			keyword = (EditText) headerView.findViewById(R.id.search_keyword);
 			//			headerView = inflater.inflate(R.layout.headerview, null);
-			//			keyword = (EditText) headerView.findViewById(R.id.search_keyword);
 
-			bookTagSpinner = (Spinner) booksView.findViewById(R.id.spinner_book_tag_select);
+			bookTagSpinner = (Spinner) headerView.findViewById(R.id.spinner_book_tag_select);
 			initData();//初始化
+			bookListView.addHeaderView(headerView);
 
 			//-----------------------------==========================================
 			//设置上拉和下拉的监听
@@ -199,10 +198,8 @@ public class BookListFragment extends Fragment {
 
 			bookListView.setAdapter(bookListAdapter);
 
-
-			// 鎼滅储鍔熻兘(鍦∣nResume涓疄鐜�)
-			// 璁剧疆鍘熷鍒楄〃
-			getBooksListByAll();// 鑾峰彇涔︾睄鏁版嵁
+			//初始化获取全部书籍
+			getBooksListByAll();
 
 			images = new Integer[] { R.drawable.a, R.drawable.b, R.drawable.c,
 					R.drawable.d, R.drawable.e };
@@ -314,7 +311,7 @@ public class BookListFragment extends Fragment {
 			bookCellTitle.setText(book.getTitle());
 			bookAuthor.setText(book.getAuthor());
 			bookSummary.setText(book.getSummary());
-			bookPrice.setText(book.getPrice()+" 鍏�");
+			bookPrice.setText(book.getPrice()+"元");
 
 
 			return view;
@@ -414,7 +411,7 @@ public class BookListFragment extends Fragment {
 		super.onResume();
 
 		//搜索按钮
-		booksView.findViewById(R.id.btn_search).setOnClickListener(new OnClickListener() {
+		headerView.findViewById(R.id.btn_search).setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
