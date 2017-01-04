@@ -8,16 +8,20 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.itcast.booksale.R;
 import com.itcast.booksale.entity.Money;
+import com.itcast.booksale.entity.OrderLists;
+import com.itcast.booksale.entity.Page;
 import com.itcast.booksale.entity.Subscribe;
 import com.itcast.booksale.entity.User;
 import com.itcast.booksale.fragment.pages.SubscribeListUserFragment;
 import com.itcast.booksale.servelet.Servelet;
 import com.lidroid.xutils.view.ResLoader;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.os.Bundle;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,9 +42,11 @@ public class RechargeListActivity extends Activity{
 	
 	List<Money> recharge;
 	
-	private List<Money> list=new ArrayList<Money>();
+	//private List<Money> list=new ArrayList<Money>();
 	
 	 User user;
+	 
+	 int page=0;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -109,19 +115,22 @@ public class RechargeListActivity extends Activity{
 				});
 			}
 		});
+		
+		//reload();
 	}
 	
 
 	void reload(){
 		
-		Toast.makeText(RechargeListActivity.this, user.getAccount(), Toast.LENGTH_SHORT).show();
+		/*Toast.makeText(RechargeListActivity.this, user.getAccount(), Toast.LENGTH_SHORT).show();
 		MultipartBody body=new MultipartBody.Builder()
 				.addFormDataPart("user_id", user.getAccount())
-				.build();
-		
+				.build();*/
+		//Log.d("=====£¡£¡======", user.getAccount());
 
 		Request request=Servelet.requestuildApi(user.getAccount()+"/money/list")
-				.post(body)
+				//Request request=Servelet.requestuildApi(user.getId()+"/money/list")
+				.get()
 				.build();
 		
 		Servelet.getOkHttpClient().newCall(request).enqueue(new Callback() {
@@ -129,13 +138,18 @@ public class RechargeListActivity extends Activity{
 			@Override
 			public void onResponse(Call arg0, Response arg1) throws IOException {
 				// TODO Auto-generated method stub
+				String ar = arg1.body().string();
+				Log.d("=====£¡£¡======", ar);
 				try{					
-					final List<Money> data =  new ObjectMapper().readValue(arg1.body().string(),new TypeReference<List<Money>>(){});
+					final Page<Money> data =  new ObjectMapper().readValue(ar,
+							new TypeReference<Page<Money>>(){});
 
 					RechargeListActivity.this.runOnUiThread(new Runnable() {
 						public void run() {
-							RechargeListActivity.this.recharge = data;
-							adapter.notifyDataSetInvalidated();
+							RechargeListActivity.this.recharge = data.getContent();
+							RechargeListActivity.this.page = data.getNumber();
+							
+							adapter.notifyDataSetChanged();
 						}
 					});
 				}catch(final Exception e){
@@ -168,36 +182,35 @@ public class RechargeListActivity extends Activity{
 	}
 	
 	BaseAdapter adapter=new BaseAdapter() {
-		
+		@SuppressLint("InflateParams")
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
 			// TODO Auto-generated method stub
-			View view = null;
+			//View view = null;
 
 			if (convertView == null) {
 				LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-				view = inflater.inflate(R.layout.activity_list_recharge, null);
-			} else {
-				view = convertView;
-			}
+				convertView = inflater.inflate(R.layout.activity_list_recharge, null);
+			} 
+			
 			Money money = recharge.get(position);
 
-			TextView textDate = (TextView) view.findViewById(R.id.recharge_createtime);
-			TextView rechargeMoney=(TextView) view.findViewById(R.id.recharge_money);
+			TextView textDate = (TextView) convertView.findViewById(R.id.recharge_createtime);
+			TextView rechargeMoney=(TextView) convertView.findViewById(R.id.recharge_money);
 			
-			String sum=String.valueOf(money.getSumMoney());
-			rechargeMoney.setText(sum);
+			String sum=String.valueOf(money.getRecharge());
+			rechargeMoney.setText("+"+sum);
 
 			String dateStr = DateFormat.format("yyyy-MM-dd hh:mm", money.getCreateDate()).toString();
 			textDate.setText(dateStr);
 
-			return view;
+			return convertView;
 		}
 		
 		@Override
 		public long getItemId(int position) {
 			// TODO Auto-generated method stub
-			return recharge.get(position).getId();
+			return position;
 		}
 		
 		@Override
@@ -209,7 +222,11 @@ public class RechargeListActivity extends Activity{
 		@Override
 		public int getCount() {
 			// TODO Auto-generated method stub
-			return recharge== null?0:recharge.size();
+			if(recharge==null){
+				return 0;
+			}else{
+				return recharge.size();
+			}
 		}
 	};
 	

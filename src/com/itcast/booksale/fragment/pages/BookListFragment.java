@@ -103,8 +103,6 @@ public class BookListFragment extends Fragment implements OnClickListener {
 
 		if (booksView == null) {
 			booksView = inflater.inflate(R.layout.fragment_page_books_list, null);
-			//			btn_loadmore = inflater.inflate(R.layout.widget_load_more_button, null);
-			//			textLoadMore = (TextView) btn_loadmore.findViewById(R.id.text);
 
 			layout_book_all=(LinearLayout) booksView.findViewById(R.id.layout_book_all);
 			bookListView = (PullableListView) booksView.findViewById(R.id.content_view);
@@ -113,28 +111,28 @@ public class BookListFragment extends Fragment implements OnClickListener {
 			keywords =keyword.getText().toString();
 			
 			//book classification
-			all_book_layout = (LinearLayout) booksView.findViewById(R.id.all_book_layout);
+			all_book_layout = (LinearLayout) headerView.findViewById(R.id.all_book_layout);
 			all_book_layout.setOnClickListener(this);
 			
-			textbook_layout = (LinearLayout) booksView.findViewById(R.id.textbook_layout);
+			textbook_layout = (LinearLayout) headerView.findViewById(R.id.textbook_layout);
 			textbook_layout.setOnClickListener(this);
 			
-			literature_layout = (LinearLayout) booksView.findViewById(R.id.literature_layouts);
+			literature_layout = (LinearLayout) headerView.findViewById(R.id.literature_layouts);
 			literature_layout.setOnClickListener(this);
 			
-			story_book_layout = (LinearLayout) booksView.findViewById(R.id.story_book_layout);
+			story_book_layout = (LinearLayout) headerView.findViewById(R.id.story_book_layout);
 			story_book_layout.setOnClickListener(this);
 			
-			art_layout = (LinearLayout) booksView.findViewById(R.id.art_layout);
+			art_layout = (LinearLayout) headerView.findViewById(R.id.art_layout);
 			art_layout.setOnClickListener(this);
 			
-			science_layout = (LinearLayout) booksView.findViewById(R.id.science_layout);
+			science_layout = (LinearLayout) headerView.findViewById(R.id.science_layout);
 			science_layout.setOnClickListener(this);
 			
-			life_layout = (LinearLayout) booksView.findViewById(R.id.life_layout);
+			life_layout = (LinearLayout) headerView.findViewById(R.id.life_layout);
 			life_layout.setOnClickListener(this);
 			
-			computer_layout = (LinearLayout) booksView.findViewById(R.id.computer_layout);
+			computer_layout = (LinearLayout) headerView.findViewById(R.id.computer_layout);
 			computer_layout.setOnClickListener(this);
 
 			bookListView.addHeaderView(headerView);
@@ -174,11 +172,6 @@ public class BookListFragment extends Fragment implements OnClickListener {
 
 
 			//---------------------------=============================================
-			//			bookListView.addHeaderView(headerView);
-
-			//加载更多
-			//			bookListView.addFooterView(btn_loadmore);
-
 
 
 			bookListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -397,12 +390,7 @@ public class BookListFragment extends Fragment implements OnClickListener {
 		}
 	}
 
-	// -------
-	// 鍒涘缓閫傞厤鍣� BaseAdapter listAdapter
-	// getView(閲嶈),getItemID,getItem,getCount
-	// Suppresslint("InflateParams")
-	// 鍦╣etView閲岄潰,鍙栧嚭瑙嗗浘 layoutInflater *= *.from(parent.getContext())
-	// view = in...in(and.r.lay.simple_List_items,null)
+	//适配器
 	BaseAdapter bookListAdapter = new BaseAdapter() {
 
 		@SuppressLint("InflateParams")
