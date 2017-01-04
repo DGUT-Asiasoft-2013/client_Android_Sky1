@@ -9,9 +9,18 @@ public class Money implements Serializable{
 	private Integer id;
 	private Date createDate;
 	private Date editDate;
-	String current_user;
+	String currentUser;
 	float recharge;
 	float sumMoney;
+	
+	
+	
+	public String getCurrentUser() {
+		return currentUser;
+	}
+	public void setCurrentUser(String currentUser) {
+		this.currentUser = currentUser;
+	}
 	public Integer getId() {
 		return id;
 	}
@@ -30,12 +39,8 @@ public class Money implements Serializable{
 	public void setEditDate(Date editDate) {
 		this.editDate = editDate;
 	}
-	public String getCurrent_user() {
-		return current_user;
-	}
-	public void setCurrent_user(String current_user) {
-		this.current_user = current_user;
-	}
+	
+	
 	public float getRecharge() {
 		return recharge;
 	}
