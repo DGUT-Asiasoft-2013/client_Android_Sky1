@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.itcast.booksale.entity.Bookbus;
 import com.itcast.booksale.entity.OrderLists;
 import com.itcast.booksale.entity.User;
@@ -34,6 +35,7 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * 订单详情页面
@@ -42,7 +44,7 @@ import android.widget.TextView;
  */
 public class OrdersActivity extends Activity {
 	Bookbus order;//get bookbus's massage what were putted
-
+	OrderLists orderlist;
 	//ye mian shu xing
 	private AvatarView bookUserAvatar; // 图书卖家照片
 	private TextView bookUserName; // 卖书卖家姓名
@@ -106,7 +108,7 @@ public class OrdersActivity extends Activity {
 
 	}
 	//保存order到数据库
-	void saveOrdersList(Bookbus order,String AllPay,String orderNumber,String payType_text){
+	void saveOrdersList(Bookbus order,String AllPay,String orderNumber,final String payType_text){
 		int book_id = order.getId().getBook().getId();
 //		Log.d("-----AllPay-----", order.getId().getBook().getAuthor());
 		MultipartBody orderbody = new MultipartBody.Builder()
@@ -128,6 +130,8 @@ public class OrdersActivity extends Activity {
 
 					@Override
 					public void run() {
+//						ObjectMapper objectMapper=new ObjectMapper();
+//						orderlist=objectMapper.readValue(, OrderLists.class);//读取值					
 						new AlertDialog.Builder(OrdersActivity.this)
 						.setTitle("连接成功")
 						.setMessage("提交订单成功")
@@ -135,8 +139,14 @@ public class OrdersActivity extends Activity {
 
 							@Override
 							public void onClick(DialogInterface dialog, int which) {
-								//返回主界面
-								goPayActivity();
+								if(payType_text.equals("在线交易")){
+									//支付页面
+									goPayActivity();
+								}else{
+									Toast.makeText(OrdersActivity.this, "私下订单已生成", Toast.LENGTH_SHORT).show();
+									goSpedingBillActivity();
+								}
+								
 							}
 						}).show();
 					}
@@ -165,6 +175,13 @@ public class OrdersActivity extends Activity {
 	void goPayActivity(){
 		Intent itnt = new Intent(this,PayMoneyActivity.class);
 		itnt.putExtra("ordersId", orderNumber);
+		startActivity(itnt);
+		finish();
+	}
+	//私下订单页面
+	void goSpedingBillActivity(){
+		Intent itnt = new Intent(this,SpendingBillsActivity.class);
+//		itnt.putExtra("order",)
 		startActivity(itnt);
 		finish();
 	}
