@@ -26,6 +26,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import okhttp3.Call;
 import okhttp3.Callback;
+import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -289,14 +290,16 @@ public class SpendingBillsActivity extends Activity {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				OrderLists orderData = data.get(postition);
-				
-				Request request = Servelet.requestuildApi("deleteOrder/"+orderData.getOrderId()).post(null).build();
+				MultipartBody body = new MultipartBody.Builder()
+						.addFormDataPart("orderId",orderData.getId().toString()).build();
+				Request request = Servelet.requestuildApi("deleteOrder").post(body).build();
 				Servelet.getOkHttpClient().newCall(request).enqueue(new Callback() {
 					
 					@Override
 					public void onResponse(Call arg0, Response arg1) throws IOException {
 						
 						final String response  = arg1.body().string();
+						Log.d("re---------------", response);
 						runOnUiThread(new Runnable() {
 							
 							@Override
