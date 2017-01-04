@@ -46,7 +46,11 @@ public class SpendingBillsActivity extends Activity {
 	View btnLoadMore;
 	TextView textLoadMore;
 	int page = 0;
-
+     private final String BUY = "BUY";
+     private final String SALE = "SALE";
+     String tag=BUY;
+     TextView tabBuy,tabSale;
+     
 	// TextView textMonth;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +58,10 @@ public class SpendingBillsActivity extends Activity {
 		setContentView(R.layout.activity_spending_bills);
 		ListView billsList = (ListView) findViewById(R.id.list_bills_list);
 		btnLoadMore = LayoutInflater.from(this).inflate(R.layout.widget_load_more_button, null);
+		tabBuy = (TextView) findViewById(R.id.tv_bills_buy);
+		tabSale =(TextView) findViewById(R.id.tv_bills_sale);
+		tabBuy.setClickable(true);
+		tabSale.setClickable(true);
 
 		textLoadMore = (TextView) btnLoadMore.findViewById(R.id.text);
 		billsList.addFooterView(btnLoadMore);
@@ -89,9 +97,36 @@ public class SpendingBillsActivity extends Activity {
 			}
 		});
 		billsList.setAdapter(adapter);
+		tabBuy.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				goBuyList();
+			}
+		});
+		tabSale.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				goSaleList();
+			}
+		});
 
 	}
-
+	//获取我买到的书的列表
+	void goBuyList(){
+		tabBuy.setBackgroundColor(Color.RED);
+		tabSale.setBackgroundColor(Color.parseColor("#F1F1F1"));
+		tag  = BUY;
+		reload();
+	}
+   //获取我卖出的书的列表
+	void goSaleList(){
+		tabSale.setBackgroundColor(Color.RED);
+		tabBuy.setBackgroundColor(Color.parseColor("#F1F1F1"));
+		tag  = SALE;
+		reload();
+	}
 	// 订单详情列表的适配器
 	BaseAdapter adapter = new BaseAdapter() {
 		@SuppressLint("InflateParams")
@@ -177,7 +212,7 @@ public class SpendingBillsActivity extends Activity {
 	}
 
 	void reload() {
-		Request request = Servelet.requestuildApi("orders").get().build();
+		Request request = Servelet.requestuildApi("orders/"+tag+"/").get().build();
 		Servelet.getOkHttpClient().newCall(request).enqueue(new Callback() {
 
 			@Override
@@ -247,13 +282,49 @@ public class SpendingBillsActivity extends Activity {
 
 	}
 
-	public void deleteBillList(int postition) {
+	public void deleteBillList(final int postition) {
 		new AlertDialog.Builder(SpendingBillsActivity.this)
 		.setNegativeButton("删除", new DialogInterface.OnClickListener() {
 
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
+				OrderLists orderData = data.get(postition);
 				
+				Request request = Servelet.requestuildApi("deleteOrder/"+orderData.getOrderId()).post(null).build();
+				Servelet.getOkHttpClient().newCall(request).enqueue(new Callback() {
+					
+					@Override
+					public void onResponse(Call arg0, Response arg1) throws IOException {
+						
+						final String response  = arg1.body().string();
+						runOnUiThread(new Runnable() {
+							
+							@Override
+							public void run() {
+								if(response.equals("true")){
+
+									reload();
+								}
+								else
+								{
+									Toast.makeText(SpendingBillsActivity.this, "false", Toast.LENGTH_SHORT).show();
+								}
+							}
+						});
+						
+					}
+					
+					@Override
+					public void onFailure(Call arg0, IOException arg1) {
+						runOnUiThread(new Runnable() {
+							
+							@Override
+							public void run() {
+								Toast.makeText(SpendingBillsActivity.this, "订单删除失败", Toast.LENGTH_SHORT).show();
+							}
+						});
+					}
+				});
 				
 				
 			}
@@ -264,7 +335,7 @@ public class SpendingBillsActivity extends Activity {
 		btnLoadMore.setEnabled(false);
 		textLoadMore.setText("载入中…");
 		OkHttpClient client = Servelet.getOkHttpClient();
-		Request request = Servelet.requestuildApi("orders/" + (page + 1)).get().build();
+		Request request = Servelet.requestuildApi("orders/" +tag+"/"+ (page + 1)).get().build();
 		client.newCall(request).enqueue(new Callback() {
 
 			@Override
