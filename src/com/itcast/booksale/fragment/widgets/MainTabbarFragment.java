@@ -20,6 +20,7 @@ public class MainTabbarFragment extends Fragment{
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		
 		View view=inflater.inflate(R.layout.fragment_main_tabbar, null);//鍔犺浇甯冨眬
 
 		tabHome=view.findViewById(R.id.tab_home);//棣栭〉
@@ -56,6 +57,7 @@ public class MainTabbarFragment extends Fragment{
 				onInforClicked();			
 			}
 		});
+		
 		return view;
 	}
 	
