@@ -24,7 +24,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 /**
- * ¸Ä±äêÇ³Æ
+ * æ”¹å˜æ˜µç§°
  * 
  * @author Administrator
  *
@@ -92,10 +92,10 @@ public class ChangeNameActivity extends Activity {
 						@Override
 						public void run() {
 							if(succeed){
-								ChangeNameActivity.this.onResponse(arg0,"³É¹¦");
+								ChangeNameActivity.this.onResponse(arg0,"æˆåŠŸ");
 								
 							}else {
-								ChangeNameActivity.this.onFailure(arg0,new Exception("Ê§°Ü"));
+								ChangeNameActivity.this.onFailure(arg0,new Exception("å¤±è´¥"));
 							}
 						}
 					});		
@@ -120,7 +120,7 @@ public class ChangeNameActivity extends Activity {
 					@Override
 					public void run() {
 						new AlertDialog.Builder(ChangeNameActivity.this)
-						.setTitle("Ê§°Ü")
+						.setTitle("å¤±è´¥")
 						.setMessage(arg1.getLocalizedMessage())
 						.show();
 					}
@@ -135,10 +135,10 @@ public class ChangeNameActivity extends Activity {
 	}
 	
 	void onResponse(Call arg0,String string){
-		Toast.makeText(ChangeNameActivity.this, "³É¹¦ĞŞ¸ÄêÇ³Æ", Toast.LENGTH_SHORT)
+		Toast.makeText(ChangeNameActivity.this, "æˆåŠŸä¿®æ”¹æ˜µç§°", Toast.LENGTH_SHORT)
 		.show();
 		
-		//finishµôÉÏÒ»¸ö¸öÈË×ÊÁÏ
+		//finishæ‰ä¸Šä¸€ä¸ªä¸ªäººèµ„æ–™
 		PersonalActivity.instance.finish();
 		
 		Intent intent=new Intent(ChangeNameActivity.this,PersonalActivity.class);
@@ -151,11 +151,11 @@ public class ChangeNameActivity extends Activity {
 		// TODO Auto-generated method stub
 		super.onResume();
 		
-		/*fragNameHint.setHintText("ÊäÈëêÇ³Æ");
+		/*fragNameHint.setHintText("è¾“å…¥æ˜µç§°");
 		
-		fragNameTitle.setTitleText("êÇ³Æ");*/
+		fragNameTitle.setTitleText("æ˜µç§°");*/
 		
-		nametitle.setText("êÇ³Æ");
-		namehint.setHint("ÇëÊäÈëĞÂêÇ³Æ");
+		nametitle.setText("æ˜µç§°");
+		namehint.setHint("è¯·è¾“å…¥æ–°æ˜µç§°");
 	}
 }

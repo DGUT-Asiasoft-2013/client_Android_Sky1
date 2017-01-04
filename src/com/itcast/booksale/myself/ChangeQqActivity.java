@@ -60,7 +60,7 @@ public class ChangeQqActivity extends Activity{
 		String qq=change_qq.getText().toString();
 		
 		if(!isQQ(qq)){
-			Toast.makeText(ChangeQqActivity.this,"QQºÅÂëÊäÈë´íÎó£¬ÇëÖØĞÂÊäÈë", Toast.LENGTH_SHORT).show();
+			Toast.makeText(ChangeQqActivity.this,"QQå·ç è¾“å…¥é”™è¯¯ï¼Œè¯·é‡æ–°è¾“å…¥", Toast.LENGTH_SHORT).show();
 			return;
 		}
 		MultipartBody body=new MultipartBody.Builder()
@@ -85,9 +85,9 @@ public class ChangeQqActivity extends Activity{
 						@Override
 						public void run() {
 							if(succeed){
-								ChangeQqActivity.this.onResponse(arg0,"³É¹¦");
+								ChangeQqActivity.this.onResponse(arg0,"æˆåŠŸ");
 							}else {
-								ChangeQqActivity.this.onFailure(arg0,new Exception("Ê§°Ü"));
+								ChangeQqActivity.this.onFailure(arg0,new Exception("å¤±è´¥"));
 							}
 						}
 					});
@@ -113,7 +113,7 @@ public class ChangeQqActivity extends Activity{
 					@Override
 					public void run() {
 						new AlertDialog.Builder(ChangeQqActivity.this)
-						.setTitle("Ê§°Ü")
+						.setTitle("å¤±è´¥")
 						.setMessage(arg1.getLocalizedMessage())
 						.show();
 					}
@@ -128,10 +128,10 @@ public class ChangeQqActivity extends Activity{
 	}
 	
 	void onResponse(Call arg0,String string){
-		Toast.makeText(ChangeQqActivity.this, "³É¹¦ĞŞ¸ÄQQºÅÂë", Toast.LENGTH_SHORT)
+		Toast.makeText(ChangeQqActivity.this, "æˆåŠŸä¿®æ”¹QQå·ç ", Toast.LENGTH_SHORT)
 		.show();
 		
-		//finishµôÉÏÒ»¸ö¸öÈË×ÊÁÏ
+		//finishæ‰ä¸Šä¸€ä¸ªä¸ªäººèµ„æ–™
 		PersonalActivity.instance.finish();
 		
 		Intent intent=new Intent(ChangeQqActivity.this, PersonalActivity.class);
@@ -144,11 +144,11 @@ public class ChangeQqActivity extends Activity{
 		// TODO Auto-generated method stub
 		super.onResume();
 		
-		qqhint.setHint("ÇëÊäÈëĞÂµÄQQ");
+		qqhint.setHint("è¯·è¾“å…¥æ–°çš„QQ");
 		qqTitle.setText("QQ");
 	}
 	
-	//ÑéÖ¤ÊÇ·ñÎªQQ
+	//éªŒè¯æ˜¯å¦ä¸ºQQ
 	 public static final String REGEX_QQ = "^[1-9][0-9]{3,11}";
 	 public static boolean isQQ(String QQ) {
 	        return Pattern.matches(REGEX_QQ, QQ);

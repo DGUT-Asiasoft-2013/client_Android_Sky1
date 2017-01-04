@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android" 
+    android:shape="rectangle">
+    <!-- android:shape 有四个属性rectangle,ovel,line,ring分别代表矩形,椭圆,线条, 环形物 -->
+    
+
+	<corners android:radius="5dip"/><!-- 球的半径 -->
+	<solid android:color="#55000000"/><!-- 固体颜色 -->
+</shape>

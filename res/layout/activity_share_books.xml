@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFFFFF"
     android:orientation="vertical" >
 
     <ScrollView
@@ -28,7 +29,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.1"
-                android:background="@android:drawable/edit_text"
+                android:background="@android:drawable/editbox_background"
                 android:gravity="left"
                 android:hint="图书名称"
                 android:inputType="textMultiLine" />
@@ -38,7 +39,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.1"
-                android:background="@android:drawable/edit_text"
+                android:background="@android:drawable/editbox_background"
                 android:gravity="left"
                 android:hint="图书作者"
                 android:inputType="textMultiLine" />
@@ -48,7 +49,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.1"
-                android:background="@android:drawable/edit_text"
+                android:background="@android:drawable/editbox_background"
                 android:gravity="left"
                 android:hint="图书出版社"
                 android:inputType="textMultiLine" />
@@ -58,7 +59,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.1"
-                android:background="@android:drawable/edit_text"
+                android:background="@android:drawable/editbox_background"
                 android:gravity="left"
                 android:hint="图书的ISBN码"
                 android:inputType="textMultiLine" />
@@ -68,7 +69,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.1"
-                android:background="@android:drawable/edit_text"
+                android:background="@android:drawable/editbox_background"
                 android:gravity="left"
                 android:hint="出售价格"
                 android:inputType="textMultiLine" />
@@ -97,7 +98,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.1"
-                android:background="@android:drawable/edit_text"
+                android:background="@android:drawable/editbox_background"
                 android:gravity="left"
                 android:hint="图书摘要"
                 android:inputType="textMultiLine" >
@@ -108,7 +109,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.1"
-                android:background="@android:drawable/edit_text"
+                android:background="@android:drawable/editbox_background"
                 android:gravity="left"
                 android:hint="图书数量"
                 android:inputType="textMultiLine" >
@@ -119,7 +120,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.1"
-                android:background="@android:drawable/edit_text"
+                android:background="@android:drawable/editbox_background"
                 android:gravity="left"
                 android:hint="备注"
                 android:inputType="textMultiLine" />
@@ -137,6 +138,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_gravity="bottom"
+                android:background="@drawable/button_fillet"
                 android:text="确定出售" />
         </LinearLayout>
     </ScrollView>

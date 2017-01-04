@@ -72,7 +72,7 @@ public class Buy_book_bus_fragment extends Fragment {
 
 	ShoppingBusAdapter adapter = new ShoppingBusAdapter();
 
-	private int totalPrice; // 定义总价
+	private float totalPrice; // 定义总价
 
 	private BookAvatarView bookAvatar; // 图书照片
 
@@ -87,6 +87,7 @@ public class Buy_book_bus_fragment extends Fragment {
 	String[] ab=new String[] {"A","B","C","D","E","F",
 			"G","H","I","J","K","L","M","N","O","P"
 			,"Q","R","S","T","U","V","W","X","Y","Z"};
+	private boolean isRemoveBookFromBus;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -173,13 +174,81 @@ public class Buy_book_bus_fragment extends Fragment {
 				// if it can delete，get this id
 				List<Integer> ids = getSeletedId();
 				onDeleted(ids); // delete id
+				
 			} else {
 				Toast.makeText(getActivity(), "there is nothing to delete", Toast.LENGTH_SHORT).show();
 			}
 		}
 
 	}
+	
+	/*
+	 * delete book from bookbus
+	 */
+     public void RemoveFromBookBus(int bookid) {
+		//client
+    	 OkHttpClient client=Servelet.getOkHttpClient();
+    	 MultipartBody body=new MultipartBody.Builder()
+    			 .addFormDataPart("isRemoveBookFromBus",
+    					 String.valueOf(!isRemoveBookFromBus)).build();
+    	 Request request=Servelet.requestuildApi("book/"+bookid+"/removefrombookbus")
+    			 .post(body)
+    			 .build();
+    	 client.newCall(request)
+    	 .enqueue(new Callback() {
+			
+			@Override
+			public void onResponse(Call arg0, Response arg1) throws IOException {
+				try {
+					
+					final String string = arg1.body().string();
+					getActivity().runOnUiThread(new Runnable() {
+						public void run() {
+							
+							new AlertDialog
+							.Builder(getActivity())
+							.setTitle("success to remove from bookbus")
+							.setMessage(string)
+							.setPositiveButton("ok", null)
+							.show();
+							
+						}
+					});
+				} catch (Exception e) {
+					getActivity().runOnUiThread(new Runnable() {
+						
+						@Override
+						public void run() {
 
+							Toast.makeText(getActivity(), "移除购物车失败", Toast.LENGTH_SHORT).show();
+						}
+					});
+				}
+				
+			}
+			
+			@Override
+			public void onFailure(Call arg0, final IOException arg1) {
+				getActivity().runOnUiThread(new Runnable() {
+					public void run() {
+						getActivity().runOnUiThread(new Runnable() {
+
+							@Override
+							public void run() {
+								new AlertDialog.Builder(getActivity()).setTitle("failed to remove bookbus")
+										.setMessage(arg1.toString())
+										.setPositiveButton("ok", null)
+										.show();
+
+							}
+						});
+					}
+				});
+				
+			}
+		});
+    	 
+	}
 	/**
 	 * top's“edit” 's ClickListener
 	 */
@@ -219,16 +288,16 @@ public class Buy_book_bus_fragment extends Fragment {
 	public void onDeleted(List<Integer> lt) {
 		for (int i = 0; i < list_shopping_bus.size(); i++) {
 			// get the book_id
-			long id = list_shopping_bus.get(i).getId().getBook().getId();
+			int id = list_shopping_bus.get(i).getId().getBook().getId();
 			for (int j = 0; j < lt.size(); j++) {
 				// get the deleteId
 				int deleteId = lt.get(j);
 				if (id == deleteId) {
+					RemoveFromBookBus(id);          //remove the book from bookbus
 					list_shopping_bus.remove(i);
 					i--;
 					lt.remove(j);
 					j--;
-
 				}
 
 			}
@@ -333,7 +402,9 @@ public class Buy_book_bus_fragment extends Fragment {
 	
 					for (int i = 0; i < list_shopping_bus.size(); i++) {
 						//Circular traversal the list_shopping_bus
+//						Log.i("--------------检测----------", list_shopping_bus.get(i).getId().getBook().getText());
 						if (mSelectedState.get(list_shopping_bus.get(i).getId().getBook().getId())) {
+							
 							//if the one is seleted
 							final Bookbus bookbus=list_shopping_bus.get(i);
 							String string=bookbus.getId().getBook().getTitle();
@@ -367,7 +438,7 @@ public class Buy_book_bus_fragment extends Fragment {
 											intent.putExtra("AllPay", AllPay);
 											
 											//get the order_number
-											String order_number=order_letter+bookbus.getId().getBook().getTitle()+bookbus.getId().getBook().getId();
+											String order_number=order_letter+bookbus.getId().getBook().getIsbn()+bookbus.getId().getBook().getId();
 											
 											//translate the order_number to the OrdersActivity
 											intent.putExtra("order_number", order_number);
@@ -611,7 +682,7 @@ public class Buy_book_bus_fragment extends Fragment {
 							totalPrice -= selectednumber * list_shopping_bus.get(position).getId().getBook().getPrice();
 						}
 
-						count_money_tv.setText("￥" + totalPrice + "");
+						count_money_tv.setText("￥" + totalPrice + "元");
 
 						if (mSelectedState.size() == listSize) {
 							/**

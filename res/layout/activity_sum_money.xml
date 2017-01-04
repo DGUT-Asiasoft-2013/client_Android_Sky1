@@ -41,9 +41,20 @@
             android:textSize="40sp" />
     </LinearLayout>
 
+    
+    
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="16dp"
+            android:background="#D9E6B0"
+            android:orientation="vertical" >
+        </LinearLayout>
+        
+    
+    <View style="@style/user_line" />
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="wrap_content" >
 
         <LinearLayout
             android:id="@+id/line_btn_recharge"
@@ -61,5 +72,38 @@
             android:layout_height="1px"
             android:background="@android:color/black" />
     </LinearLayout>
+   
+    
+    <View style="@style/user_line" />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+		android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/line_btn_recharge_list"
+            style="@style/userbaselayout" >
+
+            <TextView
+                style="@style/usertext"
+                android:text="充值记录" />
+
+            <ImageView style="@style/usertext_img" />
+        </LinearLayout>
+
+        <View style="@style/user_line" />
+
+        <!-- 绿色条 -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="16dp"
+            android:background="#D9E6B0"
+            android:orientation="vertical" >
+        </LinearLayout>
+        
+    </LinearLayout>
+    
+     
 </LinearLayout>

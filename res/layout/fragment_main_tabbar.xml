@@ -20,7 +20,7 @@
 
         <LinearLayout
             android:id="@+id/tab_home"
-            android:layout_width="0dp"
+            android:layout_width="1dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="#ffffff"
@@ -34,6 +34,7 @@
                 android:src="@drawable/tab_image_home" />
 
             <TextView
+                android:id="@+id/tab_tv_home"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="9sp"
@@ -45,7 +46,7 @@
 
         <LinearLayout
             android:id="@+id/tab_subscribes"
-            android:layout_width="0dp"
+            android:layout_width="1dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="#ffffff"
@@ -96,7 +97,7 @@
 
         <LinearLayout
             android:id="@+id/tab_shoppingCar"
-            android:layout_width="0dp"
+            android:layout_width="1dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="#ffffff"
@@ -122,7 +123,7 @@
 
         <LinearLayout
             android:id="@+id/tab_myself"
-            android:layout_width="0dp"
+            android:layout_width="1dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="#ffffff"

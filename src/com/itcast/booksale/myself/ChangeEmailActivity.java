@@ -59,7 +59,7 @@ public class ChangeEmailActivity extends Activity{
 		String email=change_email.getText().toString();
 		
 		if(!isEmail(email)){
-			Toast.makeText(ChangeEmailActivity.this,"ÓÊÏäµØÖ·ÊäÈë´íÎó£¬ÇëÖØĞÂÊäÈë", Toast.LENGTH_SHORT).show();
+			Toast.makeText(ChangeEmailActivity.this,"é‚®ç®±åœ°å€è¾“å…¥é”™è¯¯ï¼Œè¯·é‡æ–°è¾“å…¥", Toast.LENGTH_SHORT).show();
 			return;
 		}
 		
@@ -86,10 +86,10 @@ public class ChangeEmailActivity extends Activity{
 						@Override
 						public void run() {
 							if(succeed){
-								ChangeEmailActivity.this.onResponse(arg0,"³É¹¦");
+								ChangeEmailActivity.this.onResponse(arg0,"æˆåŠŸ");
 								
 							}else {
-								ChangeEmailActivity.this.onFailure(arg0,new Exception("Ê§°Ü"));
+								ChangeEmailActivity.this.onFailure(arg0,new Exception("å¤±è´¥"));
 							}
 						}
 					});
@@ -114,7 +114,7 @@ public class ChangeEmailActivity extends Activity{
 					@Override
 					public void run() {
 						new AlertDialog.Builder(ChangeEmailActivity.this)
-						.setTitle("Ê§°Ü")
+						.setTitle("å¤±è´¥")
 						.setMessage(arg1.getLocalizedMessage())
 						.show();
 					}
@@ -129,10 +129,10 @@ public class ChangeEmailActivity extends Activity{
 	}
 	
 	void onResponse(Call arg0,String string){
-		Toast.makeText(ChangeEmailActivity.this, "³É¹¦ĞŞ¸ÄÓÊÏä", Toast.LENGTH_SHORT)
+		Toast.makeText(ChangeEmailActivity.this, "æˆåŠŸä¿®æ”¹é‚®ç®±", Toast.LENGTH_SHORT)
 		.show();
 		
-		//finishµôÉÏÒ»¸ö¸öÈË×ÊÁÏ
+		//finishæ‰ä¸Šä¸€ä¸ªä¸ªäººèµ„æ–™
 		PersonalActivity.instance.finish();
 		
 		Intent intent =new Intent(ChangeEmailActivity.this, PersonalActivity.class);
@@ -145,11 +145,11 @@ public class ChangeEmailActivity extends Activity{
 		// TODO Auto-generated method stub
 		super.onResume();
 		
-		emailhint.setHint("ÇëÊäÈëĞÂµÄÓÊÏä");
-		emailTitle.setText("ÓÊÏä");
+		emailhint.setHint("è¯·è¾“å…¥æ–°çš„é‚®ç®±");
+		emailTitle.setText("é‚®ç®±");
 	}
 	
-	//ÑéÖ¤ÊÇ·ñÎªÓÊÏä
+	//éªŒè¯æ˜¯å¦ä¸ºé‚®ç®±
 	 public static final String REGEX_EMAIL = "^([a-z0-9A-Z]+[-|\\.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}$";
 	 public static boolean isEmail(String email) {
 	        return Pattern.matches(REGEX_EMAIL, email);

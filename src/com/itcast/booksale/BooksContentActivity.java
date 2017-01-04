@@ -1,5 +1,4 @@
 package com.itcast.booksale;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -377,19 +376,18 @@ public class BooksContentActivity extends Activity {
 		if (count > 0) {
 			btn_subscribe.setText("订阅数(" + count + ")");
 			btn_subscribe.setTextColor(Color.RED);
-			btn_subscribe.setBackgroundColor(Color.WHITE);
-			btn_subscribe.setTextSize(13);
+			btn_subscribe.setTextSize(16);
 		} else {
 			btn_subscribe.setText("订阅");
 			btn_subscribe.setTextColor(Color.WHITE);
-			btn_subscribe.setBackgroundColor(Color.RED);
-			btn_subscribe.setTextSize(13);
+//			btn_subscribe.setBackgroundColor(Color.RED);
+//			btn_subscribe.setTextSize(13);
 		}
 	}
 
 	void onCheckSubscribeResult(boolean result) {
 		issubscribe = result;
-		btn_subscribe.setTextColor(result ? Color.RED : Color.BLACK);
+		btn_subscribe.setTextColor(result ? Color.BLACK : Color.WHITE);
 	}
 
 	void checkSubscribe(){
@@ -406,6 +404,12 @@ public class BooksContentActivity extends Activity {
 							onCheckSubscribeResult(result);
 						}
 					});
+				}catch (JsonParseException e) {
+					e.printStackTrace();
+
+				} catch (JsonMappingException e) {
+					e.printStackTrace();
+
 				}catch(final Exception e){
 					e.printStackTrace();
 					runOnUiThread(new Runnable() {

@@ -60,7 +60,7 @@ protected void goChangePhone() {
 	String phone=change_phone.getText().toString();
 	
 	if(!isMobileNO(phone)){
-		Toast.makeText(ChangePhoneActivity.this,"ÊÖ»úºÅÂëÊäÈë´íÎó£¬ÇëÖØĞÂÊäÈë", Toast.LENGTH_SHORT).show();
+		Toast.makeText(ChangePhoneActivity.this,"æ‰‹æœºå·ç è¾“å…¥é”™è¯¯ï¼Œè¯·é‡æ–°è¾“å…¥", Toast.LENGTH_SHORT).show();
 		return;
 	}
 	MultipartBody body=new MultipartBody.Builder()
@@ -86,9 +86,9 @@ protected void goChangePhone() {
 					@Override
 					public void run() {
 						if(succeed){
-							ChangePhoneActivity.this.onResponse(arg0,"³É¹¦");
+							ChangePhoneActivity.this.onResponse(arg0,"æˆåŠŸ");
 						}else {
-							ChangePhoneActivity.this.onFailure(arg0,new Exception("Ê§°Ü"));
+							ChangePhoneActivity.this.onFailure(arg0,new Exception("å¤±è´¥"));
 						}
 						
 					}
@@ -115,7 +115,7 @@ protected void goChangePhone() {
 				@Override
 				public void run() {
 					new AlertDialog.Builder(ChangePhoneActivity.this)
-					.setTitle("Ê§°Ü")
+					.setTitle("å¤±è´¥")
 					.setMessage(arg1.getLocalizedMessage())
 					.show();
 				}
@@ -130,10 +130,10 @@ void onFailure(Call arg0,Exception exception){
 }
 
 void onResponse(Call arg0,String string){
-	Toast.makeText(ChangePhoneActivity.this, "³É¹¦ĞŞ¸Äµç»°ºÅÂë", Toast.LENGTH_SHORT)
+	Toast.makeText(ChangePhoneActivity.this, "æˆåŠŸä¿®æ”¹ç”µè¯å·ç ", Toast.LENGTH_SHORT)
 	.show();
 	
-	//finishµôÉÏÒ»¸ö¸öÈË×ÊÁÏ
+	//finishæ‰ä¸Šä¸€ä¸ªä¸ªäººèµ„æ–™
 	PersonalActivity.instance.finish();
 	
 	Intent intent=new Intent(ChangePhoneActivity.this, PersonalActivity.class);
@@ -146,12 +146,12 @@ void onResponse(Call arg0,String string){
 		// TODO Auto-generated method stub
 		super.onResume();
 		
-		phonehint.setHint("ÇëÊäÈëµç»°");
-		phonetitle.setText("µç»°");
+		phonehint.setHint("è¯·è¾“å…¥ç”µè¯");
+		phonetitle.setText("ç”µè¯");
 	}
 
-//ÑéÖ¤ÊÇ·ñÎªÊÖ»úºÅÂë
-public static boolean isMobileNO(String mobiles){//ÅĞ¶ÏÊÇ·ñÎªÕæµÄÊÖ»úºÅÂë
+//éªŒè¯æ˜¯å¦ä¸ºæ‰‹æœºå·ç 
+public static boolean isMobileNO(String mobiles){//åˆ¤æ–­æ˜¯å¦ä¸ºçœŸçš„æ‰‹æœºå·ç 
 	Pattern p=Pattern.compile("^((13[0-9])|(14[5|7])|(15[0-9])|(17[0-9])|(18[0-9]))\\d{8}$");
 	Matcher m=p.matcher(mobiles);
 	return m.matches();

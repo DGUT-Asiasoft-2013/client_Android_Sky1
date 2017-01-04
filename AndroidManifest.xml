@@ -12,7 +12,7 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/ic_launcher"
+        android:icon="@drawable/booksell"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
@@ -30,7 +30,9 @@
         </activity>
         <activity android:name="com.itcast.booksale.LoginActivity" >
         </activity>
-        <activity android:name="com.itcast.booksale.HelloWorldActivity" >
+        <activity
+            android:name="com.itcast.booksale.HelloWorldActivity"
+            android:windowSoftInputMode="adjustPan" >
         </activity>
         <activity android:name="com.itcast.booksale.PasswordRecoverActivity" >
         </activity>
@@ -58,13 +60,26 @@
         </activity>
         <activity android:name="com.itcast.booksale.myself.ChangeQqActivity" >
         </activity>
-        <activity android:name="com.itcast.booksale.PrivateMessageListActivity">
+        <activity android:name="com.itcast.booksale.PrivateMessageListActivity" >
         </activity>
-        <activity android:name="com.itcast.booksale.myself.RechargeActivity">
+        <activity android:name="com.itcast.booksale.myself.RechargeActivity" >
         </activity>
-        <activity android:name="com.itcast.booksale.RegisterFirstActivity">
+        <activity android:name="com.itcast.booksale.RegisterFirstActivity" >
         </activity>
-        <activity android:name="com.itcast.booksale.OrdersActivity"></activity>
+        <activity android:name="com.itcast.booksale.OrdersActivity" >
+        </activity>
+        <activity android:name="com.itcast.booksale.PayMoneyActivity" >
+        </activity>
+        <activity android:name="com.itcast.booksale.SpendingBillsActivity" >
+        </activity>
+        <activity android:name="com.itcast.booksale.pay.PayActivity" >
+        </activity>
+        <activity android:name="com.itcast.booksale.BillDetailActivity" >
+        </activity>
+        <activity android:name="com.itcast.booksale.myself.RechargeListActivity" >
+        </activity>
+        <activity android:name="com.itcast.booksale.ViewPageActivity" >
+        </activity>
     </application>
 
 </manifest>

@@ -28,6 +28,7 @@ public class SumMoneyActivity extends Activity{
 View view_recharge;
 TextView sumMoney;
 
+View view_list;
 User user;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -37,12 +38,23 @@ User user;
 		
 		view_recharge=findViewById(R.id.line_btn_recharge);
 		sumMoney=(TextView) findViewById(R.id.sum_money);
+		view_list=findViewById(R.id.line_btn_recharge_list);
 		
 		view_recharge.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
 				Intent intent=new Intent(SumMoneyActivity.this, RechargeActivity.class);
+				startActivity(intent);
+				finish();
+			}
+		});
+		
+		view_list.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent intent=new Intent(SumMoneyActivity.this, RechargeListActivity.class);
 				startActivity(intent);
 				finish();
 			}
