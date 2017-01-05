@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.MultipartBody;
@@ -75,7 +76,7 @@ public class PayMoneyActivity extends Activity{
 
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
-					linDataBase(balanceMoney);					
+					linDataBase(balanceMoney);
 				}
 			})
 			.setPositiveButton("取消", null)
@@ -100,12 +101,8 @@ public class PayMoneyActivity extends Activity{
 					
 					@Override
 					public void run() {
-						new AlertDialog.Builder(PayMoneyActivity.this)
-						.setTitle("成功付款")
-						.setMessage("您已经成功购买了该商品，请注意查收")
-						.setPositiveButton("确定", null)
-						.show();
-						
+						Toast.makeText(PayMoneyActivity.this, "付款成功，您的宝贝将会飞到您手中", Toast.LENGTH_SHORT).show();
+						goSpedingBillActivity();
 					}
 				});
 			}
@@ -184,5 +181,12 @@ public class PayMoneyActivity extends Activity{
 		finish();
 		OrdersActivity.temp.finish();
 	}*/
+	//私下订单页面
+	void goSpedingBillActivity(){
+			Intent itnt = new Intent(this,BillDetailActivity.class);
+			itnt.putExtra("order",orderlist);
+			startActivity(itnt);
+			finish();
+		}
 
 }
