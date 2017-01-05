@@ -19,18 +19,26 @@ import com.itcast.booksale.servelet.Servelet;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Rect;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
@@ -54,6 +62,7 @@ public class BooksContentActivity extends Activity {
 	private Button btn_subscribe; // 订阅按钮
 	private Button btn_massage; // 私信按钮
 	private Button btn_comment; // 底部评论按钮
+	private EditText add_comment_text; // 用户添加的评论
 
 	private TextView bookUserName; // 卖书卖家姓名
 	private TextView bookTitle; // 图书标题
@@ -67,12 +76,12 @@ public class BooksContentActivity extends Activity {
 	private AvatarView bookUserAvatar; // 图书卖家照片
 	private BookAvatarView bookAvatar; // 图书照片
 
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_books_view);
-
 		book = (Book) getIntent().getSerializableExtra("data");// 从BookListFragment获取Book
 
 		commentListView = (ListView) findViewById(R.id.comment_listview);
@@ -81,10 +90,10 @@ public class BooksContentActivity extends Activity {
 
 		bookUserName.setText(book.getUser().getName());
 		bookTitle.setText(book.getTitle());
-		bookUserPhone.setText(book.getUser().getPhoneNumb());
-		bookUserQQ.setText(book.getUser().getQq());
-		bookUserText.setText(book.getText());
-		bookSummaryText.setText("   " + book.getSummary());
+		bookUserPhone.setText("电话:"+book.getUser().getPhoneNumb());
+		bookUserQQ.setText("QQ:"+book.getUser().getQq());
+		bookUserText.setText("卖家留言:"+book.getText());
+		bookSummaryText.setText("简介:"+"   " + book.getSummary());
 
 		bookUserAvatar.load(Servelet.urlstring + book.getUser().getAvatar());
 		bookAvatar.load(Servelet.urlstring + book.getBookavatar());
@@ -148,6 +157,7 @@ public class BooksContentActivity extends Activity {
 		btn_subscribe = (Button) findViewById(R.id.btn_subscribe); // 订阅按钮
 		btn_massage = (Button) findViewById(R.id.btn_massage); // 私信按钮
 		btn_comment = (Button) findViewById(R.id.btn_comment); // 底部评论按钮
+		add_comment_text = (EditText) findViewById(R.id.text_comment);//评论内容
 	}
 
 	@Override
@@ -156,6 +166,8 @@ public class BooksContentActivity extends Activity {
 		loadComment(); // 调用下载评论方法
 		reload();
 	}
+	
+	
 
 	/*
 	 * 下面这个方法为下载评论
@@ -287,10 +299,49 @@ public class BooksContentActivity extends Activity {
 
 	//go to the CommentActivity() which add the comment
 	void goCommentActivity() {
+		String comment_text = add_comment_text.getText().toString();
+		add_comment_text.setText("");
+		if(comment_text.length() == 0){
+			Toast.makeText(BooksContentActivity.this, "评论内容不能为空", Toast.LENGTH_SHORT).show();
+			return;
+		}
+		// 这里addFormDataPart()的第一个参数需要跟服务器的一样
+		MultipartBody body = new MultipartBody.Builder().addFormDataPart("content", comment_text).build();
 
-		Intent itnt = new Intent(this, CommentActivity.class);
-		itnt.putExtra("data", book); // 把书的信息传给添加评论界面
-		startActivity(itnt);
+		//发起请求
+		Request request = Servelet.requestuildApi("/book/" + book.getId() + "/comment").method("post", null)//获取书的id
+				.post(body).build();
+
+		// 客户端连接
+		Servelet.getOkHttpClient().newCall(request).enqueue(new Callback() {
+
+			@Override
+			public void onResponse(final Call arg0, final Response arg1) throws IOException {
+
+
+				runOnUiThread(new Runnable() {
+
+					@Override
+					public void run() {
+						Toast.makeText(BooksContentActivity.this, "评论发表成功", Toast.LENGTH_SHORT).show();
+						loadComment();
+						
+					}
+				});
+
+			}
+
+			@Override
+			public void onFailure(Call arg0, IOException arg1) {
+				runOnUiThread(new Runnable() {
+
+					@Override
+					public void run() {
+						Toast.makeText(BooksContentActivity.this, "评论发表失败", Toast.LENGTH_SHORT).show();
+					}
+				});
+			}
+		});
 
 	}
 
@@ -380,8 +431,8 @@ public class BooksContentActivity extends Activity {
 		} else {
 			btn_subscribe.setText("订阅");
 			btn_subscribe.setTextColor(Color.WHITE);
-//			btn_subscribe.setBackgroundColor(Color.RED);
-//			btn_subscribe.setTextSize(13);
+			//			btn_subscribe.setBackgroundColor(Color.RED);
+			//			btn_subscribe.setTextSize(13);
 		}
 	}
 
@@ -444,4 +495,59 @@ public class BooksContentActivity extends Activity {
 		itnt.putExtra("sendToReceiver", user);
 		startActivity(itnt);
 	}
+
+	//---------------------------------------
+	//隐藏软键盘
+	 @Override
+     public boolean dispatchTouchEvent(MotionEvent ev) {
+         if (ev.getAction() == MotionEvent.ACTION_DOWN) {
+ 
+             // 获得当前得到焦点的View，一般情况下就是EditText（特殊情况就是轨迹求或者实体案件会移动焦点）
+             View v = getCurrentFocus();
+ 
+             if (isShouldHideInput(v, ev)) {
+                 hideSoftInput(v.getWindowToken());
+             }
+         }
+         return super.dispatchTouchEvent(ev);
+     }
+ 
+     /**
+      * 根据EditText所在坐标和用户点击的坐标相对比，来判断是否隐藏键盘，因为当用户点击EditText时没必要隐藏
+      * 
+      * @param v
+      * @param event
+      * @return
+      */
+     private boolean isShouldHideInput(View v, MotionEvent event) {
+         if (v != null && (v instanceof EditText)) {
+             int[] l = { 0, 0 };
+             v.getLocationInWindow(l);
+             int left = l[0], top = l[1], bottom = top + v.getHeight(), right = left
+                     + v.getWidth();
+             if (event.getX() > left && event.getX() < right
+                     && event.getY() > top && event.getY() < bottom) {
+                 // 点击EditText的事件，忽略它。
+                 return false;
+             } else {
+                 return true;
+             }
+         }
+         // 如果焦点不是EditText则忽略，这个发生在视图刚绘制完，第一个焦点不在EditView上，和用户用轨迹球选择其他的焦点
+         return false;
+     }
+ 
+     /**
+      * 多种隐藏软件盘方法的其中一种
+      * 
+      * @param token
+      */
+     private void hideSoftInput(IBinder token) {
+         if (token != null) {
+             InputMethodManager im = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+             im.hideSoftInputFromWindow(token,
+                     InputMethodManager.HIDE_NOT_ALWAYS);
+         }
+     }
+	//----------------------------------------------------==============
 }

@@ -18,14 +18,19 @@ import android.R.integer;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.IBinder;
 import android.os.Message;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import okhttp3.Call;
@@ -37,16 +42,16 @@ import okhttp3.Response;
 
 public class HelloWorldActivity extends Activity {
 	private static boolean isExit=false;//ding yi yi ge bian liang ,biao shi shi fou tui chu 
-	
-	 Handler mHandler = new Handler() {
 
-	        @Override
-	        public void handleMessage(Message msg) {
-	            super.handleMessage(msg);
-	            isExit = false;
-	        }
-	    };
-	    
+	Handler mHandler = new Handler() {
+
+		@Override
+		public void handleMessage(Message msg) {
+			super.handleMessage(msg);
+			isExit = false;
+		}
+	};
+
 	BookListFragment Home = new BookListFragment();// 锟斤拷页
 	SubscribeListUserFragment booking = new SubscribeListUserFragment();// 锟斤拷锟斤拷
 	Buy_book_bus_fragment shoppingcar = new Buy_book_bus_fragment();// 锟斤拷锟斤车
@@ -61,7 +66,7 @@ public class HelloWorldActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		t = (TextView)(findViewById(R.id.frag_tabbar).findViewById(R.id.tab_subscribe_count));
-		
+
 		getMe();
 		tabbar = (MainTabbarFragment) getFragmentManager().findFragmentById(R.id.frag_tabbar);
 		tabbar.setOnTabSelectedListener(new OnTabSelectedListener() {
@@ -202,29 +207,83 @@ public class HelloWorldActivity extends Activity {
 		}
 
 	}
-	
+
 	@Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-            exit();
-            return false;
-        }
-        return super.onKeyDown(keyCode, event);
-    }
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
+			exit();
+			return false;
+		}
+		return super.onKeyDown(keyCode, event);
+	}
 
-    private void exit() {
-        if (!isExit) {
-            isExit = true;
-            Toast.makeText(getApplicationContext(), "再按一次退出程序",
-                    Toast.LENGTH_SHORT).show();
-            // 利用handler延迟发送更改状态信息
-            mHandler.sendEmptyMessageDelayed(0, 2000);
-        } else {
-            finish();
-            System.exit(0);
-        }
-    }
+	private void exit() {
+		if (!isExit) {
+			isExit = true;
+			Toast.makeText(getApplicationContext(), "再按一次退出程序",
+					Toast.LENGTH_SHORT).show();
+			// 利用handler延迟发送更改状态信息
+			mHandler.sendEmptyMessageDelayed(0, 2000);
+		} else {
+			finish();
+			System.exit(0);
+		}
+	}
 
+	//---------------------------------------
+	//隐藏软键盘
+	@Override
+	public boolean dispatchTouchEvent(MotionEvent ev) {
+		if (ev.getAction() == MotionEvent.ACTION_DOWN) {
+
+			// 获得当前得到焦点的View，一般情况下就是EditText（特殊情况就是轨迹求或者实体案件会移动焦点）
+			View v = getCurrentFocus();
+
+			if (isShouldHideInput(v, ev)) {
+				hideSoftInput(v.getWindowToken());
+			}
+		}
+		return super.dispatchTouchEvent(ev);
+	}
+
+	/**
+	 * 根据EditText所在坐标和用户点击的坐标相对比，来判断是否隐藏键盘，因为当用户点击EditText时没必要隐藏
+	 * 
+	 * @param v
+	 * @param event
+	 * @return
+	 */
+	private boolean isShouldHideInput(View v, MotionEvent event) {
+		if (v != null && (v instanceof EditText)) {
+			int[] l = { 0, 0 };
+			v.getLocationInWindow(l);
+			int left = l[0], top = l[1], bottom = top + v.getHeight(), right = left
+					+ v.getWidth();
+			if (event.getX() > left && event.getX() < right
+					&& event.getY() > top && event.getY() < bottom) {
+				// 点击EditText的事件，忽略它。
+				return false;
+			} else {
+				return true;
+			}
+		}
+		// 如果焦点不是EditText则忽略，这个发生在视图刚绘制完，第一个焦点不在EditView上，和用户用轨迹球选择其他的焦点
+		return false;
+	}
+
+	/**
+	 * 多种隐藏软件盘方法的其中一种
+	 * 
+	 * @param token
+	 */
+	private void hideSoftInput(IBinder token) {
+		if (token != null) {
+			InputMethodManager im = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+			im.hideSoftInputFromWindow(token,
+					InputMethodManager.HIDE_NOT_ALWAYS);
+		}
+	}
+	//----------------------------------------------------==============
 
 }
 

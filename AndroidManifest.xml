@@ -24,7 +24,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.itcast.booksale.BooksContentActivity" >
+        <activity
+            android:name="com.itcast.booksale.BooksContentActivity"
+            android:windowSoftInputMode="stateHidden|stateUnchanged" >
         </activity>
         <activity android:name="com.itcast.booksale.CommentActivity" >
         </activity>
