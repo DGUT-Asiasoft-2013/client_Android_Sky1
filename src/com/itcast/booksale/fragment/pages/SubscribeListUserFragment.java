@@ -282,7 +282,7 @@ public class SubscribeListUserFragment extends Fragment {
 			public void onResponse(final Call arg0, Response arg1) throws IOException {
 				String body = arg1.body().string();
 				try{
-					final User user;
+					
 					user = new ObjectMapper().readValue(body, User.class);
 					getActivity().runOnUiThread(new Runnable() {
 						@Override

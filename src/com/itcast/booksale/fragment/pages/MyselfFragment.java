@@ -127,9 +127,6 @@ public class MyselfFragment extends Fragment{
 				}
 			});
 		}
-		
-		getMyData();
-		
 		return view;
 	}
 
@@ -319,9 +316,7 @@ public class MyselfFragment extends Fragment{
 		// TODO Auto-generated method stub
 		super.onResume();
 
-	}
 
-	void getMyData(){
 		user_name.setVisibility(View.GONE);
 		progressBar.setVisibility(View.VISIBLE);
 
@@ -338,8 +333,8 @@ public class MyselfFragment extends Fragment{
 				try{
 					final User user;
 
-
-					user= new ObjectMapper().readValue(ar, User.class);
+					ObjectMapper objectMapper=new ObjectMapper();
+					user=objectMapper.readValue(ar, User.class);
 
 					getActivity().runOnUiThread(new Runnable() {
 
