@@ -78,9 +78,8 @@ public class SubscribeListUserFragment extends Fragment {
 
 				@Override
 				public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
+					final User saler=data.get(position).getId().getSaler();
 					getActivity().runOnUiThread(new Runnable() {
-
-
 						public void run() {
 							new AlertDialog.Builder(getActivity())
 							.setTitle(text)
@@ -88,8 +87,6 @@ public class SubscribeListUserFragment extends Fragment {
 								@Override
 								public void onClick(DialogInterface dialog, int which) {
 									b = false;
-									//									gx.setText("不提醒更新");
-									User saler=data.get(position).getId().getSaler();
 									changeMode(saler);
 									reload();
 								}
@@ -99,8 +96,6 @@ public class SubscribeListUserFragment extends Fragment {
 								@Override
 								public void onClick(DialogInterface dialog, int which) {
 									b = true;
-									//										gx.setText("提醒更新");
-									User saler=data.get(position).getId().getSaler();
 									changeMode(saler);
 									reload();
 								}
@@ -196,7 +191,7 @@ public class SubscribeListUserFragment extends Fragment {
 
 	void onItemClicked(int position){
 
-		User saler = data.get(position).getId().getSaler();
+		final User saler = data.get(position).getId().getSaler();
 		OkHttpClient client= Servelet.getOkHttpClient();
 		Request request =Servelet.requestuildApi("/subscribe/"+user.getId()+"/"+saler.getId())
 				.method("get", null)
@@ -204,19 +199,29 @@ public class SubscribeListUserFragment extends Fragment {
 		client.newCall(request).enqueue(new Callback() {
 			@Override
 			public void onResponse(Call arg0, Response arg1) throws IOException {
-
+				getActivity().runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						Intent itnt = new Intent(getActivity(), SubscribeListBookActivity.class);
+						itnt.putExtra("data", saler);
+						startActivity(itnt);
+					}
+				});
 			}
 
 			@Override
 			public void onFailure(Call arg0, IOException arg1) {
+				getActivity().runOnUiThread(new Runnable() {
 
+					@Override
+					public void run() {
+						new AlertDialog.Builder(getActivity()).setMessage("请求失败").show();
+					}
+				});
 			}
 		});
 
-		Intent itnt = new Intent(getActivity(), SubscribeListBookActivity.class);
-		itnt.putExtra("data", saler);
 
-		startActivity(itnt);
 	}
 
 	protected void setCount(final TextView gx2, Integer user_id, Integer saler_id) {
@@ -307,8 +312,27 @@ public class SubscribeListUserFragment extends Fragment {
 			}
 		});
 	}
-
+	Thread t;
 	void reload(){
+		if(t==null){
+			t = new Thread() {
+				@Override
+				public void run() {
+					while(true){
+						reload();
+						try {
+							Thread.sleep(5000);
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+				}
+			};
+			t.start();
+		}
+
+
 		MultipartBody body = new MultipartBody.Builder()
 				.addFormDataPart("user_id", user.getId().toString())
 				.build();
@@ -329,13 +353,13 @@ public class SubscribeListUserFragment extends Fragment {
 						}
 					});
 				}catch(final Exception e){
-					getActivity().runOnUiThread(new Runnable() {
-						public void run() {
-							new AlertDialog.Builder(getActivity())
-							.setMessage(e.getMessage())
-							.show();
-						}
-					});
+//					getActivity().runOnUiThread(new Runnable() {
+//						public void run() {
+//							new AlertDialog.Builder(getActivity())
+//							.setMessage(e.getMessage())
+//							.show();
+//						}
+//					});
 				}
 			}
 

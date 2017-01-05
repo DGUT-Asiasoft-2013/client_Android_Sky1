@@ -267,16 +267,15 @@ public class LoginActivity extends Activity {
 					@Override
 					public void run() {
 
-						User user;
+//						User user;
 						progressDialog.dismiss();//进度条消失
-						try {
 
 							if(TextUtils.isEmpty(string)){//判断解析出来的是否为空字符串（如果为空，则数据库中没有此用户）
 								Toast.makeText(LoginActivity.this, "密码错误", Toast.LENGTH_SHORT).show();
 							}
 
 							ObjectMapper objectMapper=new ObjectMapper();
-							user=objectMapper.readValue(string, User.class);//读取值
+//							user=objectMapper.readValue(string, User.class);//读取值
 							Toast.makeText(LoginActivity.this, "登录成功", Toast.LENGTH_SHORT).show();
 							
 							Intent itnt = new Intent(LoginActivity.this, HelloWorldActivity.class);//跳转的页面
@@ -292,13 +291,6 @@ public class LoginActivity extends Activity {
 									startActivity(itnt);
 								}
 							}).show();	*/
-						} catch (JsonParseException e) {
-							e.printStackTrace();
-						} catch (JsonMappingException e) {
-							e.printStackTrace();
-						} catch (IOException e) {
-							e.printStackTrace();
-						}	
 					}
 				});
 			}
