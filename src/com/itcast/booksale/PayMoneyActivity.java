@@ -5,6 +5,10 @@ import java.io.IOException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.itcast.booksale.entity.OrderLists;
 import com.itcast.booksale.fragment.widgets.AvatarView;
+import com.itcast.booksale.pay.DialogWidget;
+import com.itcast.booksale.pay.PayActivity;
+import com.itcast.booksale.pay.PayPasswordView;
+import com.itcast.booksale.pay.PayPasswordView.OnPayListener;
 import com.itcast.booksale.servelet.Servelet;
 
 import android.app.Activity;
@@ -23,14 +27,16 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class PayMoneyActivity extends Activity{
-	private AvatarView userAvatar; //照片
-	private TextView userName; //姓名
-	private TextView orderNumber;//订单号
-	private TextView momeyPay;//总金额
-	private TextView userMomey;//余额
-	private TextView btn_pay;//付款
+	private AvatarView userAvatar; //鐓х墖
+	private TextView userName; //濮撳悕
+	private TextView orderNumber;//璁㈠崟鍙�
+	private TextView momeyPay;//鎬婚噾棰�
+	private TextView userMomey;//浣欓
+	private TextView btn_pay;//浠樻
 
-	String balanceMoney;//余额
+	private DialogWidget mDialogWidget;
+	
+	String balanceMoney;//浣欓
 	String ordersId;
 
 	public OrderLists orderlist;
@@ -41,7 +47,7 @@ public class PayMoneyActivity extends Activity{
 		setContentView(R.layout.activity_pay_view);
 
 		ordersId = getIntent().getStringExtra("ordersId");
-		//初始化
+		//鍒濆鍖�
 		initPayList();
 
 
@@ -62,26 +68,56 @@ public class PayMoneyActivity extends Activity{
 		Log.d("------money------------",temp.substring(1,temp.length()-1) );
 		if(user_money < pay_money){
 			new AlertDialog.Builder(this)
-			.setTitle("余额不足")
-			.setMessage("您的余额不足，请尽快充值")
-			.setNegativeButton("好", null)
+			.setTitle("浣欓涓嶈冻")
+			.setMessage("鎮ㄧ殑浣欓涓嶈冻锛岃灏藉揩鍏呭��")
+			.setNegativeButton("濂�", null)
 			.show();
 
 		}else{
 			balanceMoney = String.valueOf(pay_money);
 			new AlertDialog.Builder(this)
-			.setTitle("确认付款")
-			.setMessage("确定付款吗？")
-			.setNegativeButton("确定", new DialogInterface.OnClickListener() {
+			.setTitle("纭浠樻")
+			.setMessage("纭畾浠樻鍚楋紵")
+			.setNegativeButton("纭畾", new DialogInterface.OnClickListener() {
 
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
-					linDataBase(balanceMoney);
+					mDialogWidget=new DialogWidget(PayMoneyActivity.this, getDecorViewDialog());
+					mDialogWidget.show();
+					
+					//linDataBase(balanceMoney);
 				}
 			})
-			.setPositiveButton("取消", null)
+			.setPositiveButton("鍙栨秷", null)
 			.show();
 		}
+	}
+	
+	protected View getDecorViewDialog() {
+		// TODO Auto-generated method stub
+		//return PayPasswordView.getInstance("45.99",this,new OnPayListener() {
+			
+		return PayPasswordView.getInstance(this,new OnPayListener() {
+			
+			@Override
+			public void onSurePay(String password) {
+				// TODO Auto-generated method stub
+				mDialogWidget.dismiss();
+				mDialogWidget=null;
+				//payTextView.setText(password);
+				Toast.makeText(getApplicationContext(), "支付成功", Toast.LENGTH_SHORT).show();
+				linDataBase(balanceMoney);
+			}
+			
+			@Override
+			public void onCancelPay() {
+				// TODO Auto-generated method stub
+				mDialogWidget.dismiss();
+				mDialogWidget=null;
+				Toast.makeText(getApplicationContext(), "取消支付", Toast.LENGTH_SHORT).show();
+				
+			}
+		}).getView();
 	}
 
 	void linDataBase(String balanceMoney){
@@ -101,7 +137,7 @@ public class PayMoneyActivity extends Activity{
 					
 					@Override
 					public void run() {
-						Toast.makeText(PayMoneyActivity.this, "付款成功，您的宝贝将会飞到您手中", Toast.LENGTH_SHORT).show();
+						Toast.makeText(PayMoneyActivity.this, "浠樻鎴愬姛锛屾偍鐨勫疂璐濆皢浼氶鍒版偍鎵嬩腑", Toast.LENGTH_SHORT).show();
 						goSpedingBillActivity();
 					}
 				});
@@ -117,7 +153,7 @@ public class PayMoneyActivity extends Activity{
 	}
 
 	void initPayList(){
-		//获取
+		//鑾峰彇
 		userAvatar = (AvatarView) findViewById(R.id.c_user_avatar);
 		userName = (TextView) findViewById(R.id.c_user_name);
 		orderNumber = (TextView) findViewById(R.id.c_orders_numb);
@@ -128,7 +164,7 @@ public class PayMoneyActivity extends Activity{
 
 
 	void getOrdersMassage(String ordersId){
-		//通过订单号搜到信息
+		//閫氳繃璁㈠崟鍙锋悳鍒颁俊鎭�
 		Request request=Servelet.requestuildApi("/orders/get/"+ordersId)
 				.get()
 				.build();
@@ -170,9 +206,9 @@ public class PayMoneyActivity extends Activity{
 	@Override
 	protected void onResume() {
 		super.onResume();
-		//获取服务器数据
+		//鑾峰彇鏈嶅姟鍣ㄦ暟鎹�
 		getOrdersMassage(ordersId);
-		//异步，传回时间比程序运行时间晚，所以得不到数据
+		//寮傛锛屼紶鍥炴椂闂存瘮绋嬪簭杩愯鏃堕棿鏅氾紝鎵�浠ュ緱涓嶅埌鏁版嵁
 	}
 
 	/*void gobackHelloword(){
@@ -181,7 +217,7 @@ public class PayMoneyActivity extends Activity{
 		finish();
 		OrdersActivity.temp.finish();
 	}*/
-	//私下订单页面
+	//绉佷笅璁㈠崟椤甸潰
 	void goSpedingBillActivity(){
 			Intent itnt = new Intent(this,BillDetailActivity.class);
 			itnt.putExtra("order",orderlist);
