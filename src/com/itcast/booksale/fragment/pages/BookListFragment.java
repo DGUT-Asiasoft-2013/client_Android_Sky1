@@ -491,12 +491,13 @@ public class BookListFragment extends Fragment implements OnClickListener {
 					getActivity().runOnUiThread(new Runnable() {
 						public void run() {
 
-							new AlertDialog
+							/*new AlertDialog
 							.Builder(getActivity())
 							.setTitle("success to add bookbus")
 							.setMessage(string)
 							.setPositiveButton("ok", null)
-							.show();
+							.show();*/
+							Toast.makeText(getActivity(), "success to add bookbus", Toast.LENGTH_SHORT).show();
 
 						}
 					});
