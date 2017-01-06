@@ -46,7 +46,7 @@ public class PayMoneyActivity extends Activity{
 	String payType;
 	List<Bookbus> order;
 	//------------------- 
-	
+
 	public OrderLists orderlist;
 
 	@Override
@@ -57,7 +57,7 @@ public class PayMoneyActivity extends Activity{
 		ordersId = getIntent().getStringExtra("ordersId");
 		AllPay = getIntent().getStringExtra("AllPay");
 		payType = getIntent().getStringExtra("payType");
-		
+
 		initPayList();
 		
 		if(order==null){
@@ -65,22 +65,26 @@ public class PayMoneyActivity extends Activity{
 		}else{
 			order = new ArrayList<Bookbus>();
 		}
+		
+		setOrder();
 
 		btn_pay.setOnClickListener(new View.OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
 				payMoney();
-
+				changeState();//切换状态
+				goSpedingBillActivity();
 			}
 		});
 	}
 
 	void payMoney(){
 		float user_money = Float.valueOf(userMomey.getText().toString());
-		String temp = momeyPay.getText().toString();
-		float pay_money = Float.valueOf(temp.substring(1,temp.length()-1));
-		Log.d("------money------------",temp.substring(1,temp.length()-1) );
+		String temp = AllPay;
+//		Log.d("allpay--e-e-e-e---e--e-", temp);
+		float pay_money = Float.valueOf(temp.substring(2,temp.length()-1));
+//		Log.d("------money------------",temp.substring(2,temp.length()-1) );
 		if(user_money < pay_money){
 			new AlertDialog.Builder(this)
 			.setTitle("余额不足")
@@ -152,8 +156,9 @@ public class PayMoneyActivity extends Activity{
 
 					@Override
 					public void run() {
+						
 						Toast.makeText(PayMoneyActivity.this, "您的宝贝将以火箭速度向您飞来", Toast.LENGTH_SHORT).show();
-						goSpedingBillActivity();
+						
 					}
 				});
 			}
@@ -168,7 +173,7 @@ public class PayMoneyActivity extends Activity{
 	}
 
 	void initPayList(){
-		
+
 		userAvatar = (AvatarView) findViewById(R.id.c_user_avatar);
 		userName = (TextView) findViewById(R.id.c_user_name);
 		orderNumber = (TextView) findViewById(R.id.c_orders_numb);
@@ -177,56 +182,47 @@ public class PayMoneyActivity extends Activity{
 		btn_pay = (TextView) findViewById(R.id.btn_pay_money);
 	}
 
+	void changeState(){
+		MultipartBody body = new MultipartBody.Builder()
+				.addFormDataPart("orderId", ordersId)
+				.addFormDataPart("finish","1")//已付款
+				.build();
 
-	void getOrdersMassage(String ordersId){
-		
-		Request request=Servelet.requestuildApi("/orders/get/"+ordersId)
-				.get()
+		Request request=Servelet.requestuildApi("/order/changeState")
+				.post(body)
 				.build();
 		Servelet.getOkHttpClient().newCall(request).enqueue(new Callback() {
 
 			@Override
 			public void onResponse(Call arg0, Response arg1) throws IOException {
-				String body =arg1.body().string();
-				try{
-					ObjectMapper objectMapper=new ObjectMapper();
-					OrderLists orderli = objectMapper.readValue(body, OrderLists.class);
-					Log.d("orders------------", orderli.getUser().getName());
-					setOrder(orderli);
-				}catch(final Exception e){
-
-				}
-
+				PayMoneyActivity.this.runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						Toast.makeText(PayMoneyActivity.this, "pioiuuifdf", Toast.LENGTH_SHORT).show();
+					}
+				});
 			}
 
 			@Override
 			public void onFailure(Call arg0, IOException arg1) {
-
+				// TODO Auto-generated method stub
 
 			}
 		});
 	}
 
-	void setOrder(OrderLists orderlist){
-		this.orderlist = orderlist;
-		Log.d("chuan", orderlist.getFinish());
+	void setOrder(){
 		//--------
-		userAvatar.load(orderlist.getUser());
-		userName.setText(orderlist.getUser().getName());
+		userAvatar.load(order.get(0).getId().getUser());
+		userName.setText(order.get(0).getId().getUser().getName());
 		orderNumber.setText(ordersId);
 		momeyPay.setText(AllPay);
-		userMomey.setText(String.valueOf(orderlist.getUser().getSumMoney()));
+		userMomey.setText(String.valueOf(order.get(0).getId().getUser().getSumMoney()));
 	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
-		
-		getOrdersMassage(ordersId);
-		
-		
-		
-		
 	}
 
 	/*void gobackHelloword(){
@@ -235,8 +231,9 @@ public class PayMoneyActivity extends Activity{
 		finish();
 		OrdersActivity.temp.finish();
 	}*/
-	
+
 	void goSpedingBillActivity(){
+		payType = "已付款";
 		Intent itnt = new Intent(this,BillDetailActivity.class);
 		itnt.putExtra("order",(Serializable)order);//修改把list<>传过去
 		itnt.putExtra("AllPay", AllPay);

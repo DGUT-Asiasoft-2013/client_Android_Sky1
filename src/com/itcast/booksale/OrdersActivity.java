@@ -135,27 +135,28 @@ public class OrdersActivity extends Activity {
 		for(int i=0;i<order2.size();i++){
 			int book_id =  order2.get(i).getId().getBook().getId();
 			saveBook(book_id,payTag);
-			
-			new AlertDialog.Builder(OrdersActivity.this)
-			.setTitle("连接成功")
-			.setMessage("提交订单成功")
-			.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-
-				@Override
-				public void onClick(DialogInterface dialog, int which) {
-					if(payType_tag == 0){
-						goPayActivity();
-						//支付页面
-					}else if(payType_tag == 1){
-						Toast.makeText(OrdersActivity.this, "私下订单已生成", Toast.LENGTH_SHORT).show();
-						goSpedingBillActivity();
-					}else{
-						return;
-					}
-
-				}
-			}).show();
 		}
+
+		new AlertDialog.Builder(OrdersActivity.this)
+		.setTitle("连接成功")
+		.setMessage("提交订单成功")
+		.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				if(payType_tag == 0){
+					goPayActivity();
+					//支付页面
+				}else if(payType_tag == 1){
+					Toast.makeText(OrdersActivity.this, "私下订单已生成", Toast.LENGTH_SHORT).show();
+					goSpedingBillActivity();
+				}else{
+					return;
+				}
+
+			}
+		}).show();
+
 
 
 
@@ -270,34 +271,34 @@ public class OrdersActivity extends Activity {
 			@Override
 			public void onResponse(Call arg0, final Response arg1) throws IOException {
 
-//				final String arg = arg1.body().string();
+				//				final String arg = arg1.body().string();
 				//把订单格式化
 
 
 
-//				runOnUiThread(new Runnable() {
-//
-//					@Override
-//					public void run() {
-//						ObjectMapper objectMapper=new ObjectMapper();
-//						try {
-//							orderList = objectMapper.readValue(arg, OrderLists.class);
-//						} catch (JsonParseException e) {
-//							// TODO Auto-generated catch block
-//							e.printStackTrace();
-//						} catch (JsonMappingException e) {
-//							// TODO Auto-generated catch block
-//							e.printStackTrace();
-//						} catch (IOException e) {
-//							// TODO Auto-generated catch block
-//							e.printStackTrace();
-//						}
-//
-//						Log.d("ARG-------------------", arg);
-//						Log.d("payType_text00000000000000000", payType_text);
-//						
-//					}
-//				});
+				//				runOnUiThread(new Runnable() {
+				//
+				//					@Override
+				//					public void run() {
+				//						ObjectMapper objectMapper=new ObjectMapper();
+				//						try {
+				//							orderList = objectMapper.readValue(arg, OrderLists.class);
+				//						} catch (JsonParseException e) {
+				//							// TODO Auto-generated catch block
+				//							e.printStackTrace();
+				//						} catch (JsonMappingException e) {
+				//							// TODO Auto-generated catch block
+				//							e.printStackTrace();
+				//						} catch (IOException e) {
+				//							// TODO Auto-generated catch block
+				//							e.printStackTrace();
+				//						}
+				//
+				//						Log.d("ARG-------------------", arg);
+				//						Log.d("payType_text00000000000000000", payType_text);
+				//						
+				//					}
+				//				});
 
 
 
