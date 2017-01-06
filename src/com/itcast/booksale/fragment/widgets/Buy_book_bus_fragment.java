@@ -477,6 +477,8 @@ public class Buy_book_bus_fragment extends Fragment {
 						int each_id = list_shopping_bus.get(i).getId().getBook().getId();
 
 						mSelectedState.put(each_id, true); // 给每个购物行设置点中状态
+						
+						//This line has a value after the "+" or "-" or radio button is clicked
 						int each_num = mSelectedNum.get(each_id);
 						// 把全部价钱加起来
 						totalPrice += each_num * list_shopping_bus.get(i).getId().getBook().getPrice();
@@ -492,6 +494,7 @@ public class Buy_book_bus_fragment extends Fragment {
 				// 否则
 				totalPrice = 0; // 钱的总数为0
 				mSelectedState.clear();
+//				mSelectedNum.put(list_shopping_bus.get(i), 1);
 				// 刷新
 				adapter.notifyDataSetChanged();
 				count_money_tv.setText("￥:" + 0.00 + "元");
@@ -545,13 +548,15 @@ public class Buy_book_bus_fragment extends Fragment {
 
 			int each_book_id = bookbus.getId().getBook().getId(); // 获得对应的id
 			boolean selected = mSelectedState.get(each_book_id, false); // The selected state of its id
-			int selectedNum = mSelectedNum.get(each_book_id, 0);// Marks the
+			int selectedNum = mSelectedNum.get(each_book_id, 1);// Marks the
 																// current
 																// number state
 																// of its id
+			
 			final int count = selectedNum;      //make the selectedNum Assignment for count
 
 			String number = String.valueOf(selectedNum);
+			Log.i("--------------检测----------", number);
 			each_item_num.setText(number);
 			each_item_choose_btn.setChecked(selected); // 设置每行选择按钮的选择状态
 
@@ -587,7 +592,7 @@ public class Buy_book_bus_fragment extends Fragment {
 						each_item_num.setText(add_number);
 
 						// because client add 1,so Backstage's booknumber-1
-						bookbus.getId().getBook().setBooknumber(bookbus.getId().getBook().getBooknumber() + 1);
+						bookbus.getId().getBook().setBooknumber(bookbus.getId().getBook().getBooknumber() - 1);
 						notifyDataSetChanged(); // notify
 						// 选中了
 						totalPrice += bookbus.getId().getBook().getPrice();
@@ -627,7 +632,7 @@ public class Buy_book_bus_fragment extends Fragment {
 						each_item_num.setText(reduce_number);
 
 						// because client reduce 1,so Backstage's booknumber+1
-						bookbus.getId().getBook().setBooknumber(bookbus.getId().getBook().getBooknumber() - 1);
+						bookbus.getId().getBook().setBooknumber(bookbus.getId().getBook().getBooknumber() + 1);
 						notifyDataSetChanged(); // 刷新
 						// 选中了
 						totalPrice -= bookbus.getId().getBook().getPrice();
@@ -668,15 +673,15 @@ public class Buy_book_bus_fragment extends Fragment {
 							mSelectedState.put(each_item_id, true);
 							// 获得选择的数量
 							int selectednumber = Integer.parseInt(each_item_num.getText().toString());
-							// mSelectedNum.put(each_item_id, selectednumber);
-							totalPrice += selectednumber * list_shopping_bus.get(position).getId().getBook().getPrice();
+							mSelectedNum.put(each_item_id, selectednumber);
+							totalPrice = selectednumber * list_shopping_bus.get(position).getId().getBook().getPrice();
 						} else {
 							// delete this item
 							mSelectedState.delete(each_item_id);
 							// 获得选择的数量
 							int selectednumber = Integer.parseInt(each_item_num.getText().toString());
 							// reduce the totalPrice
-							totalPrice -= selectednumber * list_shopping_bus.get(position).getId().getBook().getPrice();
+							totalPrice = selectednumber * list_shopping_bus.get(position).getId().getBook().getPrice();
 						}
 
 						count_money_tv.setText("￥" + totalPrice + "元");
