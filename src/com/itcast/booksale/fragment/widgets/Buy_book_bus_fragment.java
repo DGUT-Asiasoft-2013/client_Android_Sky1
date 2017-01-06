@@ -439,6 +439,7 @@ public class Buy_book_bus_fragment extends Fragment {
 													// OrdersActivity
 													intent.putExtra("order_number", order_number);
 													startActivity(intent);
+													bookbusList.clear();
 													dialog.dismiss();
 													// Log.i("------------检测----------",
 													// "----------------啦啦啦啦啦-----------");
@@ -681,14 +682,14 @@ public class Buy_book_bus_fragment extends Fragment {
 							// 获得选择的数量
 							int selectednumber = Integer.parseInt(each_item_num.getText().toString());
 							mSelectedNum.put(each_item_id, selectednumber);
-							totalPrice = selectednumber * list_shopping_bus.get(position).getId().getBook().getPrice();
+							totalPrice += selectednumber * list_shopping_bus.get(position).getId().getBook().getPrice();
 						} else {
 							// delete this item
 							mSelectedState.delete(each_item_id);
 							// 获得选择的数量
 							int selectednumber = Integer.parseInt(each_item_num.getText().toString());
 							// reduce the totalPrice
-							totalPrice = selectednumber * list_shopping_bus.get(position).getId().getBook().getPrice();
+							totalPrice -= selectednumber * list_shopping_bus.get(position).getId().getBook().getPrice();
 						}
 
 						count_money_tv.setText("￥" + totalPrice + "元");

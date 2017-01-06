@@ -104,7 +104,7 @@ public class PayMoneyActivity extends Activity{
 					mDialogWidget=new DialogWidget(PayMoneyActivity.this, getDecorViewDialog());
 					mDialogWidget.show();
 
-					//linDataBase(balanceMoney);
+					linDataBase(balanceMoney);
 				}
 			})
 			.setPositiveButton("取消", null)
@@ -198,7 +198,7 @@ public class PayMoneyActivity extends Activity{
 				PayMoneyActivity.this.runOnUiThread(new Runnable() {
 					@Override
 					public void run() {
-						Toast.makeText(PayMoneyActivity.this, "pioiuuifdf", Toast.LENGTH_SHORT).show();
+//						Toast.makeText(PayMoneyActivity.this, "pioiuuifdf", Toast.LENGTH_SHORT).show();
 					}
 				});
 			}
