@@ -58,19 +58,25 @@
                 android:textColor="#00838B" />
         </RelativeLayout>
 
-        <LinearLayout
-            android:id="@+id/lin_ii"
+        <ScrollView
+            android:id="@+id/scr_vvv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/rel_step1"
-            android:orientation="vertical" >
-        </LinearLayout>
+            android:layout_below="@id/rel_step1" >
+
+            <LinearLayout
+                android:id="@+id/lin_ii"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+            </LinearLayout>
+        </ScrollView>
 
         <LinearLayout
             android:id="@+id/lin_step1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/lin_ii"
+            android:layout_below="@id/scr_vvv"
             android:orientation="horizontal" >
 
             <TextView

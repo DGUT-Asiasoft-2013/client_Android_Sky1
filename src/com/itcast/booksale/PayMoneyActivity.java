@@ -1,8 +1,12 @@
 package com.itcast.booksale;
 
 import java.io.IOException;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.itcast.booksale.entity.Bookbus;
 import com.itcast.booksale.entity.OrderLists;
 import com.itcast.booksale.fragment.widgets.AvatarView;
 import com.itcast.booksale.pay.DialogWidget;
@@ -38,7 +42,11 @@ public class PayMoneyActivity extends Activity{
 
 	String balanceMoney;
 	String ordersId;
-
+	String AllPay;
+	String payType;
+	List<Bookbus> order;
+	//------------------- 
+	
 	public OrderLists orderlist;
 
 	@Override
@@ -47,9 +55,16 @@ public class PayMoneyActivity extends Activity{
 		setContentView(R.layout.activity_pay_view);
 
 		ordersId = getIntent().getStringExtra("ordersId");
+		AllPay = getIntent().getStringExtra("AllPay");
+		payType = getIntent().getStringExtra("payType");
 		
 		initPayList();
-
+		
+		if(order==null){
+			order = (List<Bookbus>) getIntent().getSerializableExtra("order");
+		}else{
+			order = new ArrayList<Bookbus>();
+		}
 
 		btn_pay.setOnClickListener(new View.OnClickListener() {
 
@@ -198,8 +213,8 @@ public class PayMoneyActivity extends Activity{
 		//--------
 		userAvatar.load(orderlist.getUser());
 		userName.setText(orderlist.getUser().getName());
-		orderNumber.setText(orderlist.getOrderId());
-		momeyPay.setText(orderlist.getPayMoney());
+		orderNumber.setText(ordersId);
+		momeyPay.setText(AllPay);
 		userMomey.setText(String.valueOf(orderlist.getUser().getSumMoney()));
 	}
 
@@ -208,6 +223,9 @@ public class PayMoneyActivity extends Activity{
 		super.onResume();
 		
 		getOrdersMassage(ordersId);
+		
+		
+		
 		
 	}
 
@@ -220,7 +238,9 @@ public class PayMoneyActivity extends Activity{
 	
 	void goSpedingBillActivity(){
 		Intent itnt = new Intent(this,BillDetailActivity.class);
-		itnt.putExtra("order",orderlist);
+		itnt.putExtra("order",(Serializable)order);//修改把list<>传过去
+		itnt.putExtra("AllPay", AllPay);
+		itnt.putExtra("payType",payType);
 		startActivity(itnt);
 		finish();
 	}
