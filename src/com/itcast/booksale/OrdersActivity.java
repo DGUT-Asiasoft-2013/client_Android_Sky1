@@ -19,6 +19,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +33,7 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -43,7 +45,8 @@ import android.widget.Toast;
  *
  */
 public class OrdersActivity extends Activity {
-	Bookbus order;//get bookbus's massage what were putted
+	//	Bookbus order;//gone
+	List<Bookbus> order; //get bookbus's massage what were putted
 	OrderLists orderList;
 	//ye mian shu xing
 	private AvatarView bookUserAvatar; // 图书卖家照片
@@ -59,7 +62,11 @@ public class OrdersActivity extends Activity {
 	private TextView bookSummary; //图书简介
 	private TextView bookPrice;// 售价
 	private TextView books_buy_numb;//购买数量
-
+	//----------------修改内容
+	LinearLayout add_bookList;//添加购物车中多本书籍
+	LinearLayout bookList;//书籍的布局
+	LayoutInflater inflater;
+	//-------------------------------
 
 	//Pay Type Spinner
 	private Spinner payTypeSpinner;
@@ -75,24 +82,37 @@ public class OrdersActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		temp = this;
 		setContentView(R.layout.activity_orders_view);
+		//-----------设置当前布局
+		inflater = LayoutInflater.from(this);
+
 		//get bookbus
-		order = (Bookbus) getIntent().getSerializableExtra("bookbus");
+		if(order==null){
+			order = (List<Bookbus>) getIntent().getSerializableExtra("bookbus");
+		}else{
+			order = new ArrayList<Bookbus>();
+		}
+		
+	//	Log.d("bookbus,-----------------========", order.get(0).getId().getBook().getTitle());
+
 		AllPay = getIntent().getStringExtra("AllPay");
 		orderNumber = getIntent().getStringExtra("order_number");
-		initorders(); // 初始化
-		//设置
-		bookUserAvatar.load(order.getId().getUser());
-		bookUserName.setText(order.getId().getUser().getName());
-		momey_all.setText(AllPay);
+
+		add_bookList = (LinearLayout) findViewById(R.id.lin_books);//购买图书列表
+		initorders(); // 初始化父类布局
+		
 
 
-		//设置内容
-		bookAvatar.load(Servelet.urlstring + order.getId().getBook().getBookavatar());
-		bookTitle.setText(order.getId().getBook().getTitle());
+		//遍历List<Bookbus>===============================================
+		String size = String.valueOf(order.size());
+		Log.d("size==========================", size);
+		for(int i=0;i<order.size();i++){
+			addBookList();
+			setorders(order.get(i));//设置父类信息
+			setBooks(order.get(i));//设置书籍信息
+		}
 
-		bookAuthor.setText(order.getId().getBook().getAuthor());
-		bookSummary.setText(order.getId().getBook().getSummary());
-		bookPrice.setText(String.valueOf(order.getId().getBook().getPrice()));
+		//=========================================================
+
 		btn_order.setOnClickListener(new View.OnClickListener() {
 
 			@Override
@@ -108,9 +128,9 @@ public class OrdersActivity extends Activity {
 
 	}
 	//保存order到数据库
-	void saveOrdersList(Bookbus order,String AllPay,String orderNumber,final String payType_text){
-		int book_id = order.getId().getBook().getId();
-//		Log.d("-----AllPay-----", order.getId().getBook().getAuthor());
+	void saveOrdersList(List<Bookbus> order2,String AllPay,String orderNumber,final String payType_text){
+		int book_id = ((Bookbus) order2).getId().getBook().getId();
+		//		Log.d("-----AllPay-----", order.getId().getBook().getAuthor());
 		MultipartBody orderbody = new MultipartBody.Builder()
 				.addFormDataPart("orderId",orderNumber)
 				.addFormDataPart("payMoney", AllPay)
@@ -126,19 +146,19 @@ public class OrdersActivity extends Activity {
 
 			@Override
 			public void onResponse(Call arg0, final Response arg1) throws IOException {
-				
+
 				final String arg = arg1.body().string();
 				//把订单格式化
-				
+
 				ObjectMapper objectMapper=new ObjectMapper();
 				orderList = objectMapper.readValue(arg, OrderLists.class);
 				runOnUiThread(new Runnable() {
 
 					@Override
 					public void run() {
-						
+
 						Log.d("ARG-------------------", arg);
-				
+						Log.d("payType_text00000000000000000", payType_text);
 						new AlertDialog.Builder(OrdersActivity.this)
 						.setTitle("连接成功")
 						.setMessage("提交订单成功")
@@ -153,7 +173,7 @@ public class OrdersActivity extends Activity {
 									Toast.makeText(OrdersActivity.this, "私下订单已生成", Toast.LENGTH_SHORT).show();
 									goSpedingBillActivity();
 								}
-								
+
 							}
 						}).show();
 					}
@@ -197,21 +217,13 @@ public class OrdersActivity extends Activity {
 		bookUserAvatar = (AvatarView) findViewById(R.id.user_avatar);
 		bookUserName = (TextView) findViewById(R.id.user_name);
 		momey_all = (TextView) findViewById(R.id.momey_all);
-		btn_order = (TextView) findViewById(R.id.btn_order);
+		btn_order = (TextView) findViewById(R.id.btn_order);//提交订单按钮
+
 		payTypeSpinner = (Spinner) findViewById(R.id.spinner_pay_tag);
 		//添加下拉框数据
 		payType_list = new ArrayList<String>();
 		payType_list.add("在线交易");
 		payType_list.add("私下交易");
-
-		//获取订单
-
-		bookAvatar = (BookAvatarView) findViewById(R.id.book_avatar);
-		bookTitle = (TextView) findViewById(R.id.book_title); // 图书标题
-		bookAuthor = (TextView) findViewById(R.id.book_author);//图书作者
-		bookSummary = (TextView) findViewById(R.id.text_about_book); //图书简介
-		bookPrice = (TextView) findViewById(R.id.book_price);// 售价
-		books_buy_numb = (TextView) findViewById(R.id.books_numb);//购买数量
 
 
 		//适配器
@@ -238,6 +250,61 @@ public class OrdersActivity extends Activity {
 		});
 	}
 
+	//------------
+	void initBook(){
+		//获取订单
+		bookAvatar = (BookAvatarView) bookList.findViewById(R.id.book_avatar);
+		bookTitle = (TextView) bookList.findViewById(R.id.book_title); // 图书标题
+		bookAuthor = (TextView) bookList.findViewById(R.id.book_author);//图书作者
+		bookSummary = (TextView) bookList.findViewById(R.id.text_about_book); //图书简介
+		bookPrice = (TextView) bookList.findViewById(R.id.book_price);// 售价
+		books_buy_numb = (TextView) bookList.findViewById(R.id.books_numb);//购买数量
+
+	}
+
+	//遍历设置订单信息
+	void setorders(Bookbus order){
+		//设置
+		bookUserAvatar.load(order.getId().getUser());
+		bookUserName.setText(order.getId().getUser().getName());
+		momey_all.setText(AllPay);
+
+	}
+
+	void setBooks(Bookbus order){
+		//设置内容
+		bookAvatar.load(Servelet.urlstring + order.getId().getBook().getBookavatar());
+		bookTitle.setText(order.getId().getBook().getTitle());
+
+		bookAuthor.setText(order.getId().getBook().getAuthor());
+		bookSummary.setText(order.getId().getBook().getSummary());
+		bookPrice.setText(String.valueOf(order.getId().getBook().getPrice()));
+	}
+
+	//----------------------
+	void addBookList(){
+		//---------------书籍布局
+		bookList = (LinearLayout) inflater.inflate(R.layout.cell_order_list,null).findViewById(R.id.order_list_cell);
+		initBook();// 初始化书籍布局
+		//添加新的书籍布局
+		add_bookList.addView(bookList);
+
+	}
+	//-----------
+	//监听返回键
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		 
+        if (keyCode == KeyEvent.KEYCODE_BACK
+                  && event.getRepeatCount() == 0) {
+             //do something...
+        	order.clear();
+        	finish();
+              return true;
+          }
+          return super.onKeyDown(keyCode, event);
+      }
+	//-------------
 
 
 }
