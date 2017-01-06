@@ -57,21 +57,27 @@
                 android:textColor="#00838B" />
         </RelativeLayout>
 
-        <LinearLayout
-            android:id="@+id/lin_books"
+        <ScrollView
+            android:id="@+id/scr_vvv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/rel_step1"
-            android:orientation="vertical" >
+            android:layout_below="@id/rel_step1" >
 
-            <!-- 用于添加购物中多本书 -->
-        </LinearLayout>
+            <LinearLayout
+                android:id="@+id/lin_books"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <!-- 用于添加购物中多本书 -->
+            </LinearLayout>
+        </ScrollView>
 
         <LinearLayout
             android:id="@+id/lin_step1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/lin_books"
+            android:layout_below="@id/scr_vvv"
             android:orientation="horizontal" >
 
             <TextView

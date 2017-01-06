@@ -164,7 +164,10 @@ public class OrdersActivity extends Activity {
 	//支付页面
 	void goPayActivity(){
 		Intent itnt = new Intent(this,PayMoneyActivity.class);
+		itnt.putExtra("order",(Serializable)order);//修改把list<>传过去
 		itnt.putExtra("ordersId", orderNumber);
+		itnt.putExtra("AllPay", AllPay);
+		itnt.putExtra("payType",payType_text);
 		startActivity(itnt);
 		finish();
 	}

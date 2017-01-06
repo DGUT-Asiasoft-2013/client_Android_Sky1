@@ -50,6 +50,7 @@ public class BillDetailActivity  extends Activity{
 		}else{
 			data = new ArrayList<Bookbus>();
 		}
+		
 		//		data = (OrderLists) getIntent().getSerializableExtra("order");
 		add_bookList = (LinearLayout) findViewById(R.id.lin_ii);
 		AllPay = getIntent().getStringExtra("AllPay");
