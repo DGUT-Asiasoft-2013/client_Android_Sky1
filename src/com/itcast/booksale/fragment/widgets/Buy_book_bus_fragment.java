@@ -440,10 +440,16 @@ public class Buy_book_bus_fragment extends Fragment {
 											intent.putExtra("order_number", order_number);
 											startActivity(intent);
 											bookbusList.clear();
+
+											dialog.dismiss();
+
+
+
 											// Log.i("------------检测----------",
 											// "----------------啦啦啦啦啦-----------");
 										}
 									}).setNegativeButton("不了，我再想想", null).show();
+
 								}
 							});
 
@@ -483,7 +489,7 @@ public class Buy_book_bus_fragment extends Fragment {
 						int each_id = list_shopping_bus.get(i).getId().getBook().getId();
 
 						mSelectedState.put(each_id, true); // 给每个购物行设置点中状态
-						
+
 						//This line has a value after the "+" or "-" or radio button is clicked
 						int each_num = mSelectedNum.get(each_id);
 						// 把全部价钱加起来
@@ -500,7 +506,7 @@ public class Buy_book_bus_fragment extends Fragment {
 				// 否则
 				totalPrice = 0; // 钱的总数为0
 				mSelectedState.clear();
-//				mSelectedNum.put(list_shopping_bus.get(i), 1);
+				//				mSelectedNum.put(list_shopping_bus.get(i), 1);
 				// 刷新
 				adapter.notifyDataSetChanged();
 				count_money_tv.setText("￥:" + 0.00 + "元");
@@ -555,10 +561,10 @@ public class Buy_book_bus_fragment extends Fragment {
 			int each_book_id = bookbus.getId().getBook().getId(); // 获得对应的id
 			boolean selected = mSelectedState.get(each_book_id, false); // The selected state of its id
 			int selectedNum = mSelectedNum.get(each_book_id, 1);// Marks the
-																// current
-																// number state
-																// of its id
-			
+			// current
+			// number state
+			// of its id
+
 			final int count = selectedNum;      //make the selectedNum Assignment for count
 
 			String number = String.valueOf(selectedNum);

@@ -1,9 +1,12 @@
 package com.itcast.booksale;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.itcast.booksale.entity.Bookbus;
 import com.itcast.booksale.entity.OrderLists;
@@ -73,6 +76,8 @@ public class OrdersActivity extends Activity {
 	private List<String> payType_list;
 	private ArrayAdapter<String> payType_adapter;
 	String payType_text;
+	int payType_tag;
+	String payTag;
 
 	//----
 	public static OrdersActivity temp = null;
@@ -91,15 +96,13 @@ public class OrdersActivity extends Activity {
 		}else{
 			order = new ArrayList<Bookbus>();
 		}
-		
-	//	Log.d("bookbus,-----------------========", order.get(0).getId().getBook().getTitle());
 
 		AllPay = getIntent().getStringExtra("AllPay");
 		orderNumber = getIntent().getStringExtra("order_number");
 
 		add_bookList = (LinearLayout) findViewById(R.id.lin_books);//购买图书列表
 		initorders(); // 初始化父类布局
-		
+
 
 
 		//遍历List<Bookbus>===============================================
@@ -123,78 +126,38 @@ public class OrdersActivity extends Activity {
 
 			}
 		});
-		//		Log.i("------------检测----------", "----------------lalaa-----------");
 
 
 	}
+
 	//保存order到数据库
 	void saveOrdersList(List<Bookbus> order2,String AllPay,String orderNumber,final String payType_text){
-		int book_id = ((Bookbus) order2).getId().getBook().getId();
-		//		Log.d("-----AllPay-----", order.getId().getBook().getAuthor());
-		MultipartBody orderbody = new MultipartBody.Builder()
-				.addFormDataPart("orderId",orderNumber)
-				.addFormDataPart("payMoney", AllPay)
-				.addFormDataPart("payway", payType_text)
-				.addFormDataPart("finish", "已提交")
-				.build();
+		for(int i=0;i<order2.size();i++){
+			int book_id =  order2.get(i).getId().getBook().getId();
+			saveBook(book_id,payTag);
+			
+			new AlertDialog.Builder(OrdersActivity.this)
+			.setTitle("连接成功")
+			.setMessage("提交订单成功")
+			.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 
-		Request request = Servelet.requestuildApi("books/"+book_id+"/orders")
-				.post(orderbody)
-				.build();
-
-		Servelet.getOkHttpClient().newCall(request).enqueue(new Callback() {
-
-			@Override
-			public void onResponse(Call arg0, final Response arg1) throws IOException {
-
-				final String arg = arg1.body().string();
-				//把订单格式化
-
-				ObjectMapper objectMapper=new ObjectMapper();
-				orderList = objectMapper.readValue(arg, OrderLists.class);
-				runOnUiThread(new Runnable() {
-
-					@Override
-					public void run() {
-
-						Log.d("ARG-------------------", arg);
-						Log.d("payType_text00000000000000000", payType_text);
-						new AlertDialog.Builder(OrdersActivity.this)
-						.setTitle("连接成功")
-						.setMessage("提交订单成功")
-						.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-
-							@Override
-							public void onClick(DialogInterface dialog, int which) {
-								if(payType_text.equals("在线交易")){
-									//支付页面
-									goPayActivity();
-								}else{
-									Toast.makeText(OrdersActivity.this, "私下订单已生成", Toast.LENGTH_SHORT).show();
-									goSpedingBillActivity();
-								}
-
-							}
-						}).show();
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					if(payType_tag == 0){
+						goPayActivity();
+						//支付页面
+					}else if(payType_tag == 1){
+						Toast.makeText(OrdersActivity.this, "私下订单已生成", Toast.LENGTH_SHORT).show();
+						goSpedingBillActivity();
+					}else{
+						return;
 					}
-				});
-			}
 
-			@Override
-			public void onFailure(Call arg0, IOException arg1) {
-				runOnUiThread(new Runnable() {
+				}
+			}).show();
+		}
 
-					@Override
-					public void run() {
-						new AlertDialog.Builder(OrdersActivity.this)
-						.setTitle("连接失败")
-						.setMessage("提交订单失败")
-						.setPositiveButton("OK", null).show();
-					}
-				});
 
-			}
-		});
 
 	}
 
@@ -205,10 +168,13 @@ public class OrdersActivity extends Activity {
 		startActivity(itnt);
 		finish();
 	}
+
 	//私下订单页面
 	void goSpedingBillActivity(){
 		Intent itnt = new Intent(this,BillDetailActivity.class);
-		itnt.putExtra("order",orderList);
+		itnt.putExtra("order",(Serializable)order);//修改把list<>传过去
+		itnt.putExtra("AllPay", AllPay);
+		itnt.putExtra("payType",payType_text);
 		startActivity(itnt);
 		finish();
 	}
@@ -240,12 +206,14 @@ public class OrdersActivity extends Activity {
 				ArrayAdapter<String> adapter = (ArrayAdapter<String>) parent.getAdapter();
 				//选中下拉框后设置类型
 				payType_text= adapter.getItem(position);
+				payType_tag = position;//0为在线交易，1为私下交易
+				payTag = String.valueOf(payType_tag);
 
 			}
 
 			@Override
 			public void onNothingSelected(AdapterView<?> parent) {
-
+				payType_tag = 0;//默认为0
 			}
 		});
 	}
@@ -281,6 +249,74 @@ public class OrdersActivity extends Activity {
 		bookPrice.setText(String.valueOf(order.getId().getBook().getPrice()));
 	}
 
+	void saveBook(int book_id,String payTag){
+		//		Log.d("-----AllPay-----", order.getId().getBook().getAuthor());
+		MultipartBody orderbody = new MultipartBody.Builder()
+				.addFormDataPart("orderId",orderNumber)
+				.addFormDataPart("payMoney", AllPay)
+				.addFormDataPart("payway", payTag)//0或1
+				.addFormDataPart("finish", "0")//未付款
+				.build();
+
+		Request request = Servelet.requestuildApi("books/"+book_id+"/orders")
+				.post(orderbody)
+				.build();
+
+		Servelet.getOkHttpClient().newCall(request).enqueue(new Callback() {
+
+			@Override
+			public void onResponse(Call arg0, final Response arg1) throws IOException {
+
+//				final String arg = arg1.body().string();
+				//把订单格式化
+
+
+
+//				runOnUiThread(new Runnable() {
+//
+//					@Override
+//					public void run() {
+//						ObjectMapper objectMapper=new ObjectMapper();
+//						try {
+//							orderList = objectMapper.readValue(arg, OrderLists.class);
+//						} catch (JsonParseException e) {
+//							// TODO Auto-generated catch block
+//							e.printStackTrace();
+//						} catch (JsonMappingException e) {
+//							// TODO Auto-generated catch block
+//							e.printStackTrace();
+//						} catch (IOException e) {
+//							// TODO Auto-generated catch block
+//							e.printStackTrace();
+//						}
+//
+//						Log.d("ARG-------------------", arg);
+//						Log.d("payType_text00000000000000000", payType_text);
+//						
+//					}
+//				});
+
+
+
+			}
+
+			@Override
+			public void onFailure(Call arg0, IOException arg1) {
+				runOnUiThread(new Runnable() {
+
+					@Override
+					public void run() {
+						new AlertDialog.Builder(OrdersActivity.this)
+						.setTitle("连接失败")
+						.setMessage("提交订单失败")
+						.setPositiveButton("OK", null).show();
+					}
+				});
+
+			}
+		});
+	}
+
 	//----------------------
 	void addBookList(){
 		//---------------书籍布局
@@ -294,16 +330,16 @@ public class OrdersActivity extends Activity {
 	//监听返回键
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
-		 
-        if (keyCode == KeyEvent.KEYCODE_BACK
-                  && event.getRepeatCount() == 0) {
-             //do something...
-        	order.clear();
-        	finish();
-              return true;
-          }
-          return super.onKeyDown(keyCode, event);
-      }
+
+		if (keyCode == KeyEvent.KEYCODE_BACK
+				&& event.getRepeatCount() == 0) {
+			//do something...
+			order.clear();
+			finish();
+			return true;
+		}
+		return super.onKeyDown(keyCode, event);
+	}
 	//-------------
 
 
