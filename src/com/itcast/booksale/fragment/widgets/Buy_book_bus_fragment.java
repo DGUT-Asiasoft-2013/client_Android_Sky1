@@ -434,21 +434,16 @@ public class Buy_book_bus_fragment extends Fragment {
 													+ bookbus.getId().getBook().getIsbn()
 													+ bookbus.getId().getBook().getId();
 
-											// translate the
-											// order_number to the
-											// OrdersActivity
-											intent.putExtra("order_number", order_number);
-											startActivity(intent);
-											bookbusList.clear();
-
-											dialog.dismiss();
-
-
-
-											// Log.i("------------检测----------",
-											// "----------------啦啦啦啦啦-----------");
-										}
-									}).setNegativeButton("不了，我再想想", null).show();
+													// translate the
+													// order_number to the
+													// OrdersActivity
+													intent.putExtra("order_number", order_number);
+													startActivity(intent);
+													dialog.dismiss();
+													// Log.i("------------检测----------",
+													// "----------------啦啦啦啦啦-----------");
+												}
+											}).setNegativeButton("不了，我再想想", null).show();
 
 								}
 							});
