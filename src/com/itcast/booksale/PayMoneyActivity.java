@@ -95,7 +95,9 @@ public class PayMoneyActivity extends Activity{
 	
 	protected View getDecorViewDialog() {
 		// TODO Auto-generated method stub
-		return PayPasswordView.getInstance("45.99",this,new OnPayListener() {
+		//return PayPasswordView.getInstance("45.99",this,new OnPayListener() {
+			
+		return PayPasswordView.getInstance(this,new OnPayListener() {
 			
 			@Override
 			public void onSurePay(String password) {
