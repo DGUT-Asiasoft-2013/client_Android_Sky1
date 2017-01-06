@@ -16,7 +16,8 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".MainActivity"
+            android:name=".HelloWorldActivity"
+            android:windowSoftInputMode="adjustPan"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,15 +25,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.itcast.booksale.BooksContentActivity" >
+        <activity
+            android:name="com.itcast.booksale.BooksContentActivity"
+            android:windowSoftInputMode="stateHidden|stateUnchanged" >
         </activity>
         <activity android:name="com.itcast.booksale.CommentActivity" >
         </activity>
         <activity android:name="com.itcast.booksale.LoginActivity" >
         </activity>
         <activity
-            android:name="com.itcast.booksale.HelloWorldActivity"
-            android:windowSoftInputMode="adjustPan" >
+            android:name="com.itcast.booksale.MainActivity"
+             >
         </activity>
         <activity android:name="com.itcast.booksale.PasswordRecoverActivity" >
         </activity>

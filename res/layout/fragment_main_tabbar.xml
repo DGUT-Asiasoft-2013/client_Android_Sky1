@@ -37,9 +37,9 @@
                 android:id="@+id/tab_tv_home"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="9sp"
                 android:text="首页"
-                android:textColor="@color/tab_text_normal" />
+                android:textColor="@color/tab_text_normal"
+                android:textSize="9sp" />
         </LinearLayout>
 
         <!-- 订阅 -->
@@ -56,23 +56,23 @@
             <ImageView
                 android:layout_width="25dp"
                 android:layout_height="25dp"
-                android:scaleType="fitCenter"
                 android:paddingTop="1dp"
+                android:scaleType="fitCenter"
                 android:src="@drawable/tab_image_booking" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center" >
+                android:gravity="center"
+                android:orientation="horizontal" >
 
                 <TextView
                     android:id="@+id/tab_tv_booking"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="9sp"
                     android:text="订阅"
-                    android:textColor="@color/tab_text_normal" />
+                    android:textColor="@color/tab_text_normal"
+                    android:textSize="9sp" />
 
                 <TextView
                     android:id="@+id/tab_subscribe_count"
@@ -89,9 +89,8 @@
             android:id="@+id/tab_information"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:background="@android:color/holo_green_light"
-            android:gravity="center"
-            android:text="+" />
+            android:background="@drawable/booksell"
+            android:gravity="center" />
 
         <!-- 购物车 -->
 
@@ -114,9 +113,9 @@
                 android:id="@+id/tab_tv_shoppingcar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="9sp"
                 android:text="购物车"
-                android:textColor="@color/tab_text_normal" />
+                android:textColor="@color/tab_text_normal"
+                android:textSize="9sp" />
         </LinearLayout>
 
         <!-- 我的 -->
@@ -140,9 +139,9 @@
                 android:id="@+id/tab_tv_myself"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="9sp"
                 android:text="我的"
-                android:textColor="@color/black_deep" />
+                android:textColor="@color/black_deep"
+                android:textSize="9sp" />
         </LinearLayout>
     </LinearLayout>
 
