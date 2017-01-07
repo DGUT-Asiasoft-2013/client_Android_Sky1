@@ -192,7 +192,7 @@ public class PayMoneyActivity extends Activity{
 				.addFormDataPart("finish","1")//已付款
 				.build();
 
-		Request request=Servelet.requestuildApi("/order/changeState")
+		Request request=Servelet.requestuildApi("order/changeState")
 				.post(body)
 				.build();
 		Servelet.getOkHttpClient().newCall(request).enqueue(new Callback() {
