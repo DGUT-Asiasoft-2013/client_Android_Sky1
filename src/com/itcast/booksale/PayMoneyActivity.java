@@ -74,7 +74,7 @@ public class PayMoneyActivity extends Activity{
 			public void onClick(View v) {
 				payMoney();
 				changeState();//切换状态
-				goSpedingBillActivity();
+//				goSpedingBillActivity();
 			}
 		});
 	}
@@ -94,6 +94,7 @@ public class PayMoneyActivity extends Activity{
 
 		}else{
 			balanceMoney = String.valueOf(pay_money);
+			
 			new AlertDialog.Builder(this)
 			.setTitle("确定支付")
 			.setMessage("确定要支付吗?")
@@ -104,7 +105,6 @@ public class PayMoneyActivity extends Activity{
 					mDialogWidget=new DialogWidget(PayMoneyActivity.this, getDecorViewDialog());
 					mDialogWidget.show();
 
-					//linDataBase(balanceMoney);
 				}
 			})
 			.setPositiveButton("取消", null)
@@ -126,6 +126,7 @@ public class PayMoneyActivity extends Activity{
 				//payTextView.setText(password);
 				Toast.makeText(getApplicationContext(), "支付成功", Toast.LENGTH_SHORT).show();
 				linDataBase(balanceMoney);
+				goSpedingBillActivity();
 			}
 
 			@Override

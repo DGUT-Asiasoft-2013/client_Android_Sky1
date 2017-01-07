@@ -439,6 +439,7 @@ public class Buy_book_bus_fragment extends Fragment {
 													// OrdersActivity
 													intent.putExtra("order_number", order_number);
 													startActivity(intent);
+													bookbusList.clear();
 													dialog.dismiss();
 													// Log.i("------------检测----------",
 													// "----------------啦啦啦啦啦-----------");
