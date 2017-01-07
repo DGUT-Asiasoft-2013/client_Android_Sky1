@@ -1,6 +1,7 @@
 package com.itcast.booksale.fragment.widgets;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -15,7 +16,6 @@ import com.itcast.booksale.entity.Bookbus;
 import com.itcast.booksale.entity.Page;
 import com.itcast.booksale.servelet.Servelet;
 
-import android.R.integer;
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.DialogInterface;
@@ -46,7 +46,7 @@ import okhttp3.Response;
  * 这是购物车的页面显示
  */
 public class Buy_book_bus_fragment extends Fragment {
-	int count = 1;
+
 	View abView; // 购物车的页面
 
 	View top_view; // 购物车顶部的按钮布局
@@ -60,12 +60,12 @@ public class Buy_book_bus_fragment extends Fragment {
 	private LinearLayout iLayout_buttom_money;// 底部按钮的购物车和合计的布局
 	private Button delete_book_from_bookbus;// 底部删除按钮
 
+	List<Bookbus> bookbusList = new ArrayList<Bookbus>();
+
 	int page;
 
 	private ImageView back_btn; // 顶部的返回按钮
 	private TextView edit; // 顶部的“编辑”
-
-	ShoppingBusAdapter adapter = new ShoppingBusAdapter();
 
 	private float totalPrice; // 定义总价
 
@@ -97,7 +97,7 @@ public class Buy_book_bus_fragment extends Fragment {
 
 			initView(); // initialization
 			lv_shopping_bus.setAdapter(adapter); // set Listener for
-													// lv_shopping_bus
+			// lv_shopping_bus
 		}
 		return abView;
 	}
@@ -111,7 +111,7 @@ public class Buy_book_bus_fragment extends Fragment {
 		 */
 		back_btn = (ImageView) top_view.findViewById(R.id.back); // 顶部的返回按钮
 		edit = (TextView) top_view.findViewById(R.id.subtitle);// 顶部的“编辑”
-		EditOnClickListener listener = new EditOnClickListener();
+		//		EditOnClickListener listener = new EditOnClickListener();
 		edit.setOnClickListener(listener);
 
 		/**
@@ -120,7 +120,6 @@ public class Buy_book_bus_fragment extends Fragment {
 		// 底部全选的圆圈按钮
 		AllChoose_Btn = (CheckBox) bottom_view.findViewById(R.id.isAllChoose_check);
 		// 为底部全选圆圈按钮添加监听器
-		AllchooseOnClickListener cAllchooseOnClickListener = new AllchooseOnClickListener();
 		AllChoose_Btn.setOnClickListener(cAllchooseOnClickListener);
 
 		// bottom's btn'column 's moneny's total
@@ -128,13 +127,11 @@ public class Buy_book_bus_fragment extends Fragment {
 		// bottom's btn'column 's rightest count btn
 		btn_count_all_bus = (Button) bottom_view.findViewById(R.id.count_all_bus);
 		// add Listener
-		CountAllBusMoneyOnClickListener clickListener = new CountAllBusMoneyOnClickListener();
 		btn_count_all_bus.setOnClickListener(clickListener);
 		// bottom's btn and count's layout
 		iLayout_buttom_money = (LinearLayout) bottom_view.findViewById(R.id.layout_buttom_money);
 		// bottom's delete book from bookbus’ btn
 		delete_book_from_bookbus = (Button) bottom_view.findViewById(R.id.delete_book_from_bookbus);
-		DeletebookFromBookbusListener deletebookFromBookbusListener = new DeletebookFromBookbusListener();
 		delete_book_from_bookbus.setOnClickListener(deletebookFromBookbusListener);
 
 		// top's btn lan add to listview's bottom，this must before setAdapter()
@@ -165,7 +162,7 @@ public class Buy_book_bus_fragment extends Fragment {
 	 * @author Administrator
 	 *
 	 */
-	class DeletebookFromBookbusListener implements OnClickListener {
+	OnClickListener deletebookFromBookbusListener = new OnClickListener() {
 
 		@Override
 		public void onClick(View v) {
@@ -179,7 +176,7 @@ public class Buy_book_bus_fragment extends Fragment {
 			}
 		}
 
-	}
+	};
 
 	/*
 	 * delete book from bookbus
@@ -201,7 +198,7 @@ public class Buy_book_bus_fragment extends Fragment {
 						public void run() {
 
 							new AlertDialog.Builder(getActivity()).setTitle("success to remove from bookbus")
-									.setMessage(string).setPositiveButton("ok", null).show();
+							.setMessage(string).setPositiveButton("ok", null).show();
 
 						}
 					});
@@ -227,7 +224,7 @@ public class Buy_book_bus_fragment extends Fragment {
 							@Override
 							public void run() {
 								new AlertDialog.Builder(getActivity()).setTitle("failed to remove bookbus")
-										.setMessage(arg1.toString()).setPositiveButton("ok", null).show();
+								.setMessage(arg1.toString()).setPositiveButton("ok", null).show();
 
 							}
 						});
@@ -242,7 +239,7 @@ public class Buy_book_bus_fragment extends Fragment {
 	/**
 	 * top's“edit” 's ClickListener
 	 */
-	class EditOnClickListener implements OnClickListener {
+	OnClickListener listener=new OnClickListener() {
 
 		@Override
 		public void onClick(View v) {
@@ -251,25 +248,25 @@ public class Buy_book_bus_fragment extends Fragment {
 				// if it is delete model
 				edit.setText("完成");
 				iLayout_buttom_money.setVisibility(View.GONE); // design layout
-																// as INVISIBLE
+				// as INVISIBLE
 				delete_book_from_bookbus.setVisibility(abView.VISIBLE); // design
-																		// delete
-																		// as
-																		// VISIBLE
+				// delete
+				// as
+				// VISIBLE
 			} else {
 				edit.setText("编辑");
 				iLayout_buttom_money.setVisibility(View.VISIBLE); // design
-																	// layout as
-																	// INVISIBLE
+				// layout as
+				// INVISIBLE
 				delete_book_from_bookbus.setVisibility(abView.GONE); // design
-																		// delete
-																		// as
-																		// VISIBLE
+				// delete
+				// as
+				// VISIBLE
 			}
 
 		}
 
-	}
+	};
 
 	/**
 	 * delete method
@@ -296,7 +293,7 @@ public class Buy_book_bus_fragment extends Fragment {
 		adapter.notifyDataSetChanged();
 		mSelectedState.clear();
 		totalPrice = 0;
-		count_money_tv.setText("￥" + 0.00 + "元");
+		count_money_tv.setText("￥:" + 0.00 + "元");
 		AllChoose_Btn.setChecked(false);
 
 	}
@@ -354,7 +351,7 @@ public class Buy_book_bus_fragment extends Fragment {
 						public void run() {
 
 							new AlertDialog.Builder(getActivity()).setTitle("bookbus失败ing").setMessage(e.toString())
-									.show();
+							.show();
 						}
 					});
 				}
@@ -368,7 +365,7 @@ public class Buy_book_bus_fragment extends Fragment {
 					public void run() {
 
 						new AlertDialog.Builder(getActivity()).setTitle("bookbus innect 失败ing")
-								.setMessage(arg1.toString()).show();
+						.setMessage(arg1.toString()).show();
 					}
 				});
 			}
@@ -380,7 +377,7 @@ public class Buy_book_bus_fragment extends Fragment {
 	/*
 	 * 这是底部按钮栏的最右边的"结算"按钮的监听器
 	 */
-	class CountAllBusMoneyOnClickListener implements OnClickListener {
+	OnClickListener clickListener = new OnClickListener() {
 
 		@Override
 		public void onClick(View v) {
@@ -392,6 +389,7 @@ public class Buy_book_bus_fragment extends Fragment {
 				if (count_money_tv != null) {
 
 					for (int i = 0; i < list_shopping_bus.size(); i++) {
+
 						// Circular traversal the list_shopping_bus
 						// Log.i("--------------检测----------",
 						// list_shopping_bus.get(i).getId().getBook().getText());
@@ -400,6 +398,7 @@ public class Buy_book_bus_fragment extends Fragment {
 							// if the one is seleted
 							final Bookbus bookbus = list_shopping_bus.get(i);
 							String string = bookbus.getId().getBook().getTitle();
+							bookbusList.add(bookbus);
 
 							// get the random ab's character
 							Random random = new Random();
@@ -413,58 +412,65 @@ public class Buy_book_bus_fragment extends Fragment {
 								public void run() {
 
 									new AlertDialog.Builder(getActivity()).setTitle("提交订单")
-											.setMessage("您于" + bookbus.getId().getBook().getEditDate() + "想要购买"
-													+ bookbus.getId().getBook().getTitle())
-											.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+									.setMessage("您于" + bookbus.getId().getBook().getEditDate() + "想要购买"
+											+ bookbus.getId().getBook().getTitle())
+									.setPositiveButton("确定", new DialogInterface.OnClickListener() {
 
-												@Override
-												public void onClick(DialogInterface dialog, int which) {
-													Intent intent = new Intent(getActivity(), OrdersActivity.class);
-													// translate the bookbus to
-													// the OrdersActivity
-													intent.putExtra("bookbus", bookbus);
+										@Override
+										public void onClick(DialogInterface dialog, int which) {
+											Intent intent = new Intent(getActivity(), OrdersActivity.class);
+											// translate the bookbus to
+											// the OrdersActivity
+											intent.putExtra("bookbus", (Serializable)bookbusList);
 
-													// get the allpay money
-													String AllPay = count_money_tv.getText().toString();
-													// translate the AllPay to
-													// the OrdersActivity
-													intent.putExtra("AllPay", AllPay);
+											// get the allpay money
+											String AllPay = count_money_tv.getText().toString();
+											// translate the AllPay to
+											// the OrdersActivity
+											intent.putExtra("AllPay", AllPay);
 
-													// get the order_number
-													String order_number = order_letter
-															+ bookbus.getId().getBook().getIsbn()
-															+ bookbus.getId().getBook().getId();
+											// get the order_number
+											String order_number = order_letter
+													+ bookbus.getId().getBook().getIsbn()
+													+ bookbus.getId().getBook().getId();
 
 													// translate the
 													// order_number to the
 													// OrdersActivity
 													intent.putExtra("order_number", order_number);
 													startActivity(intent);
+													bookbusList.clear();
+													dialog.dismiss();
+//													AllChoose_Btn.setClickable(false);
+//													AllChoose_Btn.setBackgroundResource(R.drawable.normal_choose_all);
+													count_money_tv.setText("￥:" + 0.00 + "元");//After the settlement is complete, the total price of the returned cart will be cleared to zero
 													// Log.i("------------检测----------",
 													// "----------------啦啦啦啦啦-----------");
 												}
 											}).setNegativeButton("不了，我再想想", null).show();
+
 								}
 							});
 
 						}
 					}
-
+					
 				} else {
 					// 取消订单
 					Toast.makeText(getActivity(), "您已经取消了订单", Toast.LENGTH_SHORT).show();
+					
 
 				}
 			}
 		}
 
-	}
+	};
 
 	/*
 	 * 这是底部全选圆圈按钮的监听器
 	 */
 
-	class AllchooseOnClickListener implements OnClickListener {
+	OnClickListener cAllchooseOnClickListener = new OnClickListener() {
 
 		@Override
 		public void onClick(View v) {
@@ -483,6 +489,8 @@ public class Buy_book_bus_fragment extends Fragment {
 						int each_id = list_shopping_bus.get(i).getId().getBook().getId();
 
 						mSelectedState.put(each_id, true); // 给每个购物行设置点中状态
+
+						//This line has a value after the "+" or "-" or radio button is clicked
 						int each_num = mSelectedNum.get(each_id);
 						// 把全部价钱加起来
 						totalPrice += each_num * list_shopping_bus.get(i).getId().getBook().getPrice();
@@ -498,19 +506,20 @@ public class Buy_book_bus_fragment extends Fragment {
 				// 否则
 				totalPrice = 0; // 钱的总数为0
 				mSelectedState.clear();
+				//				mSelectedNum.put(list_shopping_bus.get(i), 1);
 				// 刷新
 				adapter.notifyDataSetChanged();
 				count_money_tv.setText("￥:" + 0.00 + "元");
 
 			}
 		}
-	}
+	};
 
 	/**
 	 * 下面为购物车的列表lv_shopping_bus的是适配器
 	 */
 
-	class ShoppingBusAdapter extends BaseAdapter {
+	BaseAdapter adapter = new BaseAdapter() {
 
 		@Override
 		public int getCount() {
@@ -537,7 +546,6 @@ public class Buy_book_bus_fragment extends Fragment {
 
 			} else {
 				abView = convertView;
-
 			}
 
 			TextView shopname = (TextView) abView.findViewById(R.id.shop_name); // 商店名字
@@ -550,17 +558,24 @@ public class Buy_book_bus_fragment extends Fragment {
 
 			final Bookbus bookbus = list_shopping_bus.get(position); // 获得对应的购物车信息
 
-			int each_book_id = list_shopping_bus.get(position).getId().getBook().getId(); // 获得对应的id
-			boolean selected = mSelectedState.get(each_book_id, false); // 标记其的id的选择状态
-			int selectedNum = mSelectedNum.get(each_book_id, 1);// 标记其的id的当前数量状态
+			int each_book_id = bookbus.getId().getBook().getId(); // 获得对应的id
+			boolean selected = mSelectedState.get(each_book_id, false); // The selected state of its id
+			int selectedNum = mSelectedNum.get(each_book_id, 1);// Marks the
+			// current
+			// number state
+			// of its id
+
+			final int count = selectedNum;      //make the selectedNum Assignment for count
+
 			String number = String.valueOf(selectedNum);
+			Log.i("--------------检测----------", number);
 			each_item_num.setText(number);
 			each_item_choose_btn.setChecked(selected); // 设置每行选择按钮的选择状态
 
 			// 设置书图片
 			bookAvatar.load(Servelet.urlstring + bookbus.getId().getBook().getBookavatar());
 			shopname.setText(bookbus.getId().getBook().getTitle()); // design
-																	// bookname
+			// bookname
 			String price = String.valueOf(bookbus.getId().getBook().getPrice());
 			each_bookprice.setText(price); // design price
 			// Log.i("--------------检测----------", "-------+号运行中");
@@ -577,11 +592,10 @@ public class Buy_book_bus_fragment extends Fragment {
 					boolean selected = mSelectedState.get(id, false);
 					// count=0;
 					if (!selected) {
-						count++;
-						mSelectedNum.put(id, count);// 设置其的id的当前数量状态
-//						int selectedNum=mSelectedNum.get(id, count);
-//						 String number = String.valueOf(selectedNum);
-//						 Log.i("--------------检测----------", number);
+						mSelectedNum.put(id, count + 1);// 设置其的id的当前数量状态
+						// int selectedNum=mSelectedNum.get(id, count);
+						// String number = String.valueOf(selectedNum);
+						// Log.i("--------------检测----------", number);
 						// set number
 						// String add_number =
 						// String.valueOf(bookbus.getId().getBook().getBooknumber()
@@ -590,11 +604,11 @@ public class Buy_book_bus_fragment extends Fragment {
 						each_item_num.setText(add_number);
 
 						// because client add 1,so Backstage's booknumber-1
-						bookbus.getId().getBook().setBooknumber(bookbus.getId().getBook().getBooknumber() + 1);
+						bookbus.getId().getBook().setBooknumber(bookbus.getId().getBook().getBooknumber() - 1);
 						notifyDataSetChanged(); // notify
 						// 选中了
 						totalPrice += bookbus.getId().getBook().getPrice();
-						count_money_tv.setText("￥" + (totalPrice + bookbus.getId().getBook().getPrice()) + "元"); // 设置总钱数
+						//						count_money_tv.setText("￥:" + (totalPrice + bookbus.getId().getBook().getPrice()) + "元"); // 设置总钱数
 
 					} else {
 						totalPrice = 0; // 钱的总数为0
@@ -621,8 +635,7 @@ public class Buy_book_bus_fragment extends Fragment {
 					boolean selected = mSelectedState.get(reduce_id, false);
 
 					if (!selected) {
-						count--;
-						mSelectedNum.put(reduce_id, count);// 设置其的id的当前数量状态
+						mSelectedNum.put(reduce_id, count - 1);// 设置其的id的当前数量状态
 						// 设置数量
 						// String reduce_number =
 						// String.valueOf(bookbus.getId().getBook().getBooknumber()
@@ -631,11 +644,11 @@ public class Buy_book_bus_fragment extends Fragment {
 						each_item_num.setText(reduce_number);
 
 						// because client reduce 1,so Backstage's booknumber+1
-						bookbus.getId().getBook().setBooknumber(bookbus.getId().getBook().getBooknumber() - 1);
+						bookbus.getId().getBook().setBooknumber(bookbus.getId().getBook().getBooknumber() + 1);
 						notifyDataSetChanged(); // 刷新
 						// 选中了
 						totalPrice -= bookbus.getId().getBook().getPrice();
-						count_money_tv.setText("￥" + (totalPrice + bookbus.getId().getBook().getPrice()) + "元"); // 设置总钱数
+						//						count_money_tv.setText("￥:" + (totalPrice + bookbus.getId().getBook().getPrice()) + "元"); // 设置总钱数
 
 					} else {
 						totalPrice = 0; // 钱的总数为0
@@ -683,7 +696,7 @@ public class Buy_book_bus_fragment extends Fragment {
 							totalPrice -= selectednumber * list_shopping_bus.get(position).getId().getBook().getPrice();
 						}
 
-						count_money_tv.setText("￥" + totalPrice + "元");
+						count_money_tv.setText("￥:" + totalPrice + "元");
 
 						if (mSelectedState.size() == listSize) {
 							/**
@@ -702,6 +715,5 @@ public class Buy_book_bus_fragment extends Fragment {
 			});
 			return abView;
 		}
-
-	}
+	};
 }

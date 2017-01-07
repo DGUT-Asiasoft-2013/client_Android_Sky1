@@ -280,8 +280,10 @@ public class SubscribeListUserFragment extends Fragment {
 
 			@Override
 			public void onResponse(final Call arg0, Response arg1) throws IOException {
+				String body = arg1.body().string();
 				try{
-					user = new ObjectMapper().readValue(arg1.body().bytes(), User.class);
+					
+					user = new ObjectMapper().readValue(body, User.class);
 					getActivity().runOnUiThread(new Runnable() {
 						@Override
 						public void run() {

@@ -32,6 +32,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
@@ -76,8 +77,9 @@ public class SpendingBillsActivity extends Activity {
 		billsList.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+				Log.d("orderData.id12111111111111", data.get(position).getOrderId());
 				goToOrderList(position);// 跳转到订单详情
+				
 			}
 		});
 
@@ -276,9 +278,10 @@ public class SpendingBillsActivity extends Activity {
 	}
 
 	public void goToOrderList(int position) {
+		
 		OrderLists orderData = data.get(position);
 		Intent itnt  = new Intent(this , BillDetailActivity.class);
-		itnt.putExtra("order", orderData);
+		itnt.putExtra("order", (Serializable)data);
 		startActivity(itnt);
 
 	}

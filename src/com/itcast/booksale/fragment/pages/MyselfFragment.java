@@ -4,6 +4,8 @@ import java.io.IOException;
 
 import com.itcast.booksale.R;
 import com.itcast.booksale.R.drawable;
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.itcast.booksale.LoginActivity;
 import com.itcast.booksale.PrivateMessageListActivity;
@@ -38,49 +40,49 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class MyselfFragment extends Fragment{
-View view;
-View view_setting,view_personal,view_sum_money,view_order,view_private_message;//锟斤拷锟斤拷,锟斤拷锟斤拷锟斤拷锟斤拷
+	View view;
+	View view_setting,view_personal,view_sum_money,view_order,view_private_message;//锟斤拷锟斤拷,锟斤拷锟斤拷锟斤拷锟斤拷
 
-TextView user_name;//锟矫伙拷锟斤拷
-ProgressBar progressBar;//锟斤拷锟斤拷锟斤拷
-AvatarView avatar;//锟矫伙拷头锟斤拷
+	TextView user_name;//锟矫伙拷锟斤拷
+	ProgressBar progressBar;//锟斤拷锟斤拷锟斤拷
+	AvatarView avatar;//锟矫伙拷头锟斤拷
 
-View line_login_register;
+	View line_login_register;
 
-TextView fragTextMyself;
+	TextView fragTextMyself;
 
-	
+
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		if(view==null){
 			view=inflater.inflate(R.layout.fragment_myself, null);//锟斤拷锟截诧拷锟斤拷
 
-     		user_name=(TextView) view.findViewById(R.id.current_user);//锟矫伙拷锟斤拷
+			user_name=(TextView) view.findViewById(R.id.current_user);//锟矫伙拷锟斤拷
 			progressBar=(ProgressBar) view.findViewById(R.id.progress);//锟斤拷锟斤拷锟斤拷
 			avatar=(AvatarView) view.findViewById(R.id.avatar);//头锟斤拷
-			
+
 			fragTextMyself=(TextView) view.findViewById(R.id.tab_tv_myself);
-	
+
 			view_setting=view.findViewById(R.id.view_setting);//锟斤拷锟矫的帮拷钮
 			view_personal=view.findViewById(R.id.view_personal);//锟斤拷锟斤拷锟斤拷锟较帮拷钮
 			view_sum_money=view.findViewById(R.id.view_sum_money);//锟斤拷锟绞诧拷锟侥帮拷钮
 			view_order=view.findViewById(R.id.view_order);//锟斤拷锟斤拷锟侥帮拷钮
 			view_private_message=view.findViewById(R.id.view_private_message);
-			
+
 			line_login_register=view.findViewById(R.id.line_login_register);
-			
+
 			view_setting.setOnClickListener(new View.OnClickListener() {//为锟斤拷锟矫帮拷钮锟斤拷拥锟斤拷锟斤拷锟斤拷锟铰硷拷
-				
+
 				@Override
 				public void onClick(View v) {
 					Intent intent=new Intent(getActivity(),SettingActivity.class);
 					startActivity(intent);			
 				}
 			});
-			
+
 			view_personal.setOnClickListener(new View.OnClickListener() {//为锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷锟矫碉拷锟斤拷锟斤拷锟斤拷录锟�
-				
+
 				@Override
 				public void onClick(View v) {
 					/*Intent intent=new Intent(getActivity(), PersonalActivity.class);
@@ -88,9 +90,9 @@ TextView fragTextMyself;
 					goPersonal();
 				}
 			});
-			
+
 			view_sum_money.setOnClickListener(new View.OnClickListener() {//为锟斤拷锟绞诧拷锟斤拷钮锟斤拷锟矫碉拷锟斤拷锟斤拷锟斤拷录锟�
-				
+
 				@Override
 				public void onClick(View v) {
 					/*Intent intent=new Intent(getActivity(), SumMoneyActivity.class);
@@ -98,18 +100,18 @@ TextView fragTextMyself;
 					goMoney();
 				}
 			});
-			
+
 			view_order.setOnClickListener(new View.OnClickListener() {
-				
+
 				@Override
 				public void onClick(View v) {
 					Intent intent=new Intent(getActivity(), SpendingBillsActivity.class);
 					startActivity(intent);
 				}
 			});
-			
+
 			view_private_message.setOnClickListener(new View.OnClickListener() {
-				
+
 				@Override
 				public void onClick(View v) {
 					/*Intent intent=new Intent(getActivity(), PrivateMessageListActivity.class);
@@ -117,9 +119,9 @@ TextView fragTextMyself;
 					goMessage();
 				}
 			});
-			
+
 			line_login_register.setOnClickListener(new OnClickListener() {
-				
+
 				@Override
 				public void onClick(View v) {
 					Intent intent=new Intent(getActivity(), LoginActivity.class);
@@ -129,26 +131,26 @@ TextView fragTextMyself;
 		}
 		return view;
 	}
-	
+
 	protected void goMessage() {
 		// TODO Auto-generated method stub
 		Request request=Servelet.requestuildApi("me")
 				.method("get", null)
 				.build();
-		
+
 		Servelet.getOkHttpClient().newCall(request).enqueue(new Callback() {
-			
+
 			@Override
 			public void onResponse(final Call arg0, Response arg1) throws IOException {
 				String ar=arg1.body().string();
 				try{
 					final User user;
-					
+
 					ObjectMapper objectMapper=new ObjectMapper();
 					user=objectMapper.readValue(ar, User.class);
-					
+
 					getActivity().runOnUiThread(new Runnable() {
-						
+
 						@Override
 						public void run() {
 							MyselfFragment.this.onReponseMessage(arg0,user);
@@ -156,28 +158,28 @@ TextView fragTextMyself;
 					});
 				}catch(final Exception e){
 					getActivity().runOnUiThread(new Runnable() {
-						
+
 						@Override
 						public void run() {
 							MyselfFragment.this.OnFailureMyself(arg0,e);
-							
+
 						}
 					});
 				}
-				
+
 			}
-			
+
 			@Override
 			public void onFailure(final Call arg0, final IOException arg1) {
 				getActivity().runOnUiThread(new Runnable() {
-					
+
 					@Override
 					public void run() {
 						MyselfFragment.this.OnFailureMyself(arg0,arg1);
-						
+
 					}
 				});
-				
+
 			}
 		});
 	}
@@ -193,20 +195,20 @@ TextView fragTextMyself;
 		Request request=Servelet.requestuildApi("me")
 				.method("get", null)
 				.build();
-		
+
 		Servelet.getOkHttpClient().newCall(request).enqueue(new Callback() {
-			
+
 			@Override
 			public void onResponse(final Call arg0, Response arg1) throws IOException {
 				String ar=arg1.body().string();
 				try{
 					final User user;
-					
+
 					ObjectMapper objectMapper=new ObjectMapper();
 					user=objectMapper.readValue(ar, User.class);
-					
+
 					getActivity().runOnUiThread(new Runnable() {
-						
+
 						@Override
 						public void run() {
 							MyselfFragment.this.onReponseMoney(arg0,user);
@@ -214,28 +216,28 @@ TextView fragTextMyself;
 					});
 				}catch(final Exception e){
 					getActivity().runOnUiThread(new Runnable() {
-						
+
 						@Override
 						public void run() {
 							MyselfFragment.this.OnFailureMyself(arg0,e);
-							
+
 						}
 					});
 				}
-				
+
 			}
-			
+
 			@Override
 			public void onFailure(final Call arg0, final IOException arg1) {
 				getActivity().runOnUiThread(new Runnable() {
-					
+
 					@Override
 					public void run() {
 						MyselfFragment.this.OnFailureMyself(arg0,arg1);
-						
+
 					}
 				});
-				
+
 			}
 		});
 	}
@@ -246,20 +248,20 @@ TextView fragTextMyself;
 		Request request=Servelet.requestuildApi("me")
 				.method("get", null)
 				.build();
-		
+
 		Servelet.getOkHttpClient().newCall(request).enqueue(new Callback() {
-			
+
 			@Override
 			public void onResponse(final Call arg0, Response arg1) throws IOException {
 				String ar=arg1.body().string();
 				try{
 					final User user;
-					
+
 					ObjectMapper objectMapper=new ObjectMapper();
 					user=objectMapper.readValue(ar, User.class);
-					
+
 					getActivity().runOnUiThread(new Runnable() {
-						
+
 						@Override
 						public void run() {
 							MyselfFragment.this.onReponseMyself(arg0,user);
@@ -267,28 +269,28 @@ TextView fragTextMyself;
 					});
 				}catch(final Exception e){
 					getActivity().runOnUiThread(new Runnable() {
-						
+
 						@Override
 						public void run() {
 							MyselfFragment.this.OnFailureMyself(arg0,e);
-							
+
 						}
 					});
 				}
-				
+
 			}
-			
+
 			@Override
 			public void onFailure(final Call arg0, final IOException arg1) {
 				getActivity().runOnUiThread(new Runnable() {
-					
+
 					@Override
 					public void run() {
 						MyselfFragment.this.OnFailureMyself(arg0,arg1);
-						
+
 					}
 				});
-				
+
 			}
 		});
 	}
@@ -312,64 +314,71 @@ TextView fragTextMyself;
 	}
 
 	@Override
-		public void onResume() {
-			// TODO Auto-generated method stub
-			super.onResume();
-			
-		
-			user_name.setVisibility(View.GONE);
-			progressBar.setVisibility(View.VISIBLE);
-			
-			
-			Request request=Servelet.requestuildApi("me")
-					.method("get", null)
-					.build();
-			
-			Servelet.getOkHttpClient().newCall(request).enqueue(new Callback() {
-				
-				@Override
-				public void onResponse(final Call arg0, Response arg1) throws IOException {
-					String ar=arg1.body().string();
-					try{
-						final User user;
-						
-						ObjectMapper objectMapper=new ObjectMapper();
-						user=objectMapper.readValue(ar, User.class);
-						
-						getActivity().runOnUiThread(new Runnable() {
-							
-							@Override
-							public void run() {
-								MyselfFragment.this.onReponse(arg0,user);
-							}
-						});
-					}catch(final Exception e){
-						getActivity().runOnUiThread(new Runnable() {
-							
-							@Override
-							public void run() {
-								MyselfFragment.this.OnFailure(arg0,e);
-								
-							}
-						});
-					}
-					
-				}
-				
-				@Override
-				public void onFailure(final Call arg0, final IOException arg1) {
+	public void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+
+
+		user_name.setVisibility(View.GONE);
+		progressBar.setVisibility(View.VISIBLE);
+
+
+		Request request=Servelet.requestuildApi("me")
+				.method("get", null)
+				.build();
+
+		Servelet.getOkHttpClient().newCall(request).enqueue(new Callback() {
+
+			@Override
+			public void onResponse(final Call arg0, Response arg1) throws IOException {
+				String ar=arg1.body().string();
+				try{
+					final User user;
+
+					ObjectMapper objectMapper=new ObjectMapper();
+					user=objectMapper.readValue(ar, User.class);
+
 					getActivity().runOnUiThread(new Runnable() {
-						
+
 						@Override
 						public void run() {
-							MyselfFragment.this.OnFailure(arg0,arg1);
-							
+							MyselfFragment.this.onReponse(arg0,user);
 						}
 					});
-					
+				} catch (JsonParseException e) {
+					e.printStackTrace();
+
+				} catch (JsonMappingException e) {
+					e.printStackTrace();
+
 				}
-			});
-		}
+				catch(final Exception e){
+					getActivity().runOnUiThread(new Runnable() {
+
+						@Override
+						public void run() {
+							MyselfFragment.this.OnFailure(arg0,e);
+
+						}
+					});
+				}
+
+			}
+
+			@Override
+			public void onFailure(final Call arg0, final IOException arg1) {
+				getActivity().runOnUiThread(new Runnable() {
+
+					@Override
+					public void run() {
+						MyselfFragment.this.OnFailure(arg0,arg1);
+
+					}
+				});
+
+			}
+		});
+	}
 
 	protected void onReponse(Call arg0, User user) {
 		progressBar.setVisibility(View.GONE);
@@ -380,7 +389,7 @@ TextView fragTextMyself;
 		user_name.setVisibility(View.VISIBLE);
 		user_name.setTextColor(Color.BLACK);
 		user_name.setText("Hi,"+user.getName());
-		
+
 	}
 
 	protected void OnFailure(Call arg0, Exception e) {
