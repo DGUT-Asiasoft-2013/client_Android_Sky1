@@ -69,11 +69,11 @@
         </activity>
         <activity android:name="com.itcast.booksale.RegisterFirstActivity" >
         </activity>
-        <activity android:name="com.itcast.booksale.OrdersActivity" >
+        <activity android:name = "com.itcast.booksale.OrdersActivity" >
         </activity>
-        <activity android:name="com.itcast.booksale.PayMoneyActivity" >
+        <activity android:name = "com.itcast.booksale.PayMoneyActivity" >
         </activity>
-        <activity android:name="com.itcast.booksale.SpendingBillsActivity" >
+        <activity android:name = "com.itcast.booksale.SpendingBillsActivity" >
         </activity>
         <activity android:name="com.itcast.booksale.pay.PayActivity" >
         </activity>

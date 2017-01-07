@@ -3,6 +3,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.itcast.booksale.R;
+import com.itcast.booksale.R.id;
+import com.itcast.booksale.R.layout;
 import com.itcast.booksale.entity.Bookbus;
 import com.itcast.booksale.fragment.widgets.AvatarView;
 import com.itcast.booksale.fragment.widgets.BookAvatarView;

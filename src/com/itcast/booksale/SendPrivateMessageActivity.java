@@ -3,6 +3,8 @@ package com.itcast.booksale;
 import java.io.IOException;
 
 import com.itcast.booksale.R;
+import com.itcast.booksale.R.id;
+import com.itcast.booksale.R.layout;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.itcast.booksale.entity.Page;

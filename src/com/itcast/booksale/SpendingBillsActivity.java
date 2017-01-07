@@ -38,6 +38,9 @@ import java.util.List;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.itcast.booksale.R;
+import com.itcast.booksale.R.id;
+import com.itcast.booksale.R.layout;
 import com.itcast.booksale.entity.*;
 
 public class SpendingBillsActivity extends Activity {
@@ -231,6 +234,11 @@ public class SpendingBillsActivity extends Activity {
 						@Override
 						public void run() {
 							SpendingBillsActivity.this.data = pageData.getContent();
+//							for(int i = 0;i<data.size()-1;i++){
+//								if(!data.get(i).equals(data.get(i+1))){
+//									order.add(data.get(i));
+//								}
+//							}
 							SpendingBillsActivity.this.page = pageData.getNumber();
 
 							adapter.notifyDataSetChanged();
