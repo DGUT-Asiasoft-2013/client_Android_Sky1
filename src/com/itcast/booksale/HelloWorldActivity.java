@@ -2,6 +2,8 @@ package com.itcast.booksale;
 
 import java.io.IOException;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.itcast.booksale.R;
 import com.itcast.booksale.entity.User;
@@ -149,7 +151,14 @@ public class HelloWorldActivity extends Activity {
 							user=new ObjectMapper().readValue(str, User.class);
 							HelloWorldThread h = new HelloWorldThread(user);
 							h.start();
-						} catch (IOException e) {
+						} catch (JsonParseException e) {
+							e.printStackTrace();
+
+						} catch (JsonMappingException e) {
+							e.printStackTrace();
+
+						}
+						catch (IOException e) {
 							e.printStackTrace();
 						}
 

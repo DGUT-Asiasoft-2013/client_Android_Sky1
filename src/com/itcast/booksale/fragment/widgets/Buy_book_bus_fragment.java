@@ -293,7 +293,7 @@ public class Buy_book_bus_fragment extends Fragment {
 		adapter.notifyDataSetChanged();
 		mSelectedState.clear();
 		totalPrice = 0;
-		count_money_tv.setText("￥" + 0.00 + "元");
+		count_money_tv.setText("￥:" + 0.00 + "元");
 		AllChoose_Btn.setChecked(false);
 
 	}
@@ -604,7 +604,7 @@ public class Buy_book_bus_fragment extends Fragment {
 						notifyDataSetChanged(); // notify
 						// 选中了
 						totalPrice += bookbus.getId().getBook().getPrice();
-						//						count_money_tv.setText("￥" + (totalPrice + bookbus.getId().getBook().getPrice()) + "元"); // 设置总钱数
+						//						count_money_tv.setText("￥:" + (totalPrice + bookbus.getId().getBook().getPrice()) + "元"); // 设置总钱数
 
 					} else {
 						totalPrice = 0; // 钱的总数为0
@@ -644,7 +644,7 @@ public class Buy_book_bus_fragment extends Fragment {
 						notifyDataSetChanged(); // 刷新
 						// 选中了
 						totalPrice -= bookbus.getId().getBook().getPrice();
-						//						count_money_tv.setText("￥" + (totalPrice + bookbus.getId().getBook().getPrice()) + "元"); // 设置总钱数
+						//						count_money_tv.setText("￥:" + (totalPrice + bookbus.getId().getBook().getPrice()) + "元"); // 设置总钱数
 
 					} else {
 						totalPrice = 0; // 钱的总数为0
@@ -682,17 +682,17 @@ public class Buy_book_bus_fragment extends Fragment {
 							// 获得选择的数量
 							int selectednumber = Integer.parseInt(each_item_num.getText().toString());
 							mSelectedNum.put(each_item_id, selectednumber);
-							totalPrice = selectednumber * list_shopping_bus.get(position).getId().getBook().getPrice();
+							totalPrice += selectednumber * list_shopping_bus.get(position).getId().getBook().getPrice();
 						} else {
 							// delete this item
 							mSelectedState.delete(each_item_id);
 							// 获得选择的数量
 							int selectednumber = Integer.parseInt(each_item_num.getText().toString());
 							// reduce the totalPrice
-							totalPrice = selectednumber * list_shopping_bus.get(position).getId().getBook().getPrice();
+							totalPrice -= selectednumber * list_shopping_bus.get(position).getId().getBook().getPrice();
 						}
 
-						count_money_tv.setText("￥" + totalPrice + "元");
+						count_money_tv.setText("￥:" + totalPrice + "元");
 
 						if (mSelectedState.size() == listSize) {
 							/**
