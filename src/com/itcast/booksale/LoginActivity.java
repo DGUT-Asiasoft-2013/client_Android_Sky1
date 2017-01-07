@@ -272,9 +272,10 @@ public class LoginActivity extends Activity {
 
 							if(TextUtils.isEmpty(string)){//判断解析出来的是否为空字符串（如果为空，则数据库中没有此用户）
 								Toast.makeText(LoginActivity.this, "密码错误", Toast.LENGTH_SHORT).show();
+								return;
 							}
 
-							ObjectMapper objectMapper=new ObjectMapper();
+//							ObjectMapper objectMapper=new ObjectMapper();
 //							user=objectMapper.readValue(string, User.class);//读取值
 							Toast.makeText(LoginActivity.this, "登录成功", Toast.LENGTH_SHORT).show();
 							

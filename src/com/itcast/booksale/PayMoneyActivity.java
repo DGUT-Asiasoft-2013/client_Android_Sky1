@@ -85,7 +85,7 @@ public class PayMoneyActivity extends Activity{
 	void payMoney(){
 		float user_money = Float.valueOf(userMomey.getText().toString());
 		String temp = AllPay;
-		Log.d("mommmfjjjfjf22222222222222222222", temp);
+//		Log.d("mommmfjjjfjf22222222222222222222", temp);
 //		Log.d("allpay--e-e-e-e---e--e-", temp);
 		float pay_money = Float.valueOf(temp.substring(2,temp.length()-1));
 //		Log.d("------money------------",temp.substring(2,temp.length()-1) );
@@ -98,7 +98,7 @@ public class PayMoneyActivity extends Activity{
 
 		}else{
 			balanceMoney = String.valueOf(pay_money);
-			Log.d("mommmfjjjfjf111111111111111111111111", balanceMoney);
+//			Log.d("mommmfjjjfjf111111111111111111111111", balanceMoney);
 			new AlertDialog.Builder(this)
 			.setTitle("确定支付")
 			.setMessage("确定要支付吗?")
@@ -130,7 +130,7 @@ public class PayMoneyActivity extends Activity{
 				mDialogWidget=null;
 				//payTextView.setText(password);
 				Toast.makeText(getApplicationContext(), "支付成功", Toast.LENGTH_SHORT).show();
-				Log.d("mommmfjjjfjf", balanceMoney);
+//				Log.d("mommmfjjjfjf", balanceMoney);
 				linDataBase(balanceMoney);
 				
 				goSpedingBillActivity();
