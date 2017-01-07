@@ -1,8 +1,12 @@
 package com.itcast.booksale;
 
 import java.io.IOException;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.itcast.booksale.entity.Bookbus;
 import com.itcast.booksale.entity.OrderLists;
 import com.itcast.booksale.fragment.widgets.AvatarView;
 import com.itcast.booksale.pay.DialogWidget;
@@ -27,17 +31,21 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class PayMoneyActivity extends Activity{
-	private AvatarView userAvatar; //鐓х墖
-	private TextView userName; //濮撳悕
-	private TextView orderNumber;//璁㈠崟鍙�
-	private TextView momeyPay;//鎬婚噾棰�
-	private TextView userMomey;//浣欓
-	private TextView btn_pay;//浠樻
+	private AvatarView userAvatar; 
+	private TextView userName; 
+	private TextView orderNumber;
+	private TextView momeyPay;
+	private TextView userMomey;
+	private TextView btn_pay;
 
 	private DialogWidget mDialogWidget;
-	
-	String balanceMoney;//浣欓
+
+	String balanceMoney;
 	String ordersId;
+	String AllPay;
+	String payType;
+	List<Bookbus> order;
+	//------------------- 
 
 	public OrderLists orderlist;
 
@@ -47,58 +55,69 @@ public class PayMoneyActivity extends Activity{
 		setContentView(R.layout.activity_pay_view);
 
 		ordersId = getIntent().getStringExtra("ordersId");
-		//鍒濆鍖�
-		initPayList();
+		AllPay = getIntent().getStringExtra("AllPay");
+		payType = getIntent().getStringExtra("payType");
 
+		initPayList();
+		
+		if(order==null){
+			order = (List<Bookbus>) getIntent().getSerializableExtra("order");
+		}else{
+			order = new ArrayList<Bookbus>();
+		}
+		
+		setOrder();
 
 		btn_pay.setOnClickListener(new View.OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
 				payMoney();
-
+				changeState();//切换状态
+				goSpedingBillActivity();
 			}
 		});
 	}
 
 	void payMoney(){
 		float user_money = Float.valueOf(userMomey.getText().toString());
-		String temp = momeyPay.getText().toString();
-		float pay_money = Float.valueOf(temp.substring(1,temp.length()-1));
-		Log.d("------money------------",temp.substring(1,temp.length()-1) );
+		String temp = AllPay;
+//		Log.d("allpay--e-e-e-e---e--e-", temp);
+		float pay_money = Float.valueOf(temp.substring(2,temp.length()-1));
+//		Log.d("------money------------",temp.substring(2,temp.length()-1) );
 		if(user_money < pay_money){
 			new AlertDialog.Builder(this)
-			.setTitle("浣欓涓嶈冻")
-			.setMessage("鎮ㄧ殑浣欓涓嶈冻锛岃灏藉揩鍏呭��")
-			.setNegativeButton("濂�", null)
+			.setTitle("余额不足")
+			.setMessage("您的余额不足,请尽快充值")
+			.setNegativeButton("好", null)
 			.show();
 
 		}else{
 			balanceMoney = String.valueOf(pay_money);
 			new AlertDialog.Builder(this)
-			.setTitle("纭浠樻")
-			.setMessage("纭畾浠樻鍚楋紵")
-			.setNegativeButton("纭畾", new DialogInterface.OnClickListener() {
+			.setTitle("确定支付")
+			.setMessage("确定要支付吗?")
+			.setNegativeButton("确定", new DialogInterface.OnClickListener() {
 
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
 					mDialogWidget=new DialogWidget(PayMoneyActivity.this, getDecorViewDialog());
 					mDialogWidget.show();
-					
-					//linDataBase(balanceMoney);
+
+					linDataBase(balanceMoney);
 				}
 			})
-			.setPositiveButton("鍙栨秷", null)
+			.setPositiveButton("取消", null)
 			.show();
 		}
 	}
-	
+
 	protected View getDecorViewDialog() {
 		// TODO Auto-generated method stub
 		//return PayPasswordView.getInstance("45.99",this,new OnPayListener() {
-			
+
 		return PayPasswordView.getInstance(this,new OnPayListener() {
-			
+
 			@Override
 			public void onSurePay(String password) {
 				// TODO Auto-generated method stub
@@ -108,14 +127,14 @@ public class PayMoneyActivity extends Activity{
 				Toast.makeText(getApplicationContext(), "支付成功", Toast.LENGTH_SHORT).show();
 				linDataBase(balanceMoney);
 			}
-			
+
 			@Override
 			public void onCancelPay() {
 				// TODO Auto-generated method stub
 				mDialogWidget.dismiss();
 				mDialogWidget=null;
 				Toast.makeText(getApplicationContext(), "取消支付", Toast.LENGTH_SHORT).show();
-				
+
 			}
 		}).getView();
 	}
@@ -132,13 +151,14 @@ public class PayMoneyActivity extends Activity{
 
 			@Override
 			public void onResponse(Call arg0, Response arg1) throws IOException {
-//				gobackHelloword();
+				//				gobackHelloword();
 				PayMoneyActivity.this.runOnUiThread(new Runnable() {
-					
+
 					@Override
 					public void run() {
-						Toast.makeText(PayMoneyActivity.this, "浠樻鎴愬姛锛屾偍鐨勫疂璐濆皢浼氶鍒版偍鎵嬩腑", Toast.LENGTH_SHORT).show();
-						goSpedingBillActivity();
+						
+						Toast.makeText(PayMoneyActivity.this, "您的宝贝将以火箭速度向您飞来", Toast.LENGTH_SHORT).show();
+						
 					}
 				});
 			}
@@ -153,7 +173,7 @@ public class PayMoneyActivity extends Activity{
 	}
 
 	void initPayList(){
-		//鑾峰彇
+
 		userAvatar = (AvatarView) findViewById(R.id.c_user_avatar);
 		userName = (TextView) findViewById(R.id.c_user_name);
 		orderNumber = (TextView) findViewById(R.id.c_orders_numb);
@@ -162,53 +182,47 @@ public class PayMoneyActivity extends Activity{
 		btn_pay = (TextView) findViewById(R.id.btn_pay_money);
 	}
 
+	void changeState(){
+		MultipartBody body = new MultipartBody.Builder()
+				.addFormDataPart("orderId", ordersId)
+				.addFormDataPart("finish","1")//已付款
+				.build();
 
-	void getOrdersMassage(String ordersId){
-		//閫氳繃璁㈠崟鍙锋悳鍒颁俊鎭�
-		Request request=Servelet.requestuildApi("/orders/get/"+ordersId)
-				.get()
+		Request request=Servelet.requestuildApi("/order/changeState")
+				.post(body)
 				.build();
 		Servelet.getOkHttpClient().newCall(request).enqueue(new Callback() {
 
 			@Override
 			public void onResponse(Call arg0, Response arg1) throws IOException {
-				String body =arg1.body().string();
-				try{
-					ObjectMapper objectMapper=new ObjectMapper();
-					OrderLists orderli = objectMapper.readValue(body, OrderLists.class);
-					Log.d("orders------------", orderli.getUser().getName());
-					setOrder(orderli);
-				}catch(final Exception e){
-
-				}
-
+				PayMoneyActivity.this.runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+//						Toast.makeText(PayMoneyActivity.this, "pioiuuifdf", Toast.LENGTH_SHORT).show();
+					}
+				});
 			}
 
 			@Override
 			public void onFailure(Call arg0, IOException arg1) {
-
+				// TODO Auto-generated method stub
 
 			}
 		});
 	}
 
-	void setOrder(OrderLists orderlist){
-		this.orderlist = orderlist;
-		Log.d("chuan", orderlist.getFinish());
+	void setOrder(){
 		//--------
-		userAvatar.load(orderlist.getUser());
-		userName.setText(orderlist.getUser().getName());
-		orderNumber.setText(orderlist.getOrderId());
-		momeyPay.setText(orderlist.getPayMoney());
-		userMomey.setText(String.valueOf(orderlist.getUser().getSumMoney()));
+		userAvatar.load(order.get(0).getId().getUser());
+		userName.setText(order.get(0).getId().getUser().getName());
+		orderNumber.setText(ordersId);
+		momeyPay.setText(AllPay);
+		userMomey.setText(String.valueOf(order.get(0).getId().getUser().getSumMoney()));
 	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
-		//鑾峰彇鏈嶅姟鍣ㄦ暟鎹�
-		getOrdersMassage(ordersId);
-		//寮傛锛屼紶鍥炴椂闂存瘮绋嬪簭杩愯鏃堕棿鏅氾紝鎵�浠ュ緱涓嶅埌鏁版嵁
 	}
 
 	/*void gobackHelloword(){
@@ -217,12 +231,15 @@ public class PayMoneyActivity extends Activity{
 		finish();
 		OrdersActivity.temp.finish();
 	}*/
-	//绉佷笅璁㈠崟椤甸潰
+
 	void goSpedingBillActivity(){
-			Intent itnt = new Intent(this,BillDetailActivity.class);
-			itnt.putExtra("order",orderlist);
-			startActivity(itnt);
-			finish();
-		}
+		payType = "已付款";
+		Intent itnt = new Intent(this,BillDetailActivity.class);
+		itnt.putExtra("order",(Serializable)order);//修改把list<>传过去
+		itnt.putExtra("AllPay", AllPay);
+		itnt.putExtra("payType",payType);
+		startActivity(itnt);
+		finish();
+	}
 
 }
