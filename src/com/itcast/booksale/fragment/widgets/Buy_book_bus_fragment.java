@@ -421,7 +421,7 @@ public class Buy_book_bus_fragment extends Fragment {
 											Intent intent = new Intent(getActivity(), OrdersActivity.class);
 											// translate the bookbus to
 											// the OrdersActivity
-											intent.putExtra("bookbus",  (Serializable)bookbusList);
+											intent.putExtra("bookbus", (Serializable)bookbusList);
 
 											// get the allpay money
 											String AllPay = count_money_tv.getText().toString();
@@ -441,6 +441,9 @@ public class Buy_book_bus_fragment extends Fragment {
 													startActivity(intent);
 													bookbusList.clear();
 													dialog.dismiss();
+//													AllChoose_Btn.setClickable(false);
+//													AllChoose_Btn.setBackgroundResource(R.drawable.normal_choose_all);
+													count_money_tv.setText("￥:" + 0.00 + "元");//After the settlement is complete, the total price of the returned cart will be cleared to zero
 													// Log.i("------------检测----------",
 													// "----------------啦啦啦啦啦-----------");
 												}
@@ -451,10 +454,11 @@ public class Buy_book_bus_fragment extends Fragment {
 
 						}
 					}
-
+					
 				} else {
 					// 取消订单
 					Toast.makeText(getActivity(), "您已经取消了订单", Toast.LENGTH_SHORT).show();
+					
 
 				}
 			}
