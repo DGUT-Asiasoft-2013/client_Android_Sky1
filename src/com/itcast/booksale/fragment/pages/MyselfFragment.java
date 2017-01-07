@@ -4,6 +4,8 @@ import java.io.IOException;
 
 import com.itcast.booksale.R;
 import com.itcast.booksale.R.drawable;
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.itcast.booksale.LoginActivity;
 import com.itcast.booksale.PrivateMessageListActivity;
@@ -343,7 +345,14 @@ public class MyselfFragment extends Fragment{
 							MyselfFragment.this.onReponse(arg0,user);
 						}
 					});
-				}catch(final Exception e){
+				} catch (JsonParseException e) {
+					e.printStackTrace();
+
+				} catch (JsonMappingException e) {
+					e.printStackTrace();
+
+				}
+				catch(final Exception e){
 					getActivity().runOnUiThread(new Runnable() {
 
 						@Override

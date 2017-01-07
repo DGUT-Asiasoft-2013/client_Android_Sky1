@@ -43,7 +43,8 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class HelloWorldActivity extends Activity {
-	private static boolean isExit=false;//ding yi yi ge bian liang ,biao shi shi fou tui chu 
+	private static boolean isExit = false;// ding yi yi ge bian liang ,biao shi
+											// shi fou tui chu
 
 	Handler mHandler = new Handler() {
 
@@ -62,12 +63,13 @@ public class HelloWorldActivity extends Activity {
 	String count;
 	MainTabbarFragment tabbar;// 锟斤拷锟斤拷tabbar
 	User user;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		t = (TextView)(findViewById(R.id.frag_tabbar).findViewById(R.id.tab_subscribe_count));
+		t = (TextView) (findViewById(R.id.frag_tabbar).findViewById(R.id.tab_subscribe_count));
 
 		getMe();
 		tabbar = (MainTabbarFragment) getFragmentManager().findFragmentById(R.id.frag_tabbar);
@@ -80,14 +82,14 @@ public class HelloWorldActivity extends Activity {
 			}
 		});
 
-		tabbar.setOnNewClickedListener(new OnNewClickedListener() {//锟接号的硷拷锟斤拷锟铰硷拷
+		tabbar.setOnNewClickedListener(new OnNewClickedListener() {// 锟接号的硷拷锟斤拷锟铰硷拷
 
 			@Override
 			public void onNewClicked() {
 				bringUpEditor();
 
 			}
-		});		
+		});
 	}
 
 	@Override
@@ -100,14 +102,14 @@ public class HelloWorldActivity extends Activity {
 	}
 
 	protected void changeFragment(int index) {
-		FragmentTransaction fTransaction=getFragmentManager().beginTransaction();
+		FragmentTransaction fTransaction = getFragmentManager().beginTransaction();
 		Fragment newFrag = null;
 
-		String tag=null;
+		String tag = null;
 		switch (index) {
 		case 0:
 			newFrag = Home;// 锟斤拷页
-			//			tag="home";
+			// tag="home";
 			break;
 
 		case 1:
@@ -126,29 +128,29 @@ public class HelloWorldActivity extends Activity {
 			break;
 		}
 
-		if(newFrag==null)  return;
-		//		newFrag=chageFragment(newFrag, chooseFragment, fTransaction);
-		getFragmentManager().beginTransaction().replace(R.id.content, newFrag).commit();//瑁呮崲fragment
+		if (newFrag == null)
+			return;
+		// newFrag=chageFragment(newFrag, chooseFragment, fTransaction);
+		getFragmentManager().beginTransaction().replace(R.id.content, newFrag).commit();// 瑁呮崲fragment
 	}
 
 	protected void bringUpEditor() {
-		Intent intent=new Intent(HelloWorldActivity.this,ShareBooksActivity.class);
+		Intent intent = new Intent(HelloWorldActivity.this, ShareBooksActivity.class);
 		startActivity(intent);
 	}
-	void getMe(){
-		Request request=Servelet.requestuildApi("/me")
-				.method("get", null)
-				.build();
+
+	void getMe() {
+		Request request = Servelet.requestuildApi("/me").method("get", null).build();
 		Servelet.getOkHttpClient().newCall(request).enqueue(new Callback() {
 			@Override
-			public void onResponse(final Call arg0,final Response arg1) throws IOException {
+			public void onResponse(final Call arg0, final Response arg1) throws IOException {
 				final String str = arg1.body().string();
 				runOnUiThread(new Runnable() {
 
 					@Override
 					public void run() {
 						try {
-							user=new ObjectMapper().readValue(str, User.class);
+							user = new ObjectMapper().readValue(str, User.class);
 							HelloWorldThread h = new HelloWorldThread(user);
 							h.start();
 						} catch (JsonParseException e) {
@@ -165,43 +167,46 @@ public class HelloWorldActivity extends Activity {
 					}
 				});
 			}
+
 			@Override
 			public void onFailure(final Call arg0, final IOException arg1) {
 			}
 		});
 	}
-	public class HelloWorldThread extends Thread{
+
+	public class HelloWorldThread extends Thread {
 		User user;
+
 		public HelloWorldThread(User user) {
 			this.user = user;
 		}
 
 		@Override
 		public void run() {
-			while(true){
-				OkHttpClient client= Servelet.getOkHttpClient();
+			while (true) {
+				OkHttpClient client = Servelet.getOkHttpClient();
 
-				Request request =Servelet.requestuildApi("/subscribe/"+user.getId()+"/count")
-						.method("get", null)
+				Request request = Servelet.requestuildApi("/subscribe/" + user.getId() + "/count").method("get", null)
 						.build();
 				client.newCall(request).enqueue(new Callback() {
 
 					@Override
 					public void onResponse(Call arg0, Response arg1) throws IOException {
-						Integer i = new ObjectMapper().readValue(arg1.body().string(),Integer.class);
+						Integer i = new ObjectMapper().readValue(arg1.body().string(), Integer.class);
 						count = i.toString();
 						runOnUiThread(new Runnable() {
 							@Override
 							public void run() {
-								if(count.equals("0")){
+								if (count.equals("0")) {
 									t.setText("");
-								}else{
+								} else {
 									t.setText(count);
 								}
 								Log.d("count", count);
 							}
 						});
 					}
+
 					@Override
 					public void onFailure(Call arg0, IOException arg1) {
 					}
@@ -229,8 +234,7 @@ public class HelloWorldActivity extends Activity {
 	private void exit() {
 		if (!isExit) {
 			isExit = true;
-			Toast.makeText(getApplicationContext(), "再按一次退出程序",
-					Toast.LENGTH_SHORT).show();
+			Toast.makeText(getApplicationContext(), "再按一次退出程序", Toast.LENGTH_SHORT).show();
 			// 利用handler延迟发送更改状态信息
 			mHandler.sendEmptyMessageDelayed(0, 2000);
 		} else {
@@ -239,8 +243,8 @@ public class HelloWorldActivity extends Activity {
 		}
 	}
 
-	//---------------------------------------
-	//隐藏软键盘
+	// ---------------------------------------
+	// 隐藏软键盘
 	@Override
 	public boolean dispatchTouchEvent(MotionEvent ev) {
 		if (ev.getAction() == MotionEvent.ACTION_DOWN) {
@@ -266,10 +270,8 @@ public class HelloWorldActivity extends Activity {
 		if (v != null && (v instanceof EditText)) {
 			int[] l = { 0, 0 };
 			v.getLocationInWindow(l);
-			int left = l[0], top = l[1], bottom = top + v.getHeight(), right = left
-					+ v.getWidth();
-			if (event.getX() > left && event.getX() < right
-					&& event.getY() > top && event.getY() < bottom) {
+			int left = l[0], top = l[1], bottom = top + v.getHeight(), right = left + v.getWidth();
+			if (event.getX() > left && event.getX() < right && event.getY() > top && event.getY() < bottom) {
 				// 点击EditText的事件，忽略它。
 				return false;
 			} else {
@@ -288,12 +290,9 @@ public class HelloWorldActivity extends Activity {
 	private void hideSoftInput(IBinder token) {
 		if (token != null) {
 			InputMethodManager im = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-			im.hideSoftInputFromWindow(token,
-					InputMethodManager.HIDE_NOT_ALWAYS);
+			im.hideSoftInputFromWindow(token, InputMethodManager.HIDE_NOT_ALWAYS);
 		}
 	}
-	//----------------------------------------------------==============
+	// ----------------------------------------------------==============
 
 }
-
-

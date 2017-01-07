@@ -105,6 +105,8 @@ public class PayMoneyActivity extends Activity{
 				public void onClick(DialogInterface dialog, int which) {
 					mDialogWidget=new DialogWidget(PayMoneyActivity.this, getDecorViewDialog());
 					mDialogWidget.show();
+
+//					linDataBase(balanceMoney);
 				}
 			})
 			.setPositiveButton("取消", null)
