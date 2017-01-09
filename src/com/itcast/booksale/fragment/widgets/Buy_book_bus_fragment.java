@@ -43,7 +43,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 /*
- * 杩欐槸璐墿杞︾殑椤甸潰鏄剧ず
+ * 这是购物车的页面显示
  */
 public class Buy_book_bus_fragment extends Fragment {
 
@@ -609,7 +609,7 @@ public class Buy_book_bus_fragment extends Fragment {
 						// 选中了
 						totalPrice += bookbus.getId().getBook().getPrice();
 						//						count_money_tv.setText("￥:" + (totalPrice + bookbus.getId().getBook().getPrice()) + "元"); // 设置总钱数
-
+						mSelectedState.clear();
 					} else {
 						totalPrice = 0; // 钱的总数为0
 						mSelectedState.clear();
@@ -649,7 +649,7 @@ public class Buy_book_bus_fragment extends Fragment {
 						// 选中了
 						totalPrice -= bookbus.getId().getBook().getPrice();
 						//						count_money_tv.setText("锟�:" + (totalPrice + bookbus.getId().getBook().getPrice()) + "鍏�"); // 设置总钱数
-
+						mSelectedState.clear();
 					} else {
 						totalPrice = 0; // 钱的总数为0
 						mSelectedState.clear();
