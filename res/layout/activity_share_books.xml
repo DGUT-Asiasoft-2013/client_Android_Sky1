@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF"
+    android:background="#D9E6B0"
     android:orientation="vertical" >
 
     <ScrollView
@@ -28,6 +28,7 @@
                 android:id="@+id/input_book_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:layout_weight="0.1"
                 android:background="@android:drawable/editbox_background"
                 android:gravity="left"
@@ -38,6 +39,7 @@
                 android:id="@+id/input_book_author"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:layout_weight="0.1"
                 android:background="@android:drawable/editbox_background"
                 android:gravity="left"
@@ -48,6 +50,7 @@
                 android:id="@+id/input_book_publisher"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:layout_weight="0.1"
                 android:background="@android:drawable/editbox_background"
                 android:gravity="left"
@@ -58,6 +61,7 @@
                 android:id="@+id/input_book_isbn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:layout_weight="0.1"
                 android:background="@android:drawable/editbox_background"
                 android:gravity="left"
@@ -68,15 +72,17 @@
                 android:id="@+id/input_book_price"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:inputType="number"
+                android:layout_marginTop="10dp"
                 android:layout_weight="0.1"
                 android:background="@android:drawable/editbox_background"
                 android:gravity="left"
-                android:hint="出售价格"
-                android:inputType="textMultiLine" />
+                android:hint="出售价格" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:layout_weight="0.1"
                 android:orientation="horizontal" >
 
@@ -97,6 +103,7 @@
                 android:id="@+id/input_book_summary"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:layout_weight="0.1"
                 android:background="@android:drawable/editbox_background"
                 android:gravity="left"
@@ -108,17 +115,19 @@
                 android:id="@+id/input_book_number"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:layout_weight="0.1"
                 android:background="@android:drawable/editbox_background"
                 android:gravity="left"
                 android:hint="图书数量"
-                android:inputType="textMultiLine" >
+                android:inputType="number" >
             </EditText>
 
             <EditText
                 android:id="@+id/input_user_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:layout_weight="0.1"
                 android:background="@android:drawable/editbox_background"
                 android:gravity="left"
@@ -127,8 +136,9 @@
 
             <fragment
                 android:id="@+id/input_share_picture"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_weight="0.3"
                 class="com.itcast.booksale.inputcells.PictureInputCellFragment"
                 tools:layout="@layout/fragment_inputcell_picture" />
@@ -138,7 +148,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_gravity="bottom"
-                android:background="@drawable/button_fillet"
+                android:background="@drawable/buttom_gradient_bg"
                 android:text="确定出售" />
         </LinearLayout>
     </ScrollView>

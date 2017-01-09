@@ -667,7 +667,7 @@ public class BookListFragment extends Fragment implements OnClickListener {
 			public void onFailure(Call arg0, final IOException e) {
 				getActivity().runOnUiThread(new Runnable() {
 					public void run() {
-						new AlertDialog.Builder(getActivity()).setTitle("reload onFailure").setMessage(e.getMessage())
+						new AlertDialog.Builder(getActivity()).setTitle("reload onFailure11").setMessage(e.getMessage())
 								.show();
 					}
 				});
