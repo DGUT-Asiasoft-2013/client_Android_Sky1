@@ -21,18 +21,18 @@ public class User implements Serializable{
 	String phoneNumb;//电话号码
 	String qq;
 	float sumMoney;
-	//String payPassword;
+	String payPassword;
 	
 	
 	
 	
 
-	/*public String getPayPassword() {
+	public String getPayPassword() {
 		return payPassword;
 	}
 	public void setPayPassword(String payPassword) {
 		this.payPassword = payPassword;
-	}*/
+	}
 	public float getSumMoney() {
 		return sumMoney;
 	}

@@ -47,8 +47,6 @@ public class SubscribeListUserFragment extends Fragment {
 	User user;
 	View view;
 	ListView listView;
-	View btnLoadMore;
-	TextView textLoadMore;
 	String text = "卖家有更新是否提醒我";
 	List<Subscribe> data;
 	Boolean b;
@@ -59,11 +57,8 @@ public class SubscribeListUserFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		if (view==null){
 			view = inflater.inflate(R.layout.fragment_page_subscribe_user_list, null);
-			btnLoadMore = inflater.inflate(R.layout.widget_load_more_button, null);
-			textLoadMore = (TextView) btnLoadMore.findViewById(R.id.text);
 
 			listView = (ListView) view.findViewById(R.id.list_subscribe_user);
-			listView.addFooterView(btnLoadMore);
 			listView.setAdapter(listAdapter);
 
 			listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -106,15 +101,6 @@ public class SubscribeListUserFragment extends Fragment {
 					return true;
 				}
 			});
-
-			btnLoadMore.setOnClickListener(new View.OnClickListener() {
-
-				@Override
-				public void onClick(View v) {
-					loadmore();
-				}
-			});
-
 		}
 
 		return view;
@@ -378,52 +364,4 @@ public class SubscribeListUserFragment extends Fragment {
 		});
 	}
 
-	void loadmore(){
-		btnLoadMore.setEnabled(false);
-		textLoadMore.setText("正在加载...");
-
-		Request request = Servelet.requestuildApi("subscribe/"+(page+1)).get().build();
-		Servelet.getOkHttpClient().newCall(request).enqueue(new Callback() {
-			@Override
-			public void onResponse(Call arg0, Response arg1) throws IOException {
-				getActivity().runOnUiThread(new Runnable() {
-					public void run() {
-						btnLoadMore.setEnabled(true);
-						textLoadMore.setText("加载更多");
-					}
-				});
-
-				try{
-					final Page<User> feeds = new ObjectMapper().readValue(arg1.body().string(), new TypeReference<Page<User>>() {});
-					if(feeds.getNumber()>page){
-
-						getActivity().runOnUiThread(new Runnable() {
-							public void run() {
-								if(data==null){
-									//									data = feeds.getContent();
-								}else{
-									//									data.addAll(feeds.getContent());
-								}
-								page = feeds.getNumber();
-
-								listAdapter.notifyDataSetChanged();
-							}
-						});
-					}
-				}catch(Exception ex){
-					ex.printStackTrace();
-				}
-			}
-
-			@Override
-			public void onFailure(Call arg0, IOException arg1) {
-				getActivity().runOnUiThread(new Runnable() {
-					public void run() {
-						btnLoadMore.setEnabled(true);
-						textLoadMore.setText("加载更多");
-					}
-				});
-			}
-		});
-	}
 }

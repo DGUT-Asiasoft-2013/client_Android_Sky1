@@ -23,6 +23,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -128,12 +129,90 @@ public class PayMoneyActivity extends Activity{
 				// TODO Auto-generated method stub
 				mDialogWidget.dismiss();
 				mDialogWidget=null;
-				//payTextView.setText(password);
-				Toast.makeText(getApplicationContext(), "支付成功", Toast.LENGTH_SHORT).show();
+				
+				String payPassword=password;
+				
+				MultipartBody.Builder requestBodyBuilder=new MultipartBody.Builder().setType(MultipartBody.FORM)
+						.addFormDataPart("payPassword", payPassword);
+				
+				Request request=Servelet.requestuildApi("pay/exit")
+						.method("post", null)
+						.post(requestBodyBuilder.build())
+						.build();//向服务器请求打开URL
+				
+				Servelet.getOkHttpClient().newCall(request).enqueue(new Callback() {
+					
+					@Override
+					public void onResponse(final Call arg0, Response arg1) throws IOException {
+						// TODO Auto-generated method stub
+						byte[] ar=arg1.body().bytes();
+						
+						try {
+							final Boolean succeed=new ObjectMapper().readValue(ar, Boolean.class);
+							
+							PayMoneyActivity.this.runOnUiThread(new Runnable() {
+								
+								@Override
+								public void run() {
+									// TODO Auto-generated method stub
+									if(succeed){
+										Toast.makeText(getApplicationContext(), "支付成功", Toast.LENGTH_SHORT)
+										.show();
+//										Log.d("mommmfjjjfjf", balanceMoney);
+										linDataBase(balanceMoney);
+										
+										goSpedingBillActivity();
+									}else{
+										Toast.makeText(PayMoneyActivity.this, "支付密码错误", Toast.LENGTH_SHORT)
+										.show();
+										return;
+									}
+								}
+							});
+						} catch (final Exception e) {
+							// TODO: handle exception
+							PayMoneyActivity.this.runOnUiThread(new Runnable() {
+								
+								@Override
+								public void run() {
+									// TODO Auto-generated method stub
+									PayMoneyActivity.this.runOnUiThread(new Runnable() {
+
+										@Override
+										public void run() {
+											new AlertDialog.Builder(PayMoneyActivity.this)
+											.setTitle("失败")
+											.setMessage("连接失败")
+											.setNegativeButton("确定", null)
+											.show();
+										}
+									});
+								}
+							});
+						}
+					}
+					
+					@Override
+					public void onFailure(Call arg0, IOException arg1) {
+						runOnUiThread(new Runnable() {
+
+							@Override
+							public void run() {
+								new AlertDialog.Builder(PayMoneyActivity.this)
+								.setTitle("失败")
+								.setMessage("连接失败")
+								.setNegativeButton("确定", null)
+								.show();
+							}
+						});
+
+					}
+				});
+				/*Toast.makeText(getApplicationContext(), "支付成功", Toast.LENGTH_SHORT).show();
 //				Log.d("mommmfjjjfjf", balanceMoney);
 				linDataBase(balanceMoney);
 				
-				goSpedingBillActivity();
+				goSpedingBillActivity();*/
 			}
 
 			@Override
