@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.itcast.booksale.R;
+import com.itcast.booksale.SettingPayActivity;
 import com.itcast.booksale.entity.User;
 import com.itcast.booksale.fragment.pages.MyselfFragment;
 import com.itcast.booksale.servelet.Servelet;
@@ -139,9 +140,71 @@ public class RechargeActivity extends Activity {
 
 			@Override
 			public void onClick(View v) {
-				goRecharge();
+				goPay();
+				//goRecharge();
 			}
 		});
+	}
+
+	protected void goPay() {
+		// TODO Auto-generated method stub
+		Request request=Servelet.requestuildApi("me/if")
+				.method("get", null)
+				.build();
+		
+		Servelet.getOkHttpClient().newCall(request).enqueue(new Callback() {
+			
+			@Override
+			public void onResponse(final Call arg0, final Response arg1) throws IOException {
+				// TODO Auto-generated method stub
+				byte[] ar=arg1.body().bytes();
+				
+				try {
+					final Boolean succeed=new ObjectMapper().readValue(ar, Boolean.class);
+					
+					RechargeActivity.this.runOnUiThread(new Runnable() {
+						
+						@Override
+						public void run() {
+							// TODO Auto-generated method stub
+							if(succeed){
+								RechargeActivity.this.onResponsePay(arg0,user);
+							}else{
+								Intent intent=new Intent(RechargeActivity.this, SettingPayActivity.class);
+								startActivity(intent);
+							}
+						}
+					});
+				} catch (final Exception e) {
+					// TODO: handle exception
+					RechargeActivity.this.runOnUiThread(new Runnable() {
+						
+						@Override
+						public void run() {
+							// TODO Auto-generated method stub
+							RechargeActivity.this.onFailurePay(arg0,e);
+						}
+					});
+				}
+			}
+			
+			@Override
+			public void onFailure(Call arg0, IOException arg1) {
+				// TODO Auto-generated method stub
+				RechargeActivity.this.onFailurePay(arg0,arg1);
+			}
+		});
+	}
+
+	protected void onFailurePay(Call arg0, Exception arg1) {
+		// TODO Auto-generated method stub
+		Toast.makeText(RechargeActivity.this, "ÍøÂç´íÎó", Toast.LENGTH_SHORT)
+		.show();
+	}
+
+	protected void onResponsePay(Call arg0, User user2) {
+		// TODO Auto-generated method stub
+		goRecharge();
 	}
 
 	@Override

@@ -153,7 +153,8 @@ public class HelloWorldActivity extends Activity {
 							user = new ObjectMapper().readValue(str, User.class);
 							HelloWorldThread h = new HelloWorldThread(user);
 							h.start();
-						} catch (JsonParseException e) {
+						}catch (JsonParseException e) {
+
 							e.printStackTrace();
 
 						} catch (JsonMappingException e) {
