@@ -208,7 +208,7 @@ public class Buy_book_bus_fragment extends Fragment {
 						@Override
 						public void run() {
 
-							Toast.makeText(getActivity(), "移除购物车失败", Toast.LENGTH_SHORT).show();
+							Toast.makeText(getActivity(), getResources().getString(R.string.yichufrombus), Toast.LENGTH_SHORT).show();
 						}
 					});
 				}
@@ -246,7 +246,7 @@ public class Buy_book_bus_fragment extends Fragment {
 			isDelete = !isDelete; // design the model
 			if (isDelete) {
 				// if it is delete model
-				edit.setText("完成");
+				edit.setText(getResources().getString(R.string.finish));
 				iLayout_buttom_money.setVisibility(View.GONE); // design layout
 				// as INVISIBLE
 				delete_book_from_bookbus.setVisibility(abView.VISIBLE); // design
@@ -254,7 +254,7 @@ public class Buy_book_bus_fragment extends Fragment {
 				// as
 				// VISIBLE
 			} else {
-				edit.setText("编辑");
+				edit.setText(getResources().getString(R.string.edit));
 				iLayout_buttom_money.setVisibility(View.VISIBLE); // design
 				// layout as
 				// INVISIBLE
@@ -293,7 +293,7 @@ public class Buy_book_bus_fragment extends Fragment {
 		adapter.notifyDataSetChanged();
 		mSelectedState.clear();
 		totalPrice = 0;
-		count_money_tv.setText("￥:" + 0.00 + "元");
+		count_money_tv.setText( getResources().getString(R.string.rmb) + 0.00 +  getResources().getString(R.string.yuan));
 		AllChoose_Btn.setChecked(false);
 
 	}
@@ -411,10 +411,10 @@ public class Buy_book_bus_fragment extends Fragment {
 								@Override
 								public void run() {
 
-									new AlertDialog.Builder(getActivity()).setTitle("提交订单")
-									.setMessage("您于" + bookbus.getId().getBook().getEditDate() + "想要购买"
+									new AlertDialog.Builder(getActivity()).setTitle(getResources().getString(R.string.tijiao ))
+									.setMessage(getResources().getString(R.string.you ) + bookbus.getId().getBook().getEditDate() + getResources().getString(R.string.wantbuy )
 											+ bookbus.getId().getBook().getTitle())
-									.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+									.setPositiveButton(getResources().getString(R.string.sure ), new DialogInterface.OnClickListener() {
 
 										@Override
 										public void onClick(DialogInterface dialog, int which) {
@@ -443,11 +443,11 @@ public class Buy_book_bus_fragment extends Fragment {
 													dialog.dismiss();
 //													AllChoose_Btn.setClickable(false);
 //													AllChoose_Btn.setBackgroundResource(R.drawable.normal_choose_all);
-													count_money_tv.setText("￥:" + 0.00 + "元");//After the settlement is complete, the total price of the returned cart will be cleared to zero
+													count_money_tv.setText(getResources().getString(R.string.rmb) + 0.00 + getResources().getString(R.string.yuan));//After the settlement is complete, the total price of the returned cart will be cleared to zero
 													// Log.i("------------检测----------",
 													// "----------------啦啦啦啦啦-----------");
 												}
-											}).setNegativeButton("不了，我再想想", null).show();
+											}).setNegativeButton(getResources().getString(R.string.no), null).show();
 
 								}
 							});
@@ -457,7 +457,7 @@ public class Buy_book_bus_fragment extends Fragment {
 					
 				} else {
 					// 取消订单
-					Toast.makeText(getActivity(), "您已经取消了订单", Toast.LENGTH_SHORT).show();
+					Toast.makeText(getActivity(), getResources().getString(R.string.cancle), Toast.LENGTH_SHORT).show();
 					
 
 				}
@@ -498,7 +498,7 @@ public class Buy_book_bus_fragment extends Fragment {
 
 					// 刷新列表
 					adapter.notifyDataSetChanged();
-					count_money_tv.setText("￥:" + totalPrice + "元"); // 输入钱的总数
+					count_money_tv.setText(getResources().getString(R.string.rmb) + totalPrice + getResources().getString(R.string.yuan)); // 输入钱的总数
 
 				}
 
@@ -509,7 +509,7 @@ public class Buy_book_bus_fragment extends Fragment {
 				//				mSelectedNum.put(list_shopping_bus.get(i), 1);
 				// 刷新
 				adapter.notifyDataSetChanged();
-				count_money_tv.setText("￥:" + 0.00 + "元");
+				count_money_tv.setText(getResources().getString(R.string.rmb) + 0.00 + getResources().getString(R.string.yuan));
 
 			}
 		}
@@ -696,7 +696,7 @@ public class Buy_book_bus_fragment extends Fragment {
 							totalPrice -= selectednumber * list_shopping_bus.get(position).getId().getBook().getPrice();
 						}
 
-						count_money_tv.setText("￥:" + totalPrice + "元");
+						count_money_tv.setText( getResources().getString(R.string.rmb) + totalPrice +  getResources().getString(R.string.yuan));
 
 						if (mSelectedState.size() == listSize) {
 							/**

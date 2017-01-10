@@ -90,7 +90,7 @@
             android:layout_alignParentRight="true"
             android:background="@color/orange_color"
             android:textSize="16sp"
-            android:text="结算(0)"
+            android:text="@string/jiesuan"
             android:textColor="@android:color/white" />
     </RelativeLayout>
 

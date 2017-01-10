@@ -192,8 +192,12 @@ public class BookListFragment extends Fragment implements OnClickListener {
 
 			images = new Integer[] { R.drawable.a, R.drawable.b, R.drawable.c,
 					R.drawable.d, R.drawable.e };
-			titles = new String[] { "书香", "就输大甩卖",
-					"身临图书馆", "品味书", "看书看到天亮" };
+			titles = new String[] { 
+					getResources().getString(R.string.booksmell),
+					getResources().getString(R.string.oldsale),
+					getResources().getString(R.string.library), 
+					getResources().getString(R.string.smellbook),
+					getResources().getString(R.string.lookbook) };
 			// 为了更好的使用这些信息，可以创建一个集合
 			imageviews = new ArrayList<ImageView>();
 			for (int i = 0; i < images.length; i++) {
@@ -253,42 +257,42 @@ public class BookListFragment extends Fragment implements OnClickListener {
 		keywords = keyword.getText().toString();
 		switch (v.getId()) {
 		case R.id.all_book_layout:
-			bookTag_text = "全部";
+			bookTag_text = getResources().getString(R.string.all);
 			allBookLayoutClick();
 			break;
 			
 		case R.id.textbook_layout:
-			bookTag_text = "教科书";
+			bookTag_text = getResources().getString(R.string.textbook);
 			TextBooklayoutClick();
 			break;
 			
 		case R.id.literature_layouts:
-			bookTag_text = "文学";
+			bookTag_text = getResources().getString(R.string.literature);
 			LiteraturelayoutClick();
 			break;
 			
 		case R.id.story_book_layout:
-			bookTag_text = "童书";
+			bookTag_text = getResources().getString(R.string.childrenbooks);
 			StoryBookLayoutClick();
 			break;
 			
 		case R.id.art_layout:
-			bookTag_text = "艺术";
+			bookTag_text = getResources().getString(R.string.art);
 			ArtLayoutClick();
 			break;
 			
 		case R.id.science_layout:
-			bookTag_text = "科技";
+			bookTag_text = getResources().getString(R.string.science);
 			ScienceLayoutClick();
 			break;
 			
 		case R.id.life_layout:
-			bookTag_text = "生活";
+			bookTag_text = getResources().getString(R.string.life);
 			LifeLayoutClick();
 			break;
 			
 		case R.id.computer_layout:
-			bookTag_text = "计算机";
+			bookTag_text = getResources().getString(R.string.computer);
 			ComputerLayoutClick();
 			break;
 
@@ -302,11 +306,11 @@ public class BookListFragment extends Fragment implements OnClickListener {
 	 */
 	public void ComputerLayoutClick() {
 		if (keywords.length()==0) {
-			getBooksListByTag("计算机");
+			getBooksListByTag(getResources().getString(R.string.computer));
 			
 		}
 		else {
-			getBookListByKeywordAndType(keywords,"计算机");
+			getBookListByKeywordAndType(keywords,getResources().getString(R.string.computer));
 		}
 	}
 
@@ -315,11 +319,11 @@ public class BookListFragment extends Fragment implements OnClickListener {
 	 */
 	public void LifeLayoutClick() {
 		if (keywords.length()==0) {
-			getBooksListByTag("生活");
+			getBooksListByTag(getResources().getString(R.string.life));
 			
 		}
 		else {
-			getBookListByKeywordAndType(keywords,"生活");
+			getBookListByKeywordAndType(keywords,getResources().getString(R.string.life));
 		}
 	}
 
@@ -328,11 +332,11 @@ public class BookListFragment extends Fragment implements OnClickListener {
 	 */
 	public void ScienceLayoutClick() {
 		if (keywords.length()==0) {
-			getBooksListByTag("科技");
+			getBooksListByTag(getResources().getString(R.string.science));
 			
 		}
 		else {
-			getBookListByKeywordAndType(keywords,"科技");
+			getBookListByKeywordAndType(keywords,getResources().getString(R.string.science));
 		}
 	}
 
@@ -341,11 +345,11 @@ public class BookListFragment extends Fragment implements OnClickListener {
 	 */
 	public void ArtLayoutClick() {
 		if (keywords.length()==0) {
-			getBooksListByTag("艺术");
+			getBooksListByTag(getResources().getString(R.string.art));
 			
 		}
 		else {
-			getBookListByKeywordAndType(keywords,"艺术");
+			getBookListByKeywordAndType(keywords,getResources().getString(R.string.art));
 		}
 	}
 
@@ -354,11 +358,11 @@ public class BookListFragment extends Fragment implements OnClickListener {
 	 */
 	public void StoryBookLayoutClick() {
 		if (keywords.length()==0) {
-			getBooksListByTag("童书");
+			getBooksListByTag(getResources().getString(R.string.childrenbooks));
 			
 		}
 		else {
-			getBookListByKeywordAndType(keywords,"童书");
+			getBookListByKeywordAndType(keywords,getResources().getString(R.string.childrenbooks));
 		}
 	}
 
@@ -367,11 +371,11 @@ public class BookListFragment extends Fragment implements OnClickListener {
 	 */
 	public void LiteraturelayoutClick() {
 		if (keywords.length()==0) {
-			getBooksListByTag("文学");
+			getBooksListByTag(getResources().getString(R.string.literature));
 			
 		}
 		else {
-			getBookListByKeywordAndType(keywords,"文学");
+			getBookListByKeywordAndType(keywords,getResources().getString(R.string.literature));
 		}
 	}
 
@@ -380,11 +384,11 @@ public class BookListFragment extends Fragment implements OnClickListener {
 	 */
 	public void TextBooklayoutClick() {
 		if (keywords.length()==0) {
-			getBooksListByTag("教科书");
+			getBooksListByTag(getResources().getString(R.string.textbook));
 			
 		}
 		else {
-			getBookListByKeywordAndType(keywords,"教科书");
+			getBookListByKeywordAndType(keywords,getResources().getString(R.string.textbook));
 		}
 	}
 
@@ -459,7 +463,7 @@ public class BookListFragment extends Fragment implements OnClickListener {
 				bookSummary.setText(book.getSummary());
 			}
 			
-			bookPrice.setText(book.getPrice()+"元");
+			bookPrice.setText(book.getPrice()+getResources().getString(R.string.yuan));
 
 
 			return view;
@@ -518,7 +522,7 @@ public class BookListFragment extends Fragment implements OnClickListener {
 						@Override
 						public void run() {
 
-							Toast.makeText(getActivity(), "上传购物车失败", Toast.LENGTH_SHORT).show();
+							Toast.makeText(getActivity(), R.string.failtopull, Toast.LENGTH_SHORT).show();
 						}
 					});
 				}
@@ -583,7 +587,7 @@ public class BookListFragment extends Fragment implements OnClickListener {
 	void getBooksListByKeyword() {
 		loadmoreSelect = 1;// 1为搜索的加载更多
 		// 判断类型有无选择
-		if (bookTag_text.equals("全部")) {
+		if (bookTag_text.equals(R.string.all)) {
 			Request request = Servelet.requestuildApi("/book/s/" + keywords).get().build();
 
 			reload(request);
@@ -618,7 +622,7 @@ public class BookListFragment extends Fragment implements OnClickListener {
 	void searchByKeyword() {
 		keywords = keyword.getText().toString();
 		if (keywords.length() == 0) {
-			Toast.makeText(getActivity(), "请输入关键字", Toast.LENGTH_SHORT).show();
+			Toast.makeText(getActivity(), R.string.input, Toast.LENGTH_SHORT).show();
 			return;
 		} else {
 
@@ -668,7 +672,7 @@ public class BookListFragment extends Fragment implements OnClickListener {
 						@Override
 						public void run() {
 
-							Toast.makeText(getActivity(), "reload失败", Toast.LENGTH_SHORT).show();
+							Toast.makeText(getActivity(), R.string.reloadfail, Toast.LENGTH_SHORT).show();
 						}
 					});
 				}
@@ -697,7 +701,7 @@ public class BookListFragment extends Fragment implements OnClickListener {
 	// 搜索列表的加载更多
 	void loadmoreBooksListByKeyword() {
 		// 判断类型有无选择
-		if (bookTag_text.equals("全部")) {
+		if (bookTag_text.equals(R.string.all)) {
 			Request request = Servelet.requestuildApi("/book/s/" + keywords + "/" + (page + 1)).get().build();
 			loadmore(request);
 		} else {

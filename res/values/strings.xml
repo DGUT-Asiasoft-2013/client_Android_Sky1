@@ -28,6 +28,42 @@
     <string name="loading">正在加载...</string>
     <string name="load_succeed">加载成功</string>
     <string name="load_fail">加载失败</string>
+    <string name="jiesuan">结算(0)</string>
+    
+    
+    <!--购物车 -->
+    <string name="finish">完成</string>
+    <string name="edit">编辑</string>
+    <string name="tijiao">提交订单</string>
+    <string name="you">您于</string>
+    <string name="wantbuy">想要购买</string>
+    <string name="sure">确定</string>
+    <string name="rmb">￥:</string>
+    <string name="yuan">元</string>
+    <string name="no">不了，我再想想</string>
+    <string name="cancle">您已经取消了订单</string>
+    <string name="yichufrombus">移除购物车失败</string>
+    
+    <!-- 首页 -->
+    <string name="booksmell">书香</string>
+    <string name="oldsale">旧书大甩卖</string>
+    <string name="library">身临图书馆</string>
+    <string name="smellbook">品味书</string>
+    <string name="lookbook">看书看到天亮</string>
+    
+    <string name="all">全部</string>
+    <string name="textbook">教科书</string>
+    <string name="literature">文学</string>
+    <string name="childrenbooks">童书</string>
+    <string name="art">艺术</string>
+    <string name="science">科技</string>
+    <string name="life">生活</string>
+    <string name="computer">计算机</string>
+    <string name="failtopull">上传购物车失败</string>
+    <string name="input">请输入关键字</string>
+    <string name="reloadfail">reload失败</string>
+    
+    
     
     <!-- 订单OrdersActivity -->
     <string name="content_succeed">连接成功</string>
