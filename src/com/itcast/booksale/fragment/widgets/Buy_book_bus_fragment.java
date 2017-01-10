@@ -648,7 +648,7 @@ public class Buy_book_bus_fragment extends Fragment {
 						notifyDataSetChanged(); // 刷新
 						// 选中了
 						totalPrice -= bookbus.getId().getBook().getPrice();
-						//						count_money_tv.setText("锟�:" + (totalPrice + bookbus.getId().getBook().getPrice()) + "鍏�"); // 设置总钱数
+						//						count_money_tv.setText("￥:" + (totalPrice + bookbus.getId().getBook().getPrice()) + "鍏�"); // 设置总钱数
 						mSelectedState.clear();
 					} else {
 						totalPrice = 0; // 钱的总数为0
