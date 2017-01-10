@@ -211,10 +211,12 @@ public class PrivateMessageListActivity extends Activity {
 
 						@Override
 						public void run() {
+							if(pageData.getNumberOfElements()>0){
 
 							PrivateMessageListActivity.this.privateMessageData = pageData.getContent();
 
 							adapter.notifyDataSetInvalidated();
+							}
 						}
 					});
 				} catch (final Exception e) {
@@ -268,7 +270,7 @@ public class PrivateMessageListActivity extends Activity {
 				public void run() {
 					refresh();
 				}
-			}, 3000);
+			}, 2000);
 	}
 
 	public void getCurrentUser() {
