@@ -350,7 +350,7 @@ public class BooksContentActivity extends Activity {
 		MultipartBody body = new MultipartBody.Builder()
 				.addFormDataPart("subscribe", String.valueOf(!issubscribe))
 				.build();
-		Request request = Servelet.requestuildApi("saler/"+book.getUser().getId()+"/subscribe")
+		Request request = Servelet.requestuildApi("saler/"+book.getUser().getId()+"/subscribe/s")
 				.post(body)
 				.build();
 		Servelet.getOkHttpClient().newCall(request).enqueue(new Callback() {

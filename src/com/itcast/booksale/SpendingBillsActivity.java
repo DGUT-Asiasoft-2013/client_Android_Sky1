@@ -29,6 +29,7 @@ import okhttp3.Callback;
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 
 import java.io.IOException;
@@ -301,6 +302,7 @@ public class SpendingBillsActivity extends Activity {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				OrderLists orderData = data.get(postition);
+
 				MultipartBody body = new MultipartBody.Builder()
 						.addFormDataPart("orderId",orderData.getId().toString()).build();
 				Request request = Servelet.requestuildApi("deleteOrder").post(body).build();

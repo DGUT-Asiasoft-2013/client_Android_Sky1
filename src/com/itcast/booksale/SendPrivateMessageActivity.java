@@ -109,7 +109,7 @@ public class SendPrivateMessageActivity extends Activity {
 					holder1 = new ViewHolderMe();
 					holder1.textView = (TextView) view.findViewById(R.id.chatlist_text_me);
 					holder1.avatar=(AvatarViewPrivateMessage) view.findViewById(R.id.chatlist_avatar_me);
-					holder1.textView.setText(data.getPrivateMessageSender().getName()+" : "+data.getPrivateText());
+					holder1.textView.setText(data.getPrivateText());
 					holder1.avatar.load(data.getPrivateMessageSender());
 					view.setTag(holder1);
 					break;
@@ -118,7 +118,7 @@ public class SendPrivateMessageActivity extends Activity {
 					holder2 = new ViewHolderOthers();
 					holder2.textView = (TextView) view.findViewById(R.id.chatlist_text_other);
 					holder2.avatar = (AvatarViewPrivateMessage) view.findViewById(R.id.chatlist_avatar_other);
-					holder2.textView.setText(data.getPrivateMessageSender().getName()+" : "+data.getPrivateText());
+					holder2.textView.setText(data.getPrivateText());
 					holder2.avatar.load(data.getPrivateMessageSender());
 					view.setTag(holder2);
 					break;
@@ -129,7 +129,7 @@ public class SendPrivateMessageActivity extends Activity {
 					holder1 = (ViewHolderMe) view.getTag();
 					holder1.textView = (TextView) view.findViewById(R.id.chatlist_text_me);
 					holder1.avatar=(AvatarViewPrivateMessage) view.findViewById(R.id.chatlist_avatar_me);
-					holder1.textView.setText(data.getPrivateMessageSender().getName()+" : "+data.getPrivateText());
+					holder1.textView.setText(data.getPrivateText());
 					holder1.avatar.load(data.getPrivateMessageSender());
 					break;
 
@@ -137,7 +137,7 @@ public class SendPrivateMessageActivity extends Activity {
 					holder2 = (ViewHolderOthers) view.getTag();
 					holder2.textView = (TextView) view.findViewById(R.id.chatlist_text_other);
 					holder2.avatar=(AvatarViewPrivateMessage) view.findViewById(R.id.chatlist_avatar_other);
-					holder2.textView.setText(data.getPrivateMessageSender().getName()+" : "+data.getPrivateText());
+					holder2.textView.setText(data.getPrivateText());
 					holder2.avatar.load(data.getPrivateMessageSender());
 					break;
 				}

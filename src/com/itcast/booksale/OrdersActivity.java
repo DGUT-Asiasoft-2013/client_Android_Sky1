@@ -55,22 +55,22 @@ public class OrdersActivity extends Activity {
 	List<Bookbus> order; //get bookbus's massage what were putted
 	OrderLists orderList;
 	//ye mian shu xing
-	private AvatarView bookUserAvatar; // 鍥句功鍗栧鐓х墖
-	private TextView bookUserName; // 鍗栦功鍗栧濮撳悕
-	private TextView btn_order;//鎻愪氦璁㈠崟
-	private TextView momey_all;//鎬婚噾棰�
+	private AvatarView bookUserAvatar; // 卖家头像
+	private TextView bookUserName; // 卖家名称
+	private TextView btn_order;//提交订单
+	private TextView momey_all;//总价
 	private String AllPay;
-	private String orderNumber;//璁㈠崟鍙�
+	private String orderNumber;//订单号
 
-	private BookAvatarView bookAvatar; // 鍥句功鐓х墖
-	private TextView bookTitle; // 鍥句功鏍囬
-	private TextView bookAuthor;//鍥句功浣滆��
-	private TextView bookSummary; //鍥句功绠�浠�
-	private TextView bookPrice;// 鍞环
-	private TextView books_buy_numb;//璐拱鏁伴噺
-	//----------------淇敼鍐呭
-	LinearLayout add_bookList;//娣诲姞璐墿杞︿腑澶氭湰涔︾睄
-	LinearLayout bookList;//涔︾睄鐨勫竷灞�
+	private BookAvatarView bookAvatar; // 图书照片
+	private TextView bookTitle; // 图书名称
+	private TextView bookAuthor;//图书作者
+	private TextView bookSummary; //图书简介
+	private TextView bookPrice;//图书价格
+	private TextView books_buy_numb;//图书购买数量
+	//----------------显示列表
+	LinearLayout add_bookList;//添加图书
+	LinearLayout bookList;//单元格
 	LayoutInflater inflater;
 	//-------------------------------
 
@@ -91,7 +91,7 @@ public class OrdersActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		temp = this;
 		setContentView(R.layout.activity_orders_view);
-		//-----------璁剧疆褰撳墠甯冨眬
+		//-----------
 		inflater = LayoutInflater.from(this);
 
 		//get bookbus
@@ -104,18 +104,18 @@ public class OrdersActivity extends Activity {
 		AllPay = getIntent().getStringExtra("AllPay");
 		orderNumber = getIntent().getStringExtra("order_number");
 
-		add_bookList = (LinearLayout) findViewById(R.id.lin_books);//璐拱鍥句功鍒楄〃
-		initorders(); // 鍒濆鍖栫埗绫诲竷灞�
+		add_bookList = (LinearLayout) findViewById(R.id.lin_books);//购物车图书列表
+		initorders(); //初始化父类信息
 
 
 
-		//閬嶅巻List<Bookbus>===============================================
+		//List<Bookbus>===============================================
 		String size = String.valueOf(order.size());
 		Log.d("size==========================", size);
 		for(int i=0;i<order.size();i++){
 			addBookList();
-			setorders(order.get(i));//璁剧疆鐖剁被淇℃伅
-			setBooks(order.get(i));//璁剧疆涔︾睄淇℃伅
+			setorders(order.get(i));//设置父类信息
+			setBooks(order.get(i));//设置单元格信息
 		}
 
 		//=========================================================
@@ -124,7 +124,7 @@ public class OrdersActivity extends Activity {
 
 			@Override
 			public void onClick(View v) {
-				//鎻愪氦璁㈠崟
+				//提交订单
 				saveOrdersList(order,AllPay,orderNumber,payType_text);
 
 
@@ -134,7 +134,7 @@ public class OrdersActivity extends Activity {
 
 	}
 
-	//淇濆瓨order鍒版暟鎹簱
+	//保存订单
 	void saveOrdersList(List<Bookbus> order2,String AllPay,String orderNumber,final String payType_text){
 		for(int i=0;i<order2.size();i++){
 			int book_id =  order2.get(i).getId().getBook().getId();
@@ -142,17 +142,17 @@ public class OrdersActivity extends Activity {
 		}
 
 		new AlertDialog.Builder(OrdersActivity.this)
-		.setTitle("杩炴帴鎴愬姛")
-		.setMessage("鎻愪氦璁㈠崟鎴愬姛")
+		.setTitle("连接成功")
+		.setMessage("订单保存成功")
 		.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				if(payType_tag == 0){
 					goPayActivity();
-					//鏀粯椤甸潰
+					//在线支付
 				}else if(payType_tag == 1){
-					Toast.makeText(OrdersActivity.this, "绉佷笅璁㈠崟宸茬敓鎴�", Toast.LENGTH_SHORT).show();
+					Toast.makeText(OrdersActivity.this, "私下订单已生成", Toast.LENGTH_SHORT).show();
 					goSpedingBillActivity();
 				}else{
 					return;
@@ -166,10 +166,10 @@ public class OrdersActivity extends Activity {
 
 	}
 
-	//鏀粯椤甸潰
+	//在线交易
 	void goPayActivity(){
 		Intent itnt = new Intent(this,PayMoneyActivity.class);
-		itnt.putExtra("order",(Serializable)order);//淇敼鎶妉ist<>浼犺繃鍘�
+		itnt.putExtra("order",(Serializable)order);//把购物车list传过去
 		itnt.putExtra("ordersId", orderNumber);
 		itnt.putExtra("AllPay", AllPay);
 		itnt.putExtra("payType",payType_text);
@@ -177,10 +177,10 @@ public class OrdersActivity extends Activity {
 		finish();
 	}
 
-	//绉佷笅璁㈠崟椤甸潰
+	//私下订单
 	void goSpedingBillActivity(){
 		Intent itnt = new Intent(this,BillDetailActivity.class);
-		itnt.putExtra("order",(Serializable)order);//淇敼鎶妉ist<>浼犺繃鍘�
+		itnt.putExtra("order",(Serializable)order);//把购物车list传过去
 		itnt.putExtra("AllPay", AllPay);
 		itnt.putExtra("payType",payType_text);
 		startActivity(itnt);
@@ -191,20 +191,20 @@ public class OrdersActivity extends Activity {
 		bookUserAvatar = (AvatarView) findViewById(R.id.user_avatar);
 		bookUserName = (TextView) findViewById(R.id.user_name);
 		momey_all = (TextView) findViewById(R.id.momey_all);
-		btn_order = (TextView) findViewById(R.id.btn_order);//鎻愪氦璁㈠崟鎸夐挳
+		btn_order = (TextView) findViewById(R.id.btn_order);//提交订单按钮
 
 		payTypeSpinner = (Spinner) findViewById(R.id.spinner_pay_tag);
-		//娣诲姞涓嬫媺妗嗘暟鎹�
+		//下拉框
 		payType_list = new ArrayList<String>();
 		payType_list.add("在线交易");
 		payType_list.add("私下交易");
 
 
-		//閫傞厤鍣�
+		//适配器
 		payType_adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,payType_list);
-		//璁剧疆鏍峰紡
+		//设置样式
 		payType_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		//鍔犺浇閫傞厤鍣�
+		//设置适配器
 		payTypeSpinner.setAdapter(payType_adapter);
 
 		payTypeSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
@@ -212,43 +212,44 @@ public class OrdersActivity extends Activity {
 			@Override
 			public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 				ArrayAdapter<String> adapter = (ArrayAdapter<String>) parent.getAdapter();
-				//閫変腑涓嬫媺妗嗗悗璁剧疆绫诲瀷
+				//获取下拉框内容
 				payType_text= adapter.getItem(position);
-				payType_tag = position;//0涓哄湪绾夸氦鏄擄紝1涓虹涓嬩氦鏄�
+				payType_tag = position;//0为在线交易，1为私下交易
 				payTag = String.valueOf(payType_tag);
 
 			}
 
 			@Override
 			public void onNothingSelected(AdapterView<?> parent) {
-				payType_tag = 0;//榛樿涓�0
+				payType_tag = 0;//在线交易
 			}
 		});
 	}
 
 	//------------
 	void initBook(){
-		//鑾峰彇璁㈠崟
+		//单元格图书信息
 		bookAvatar = (BookAvatarView) bookList.findViewById(R.id.book_avatar);
-		bookTitle = (TextView) bookList.findViewById(R.id.book_title); // 鍥句功鏍囬
-		bookAuthor = (TextView) bookList.findViewById(R.id.book_author);//鍥句功浣滆��
-		bookSummary = (TextView) bookList.findViewById(R.id.text_about_book); //鍥句功绠�浠�
-		bookPrice = (TextView) bookList.findViewById(R.id.book_price);// 鍞环
-		books_buy_numb = (TextView) bookList.findViewById(R.id.books_numb);//璐拱鏁伴噺
+		bookTitle = (TextView) bookList.findViewById(R.id.book_title);
+		bookAuthor = (TextView) bookList.findViewById(R.id.book_author);
+		bookSummary = (TextView) bookList.findViewById(R.id.text_about_book);
+		bookPrice = (TextView) bookList.findViewById(R.id.book_price);
+		books_buy_numb = (TextView) bookList.findViewById(R.id.books_numb);
 
 	}
 
-	//閬嶅巻璁剧疆璁㈠崟淇℃伅
+	//设置父类信息
 	void setorders(Bookbus order){
-		//璁剧疆
+
 		bookUserAvatar.load(order.getId().getUser());
 		bookUserName.setText(order.getId().getUser().getName());
 		momey_all.setText(AllPay);
 
 	}
 
+	//设置单元格图书信息
 	void setBooks(Bookbus order){
-		//璁剧疆鍐呭
+
 		bookAvatar.load(Servelet.urlstring + order.getId().getBook().getBookavatar());
 		bookTitle.setText(order.getId().getBook().getTitle());
 
@@ -262,8 +263,8 @@ public class OrdersActivity extends Activity {
 		MultipartBody orderbody = new MultipartBody.Builder()
 				.addFormDataPart("orderId",orderNumber)
 				.addFormDataPart("payMoney", AllPay)
-				.addFormDataPart("payway", payTag)//0鎴�1
-				.addFormDataPart("finish", "0")//鏈粯娆�
+				.addFormDataPart("payway", payTag)//0 or 1
+				.addFormDataPart("finish", "0")//未付款
 				.build();
 
 		Request request = Servelet.requestuildApi("books/"+book_id+"/orders")
@@ -271,7 +272,7 @@ public class OrdersActivity extends Activity {
 				.build();
 
 		Servelet.getOkHttpClient().newCall(request).enqueue(new Callback() {
-			
+
 			@Override
 			public void onResponse(Call arg0, final Response arg1) throws IOException {
 
@@ -306,37 +307,37 @@ public class OrdersActivity extends Activity {
 
 
 			}
-			
+
 			@Override
 			public void onFailure(Call arg0, IOException arg1) {
-				
+
 				new AlertDialog.Builder(OrdersActivity.this)
-				.setTitle("鎻愪氦澶辫触")
-				.setMessage("鎻愪氦璁㈠崟澶辫触")
+				.setTitle("提交失败")
+				.setMessage("连接超时")
 				.setNegativeButton("ok", null)
 				.show();
 			}
 		});
-		
-		
-		
-	}
-			
 
-//		});
-//	}
+
+
+	}
+
+
+	//		});
+	//	}
 
 	//----------------------
 	void addBookList(){
-		//---------------涔︾睄甯冨眬
+		//--------------
 		bookList = (LinearLayout) inflater.inflate(R.layout.cell_order_list,null).findViewById(R.id.order_list_cell);
-		initBook();// 鍒濆鍖栦功绫嶅竷灞�
-		//娣诲姞鏂扮殑涔︾睄甯冨眬
+		initBook();//初始化
+		//添加单元格
 		add_bookList.addView(bookList);
 
 	}
 	//-----------
-	//鐩戝惉杩斿洖閿�
+	//返回时清空数据
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 

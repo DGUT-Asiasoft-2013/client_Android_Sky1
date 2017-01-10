@@ -444,10 +444,21 @@ public class BookListFragment extends Fragment implements OnClickListener {
 					.toString();
 
 			textDate.setText(list_createDate);
-			bookAvatar.load(Servelet.urlstring + book.getBookavatar());//涔︾殑灏侀潰
-			bookCellTitle.setText(book.getTitle());
+			bookAvatar.load(Servelet.urlstring + book.getBookavatar());
+			//截取书名
+			if(book.getTitle().length()>12){
+				bookCellTitle.setText(book.getTitle().subSequence(0, 12) + "...");
+			}else{
+				bookCellTitle.setText(book.getTitle());
+			}			
 			bookAuthor.setText(book.getAuthor());
-			bookSummary.setText(book.getSummary());
+			//截取简介
+			if(book.getSummary().length()>20){
+				bookSummary.setText(book.getSummary().subSequence(0, 20) + "......");
+			}else{
+				bookSummary.setText(book.getSummary());
+			}
+			
 			bookPrice.setText(book.getPrice()+"元");
 
 
