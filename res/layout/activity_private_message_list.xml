@@ -27,14 +27,14 @@
         android:id="@+id/chat_list_connecters"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:divider="@android:color/black"
+       
         android:descendantFocusability="blocksDescendants"
           android:footerDividersEnabled="true"
         android:paddingLeft="10dp"  
         android:paddingRight="10dp"  
         android:paddingTop="2dp"  
         android:paddingBottom="2dp"
-        android:dividerHeight="1px"
+       
          >
     </ListView>
 

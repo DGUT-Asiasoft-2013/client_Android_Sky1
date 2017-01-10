@@ -34,6 +34,7 @@
         android:layout_toRightOf="@id/chatlist_avatar_other"
         android:paddingBottom="18dip"
         android:paddingTop="13dip"
-        android:text="hewdfb" />
+        android:text="hewdfb"
+        android:background="@drawable/jmui_msg_receive_bg" />
 
 </RelativeLayout>
