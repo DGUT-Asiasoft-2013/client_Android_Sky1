@@ -28,5 +28,14 @@
     <string name="loading">正在加载...</string>
     <string name="load_succeed">加载成功</string>
     <string name="load_fail">加载失败</string>
+    
+    <!-- 订单OrdersActivity -->
+    <string name="content_succeed">连接成功</string>
+    <string name="ORDERS_SAVE_SUCCEED">订单保存成功</string>
+    <string name="OWN_ORDERS_MAKED">私下订单已生成</string>
+    <string name="ONLINE_PAY">在线交易</string>
+    <string name="PRIVATE_PAY">私下交易</string>
+    <string name="content_fail">提交失败</string>
+    <string name="content_overtime">连接超时</string>
 
 </resources>

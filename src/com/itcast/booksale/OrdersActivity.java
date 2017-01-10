@@ -46,7 +46,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 /**
- * 璁㈠崟璇︽儏椤甸潰
+ * 订单
  * @author Administrator
  *
  */
@@ -142,8 +142,8 @@ public class OrdersActivity extends Activity {
 		}
 
 		new AlertDialog.Builder(OrdersActivity.this)
-		.setTitle("连接成功")
-		.setMessage("订单保存成功")
+		.setTitle(getResources().getString(R.string.content_succeed))//连接成功
+		.setMessage(getResources().getString(R.string.ORDERS_SAVE_SUCCEED))//订单保存成功
 		.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 
 			@Override
@@ -152,7 +152,9 @@ public class OrdersActivity extends Activity {
 					goPayActivity();
 					//在线支付
 				}else if(payType_tag == 1){
-					Toast.makeText(OrdersActivity.this, "私下订单已生成", Toast.LENGTH_SHORT).show();
+					Toast.makeText(OrdersActivity.this,
+							getResources().getString(R.string.OWN_ORDERS_MAKED), 
+							Toast.LENGTH_SHORT).show();//私下订单已生成
 					goSpedingBillActivity();
 				}else{
 					return;
@@ -196,8 +198,8 @@ public class OrdersActivity extends Activity {
 		payTypeSpinner = (Spinner) findViewById(R.id.spinner_pay_tag);
 		//下拉框
 		payType_list = new ArrayList<String>();
-		payType_list.add("在线交易");
-		payType_list.add("私下交易");
+		payType_list.add(getResources().getString(R.string.ONLINE_PAY));//"在线交易"
+		payType_list.add(getResources().getString(R.string.PRIVATE_PAY));//"私下交易"
 
 
 		//适配器
@@ -312,8 +314,8 @@ public class OrdersActivity extends Activity {
 			public void onFailure(Call arg0, IOException arg1) {
 
 				new AlertDialog.Builder(OrdersActivity.this)
-				.setTitle("提交失败")
-				.setMessage("连接超时")
+				.setTitle(getResources().getString(R.string.content_fail))//"提交失败"
+				.setMessage(getResources().getString(R.string.content_overtime))//"连接超时"
 				.setNegativeButton("ok", null)
 				.show();
 			}
