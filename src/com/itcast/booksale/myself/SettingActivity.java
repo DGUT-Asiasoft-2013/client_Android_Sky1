@@ -39,15 +39,16 @@ public class SettingActivity extends Activity{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_setting);
 		
-		s_login=findViewById(R.id.line_btn_login);//µÇÂ¼°´Å¥
-		s_register=findViewById(R.id.line_btn_register);//×¢²á°´Å¥
-		s_back=findViewById(R.id.line_btn_back);//ÍË³öµÇÂ¼
-		s_password_recover=findViewById(R.id.line_btn_password_recover);//ÐÞ¸ÄÃÜÂë
+		s_login=findViewById(R.id.line_btn_login);//ï¿½ï¿½Â¼ï¿½ï¿½Å¥
+		s_register=findViewById(R.id.line_btn_register);//×¢ï¿½á°´Å¥
+		s_back=findViewById(R.id.line_btn_back);//ï¿½Ë³ï¿½ï¿½ï¿½Â¼
+		s_password_recover=findViewById(R.id.line_btn_password_recover);//ï¿½Þ¸ï¿½ï¿½ï¿½ï¿½ï¿½
 		
 		s_login.setOnClickListener(new View.OnClickListener() {//Îªï¿½ï¿½Â¼ï¿½ï¿½Å¥ï¿½ï¿½Óµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â¼ï¿½
 			
 			@Override
 			public void onClick(View v) {
+				LoginActivity.b=false;
 				Intent intent=new Intent(SettingActivity.this, LoginActivity.class);
 				startActivity(intent);
 			}
@@ -79,12 +80,12 @@ public class SettingActivity extends Activity{
 		});
 	}
 
-	protected void goPasswordRecover() {//ÐÞ¸ÄÃÜÂë
+	protected void goPasswordRecover() {//ï¿½Þ¸ï¿½ï¿½ï¿½ï¿½ï¿½
 		Intent intent =new Intent(SettingActivity.this, PasswordRecoverActivity.class);
 		startActivity(intent);
 	}
 
-	protected void goback() {//ÍÆ³öµÇÂ¼ÒÔ¼°È¥µôsession		
+	protected void goback() {//ï¿½Æ³ï¿½ï¿½ï¿½Â¼ï¿½Ô¼ï¿½È¥ï¿½ï¿½session		
 		Request request=Servelet.requestuildApi("exit")
 				.build();
 		
@@ -96,7 +97,7 @@ public class SettingActivity extends Activity{
 					
 					@Override
 					public void run() {
-						Toast.makeText(SettingActivity.this, "ÍË³öµÇÂ¼", Toast.LENGTH_SHORT).show();
+						Toast.makeText(SettingActivity.this, "ï¿½Ë³ï¿½ï¿½ï¿½Â¼", Toast.LENGTH_SHORT).show();
 						Intent intent=new Intent(SettingActivity.this, HelloWorldActivity.class);
 						startActivity(intent);
 						finish();
@@ -110,7 +111,7 @@ public class SettingActivity extends Activity{
 					
 					@Override
 					public void run() {
-						Toast.makeText(SettingActivity.this, "ÍøÂç´íÎó", Toast.LENGTH_SHORT).show();
+						Toast.makeText(SettingActivity.this, "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½", Toast.LENGTH_SHORT).show();
 					}
 				});
 			}

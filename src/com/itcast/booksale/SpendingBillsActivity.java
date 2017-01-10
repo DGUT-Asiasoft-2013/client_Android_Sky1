@@ -33,11 +33,15 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.itcast.booksale.R;
+import com.itcast.booksale.R.id;
+import com.itcast.booksale.R.layout;
 import com.itcast.booksale.entity.*;
 
 public class SpendingBillsActivity extends Activity {
@@ -77,8 +81,9 @@ public class SpendingBillsActivity extends Activity {
 		billsList.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+				Log.d("orderData.id12111111111111", data.get(position).getOrderId());
 				goToOrderList(position);// 跳转到订单详情
+				
 			}
 		});
 
@@ -230,6 +235,11 @@ public class SpendingBillsActivity extends Activity {
 						@Override
 						public void run() {
 							SpendingBillsActivity.this.data = pageData.getContent();
+//							for(int i = 0;i<data.size()-1;i++){
+//								if(!data.get(i).equals(data.get(i+1))){
+//									order.add(data.get(i));
+//								}
+//							}
 							SpendingBillsActivity.this.page = pageData.getNumber();
 
 							adapter.notifyDataSetChanged();
@@ -277,9 +287,10 @@ public class SpendingBillsActivity extends Activity {
 	}
 
 	public void goToOrderList(int position) {
+		
 		OrderLists orderData = data.get(position);
 		Intent itnt  = new Intent(this , BillDetailActivity.class);
-		itnt.putExtra("order", orderData);
+		itnt.putExtra("order", (Serializable)data);
 		startActivity(itnt);
 
 	}
@@ -291,15 +302,17 @@ public class SpendingBillsActivity extends Activity {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				OrderLists orderData = data.get(postition);
-				MultipartBody body = new MultipartBody.Builder().addFormDataPart("ha", "haha").build();
-				Request request = Servelet.requestuildApi("deleteOrder/"+orderData.getOrderId()).post(body).build();
+
+				MultipartBody body = new MultipartBody.Builder()
+						.addFormDataPart("orderId",orderData.getId().toString()).build();
+				Request request = Servelet.requestuildApi("deleteOrder").post(body).build();
 				Servelet.getOkHttpClient().newCall(request).enqueue(new Callback() {
 					
 					@Override
 					public void onResponse(Call arg0, Response arg1) throws IOException {
 						
 						final String response  = arg1.body().string();
-						Log.d("rreii", response);
+						Log.d("re---------------", response);
 						runOnUiThread(new Runnable() {
 							
 							@Override

@@ -1,0 +1,27 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#fff"
+    android:orientation="vertical"
+    tools:context="com.example.payui.MainActivity" >
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:gravity="center"
+        android:text="设置支付密码" />
+
+    <TextView
+        android:id="@+id/payEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:layout_margin="20dp"
+        android:layout_gravity="center"
+        android:gravity="center_vertical"
+        android:background="@drawable/edittext_bg_nor"
+        android:hint="请设置支付密码"/>
+    
+    
+</LinearLayout>

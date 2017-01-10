@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="fill_parent"
+    android:focusableInTouchMode="true"
     android:orientation="vertical" >
 
     <LinearLayout
@@ -57,7 +58,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="15dp"
                     android:gravity="center"
-                    android:text="昵称" />
+                    android:text="昵称"
+                    android:textSize="10sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -109,7 +111,7 @@
                     android:drawableLeft="@drawable/subscription"
                     android:text="订阅"
                     android:textColor="@android:color/white"
-                    android:textSize="15sp" />
+                    android:textSize="12sp" />
 
                 <Button
                     android:id="@+id/btn_massage"
@@ -121,7 +123,7 @@
                     android:paddingTop="5dp"
                     android:text="私信"
                     android:textColor="@android:color/white"
-                    android:textSize="15sp" />
+                    android:textSize="12sp" />
             </LinearLayout>
         </LinearLayout>
 
@@ -136,7 +138,8 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
-            android:text="内容简介" />
+            android:text="内容简介"
+            android:textSize="15sp" />
 
         <View
             android:layout_width="match_parent"
@@ -151,13 +154,26 @@
         </ListView>
     </LinearLayout>
 
-    <Button
-        android:id="@+id/btn_comment"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_alignParentBottom="true"
-        android:background="@drawable/comment_button_fillet"
-        android:text="评论"
-        android:textSize="15sp" />
+        android:orientation="horizontal" >
+
+        <EditText
+            android:id="@+id/text_comment"
+            android:layout_width="0dp"
+            android:layout_weight="0.5"
+            android:layout_height="50dp"
+            android:background="@android:drawable/edit_text"
+            android:hint="想评论些什么..." />
+
+        <Button
+            android:id="@+id/btn_comment"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:padding="1dp"
+            android:background="@drawable/send_comment3" />
+    </LinearLayout>
 
 </RelativeLayout>

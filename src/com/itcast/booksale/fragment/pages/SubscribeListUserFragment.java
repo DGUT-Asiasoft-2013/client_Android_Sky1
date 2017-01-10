@@ -47,8 +47,6 @@ public class SubscribeListUserFragment extends Fragment {
 	User user;
 	View view;
 	ListView listView;
-	View btnLoadMore;
-	TextView textLoadMore;
 	String text = "卖家有更新是否提醒我";
 	List<Subscribe> data;
 	Boolean b;
@@ -59,11 +57,8 @@ public class SubscribeListUserFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		if (view==null){
 			view = inflater.inflate(R.layout.fragment_page_subscribe_user_list, null);
-			btnLoadMore = inflater.inflate(R.layout.widget_load_more_button, null);
-			textLoadMore = (TextView) btnLoadMore.findViewById(R.id.text);
 
 			listView = (ListView) view.findViewById(R.id.list_subscribe_user);
-			listView.addFooterView(btnLoadMore);
 			listView.setAdapter(listAdapter);
 
 			listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -78,9 +73,8 @@ public class SubscribeListUserFragment extends Fragment {
 
 				@Override
 				public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
+					final User saler=data.get(position).getId().getSaler();
 					getActivity().runOnUiThread(new Runnable() {
-
-
 						public void run() {
 							new AlertDialog.Builder(getActivity())
 							.setTitle(text)
@@ -88,8 +82,6 @@ public class SubscribeListUserFragment extends Fragment {
 								@Override
 								public void onClick(DialogInterface dialog, int which) {
 									b = false;
-									//									gx.setText("不提醒更新");
-									User saler=data.get(position).getId().getSaler();
 									changeMode(saler);
 									reload();
 								}
@@ -99,8 +91,6 @@ public class SubscribeListUserFragment extends Fragment {
 								@Override
 								public void onClick(DialogInterface dialog, int which) {
 									b = true;
-									//										gx.setText("提醒更新");
-									User saler=data.get(position).getId().getSaler();
 									changeMode(saler);
 									reload();
 								}
@@ -111,15 +101,6 @@ public class SubscribeListUserFragment extends Fragment {
 					return true;
 				}
 			});
-
-			btnLoadMore.setOnClickListener(new View.OnClickListener() {
-
-				@Override
-				public void onClick(View v) {
-					loadmore();
-				}
-			});
-
 		}
 
 		return view;
@@ -196,7 +177,7 @@ public class SubscribeListUserFragment extends Fragment {
 
 	void onItemClicked(int position){
 
-		User saler = data.get(position).getId().getSaler();
+		final User saler = data.get(position).getId().getSaler();
 		OkHttpClient client= Servelet.getOkHttpClient();
 		Request request =Servelet.requestuildApi("/subscribe/"+user.getId()+"/"+saler.getId())
 				.method("get", null)
@@ -204,19 +185,29 @@ public class SubscribeListUserFragment extends Fragment {
 		client.newCall(request).enqueue(new Callback() {
 			@Override
 			public void onResponse(Call arg0, Response arg1) throws IOException {
-
+				getActivity().runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						Intent itnt = new Intent(getActivity(), SubscribeListBookActivity.class);
+						itnt.putExtra("data", saler);
+						startActivity(itnt);
+					}
+				});
 			}
 
 			@Override
 			public void onFailure(Call arg0, IOException arg1) {
+				getActivity().runOnUiThread(new Runnable() {
 
+					@Override
+					public void run() {
+						new AlertDialog.Builder(getActivity()).setMessage("请求失败").show();
+					}
+				});
 			}
 		});
 
-		Intent itnt = new Intent(getActivity(), SubscribeListBookActivity.class);
-		itnt.putExtra("data", saler);
 
-		startActivity(itnt);
 	}
 
 	protected void setCount(final TextView gx2, Integer user_id, Integer saler_id) {
@@ -275,8 +266,10 @@ public class SubscribeListUserFragment extends Fragment {
 
 			@Override
 			public void onResponse(final Call arg0, Response arg1) throws IOException {
+				String body = arg1.body().string();
 				try{
-					user = new ObjectMapper().readValue(arg1.body().bytes(), User.class);
+					
+					user = new ObjectMapper().readValue(body, User.class);
 					getActivity().runOnUiThread(new Runnable() {
 						@Override
 						public void run() {
@@ -307,8 +300,27 @@ public class SubscribeListUserFragment extends Fragment {
 			}
 		});
 	}
-
+	Thread t;
 	void reload(){
+		if(t==null){
+			t = new Thread() {
+				@Override
+				public void run() {
+					while(true){
+						reload();
+						try {
+							Thread.sleep(5000);
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+				}
+			};
+			t.start();
+		}
+
+
 		MultipartBody body = new MultipartBody.Builder()
 				.addFormDataPart("user_id", user.getId().toString())
 				.build();
@@ -329,13 +341,13 @@ public class SubscribeListUserFragment extends Fragment {
 						}
 					});
 				}catch(final Exception e){
-					getActivity().runOnUiThread(new Runnable() {
-						public void run() {
-							new AlertDialog.Builder(getActivity())
-							.setMessage(e.getMessage())
-							.show();
-						}
-					});
+//					getActivity().runOnUiThread(new Runnable() {
+//						public void run() {
+//							new AlertDialog.Builder(getActivity())
+//							.setMessage(e.getMessage())
+//							.show();
+//						}
+//					});
 				}
 			}
 
@@ -352,52 +364,4 @@ public class SubscribeListUserFragment extends Fragment {
 		});
 	}
 
-	void loadmore(){
-		btnLoadMore.setEnabled(false);
-		textLoadMore.setText("正在加载...");
-
-		Request request = Servelet.requestuildApi("subscribe/"+(page+1)).get().build();
-		Servelet.getOkHttpClient().newCall(request).enqueue(new Callback() {
-			@Override
-			public void onResponse(Call arg0, Response arg1) throws IOException {
-				getActivity().runOnUiThread(new Runnable() {
-					public void run() {
-						btnLoadMore.setEnabled(true);
-						textLoadMore.setText("加载更多");
-					}
-				});
-
-				try{
-					final Page<User> feeds = new ObjectMapper().readValue(arg1.body().string(), new TypeReference<Page<User>>() {});
-					if(feeds.getNumber()>page){
-
-						getActivity().runOnUiThread(new Runnable() {
-							public void run() {
-								if(data==null){
-									//									data = feeds.getContent();
-								}else{
-									//									data.addAll(feeds.getContent());
-								}
-								page = feeds.getNumber();
-
-								listAdapter.notifyDataSetChanged();
-							}
-						});
-					}
-				}catch(Exception ex){
-					ex.printStackTrace();
-				}
-			}
-
-			@Override
-			public void onFailure(Call arg0, IOException arg1) {
-				getActivity().runOnUiThread(new Runnable() {
-					public void run() {
-						btnLoadMore.setEnabled(true);
-						textLoadMore.setText("加载更多");
-					}
-				});
-			}
-		});
-	}
 }

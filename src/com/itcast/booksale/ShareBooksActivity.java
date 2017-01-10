@@ -21,6 +21,7 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.MediaType;
@@ -130,6 +131,15 @@ public class ShareBooksActivity extends Activity{
 		String ISBN = editISBN.getText().toString();
 		String booknumber=editBookNumber.getText().toString();
 		  
+		if(bookTitle.length()==0){
+			Toast.makeText(ShareBooksActivity.this, "图书标题不能为空", Toast.LENGTH_SHORT).show();
+			return;
+		}else if(ISBN.length() == 0){
+			Toast.makeText(ShareBooksActivity.this, "ISBN不能为空", Toast.LENGTH_SHORT).show();
+			return;
+		}else if(booknumber.length() == 0){
+			booknumber = "1";//默认为1本
+		}
 		
 		//下面的addFormDataPart("title", bookTitle)左边的title应该跟服务器的一样，记住
 		MultipartBody.Builder bookBody = new MultipartBody.Builder()

@@ -70,7 +70,7 @@ public class BookListFragment extends Fragment implements OnClickListener {
 	//	View btn_loadmore;//可以不要了
 	//	TextView textLoadMore;
 	int loadmoreSelect;//用于区分各个书单列表的加载更多
-	String bookTag_text;
+	String bookTag_text;//类型
 
 	private LinearLayout layout_book_all;
 	private LinearLayout all_book_layout;
@@ -109,6 +109,7 @@ public class BookListFragment extends Fragment implements OnClickListener {
 			headerView = inflater.inflate(R.layout.headerview, null);
 			keyword = (EditText) booksView.findViewById(R.id.search_keyword);
 			keywords =keyword.getText().toString();
+			bookTag_text = "全部";//default默认为全部
 			
 			//book classification
 			all_book_layout = (LinearLayout) headerView.findViewById(R.id.all_book_layout);
@@ -178,7 +179,7 @@ public class BookListFragment extends Fragment implements OnClickListener {
 
 				@Override
 				public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-					goBookIntroduction(position);// 璺宠浆鍒颁功绫嶇畝浠�
+					goBookIntroduction(position);
 				}
 
 			});
@@ -249,35 +250,45 @@ public class BookListFragment extends Fragment implements OnClickListener {
 
 	
 	public void onClick(View v) {
+		keywords = keyword.getText().toString();
 		switch (v.getId()) {
 		case R.id.all_book_layout:
+			bookTag_text = "全部";
 			allBookLayoutClick();
 			break;
+			
 		case R.id.textbook_layout:
+			bookTag_text = "教科书";
 			TextBooklayoutClick();
 			break;
 			
 		case R.id.literature_layouts:
+			bookTag_text = "文学";
 			LiteraturelayoutClick();
 			break;
 			
 		case R.id.story_book_layout:
+			bookTag_text = "童书";
 			StoryBookLayoutClick();
 			break;
 			
 		case R.id.art_layout:
+			bookTag_text = "艺术";
 			ArtLayoutClick();
 			break;
 			
 		case R.id.science_layout:
+			bookTag_text = "科技";
 			ScienceLayoutClick();
 			break;
 			
 		case R.id.life_layout:
+			bookTag_text = "生活";
 			LifeLayoutClick();
 			break;
 			
 		case R.id.computer_layout:
+			bookTag_text = "计算机";
 			ComputerLayoutClick();
 			break;
 
@@ -480,12 +491,13 @@ public class BookListFragment extends Fragment implements OnClickListener {
 					getActivity().runOnUiThread(new Runnable() {
 						public void run() {
 
-							new AlertDialog
+							/*new AlertDialog
 							.Builder(getActivity())
 							.setTitle("success to add bookbus")
 							.setMessage(string)
 							.setPositiveButton("ok", null)
-							.show();
+							.show();*/
+							Toast.makeText(getActivity(), "success to add bookbus", Toast.LENGTH_SHORT).show();
 
 						}
 					});
@@ -524,7 +536,7 @@ public class BookListFragment extends Fragment implements OnClickListener {
 
 	// 转到书本详情页面
 	void goBookIntroduction(int position) {
-		Book book = booksData.get(position);
+		Book book = booksData.get(position-1);
 
 		Intent itnt = new Intent(getActivity(), BooksContentActivity.class);
 		itnt.putExtra("data", book);  // 传书的内容给BooksContentActivity
@@ -542,7 +554,6 @@ public class BookListFragment extends Fragment implements OnClickListener {
 			@Override
 			public void onClick(View v) {
 				searchByKeyword();
-
 			}
 		});
 
@@ -656,7 +667,7 @@ public class BookListFragment extends Fragment implements OnClickListener {
 			public void onFailure(Call arg0, final IOException e) {
 				getActivity().runOnUiThread(new Runnable() {
 					public void run() {
-						new AlertDialog.Builder(getActivity()).setTitle("reload onFailure").setMessage(e.getMessage())
+						new AlertDialog.Builder(getActivity()).setTitle("reload onFailure11").setMessage(e.getMessage())
 								.show();
 					}
 				});

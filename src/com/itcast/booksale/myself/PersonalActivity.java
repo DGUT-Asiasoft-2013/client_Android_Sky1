@@ -2,7 +2,10 @@ package com.itcast.booksale.myself;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.security.PublicKey;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import com.itcast.booksale.LoginActivity;
 import com.itcast.booksale.R;
@@ -13,8 +16,10 @@ import com.itcast.booksale.fragment.widgets.AvatarView;
 import com.itcast.booksale.inputcells.PictureInputCellFragment;
 import com.itcast.booksale.servelet.Servelet;
 
+import android.R.string;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -25,6 +30,8 @@ import android.text.StaticLayout;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.inputmethod.EditorInfo;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import okhttp3.Call;
@@ -43,6 +50,7 @@ import okhttp3.Response;
 public class PersonalActivity extends Activity{
 	static Activity instance;//销毁Activity的一个静态亮
 
+	EditText edit;
 	private static final int REQUESTCODE_CAMERA = 0;
 	private static final int REQUESTCODE_ALBUM = 0;
 	AvatarView avatar;//头锟斤拷
@@ -94,8 +102,9 @@ public class PersonalActivity extends Activity{
 
 			@Override
 			public void onClick(View v) {
-				Intent intent =new Intent(PersonalActivity.this, ChangeNameActivity.class);
-				startActivity(intent);
+				goChangeName();
+				/*Intent intent =new Intent(PersonalActivity.this, ChangeNameActivity.class);
+				startActivity(intent);*/
 			}
 		});
 
@@ -103,8 +112,9 @@ public class PersonalActivity extends Activity{
 
 			@Override
 			public void onClick(View v) {
-				Intent intent=new Intent(PersonalActivity.this, ChangeEmailActivity.class);
-				startActivity(intent);
+				goChangeEmail();
+				/*Intent intent=new Intent(PersonalActivity.this, ChangeEmailActivity.class);
+				startActivity(intent);*/
 			}
 		});
 
@@ -112,8 +122,9 @@ public class PersonalActivity extends Activity{
 
 			@Override
 			public void onClick(View v) {
-				Intent intent=new Intent(PersonalActivity.this, ChangePhoneActivity.class);
-				startActivity(intent);
+				goChangePhone();
+				/*Intent intent=new Intent(PersonalActivity.this, ChangePhoneActivity.class);
+				startActivity(intent);*/
 			}
 		});
 
@@ -121,8 +132,9 @@ public class PersonalActivity extends Activity{
 
 			@Override
 			public void onClick(View v) {
-				Intent intent =new Intent(PersonalActivity.this, ChangeQqActivity.class);
-				startActivity(intent);
+				goChangeQq();
+				/*Intent intent =new Intent(PersonalActivity.this, ChangeQqActivity.class);
+				startActivity(intent);*/
 			}
 		});
 
@@ -134,6 +146,580 @@ public class PersonalActivity extends Activity{
 			}
 		});
 	}
+
+	 public static final String REGEX_QQ = "^[1-9][0-9]{3,11}";
+	 public static boolean isQQ(String QQ) {
+	        return Pattern.matches(REGEX_QQ, QQ);
+	    }
+
+	protected void goChangeQq() {
+		// TODO Auto-generated method stub
+		final EditText et=new EditText(PersonalActivity.this);
+		et.setHint("请输入QQ");
+		
+		AlertDialog.Builder inputDialog=new AlertDialog.Builder(PersonalActivity.this);
+		inputDialog.setTitle("修改QQ").setView(et);
+
+		inputDialog.setPositiveButton("保存", new DialogInterface.OnClickListener() {
+
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				// TODO Auto-generated method stub
+				String qq=et.getText().toString();
+
+				if(!isQQ(qq)){
+					try {
+						Field field = dialog.getClass()
+								.getSuperclass()
+								.getDeclaredField("mShowing");
+						field.setAccessible(true);
+						field.set(dialog, false); // 此处设为true则可以关闭
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+					Toast.makeText(PersonalActivity.this, "请输入正确的QQ号码", Toast.LENGTH_SHORT)
+					.show();
+				}else{
+					try {
+						Field field = dialog.getClass()
+								.getSuperclass()
+								.getDeclaredField("mShowing");
+						field.setAccessible(true);
+						field.set(dialog, true); // 此处设为true则可以关闭
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+					goChangeQq2(qq);
+					dialog.dismiss();
+				}
+
+			}
+		}).setNegativeButton("取消", 
+				new DialogInterface.OnClickListener() {
+			 
+            @Override
+           public void onClick(DialogInterface dialog,
+               int which) {
+            // TODO Auto-generated method stub
+                try {
+                    Field field = dialog.getClass()
+                            .getSuperclass()
+                           .getDeclaredField("mShowing");
+                    field.setAccessible(true);
+                   field.set(dialog, true);
+               } catch (Exception e) {
+                e.printStackTrace();
+               }
+           }
+        }).show();
+	}
+
+
+
+	protected void goChangeQq2(String qq) {
+		// TODO Auto-generated method stub
+		MultipartBody body=new MultipartBody.Builder()
+				.addFormDataPart("qq", qq)
+				.build();
+		
+		Request request=Servelet.requestuildApi("change/qq")
+						.post(body)
+						.build();
+		
+		Servelet.getOkHttpClient().newCall(request).enqueue(new Callback() {
+			
+			@Override
+			public void onResponse(final Call arg0, Response arg1) throws IOException {
+				byte[] ar=arg1.body().bytes();
+				
+				try {
+					final Boolean succeed=new ObjectMapper().readValue(ar, Boolean.class);
+					
+					PersonalActivity.this.runOnUiThread(new Runnable() {
+						
+						@Override
+						public void run() {
+							if(succeed){
+								PersonalActivity.this.onResponseQq(arg0,"修改QQ成功");
+							}else {
+								PersonalActivity.this.onFailureQq(arg0,new Exception("修改失败"));
+							}
+						}
+					});
+				} catch (final Exception e) {
+					PersonalActivity.this.runOnUiThread(new Runnable() {
+						
+						@Override
+						public void run() {
+							PersonalActivity.this.onFailureQq(arg0,e);
+						}
+					});
+				}
+				
+			}
+			
+			@Override
+			public void onFailure(Call arg0, final IOException arg1) {
+				Toast.makeText(PersonalActivity.this, arg1.getLocalizedMessage(), Toast.LENGTH_SHORT)
+				.show();
+				
+				PersonalActivity.this.runOnUiThread(new Runnable() {
+					
+					@Override
+					public void run() {
+						new AlertDialog.Builder(PersonalActivity.this)
+						.setTitle("失败")
+						.setMessage(arg1.getLocalizedMessage())
+						.show();
+					}
+				});
+			}
+		});
+	}
+	
+	void onFailureQq(Call arg0,Exception exception){
+		Toast.makeText(PersonalActivity.this, exception.getLocalizedMessage(), Toast.LENGTH_SHORT)
+		.show();
+	}
+	
+	void onResponseQq(Call arg0,String string){
+		Toast.makeText(PersonalActivity.this, "成功修改QQ", Toast.LENGTH_SHORT)
+		.show();
+		
+		onResume();
+	}
+
+
+	public static boolean isMobileNO(String mobiles){//鍒ゆ柇鏄惁涓虹湡鐨勬墜鏈哄彿鐮�
+		Pattern p=Pattern.compile("^((13[0-9])|(14[5|7])|(15[0-9])|(17[0-9])|(18[0-9]))\\d{8}$");
+		Matcher m=p.matcher(mobiles);
+		return m.matches();
+	}
+
+	protected void goChangePhone() {
+		// TODO Auto-generated method stub
+		final EditText et=new EditText(PersonalActivity.this);
+		et.setHint("请输入手机号码");
+		
+		AlertDialog.Builder inputDialog=new AlertDialog.Builder(PersonalActivity.this);
+		inputDialog.setTitle("修改手机号码").setView(et);
+
+		inputDialog.setPositiveButton("保存", new DialogInterface.OnClickListener() {
+
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				// TODO Auto-generated method stub
+				String phone=et.getText().toString();
+
+				if(!isMobileNO(phone)){
+					try {
+						Field field = dialog.getClass()
+								.getSuperclass()
+								.getDeclaredField("mShowing");
+						field.setAccessible(true);
+						field.set(dialog, false); // 此处设为true则可以关闭
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+					Toast.makeText(PersonalActivity.this, "请输入正确的手机号码", Toast.LENGTH_SHORT)
+					.show();
+				}else{
+					try {
+						Field field = dialog.getClass()
+								.getSuperclass()
+								.getDeclaredField("mShowing");
+						field.setAccessible(true);
+						field.set(dialog, true); // 此处设为true则可以关闭
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+					goChangePhone2(phone);
+					dialog.dismiss();
+				}
+
+			}
+		}).setNegativeButton("取消", 
+				new DialogInterface.OnClickListener() {
+			 
+            @Override
+           public void onClick(DialogInterface dialog,
+               int which) {
+            // TODO Auto-generated method stub
+                try {
+                    Field field = dialog.getClass()
+                            .getSuperclass()
+                           .getDeclaredField("mShowing");
+                    field.setAccessible(true);
+                   field.set(dialog, true);
+               } catch (Exception e) {
+                e.printStackTrace();
+               }
+           }
+        }).show();
+	}
+	
+
+
+
+	protected void goChangePhone2(String phone) {
+		// TODO Auto-generated method stub
+		MultipartBody body=new MultipartBody.Builder()
+				.addFormDataPart("phone", phone)
+				.build();
+		
+		Request request=Servelet.requestuildApi("change/phone")
+				.post(body)
+				.build();
+		
+		Servelet.getOkHttpClient().newCall(request).enqueue(new Callback() {
+			
+			@Override
+			public void onResponse(final Call arg0, Response arg1) throws IOException {
+				// TODO Auto-generated method stub
+				byte[] ar=arg1.body().bytes();
+				
+				try {
+					final Boolean succeed=new ObjectMapper().readValue(ar, Boolean.class);
+					
+					PersonalActivity.this.runOnUiThread(new Runnable() {
+						
+						@Override
+						public void run() {
+							if(succeed){
+								PersonalActivity.this.onResponsePhone(arg0,"修改电话号码成功");
+							}else {
+								PersonalActivity.this.onFailurePhone(arg0,new Exception("修改失败"));
+							}
+							
+						}
+					});
+				} catch (final Exception e) {
+					PersonalActivity.this.runOnUiThread(new Runnable() {
+						
+						@Override
+						public void run() {
+							PersonalActivity.this.onFailurePhone(arg0,e);
+							
+						}
+					});
+				}
+			}
+			
+			@Override
+			public void onFailure(Call arg0, final IOException arg1) {
+				Toast.makeText(PersonalActivity.this, arg1.getLocalizedMessage(), Toast.LENGTH_SHORT)
+				.show();
+				
+				PersonalActivity.this.runOnUiThread(new Runnable() {
+					
+					@Override
+					public void run() {
+						new AlertDialog.Builder(PersonalActivity.this)
+						.setTitle("失败")
+						.setMessage(arg1.getLocalizedMessage())
+						.show();
+					}
+				});
+			}
+		});
+	}
+
+	void onFailurePhone(Call arg0,Exception exception){
+		Toast.makeText(PersonalActivity.this , exception.getLocalizedMessage(), Toast.LENGTH_SHORT)
+		.show();
+	}
+
+	void onResponsePhone(Call arg0,String string){
+		Toast.makeText(PersonalActivity.this, "修改电话号码成功", Toast.LENGTH_SHORT)
+		.show();
+		
+		onResume();
+	}
+
+	public static final String REGEX_EMAIL = "^([a-z0-9A-Z]+[-|\\.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}$";
+	 public static boolean isEmail(String email) {
+	        return Pattern.matches(REGEX_EMAIL, email);
+	    }
+
+	protected void goChangeEmail() {
+		// TODO Auto-generated method stub
+		final EditText et=new EditText(PersonalActivity.this);
+		et.setHint("请输入邮箱");
+		
+		AlertDialog.Builder inputDialog=new AlertDialog.Builder(PersonalActivity.this);
+		inputDialog.setTitle("修改邮箱").setView(et);
+
+		inputDialog.setPositiveButton("保存", new DialogInterface.OnClickListener() {
+
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				// TODO Auto-generated method stub
+				String email=et.getText().toString();
+
+				if(!isEmail(email)){
+					try {
+						Field field = dialog.getClass()
+								.getSuperclass()
+								.getDeclaredField("mShowing");
+						field.setAccessible(true);
+						field.set(dialog, false); // 此处设为true则可以关闭
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+					Toast.makeText(PersonalActivity.this, "请输入正确的邮箱地址", Toast.LENGTH_SHORT)
+					.show();
+				}else{
+					try {
+						Field field = dialog.getClass()
+								.getSuperclass()
+								.getDeclaredField("mShowing");
+						field.setAccessible(true);
+						field.set(dialog, true); // 此处设为true则可以关闭
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+					goChangeEmail2(email);
+					dialog.dismiss();
+				}
+
+			}
+		}).setNegativeButton("取消", 
+				new DialogInterface.OnClickListener() {
+			 
+            @Override
+           public void onClick(DialogInterface dialog,
+               int which) {
+            // TODO Auto-generated method stub
+                try {
+                    Field field = dialog.getClass()
+                            .getSuperclass()
+                           .getDeclaredField("mShowing");
+                    field.setAccessible(true);
+                   field.set(dialog, true);
+               } catch (Exception e) {
+                e.printStackTrace();
+               }
+           }
+        }).show();
+	}
+	
+
+	protected void goChangeEmail2(String email) {
+		// TODO Auto-generated method stub
+		MultipartBody body=new MultipartBody.Builder()
+				.addFormDataPart("email", email)
+				.build();
+		
+		Request request=Servelet.requestuildApi("change/email")
+						.post(body)
+						.build();
+		
+		Servelet.getOkHttpClient().newCall(request).enqueue(new Callback() {
+			
+			@Override
+			public void onResponse(final Call arg0, Response arg1) throws IOException {
+				// TODO Auto-generated method stub
+				byte[] ar=arg1.body().bytes();
+				
+				try{
+					final Boolean succeed=new ObjectMapper().readValue(ar, Boolean.class);
+					
+					PersonalActivity.this.runOnUiThread(new Runnable() {
+						
+						@Override
+						public void run() {
+							if(succeed){
+								PersonalActivity.this.onResponseEmail(arg0,"修改成功");
+								
+							}else {
+								PersonalActivity.this.onFailureEmail(arg0,new Exception("修改失败"));
+							}
+						}
+					});
+				}catch (final Exception e) {
+					PersonalActivity.this.runOnUiThread(new Runnable() {
+						
+						@Override
+						public void run() {
+							PersonalActivity.this.onFailureEmail(arg0,e);
+						}
+					});
+				}
+			}
+			
+			@Override
+			public void onFailure(Call arg0, final IOException arg1) {
+				Toast.makeText(PersonalActivity.this, arg1.getLocalizedMessage(), Toast.LENGTH_SHORT)
+				.show();
+				
+				PersonalActivity.this.runOnUiThread(new Runnable() {
+					
+					@Override
+					public void run() {
+						new AlertDialog.Builder(PersonalActivity.this)
+						.setTitle("失败")
+						.setMessage(arg1.getLocalizedMessage())
+						.show();
+					}
+				});
+			}
+		});
+	}
+	
+	void onFailureEmail(Call arg0,Exception exception){
+		Toast.makeText(PersonalActivity.this, exception.getLocalizedMessage(), Toast.LENGTH_SHORT)
+		.show();
+	}
+	
+	void onResponseEmail(Call arg0,String string){
+		Toast.makeText(PersonalActivity.this, "修改邮箱成功", Toast.LENGTH_SHORT)
+		.show();
+
+		onResume();
+	}
+
+
+
+	protected void goChangeName() {
+		// TODO Auto-generated method stub
+		final EditText et=new EditText(PersonalActivity.this);
+		et.setHint("请输入昵称");
+
+		AlertDialog.Builder inputDialog=new AlertDialog.Builder(PersonalActivity.this);
+		inputDialog.setTitle("修改昵称").setView(et);
+
+		inputDialog.setPositiveButton("保存", new DialogInterface.OnClickListener() {
+
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				// TODO Auto-generated method stub
+				String name=et.getText().toString();
+
+				if(TextUtils.isEmpty(name)){
+					try {
+						Field field = dialog.getClass()
+								.getSuperclass()
+								.getDeclaredField("mShowing");
+						field.setAccessible(true);
+						field.set(dialog, false); // 此处设为true则可以关闭
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+					Toast.makeText(PersonalActivity.this, "昵称不能为空", Toast.LENGTH_SHORT)
+					.show();
+				}else{
+					try {
+						Field field = dialog.getClass()
+								.getSuperclass()
+								.getDeclaredField("mShowing");
+						field.setAccessible(true);
+						field.set(dialog, true); // 此处设为true则可以关闭
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+					goChangeName2(name);
+					dialog.dismiss();
+				}
+
+			}
+		}).setNegativeButton("取消",  
+				new DialogInterface.OnClickListener() {
+			 
+			                              @Override
+			                             public void onClick(DialogInterface dialog,
+		                                     int which) {
+		                                  // TODO Auto-generated method stub
+			                                  try {
+			                                      Field field = dialog.getClass()
+			                                              .getSuperclass()
+			                                             .getDeclaredField("mShowing");
+			                                      field.setAccessible(true);
+			                                     field.set(dialog, true);
+			                                 } catch (Exception e) {
+		                                      e.printStackTrace();
+			                                 }
+			                             }
+			                          }).show();
+	}
+
+
+	protected void goChangeName2(String name) {
+		// TODO Auto-generated method stub
+		MultipartBody body=new MultipartBody.Builder()
+				.addFormDataPart("name", name)
+				.build();
+
+		Request request=Servelet.requestuildApi("change/name")
+				.post(body)
+				.build();
+
+		Servelet.getOkHttpClient().newCall(request).enqueue(new Callback() {
+
+			@Override
+			public void onResponse(final Call arg0, Response arg1) throws IOException {
+				// TODO Auto-generated method stub
+				byte[] ar=arg1.body().bytes();
+
+				try {
+					final Boolean succeed=new ObjectMapper().readValue(ar, Boolean.class);
+
+					PersonalActivity.this.runOnUiThread(new Runnable() {
+
+						@Override
+						public void run() {
+							if(succeed){
+								PersonalActivity.this.onResponseName(arg0,"修改成功");
+
+							}else {
+								PersonalActivity.this.onFailureName(arg0,new Exception("修改失败"));
+							}
+						}
+					});		
+				} catch (final Exception e) {
+					PersonalActivity.this.runOnUiThread(new Runnable() {
+
+						@Override
+						public void run() {
+							PersonalActivity.this.onFailureName(arg0,e);
+						}
+					});
+				}
+			}
+
+			@Override
+			public void onFailure(Call arg0, final IOException arg1) {
+				Toast.makeText(PersonalActivity.this , arg1.getLocalizedMessage(), Toast.LENGTH_SHORT)
+				.show();
+
+				PersonalActivity.this.runOnUiThread(new Runnable() {
+
+					@Override
+					public void run() {
+						new AlertDialog.Builder(PersonalActivity.this)
+						.setTitle("失败")
+						.setMessage(arg1.getLocalizedMessage())
+						.show();
+					}
+				});
+			}
+		});
+	}
+
+	void onFailureName(Call arg0,Exception exception){
+		Toast.makeText(PersonalActivity.this , exception.getLocalizedMessage(), Toast.LENGTH_SHORT)
+		.show();
+	}
+
+	void onResponseName(Call arg0,String string){
+		Toast.makeText(PersonalActivity.this, "修改昵称成功", Toast.LENGTH_SHORT)
+		.show();
+
+		onResume();
+
+		//finish鎺変笂涓�涓釜浜鸿祫鏂�
+
+	}
+
 
 
 
@@ -173,7 +759,7 @@ public class PersonalActivity extends Activity{
 				.post(requestBodyBuilder.build())
 				.build();
 		Servelet.getOkHttpClient().newCall(request).enqueue(new Callback() {
-			
+
 			@Override
 			public void onResponse(final Call arg0, final Response arg1) throws IOException {
 				runOnUiThread(new Runnable() {
@@ -183,9 +769,9 @@ public class PersonalActivity extends Activity{
 						PersonalActivity.this.onResponse(arg0, ar);		
 					}
 				});
-				
+
 			}
-			
+
 			@Override
 			public void onFailure(final Call arg0, final IOException arg1) {
 				runOnUiThread(new Runnable() {
@@ -204,10 +790,10 @@ public class PersonalActivity extends Activity{
 	}
 	protected void onResponse(Call arg0, String ar) {//鎴愬姛
 		try {
-			
+
 			Toast.makeText(PersonalActivity.this, "修改头像成功", Toast.LENGTH_SHORT).show();
-			
-			
+
+
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -237,9 +823,9 @@ public class PersonalActivity extends Activity{
 				e.printStackTrace();//鎵撳嵃寮傚父浠ュ強鏄剧ず璋冪敤淇℃伅锛堟湁鍔╀簬璋冭瘯锛�
 			} 
 		}
-		
-		
-		
+
+
+
 	}
 
 

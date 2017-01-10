@@ -60,26 +60,42 @@ public class PayPasswordView{
 	private TextView box6;//密码框的第6个数字
 	@ViewInject(R.id.pay_title)
 	private TextView title;//请输入支付密码
-	@ViewInject(R.id.pay_content)
-	private TextView content;//消费金额
+	//@ViewInject(R.id.pay_content)
+	//private TextView content;//消费金额
 
 	private ArrayList<String> mList=new ArrayList<String>();
 	private View mView;
 	private OnPayListener listener;
 	private Context mContext;
-	public PayPasswordView(String monney,Context mContext,OnPayListener listener){
+	/*public PayPasswordView(String monney,Context mContext,OnPayListener listener){
 		getDecorView(monney, mContext, listener);
-	}
-	public static PayPasswordView getInstance(String monney,Context mContext,OnPayListener listener){
+	}*/
+	/*public static PayPasswordView getInstance(String monney,Context mContext,OnPayListener listener){
 		return  new PayPasswordView(monney,mContext,listener);
+	}*/
+	
+	public static PayPasswordView getInstance(Context mContext,OnPayListener listener){
+		return  new PayPasswordView( mContext, listener);
+	}
+	
+	public PayPasswordView(Context mContext,OnPayListener listener){
+		getDecorView( mContext, listener);
 	}
 
-	public void getDecorView(String monney,Context mContext,OnPayListener listener){
+	/*public void getDecorView(String monney,Context mContext,OnPayListener listener){
 		this.listener=listener;
 		this.mContext=mContext;
 		mView=LayoutInflater.from(mContext).inflate(R.layout.item_paypassword, null);
 		ViewUtils.inject(this,mView);
-		content.setText("消费金额："+monney+"元");
+		//content.setText("消费金额："+monney+"元");
+	}*/
+	
+	public void getDecorView(Context mContext,OnPayListener listener){
+		this.listener=listener;
+		this.mContext=mContext;
+		mView=LayoutInflater.from(mContext).inflate(R.layout.item_paypassword, null);
+		ViewUtils.inject(this,mView);
+		//content.setText("消费金额："+monney+"元");
 	}
 	@OnClick({R.id.pay_keyboard_del,R.id.pay_keyboard_zero,
 		R.id.pay_keyboard_one,R.id.pay_keyboard_two,
