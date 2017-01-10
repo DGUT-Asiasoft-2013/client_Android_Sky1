@@ -73,5 +73,18 @@
     <string name="PRIVATE_PAY">私下交易</string>
     <string name="content_fail">提交失败</string>
     <string name="content_overtime">连接超时</string>
+    
+    <!-- 支付PayMoneyActivity -->
+    <string name="running_low">余额不足</string>
+    <string name="running_low_text">您的余额不足,请尽快充值</string>
+    <string name="make_ok">好</string>
+    <string name="determine_payment">确定支付</string>
+    <string name="determine_payment_text">确定要支付吗?</string>
+    <string name="pay_succeed">支付成功</string>
+    <string name="pay_fail">支付密码错误</string>
+    <string name="pay_content_fail">支付失败</string>
+    <string name="payment_cancel">取消支付</string>
+    <string name="payment_succeed_text">您的宝贝将以火箭速度向您飞来</string>
+    <string name="paytag_1">已付款</string>
 
 </resources>

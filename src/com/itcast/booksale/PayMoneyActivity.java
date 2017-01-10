@@ -92,18 +92,18 @@ public class PayMoneyActivity extends Activity{
 //		Log.d("------money------------",temp.substring(2,temp.length()-1) );
 		if(user_money < pay_money){
 			new AlertDialog.Builder(this)
-			.setTitle("余额不足")
-			.setMessage("您的余额不足,请尽快充值")
-			.setNegativeButton("好", null)
+			.setTitle(getResources().getString(R.string.running_low))//"余额不足"
+			.setMessage(getResources().getString(R.string.running_low_text))//"您的余额不足,请尽快充值"
+			.setNegativeButton(getResources().getString(R.string.make_ok), null)//"好"
 			.show();
 
 		}else{
 			balanceMoney = String.valueOf(pay_money);
 //			Log.d("mommmfjjjfjf111111111111111111111111", balanceMoney);
 			new AlertDialog.Builder(this)
-			.setTitle("确定支付")
-			.setMessage("确定要支付吗?")
-			.setNegativeButton("确定", new DialogInterface.OnClickListener() {
+			.setTitle(getResources().getString(R.string.determine_payment))//"确定支付"
+			.setMessage(getResources().getString(R.string.determine_payment_text))//"确定要支付吗?"
+			.setNegativeButton(getResources().getString(R.string.sure), new DialogInterface.OnClickListener() {
 
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
@@ -113,7 +113,7 @@ public class PayMoneyActivity extends Activity{
 //					linDataBase(balanceMoney);
 				}
 			})
-			.setPositiveButton("取消", null)
+			.setPositiveButton(getResources().getString(R.string.pay_cancel), null)//取消
 			.show();
 		}
 	}
@@ -156,14 +156,16 @@ public class PayMoneyActivity extends Activity{
 								public void run() {
 									// TODO Auto-generated method stub
 									if(succeed){
-										Toast.makeText(getApplicationContext(), "支付成功", Toast.LENGTH_SHORT)
+										Toast.makeText(getApplicationContext(),
+												getResources().getString(R.string.pay_succeed), Toast.LENGTH_SHORT)//"支付成功"
 										.show();
 //										Log.d("mommmfjjjfjf", balanceMoney);
 										linDataBase(balanceMoney);
 										
 										goSpedingBillActivity();
 									}else{
-										Toast.makeText(PayMoneyActivity.this, "支付密码错误", Toast.LENGTH_SHORT)
+										Toast.makeText(PayMoneyActivity.this,
+												getResources().getString(R.string.pay_fail), Toast.LENGTH_SHORT)//"支付密码错误"
 										.show();
 										return;
 									}
@@ -181,9 +183,9 @@ public class PayMoneyActivity extends Activity{
 										@Override
 										public void run() {
 											new AlertDialog.Builder(PayMoneyActivity.this)
-											.setTitle("失败")
-											.setMessage("连接失败")
-											.setNegativeButton("确定", null)
+											.setTitle(getResources().getString(R.string.pay_content_fail))//支付失败
+											.setMessage(getResources().getString(R.string.content_overtime))//连接超时
+											.setNegativeButton(getResources().getString(R.string.sure), null)//"确定"
 											.show();
 										}
 									});
@@ -199,9 +201,9 @@ public class PayMoneyActivity extends Activity{
 							@Override
 							public void run() {
 								new AlertDialog.Builder(PayMoneyActivity.this)
-								.setTitle("失败")
-								.setMessage("连接失败")
-								.setNegativeButton("确定", null)
+								.setTitle(getResources().getString(R.string.pay_content_fail))//支付失败
+								.setMessage(getResources().getString(R.string.content_overtime))//连接超时
+								.setNegativeButton(getResources().getString(R.string.sure), null)//"确定"
 								.show();
 							}
 						});
@@ -220,7 +222,8 @@ public class PayMoneyActivity extends Activity{
 				// TODO Auto-generated method stub
 				mDialogWidget.dismiss();
 				mDialogWidget=null;
-				Toast.makeText(getApplicationContext(), "取消支付", Toast.LENGTH_SHORT).show();
+				Toast.makeText(getApplicationContext(),
+						getResources().getString(R.string.payment_cancel), Toast.LENGTH_SHORT).show();//"取消支付"
 
 			}
 		}).getView();
@@ -245,7 +248,9 @@ public class PayMoneyActivity extends Activity{
 					@Override
 					public void run() {
 						
-						Toast.makeText(PayMoneyActivity.this, "您的宝贝将以火箭速度向您飞来", Toast.LENGTH_SHORT).show();
+						Toast.makeText(PayMoneyActivity.this,
+								getResources().getString(R.string.payment_succeed_text), //您的宝贝将以火箭速度向您飞来
+								Toast.LENGTH_SHORT).show();
 						
 					}
 				});
@@ -321,7 +326,7 @@ public class PayMoneyActivity extends Activity{
 	}*/
 
 	void goSpedingBillActivity(){
-		payType = "已付款";
+		payType = getResources().getString(R.string.paytag_1);//已付款
 		Intent itnt = new Intent(this,BillDetailActivity.class);
 		itnt.putExtra("order",(Serializable)order);//修改把list<>传过去
 		itnt.putExtra("AllPay", AllPay);
