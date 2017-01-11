@@ -28,6 +28,50 @@
     <string name="loading">正在加载...</string>
     <string name="load_succeed">加载成功</string>
     <string name="load_fail">加载失败</string>
+    
+    <!-- Myself -->
+    <string name="sorry_nologin">对不起，你未登录</string>
+    <string name="sorry_account_cannot_change">对不起，账号作为登录ID不能更改</string>
+    <string name="hint_qq">请输入QQ</string>
+    <string name="dialog_change_qq">修改QQ</string>
+    <string name="change_save">保存</string>
+    <string name="tips_qq">请输入正确的QQ号码</string>
+    <string name="change_cancel">取消</string>
+    <string name="change_succeed">修改成功</string>
+    <string name="change_fail">修改失败</string>
+    <string name="no_net">失败</string>
+    <string name="change_qq_succeed">成功修改QQ</string>
+    <string name="hint_phone">请输入手机号码</string>
+    <string name="dialog_phone">修改手机号码</string>
+    <string name="tip_phone">请输入正确的手机号码</string>
+    <string name="change_phone_succeed">修改电话号码成功</string>
+    <string name="hint_email">请输入邮箱</string>
+    <string name="dialog_email">修改邮箱</string>
+    <string name="tip_email">请输入正确的邮箱地址</string>
+    <string name="change_email_succeed">修改邮箱成功</string>
+    <string name="hint_name">请输入昵称</string>
+    <string name="dialog_name">修改昵称</string>
+    <string name="tip_name">昵称不能为空</string>
+    <string name="change_name_succeed">修改昵称成功</string>
+    <string name="takePhoto">拍照</string>
+    <string name="image_book">相册</string>
+    <string name="dialog_avatar">修改头像</string>
+    <string name="avatar_ok">好</string>
+    <string name="sorry_net_fial">对不起，网络错误</string>
+    <string name="onclick_add_avatar">点击添加头像</string>
+    
+    <!-- RechargeActivity -->
+    <string name="recharge_cannot_0">充值金额不能为0.00元</string>
+    <string name="r_fail">失败</string>
+    <string name="r_net_error">网络错误</string>
+    <string name="r_sure">确定</string>
+    <string name="r_succeed">充值成功</string>
+    <string name="set_exit">已退出登录</string>
+    <string name="set_exit_fail">退出失败</string>
+    <string name="sum_nologin">对不起，你未登录</string>
+    <string name="me_cancel">取消</string>
+    <string name="onclick_again">再按一次退出程序</string>
+
     <string name="jiesuan">结算(0)</string>
     
     

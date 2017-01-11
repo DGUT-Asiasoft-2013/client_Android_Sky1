@@ -126,7 +126,7 @@ public class RechargeListActivity extends Activity{
 		MultipartBody body=new MultipartBody.Builder()
 				.addFormDataPart("user_id", user.getAccount())
 				.build();*/
-		//Log.d("=====£¡£¡======", user.getAccount());
+		//Log.d("=====ï¿½ï¿½ï¿½ï¿½======", user.getAccount());
 
 		Request request=Servelet.requestuildApi(user.getAccount()+"/money/list")
 				//Request request=Servelet.requestuildApi(user.getId()+"/money/list")
@@ -139,7 +139,7 @@ public class RechargeListActivity extends Activity{
 			public void onResponse(Call arg0, Response arg1) throws IOException {
 				// TODO Auto-generated method stub
 				String ar = arg1.body().string();
-				Log.d("=====£¡£¡======", ar);
+				//Log.d("=====ï¿½ï¿½ï¿½ï¿½======", ar);
 				try{					
 					final Page<Money> data =  new ObjectMapper().readValue(ar,
 							new TypeReference<Page<Money>>(){});
