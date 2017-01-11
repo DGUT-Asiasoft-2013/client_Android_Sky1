@@ -84,11 +84,11 @@ public class PasswordRecoverActivity extends Activity {
 						@Override
 						public void run() {
 							if(succeed){
-								Toast.makeText(PasswordRecoverActivity.this, "验证码已发送，请注意查收信息", Toast.LENGTH_SHORT)
+								Toast.makeText(PasswordRecoverActivity.this, R.string.pr_yzm, Toast.LENGTH_SHORT)
 								.show();
 								PasswordRecoverActivity.this.Step2OnReponse(arg0,arg1);
 							}else {
-								PasswordRecoverActivity.this.onFailure(arg0,new Exception("此手机未注册过"));
+								PasswordRecoverActivity.this.onFailure(arg0,new Exception(getString(R.string.pr_phone_no_zc)));
 							}
 						}
 					});
@@ -98,7 +98,7 @@ public class PasswordRecoverActivity extends Activity {
 						
 						@Override
 						public void run() {
-							Toast.makeText(PasswordRecoverActivity.this, "网络错误", Toast.LENGTH_SHORT).show();
+							Toast.makeText(PasswordRecoverActivity.this, R.string.pr_net_error, Toast.LENGTH_SHORT).show();
 							
 						}
 					});
@@ -114,7 +114,7 @@ public class PasswordRecoverActivity extends Activity {
 					@Override
 					public void run() {
 						new AlertDialog.Builder(PasswordRecoverActivity.this)
-						.setTitle("请求失败")
+						.setTitle(R.string.pr_require_fail)
 						.setMessage(arg1.getLocalizedMessage())
 						.show();
 						
@@ -164,7 +164,7 @@ public class PasswordRecoverActivity extends Activity {
 								PasswordRecoverActivity.this.onResponse(arg0, "succeed is true");
 							}else{
 								//Toast.makeText(PasswordRecoverActivity.this, "shibai",Toast.LENGTH_SHORT).show();
-								PasswordRecoverActivity.this.onFailure(arg0, new Exception("此邮箱尚未注册！"));
+								PasswordRecoverActivity.this.onFailure(arg0, new Exception(getString(R.string.pr_email_nologin)));
 							}
 							
 						}
@@ -189,7 +189,7 @@ public class PasswordRecoverActivity extends Activity {
 					@Override
 					public void run() {
 						new AlertDialog.Builder(PasswordRecoverActivity.this)
-										.setTitle("请求失败")
+										.setTitle(R.string.pr_require_fail)
 										.setMessage(arg1.getLocalizedMessage()).show();
 						
 					}
@@ -204,7 +204,7 @@ public class PasswordRecoverActivity extends Activity {
 	}
 
 	protected void onResponse(Call arg0, String string) {
-		Toast.makeText(PasswordRecoverActivity.this, "成功", Toast.LENGTH_SHORT).show();
+		Toast.makeText(PasswordRecoverActivity.this, R.string.pr_succeed, Toast.LENGTH_SHORT).show();
 		
 		Intent intent=new Intent(PasswordRecoverActivity.this,LoginActivity.class);
 		startActivity(intent);

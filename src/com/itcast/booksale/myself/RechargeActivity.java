@@ -198,7 +198,7 @@ public class RechargeActivity extends Activity {
 
 	protected void onFailurePay(Call arg0, Exception arg1) {
 		// TODO Auto-generated method stub
-		Toast.makeText(RechargeActivity.this, "网络错误", Toast.LENGTH_SHORT)
+		Toast.makeText(RechargeActivity.this, R.string.recharge_yihcang, Toast.LENGTH_SHORT)
 		.show();
 	}
 
@@ -276,7 +276,7 @@ public class RechargeActivity extends Activity {
 		// Toast.makeText(RechargeActivity.this, money,
 		// Toast.LENGTH_SHORT).show();
 		if (money.length() == 0) {
-			Toast.makeText(RechargeActivity.this, "充值金额不能为0.00", Toast.LENGTH_SHORT).show();
+			Toast.makeText(RechargeActivity.this, R.string.recharge_cannot_0, Toast.LENGTH_SHORT).show();
 			return;
 		}
 
@@ -309,8 +309,8 @@ public class RechargeActivity extends Activity {
 
 					@Override
 					public void run() {
-						new AlertDialog.Builder(RechargeActivity.this).setTitle("失败").setMessage("网络错误！")
-								.setNegativeButton("确定", null).show();
+						new AlertDialog.Builder(RechargeActivity.this).setTitle(R.string.r_fail).setMessage(R.string.r_net_error)
+								.setNegativeButton(R.string.r_sure, null).show();
 
 					}
 				});
@@ -319,7 +319,7 @@ public class RechargeActivity extends Activity {
 	}
 
 	protected void onReponse(Call arg0, String ar) {
-		Toast.makeText(RechargeActivity.this, "充值成功", Toast.LENGTH_SHORT).show();
+		Toast.makeText(RechargeActivity.this, R.string.r_succeed, Toast.LENGTH_SHORT).show();
 		Intent intent = new Intent(RechargeActivity.this, SumMoneyActivity.class);
 		startActivity(intent);
 		finish();

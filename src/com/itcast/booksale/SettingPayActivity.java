@@ -60,7 +60,7 @@ public class SettingPayActivity extends Activity {
 				payTextView.setText(password);
 				goSetPayPassword();
 			
-				/*Toast.makeText(getApplicationContext(), "支付密码设置成功", Toast.LENGTH_SHORT).show();
+				/*Toast.makeText(getApplicationContext(), "支锟斤拷锟斤拷锟斤拷锟斤拷锟矫成癸拷", Toast.LENGTH_SHORT).show();
 				finish();*/
 			}
 			
@@ -69,7 +69,7 @@ public class SettingPayActivity extends Activity {
 				// TODO Auto-generated method stub
 				mDialogWidget.dismiss();
 				mDialogWidget=null;
-				Toast.makeText(getApplicationContext(), "取消设置支付密码", Toast.LENGTH_SHORT).show();
+				Toast.makeText(getApplicationContext(), R.string.setpay_cancel, Toast.LENGTH_SHORT).show();
 				
 			}
 		}).getView();
@@ -116,8 +116,8 @@ public class SettingPayActivity extends Activity {
 
 					@Override
 					public void run() {
-						new AlertDialog.Builder(SettingPayActivity.this).setTitle("失败").setMessage("网络错误！")
-								.setNegativeButton("确定", null).show();
+						new AlertDialog.Builder(SettingPayActivity.this).setTitle(R.string.sp_fail).setMessage(R.string.sp_net_error)
+								.setNegativeButton(R.string.sp_qd, null).show();
 
 					}
 				});
@@ -127,7 +127,7 @@ public class SettingPayActivity extends Activity {
 
 	protected void onReponse(Call arg0, String ar) {
 		// TODO Auto-generated method stub
-		Toast.makeText(getApplicationContext(), "支付密码设置成功", Toast.LENGTH_SHORT).show();
+		Toast.makeText(getApplicationContext(), R.string.sp_succeed, Toast.LENGTH_SHORT).show();
 		finish();
 	}
 }

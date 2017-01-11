@@ -12,10 +12,14 @@ import com.itcast.booksale.servelet.Servelet;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.IBinder;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
@@ -38,31 +42,31 @@ import okhttp3.Response;
  */
 public class ShareBooksActivity extends Activity{
 
-	
+
 	//图书信息(8个)
 	EditText editBookTitle,editBookAuthor
 	,editPrice,editBookPublisher,editISBN
 	,editBookSummary,editText,editBookNumber;
-    PictureInputCellFragment fragInputBookAvatar;//图书照片
-    //图书分类(标签)
-    private Spinner bookTagSpinner;
-    private List<String> bookTag_list;
-    private ArrayAdapter<String> booksTag_adapter;
-    String bookTag_text;
-    
+	PictureInputCellFragment fragInputBookAvatar;//图书照片
+	//图书分类(标签)
+	private Spinner bookTagSpinner;
+	private List<String> bookTag_list;
+	private ArrayAdapter<String> booksTag_adapter;
+	String bookTag_text;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.activity_share_books);
-		
+
 		//初始化定义
 		init();
-		
-	
-	    //确定出售
+
+
+		//确定出售
 		findViewById(R.id.btn_share_book).setOnClickListener(new View.OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				//将信息存进数据库
@@ -70,7 +74,7 @@ public class ShareBooksActivity extends Activity{
 			}
 		});
 	}
-	
+
 	//初始化
 	void init(){
 		editBookTitle = (EditText) findViewById(R.id.input_book_title);//图书名称
@@ -98,9 +102,9 @@ public class ShareBooksActivity extends Activity{
 		booksTag_adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,bookTag_list);
 		//设置样式
 		booksTag_adapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
-	    //加载适配器
+		//加载适配器
 		bookTagSpinner.setAdapter(booksTag_adapter);
-		
+
 		bookTagSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
 
 			@Override
@@ -108,18 +112,18 @@ public class ShareBooksActivity extends Activity{
 				ArrayAdapter<String> adapter = (ArrayAdapter<String>) parent.getAdapter();
 				//选中下拉框后设置类型
 				bookTag_text= adapter.getItem(position);
-				
+
 			}
 
 			@Override
 			public void onNothingSelected(AdapterView<?> parent) {
-				
+
 			}
 		});
 	}
-	
+
 	void sendContent(){
-		
+
 		//获取图书信息
 		String bookTitle = editBookTitle.getText().toString();
 		String bookAuthor = editBookAuthor.getText().toString();
@@ -130,7 +134,7 @@ public class ShareBooksActivity extends Activity{
 		String text = editText.getText().toString();
 		String ISBN = editISBN.getText().toString();
 		String booknumber=editBookNumber.getText().toString();
-		  
+
 		if(bookTitle.length()==0){
 			Toast.makeText(ShareBooksActivity.this, "图书标题不能为空", Toast.LENGTH_SHORT).show();
 			return;
@@ -140,7 +144,7 @@ public class ShareBooksActivity extends Activity{
 		}else if(booknumber.length() == 0){
 			booknumber = "1";//默认为1本
 		}
-		
+
 		//下面的addFormDataPart("title", bookTitle)左边的title应该跟服务器的一样，记住
 		MultipartBody.Builder bookBody = new MultipartBody.Builder()
 				.addFormDataPart("title", bookTitle)
@@ -152,7 +156,7 @@ public class ShareBooksActivity extends Activity{
 				.addFormDataPart("book_isbn", ISBN) 
 				.addFormDataPart("text", text)
 				.addFormDataPart("booknumber", booknumber);
-		
+
 
 		//----------------
 		//创建存储图片
@@ -160,17 +164,17 @@ public class ShareBooksActivity extends Activity{
 		if (pngData != null){
 			RequestBody fileBody = RequestBody.create(MediaType.parse("image.png"), pngData);
 			bookBody.addFormDataPart("bookavatar", "bookavatar.png", fileBody);
-			
+
 		}
-		
+
 		//创建新载体
 		RequestBody newBookBody = bookBody.build();
 		Request request = Servelet.requestuildApi("sellbooks")
 				.post(newBookBody)
 				.build();
-		
+
 		Servelet.getOkHttpClient().newCall(request).enqueue(new Callback() {
-			
+
 			@Override
 			public void onResponse(Call arg0, Response arg1) throws IOException {
 				final String responseBody = arg1.body().string();
@@ -181,7 +185,7 @@ public class ShareBooksActivity extends Activity{
 					}
 				});
 			}
-			
+
 			@Override
 			public void onFailure(Call arg0, final IOException arg1) {
 				runOnUiThread(new Runnable() {
@@ -189,14 +193,14 @@ public class ShareBooksActivity extends Activity{
 						ShareBooksActivity.this.onFailure(arg1);
 					}
 				});
-				
+
 			}
 		});
 	}
-	
+
 	void onSucceed(final String text){
 		runOnUiThread(new Runnable() {
-			
+
 			@Override
 			public void run() {
 				new AlertDialog.Builder(ShareBooksActivity.this)
@@ -212,12 +216,12 @@ public class ShareBooksActivity extends Activity{
 				}).show();
 			}
 		});
-		
+
 	}
-	
+
 	void onFailure(final Exception e){
 		runOnUiThread(new Runnable() {
-			
+
 			@Override
 			public void run() {
 				new AlertDialog.Builder(ShareBooksActivity.this)
@@ -226,7 +230,7 @@ public class ShareBooksActivity extends Activity{
 				.show();
 			}
 		});
-		
+
 	}
 	void goMainView(){
 
@@ -235,9 +239,61 @@ public class ShareBooksActivity extends Activity{
 		Intent itnt = new Intent(this,HelloWorldActivity.class);
 
 		startActivity(itnt);
-        
+
 		finish();
 
 	}
-			
+	//隐藏软键盘
+	@Override
+	public boolean dispatchTouchEvent(MotionEvent ev) {
+		if (ev.getAction() == MotionEvent.ACTION_DOWN) {
+
+			// 获得当前得到焦点的View，一般情况下就是EditText（特殊情况就是轨迹求或者实体案件会移动焦点）
+			View v = getCurrentFocus();
+
+			if (isShouldHideInput(v, ev)) {
+				hideSoftInput(v.getWindowToken());
+			}
+		}
+		return super.dispatchTouchEvent(ev);
+	}
+
+	/**
+	 * 根据EditText所在坐标和用户点击的坐标相对比，来判断是否隐藏键盘，因为当用户点击EditText时没必要隐藏
+	 * 
+	 * @param v
+	 * @param event
+	 * @return
+	 */
+	private boolean isShouldHideInput(View v, MotionEvent event) {
+		if (v != null && (v instanceof EditText)) {
+			int[] l = { 0, 0 };
+			v.getLocationInWindow(l);
+			int left = l[0], top = l[1], bottom = top + v.getHeight(), right = left
+					+ v.getWidth();
+			if (event.getX() > left && event.getX() < right
+					&& event.getY() > top && event.getY() < bottom) {
+				// 点击EditText的事件，忽略它。
+				return false;
+			} else {
+				return true;
+			}
+		}
+		// 如果焦点不是EditText则忽略，这个发生在视图刚绘制完，第一个焦点不在EditView上，和用户用轨迹球选择其他的焦点
+		return false;
+	}
+
+	/**
+	 * 多种隐藏软件盘方法的其中一种
+	 * 
+	 * @param token
+	 */
+	private void hideSoftInput(IBinder token) {
+		if (token != null) {
+			InputMethodManager im = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+			im.hideSoftInputFromWindow(token,
+					InputMethodManager.HIDE_NOT_ALWAYS);
+		}
+	}
+
 }

@@ -74,25 +74,25 @@ public class RegisterActivity extends Activity {
 			// TODO Auto-generated method stub
 			super.onResume();
 			
-			fragInputCellAccount.setLabelText("账号*:");//璐﹀彿
+			fragInputCellAccount.setLabelText(getString(R.string.zc_account_l));//璐﹀彿
 			{
-				fragInputCellAccount.setHintText("请输入账号(必填)");
+				fragInputCellAccount.setHintText(getString(R.string.zc_account_h));
 			}
 			
-			fragInputCellName.setLabelText("昵称*:");//鏄电О
+			fragInputCellName.setLabelText(getString(R.string.zc_name_l));//鏄电О
 			{
-				fragInputCellName.setHintText("请输入昵称(必填)");
+				fragInputCellName.setHintText(getString(R.string.zc_name_h));
 			}
 			
-			fragInputCellPassword.setLabelText("密码*:");//瀵嗙爜
+			fragInputCellPassword.setLabelText(getString(R.string.zc_password_l));//瀵嗙爜
 			{
-				fragInputCellPassword.setHintText("请输入密码(必填)");
+				fragInputCellPassword.setHintText(getString(R.string.zc_password_h));
 				fragInputCellPassword.setIsPassword(true);
 			}
 			
-			fragInputCellPasswordRepeat.setLabelText("重复密码*:");//閲嶅瀵嗙爜
+			fragInputCellPasswordRepeat.setLabelText(getString(R.string.zc_password_r_l));//閲嶅瀵嗙爜
 			{
-				fragInputCellPasswordRepeat.setHintText("请再次输入密码(必填)");
+				fragInputCellPasswordRepeat.setHintText(getString(R.string.zc_password_r_h));
 				fragInputCellPasswordRepeat.setIsPassword(true);
 			}
 			
@@ -102,15 +102,15 @@ public class RegisterActivity extends Activity {
 				fragInputCellPhone.setIsPhone(true);
 			}*/
 			
-			fragInputCellEmail.setLabelText("邮箱:");//閭
+			fragInputCellEmail.setLabelText(getString(R.string.zc_email_l));//閭
 			{
-				fragInputCellEmail.setHintText("请输入绑定邮箱");
+				fragInputCellEmail.setHintText(getString(R.string.zc_email_h));
 				fragInputCellEmail.setIsEmail(true);
 			}
 			
-			fragInputCellQq.setLabelText("QQ:");//QQ
+			fragInputCellQq.setLabelText(getString(R.string.zc_qq_l));//QQ
 			{
-				fragInputCellQq.setHintText("请输入QQ");
+				fragInputCellQq.setHintText(getString(R.string.zc_qq_h));
 				fragInputCellQq.setIsNumber(true);
 			}
 		}
@@ -121,8 +121,8 @@ public class RegisterActivity extends Activity {
 		
 		if(!password.equals(passwordRepeat)){//鍒ゆ柇涓ゆ杈撶殑瀵嗙爜鏄惁涓�鏍凤紝鑻ヤ笉涓�鏍峰垯寮瑰嚭瀵硅瘽鎻愮ず妗�
 			new AlertDialog.Builder(RegisterActivity.this)
-			.setMessage("两次输入的密码不正确")
-			.setNegativeButton("濂�", null)
+			.setMessage(R.string.password_two_error)
+			.setNegativeButton(R.string.zc_qd, null)
 			.show();//鏄剧ず瀵硅瘽妗�
 			
 			return;
@@ -136,16 +136,16 @@ public class RegisterActivity extends Activity {
 	
 		
 		if(account.length()==0){
-			Toast.makeText(RegisterActivity.this,"账户不能为空", Toast.LENGTH_SHORT).show();
+			Toast.makeText(RegisterActivity.this,R.string.zc_account_nnull, Toast.LENGTH_SHORT).show();
 			return;
 		}else if (password.length()==0) {
-			Toast.makeText(RegisterActivity.this,"密码不能为空", Toast.LENGTH_SHORT).show();
+			Toast.makeText(RegisterActivity.this,R.string.zc_password_nnull, Toast.LENGTH_SHORT).show();
 			return;
 		}else if (passwordRepeat.length()==0) {
-			Toast.makeText(RegisterActivity.this,"密码不能为空", Toast.LENGTH_SHORT).show();
+			Toast.makeText(RegisterActivity.this,R.string.zc_password_nnull, Toast.LENGTH_SHORT).show();
 			return;
 		}else if (name.length()==0) {
-			Toast.makeText(RegisterActivity.this,"昵称不能为空", Toast.LENGTH_SHORT).show();
+			Toast.makeText(RegisterActivity.this,R.string.zc_name_nnull, Toast.LENGTH_SHORT).show();
 			return;
 		}/*else if(phone.length()==0) {
 			Toast.makeText(RegisterActivity.this,"电话号码不能为空", Toast.LENGTH_SHORT).show();
@@ -153,7 +153,7 @@ public class RegisterActivity extends Activity {
 		}*/
 		
 		if(email.length()!=0&&!SimpleTextInputCellFragment.isEmail(email)){
-			Toast.makeText(RegisterActivity.this,"邮箱地址输入错误，请重新输入", Toast.LENGTH_SHORT).show();
+			Toast.makeText(RegisterActivity.this,R.string.zc_tip_email, Toast.LENGTH_SHORT).show();
 			return;
 		}
 		
@@ -169,7 +169,7 @@ public class RegisterActivity extends Activity {
 		}*/
 		
 		if(qq.length()!=0&&!SimpleTextInputCellFragment.isQQ(qq)){
-			Toast.makeText(RegisterActivity.this,"QQ号码输入错误，请重新输入", Toast.LENGTH_SHORT).show();
+			Toast.makeText(RegisterActivity.this,R.string.zc_tip_qq, Toast.LENGTH_SHORT).show();
 			return;
 		}
 		
@@ -201,7 +201,7 @@ public class RegisterActivity extends Activity {
 		
 		//杩涘害鏉�
 		final ProgressDialog progressDialog = new ProgressDialog(RegisterActivity.this);
-		progressDialog.setMessage("请稍后");
+		progressDialog.setMessage(getString(R.string.zc_wait));
 		progressDialog.setCancelable(false);
 		progressDialog.setCanceledOnTouchOutside(false);
 		progressDialog.show();
@@ -241,8 +241,8 @@ public class RegisterActivity extends Activity {
 
 
 	protected void onFailure(Call arg0, Exception arg1) {//鏃犳硶杩炴帴鏈嶅姟鍣ㄦ椂
-		new AlertDialog.Builder(this).setTitle("失败").setMessage(arg1.getLocalizedMessage())
-		.setNegativeButton("好", null).show();
+		new AlertDialog.Builder(this).setTitle(R.string.zc_fail).setMessage(arg1.getLocalizedMessage())
+		.setNegativeButton(R.string.zc_ok, null).show();
 	}
 
 
@@ -258,7 +258,7 @@ public class RegisterActivity extends Activity {
 				}
 			})
 			.show();*/
-			Toast.makeText(RegisterActivity.this, "注册成功", Toast.LENGTH_SHORT).show();
+			Toast.makeText(RegisterActivity.this, R.string.zc_succeed, Toast.LENGTH_SHORT).show();
 			Intent intent=new Intent(RegisterActivity.this,LoginActivity.class);
 			startActivity(intent);
 		} catch (Exception e) {

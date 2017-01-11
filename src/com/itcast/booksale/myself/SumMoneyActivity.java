@@ -117,7 +117,7 @@ User user;
 	
 	public void reload(){
 		if(TextUtils.isEmpty(user.getAccount())){
-			Toast.makeText(SumMoneyActivity.this, "ÍøÂç´íÎó", Toast.LENGTH_SHORT)
+			Toast.makeText(SumMoneyActivity.this, R.string.sum_nologin, Toast.LENGTH_SHORT)
 			.show();
 		}
 	    sumMoney.setVisibility(View.VISIBLE);
