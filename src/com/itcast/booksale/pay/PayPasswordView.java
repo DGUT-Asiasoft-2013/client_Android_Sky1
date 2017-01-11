@@ -21,7 +21,7 @@ import android.widget.Toast;
 public class PayPasswordView{
 
 	@ViewInject(R.id.pay_keyboard_del)
-	private ImageView del;//É¾³ý¼ü
+	private ImageView del;//É¾ï¿½ï¿½ï¿½ï¿½
 	@ViewInject(R.id.pay_keyboard_zero)
 	private ImageView zero;//0
 	@ViewInject(R.id.pay_keyboard_one)
@@ -43,25 +43,25 @@ public class PayPasswordView{
 	@ViewInject(R.id.pay_keyboard_nine)
 	private ImageView nine;//9
 	@ViewInject(R.id.pay_cancel)
-	private TextView cancel;//È¡Ïû
+	private TextView cancel;//È¡ï¿½ï¿½
 	@ViewInject(R.id.pay_sure)
-	private TextView sure;//È·¶¨Ö§¸¶
+	private TextView sure;//È·ï¿½ï¿½Ö§ï¿½ï¿½
 	@ViewInject(R.id.pay_box1)
-	private TextView box1;//ÃÜÂë¿òµÄµÚ1¸öÊý×Ö
+	private TextView box1;//ï¿½ï¿½ï¿½ï¿½ï¿½Äµï¿½1ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	@ViewInject(R.id.pay_box2)
-	private TextView box2;//ÃÜÂë¿òµÄµÚ2¸öÊý×Ö
+	private TextView box2;//ï¿½ï¿½ï¿½ï¿½ï¿½Äµï¿½2ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	@ViewInject(R.id.pay_box3)
-	private TextView box3;//ÃÜÂë¿òµÄµÚ3¸öÊý×Ö
+	private TextView box3;//ï¿½ï¿½ï¿½ï¿½ï¿½Äµï¿½3ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	@ViewInject(R.id.pay_box4)
-	private TextView box4;//ÃÜÂë¿òµÄµÚ4¸öÊý×Ö
+	private TextView box4;//ï¿½ï¿½ï¿½ï¿½ï¿½Äµï¿½4ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	@ViewInject(R.id.pay_box5)
-	private TextView box5;//ÃÜÂë¿òµÄµÚ5¸öÊý×Ö
+	private TextView box5;//ï¿½ï¿½ï¿½ï¿½ï¿½Äµï¿½5ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	@ViewInject(R.id.pay_box6)
-	private TextView box6;//ÃÜÂë¿òµÄµÚ6¸öÊý×Ö
+	private TextView box6;//ï¿½ï¿½ï¿½ï¿½ï¿½Äµï¿½6ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	@ViewInject(R.id.pay_title)
-	private TextView title;//ÇëÊäÈëÖ§¸¶ÃÜÂë
+	private TextView title;//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö§ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	//@ViewInject(R.id.pay_content)
-	//private TextView content;//Ïû·Ñ½ð¶î
+	//private TextView content;//ï¿½ï¿½ï¿½Ñ½ï¿½ï¿½
 
 	private ArrayList<String> mList=new ArrayList<String>();
 	private View mView;
@@ -87,7 +87,7 @@ public class PayPasswordView{
 		this.mContext=mContext;
 		mView=LayoutInflater.from(mContext).inflate(R.layout.item_paypassword, null);
 		ViewUtils.inject(this,mView);
-		//content.setText("Ïû·Ñ½ð¶î£º"+monney+"Ôª");
+		//content.setText("ï¿½ï¿½ï¿½Ñ½ï¿½î£º"+monney+"Ôª");
 	}*/
 	
 	public void getDecorView(Context mContext,OnPayListener listener){
@@ -95,7 +95,7 @@ public class PayPasswordView{
 		this.mContext=mContext;
 		mView=LayoutInflater.from(mContext).inflate(R.layout.item_paypassword, null);
 		ViewUtils.inject(this,mView);
-		//content.setText("Ïû·Ñ½ð¶î£º"+monney+"Ôª");
+		//content.setText("ï¿½ï¿½ï¿½Ñ½ï¿½î£º"+monney+"Ôª");
 	}
 	@OnClick({R.id.pay_keyboard_del,R.id.pay_keyboard_zero,
 		R.id.pay_keyboard_one,R.id.pay_keyboard_two,
@@ -157,7 +157,7 @@ public class PayPasswordView{
 			listener.onCancelPay();
 		}else if(type.getType()==ActionEnum.sure){
 			if(mList.size()<6){
-				Toast.makeText(mContext, "Ö§¸¶ÃÜÂë±ØÐë6Î»", Toast.LENGTH_SHORT).show();
+				Toast.makeText(mContext, R.string.setp_less_6, Toast.LENGTH_SHORT).show();
 			}else{
 				String payValue="";
 				for (int i = 0; i < mList.size(); i++) {

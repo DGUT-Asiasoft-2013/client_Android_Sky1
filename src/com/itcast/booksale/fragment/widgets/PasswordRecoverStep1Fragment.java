@@ -36,9 +36,9 @@ public class PasswordRecoverStep1Fragment extends Fragment {
 	public void onResume() {//鍒濆鍖栨帶浠�
 		super.onResume();
 		
-		fragEmail.setLabelText("手机号码:");
+		fragEmail.setLabelText(getActivity().getString(R.string.pr_phone_l));
 		{
-			fragEmail.setHintText("请输入绑定的手机号码");
+			fragEmail.setHintText(getActivity().getString(R.string.pr_phone_h));
 		}
 	}
 	

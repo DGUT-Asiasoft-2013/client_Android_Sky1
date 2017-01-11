@@ -44,20 +44,20 @@ public class PasswordRecoverStep2Fragment extends Fragment {
 		//鍒濆鍖栨帶浠�
 		super.onResume();
 		
-		fragVerify.setLabelText("验证码:");
+		fragVerify.setLabelText(getActivity().getString(R.string.pr_yam_l));
 		{
-			fragVerify.setHintText("请输入验证码");
+			fragVerify.setHintText(getActivity().getString(R.string.pr_yam_h));
 		}
 		
-		fragPassword.setLabelText("新密码:");
+		fragPassword.setLabelText(getActivity().getString(R.string.pr_password_l));
 		{
-			fragPassword.setHintText("请输入新密码");
+			fragPassword.setHintText(getActivity().getString(R.string.pr_password_h));
 			fragPassword.setIsPassword(true);
 		}
 		
-		fragPasswordRepeat.setLabelText("重复新密码:");
+		fragPasswordRepeat.setLabelText(getActivity().getString(R.string.pr_password_two_l));
 		{
-			fragPasswordRepeat.setHintText("请再次输入新密码");
+			fragPasswordRepeat.setHintText(getActivity().getString(R.string.pr_password_two_h));
 			fragPasswordRepeat.setIsPassword(true);
 		}
 	}
@@ -82,8 +82,8 @@ public class PasswordRecoverStep2Fragment extends Fragment {
 		} else {//涓嶄竴鑷存椂鏄剧ず鎻愮ず瀵硅瘽妗�
 			new AlertDialog
 			.Builder(getActivity())
-			.setMessage("两次输入的密码不一致")
-			.setNegativeButton("确定",null).show();
+			.setMessage(R.string.pr_password_error)
+			.setNegativeButton(R.string.pr_sure,null).show();
 		}
 	}	
 

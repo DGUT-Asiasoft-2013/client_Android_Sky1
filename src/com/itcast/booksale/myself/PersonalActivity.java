@@ -791,7 +791,7 @@ public class PersonalActivity extends Activity{
 	protected void onResponse(Call arg0, String ar) {//鎴愬姛
 		try {
 
-			Toast.makeText(PersonalActivity.this, "修改头像成功", Toast.LENGTH_SHORT).show();
+			Toast.makeText(PersonalActivity.this, R.string.person_avatar_succeed, Toast.LENGTH_SHORT).show();
 
 
 		} catch (Exception e) {
