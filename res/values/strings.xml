@@ -138,5 +138,6 @@
     <string name="Introduction">简介:</string>
     <string name="sendTO">给</string>
     <string name="sendPivateMessage">发私信</string>
+    <string name="recharge_yihcang">充值异常</string>
 
 </resources>
