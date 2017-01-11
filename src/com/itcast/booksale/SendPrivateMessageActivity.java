@@ -67,7 +67,7 @@ public class SendPrivateMessageActivity extends Activity {
 		// 一些数据的初始化
 	
 		privateMessageReceiver = (User) getIntent().getSerializableExtra("sendToReceiver");
-		textConnectToSb.setText("给  " + privateMessageReceiver.getName() + " 发私信");
+		textConnectToSb.setText(getResources().getString(R.string.sendTO)+ privateMessageReceiver.getName() +getResources().getString(R.string.sendPivateMessage));
 
 		//设置刷新线程启动
 	

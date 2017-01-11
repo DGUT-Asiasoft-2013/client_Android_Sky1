@@ -78,7 +78,7 @@ public class PrivateMessageListActivity extends Activity {
 			// view.findViewById(R.id.chatlist_time);
 			
 			avatar.load(user);
-			text_who.setText(user.getAccount());
+			text_who.setText(user.getName());
 			
 
 			return view;
