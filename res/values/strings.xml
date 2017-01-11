@@ -86,5 +86,11 @@
     <string name="payment_cancel">取消支付</string>
     <string name="payment_succeed_text">您的宝贝将以火箭速度向您飞来</string>
     <string name="paytag_1">已付款</string>
+    
+    <!-- 书的详情BooksContentActivity -->
+    <string name="tel">电话:</string>
+    <string name="qq">QQ</string>
+    <string name="Sellermessage">卖家留言:</string>
+    <string name="Introduction">简介:</string>
 
 </resources>
