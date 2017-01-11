@@ -109,7 +109,7 @@ public class BookListFragment extends Fragment implements OnClickListener {
 			headerView = inflater.inflate(R.layout.headerview, null);
 			keyword = (EditText) booksView.findViewById(R.id.search_keyword);
 			keywords =keyword.getText().toString();
-			bookTag_text = "全部";//default默认为全部
+			bookTag_text = getResources().getString(R.string.all);//default默认为全部
 			
 			//book classification
 			all_book_layout = (LinearLayout) headerView.findViewById(R.id.all_book_layout);
@@ -588,7 +588,7 @@ public class BookListFragment extends Fragment implements OnClickListener {
 	void getBooksListByKeyword() {
 		loadmoreSelect = 1;// 1为搜索的加载更多
 		// 判断类型有无选择
-		if (bookTag_text.equals(R.string.all)) {
+		if (bookTag_text.equals(getResources().getString(R.string.all))) {
 			Request request = Servelet.requestuildApi("/book/s/" + keywords).get().build();
 
 			reload(request);
