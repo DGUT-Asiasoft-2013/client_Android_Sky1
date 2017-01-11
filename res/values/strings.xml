@@ -86,5 +86,7 @@
     <string name="payment_cancel">取消支付</string>
     <string name="payment_succeed_text">您的宝贝将以火箭速度向您飞来</string>
     <string name="paytag_1">已付款</string>
+    <string name="sendTO">给</string>
+    <string name="sendPivateMessage">发私信</string>
 
 </resources>
