@@ -94,7 +94,7 @@ public class PersonalActivity extends Activity{
 
 			@Override
 			public void onClick(View v) {
-				Toast.makeText(PersonalActivity.this, "对不起，账号作为登录ID不能更改", Toast.LENGTH_SHORT).show();
+				Toast.makeText(PersonalActivity.this, R.string.sorry_account_cannot_change, Toast.LENGTH_SHORT).show();
 			}
 		});
 
@@ -155,12 +155,12 @@ public class PersonalActivity extends Activity{
 	protected void goChangeQq() {
 		// TODO Auto-generated method stub
 		final EditText et=new EditText(PersonalActivity.this);
-		et.setHint("请输入QQ");
+		et.setHint(R.string.hint_qq);
 		
 		AlertDialog.Builder inputDialog=new AlertDialog.Builder(PersonalActivity.this);
-		inputDialog.setTitle("修改QQ").setView(et);
+		inputDialog.setTitle(R.string.dialog_change_qq).setView(et);
 
-		inputDialog.setPositiveButton("保存", new DialogInterface.OnClickListener() {
+		inputDialog.setPositiveButton(R.string.change_save, new DialogInterface.OnClickListener() {
 
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
@@ -177,7 +177,7 @@ public class PersonalActivity extends Activity{
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
-					Toast.makeText(PersonalActivity.this, "请输入正确的QQ号码", Toast.LENGTH_SHORT)
+					Toast.makeText(PersonalActivity.this, R.string.tips_qq, Toast.LENGTH_SHORT)
 					.show();
 				}else{
 					try {
@@ -194,7 +194,7 @@ public class PersonalActivity extends Activity{
 				}
 
 			}
-		}).setNegativeButton("取消", 
+		}).setNegativeButton(R.string.change_cancel, 
 				new DialogInterface.OnClickListener() {
 			 
             @Override
@@ -240,9 +240,9 @@ public class PersonalActivity extends Activity{
 						@Override
 						public void run() {
 							if(succeed){
-								PersonalActivity.this.onResponseQq(arg0,"修改QQ成功");
+								PersonalActivity.this.onResponseQq(arg0,getString(R.string.change_succeed));
 							}else {
-								PersonalActivity.this.onFailureQq(arg0,new Exception("修改失败"));
+								PersonalActivity.this.onFailureQq(arg0,new Exception(getString(R.string.change_fail)));
 							}
 						}
 					});
@@ -268,7 +268,7 @@ public class PersonalActivity extends Activity{
 					@Override
 					public void run() {
 						new AlertDialog.Builder(PersonalActivity.this)
-						.setTitle("失败")
+						.setTitle(R.string.no_net)
 						.setMessage(arg1.getLocalizedMessage())
 						.show();
 					}
@@ -283,7 +283,7 @@ public class PersonalActivity extends Activity{
 	}
 	
 	void onResponseQq(Call arg0,String string){
-		Toast.makeText(PersonalActivity.this, "成功修改QQ", Toast.LENGTH_SHORT)
+		Toast.makeText(PersonalActivity.this, R.string.change_qq_succeed, Toast.LENGTH_SHORT)
 		.show();
 		
 		onResume();
@@ -299,12 +299,12 @@ public class PersonalActivity extends Activity{
 	protected void goChangePhone() {
 		// TODO Auto-generated method stub
 		final EditText et=new EditText(PersonalActivity.this);
-		et.setHint("请输入手机号码");
+		et.setHint(R.string.hint_phone);
 		
 		AlertDialog.Builder inputDialog=new AlertDialog.Builder(PersonalActivity.this);
-		inputDialog.setTitle("修改手机号码").setView(et);
+		inputDialog.setTitle(R.string.dialog_phone).setView(et);
 
-		inputDialog.setPositiveButton("保存", new DialogInterface.OnClickListener() {
+		inputDialog.setPositiveButton(R.string.change_save, new DialogInterface.OnClickListener() {
 
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
@@ -321,7 +321,7 @@ public class PersonalActivity extends Activity{
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
-					Toast.makeText(PersonalActivity.this, "请输入正确的手机号码", Toast.LENGTH_SHORT)
+					Toast.makeText(PersonalActivity.this, R.string.tip_phone, Toast.LENGTH_SHORT)
 					.show();
 				}else{
 					try {
@@ -338,7 +338,7 @@ public class PersonalActivity extends Activity{
 				}
 
 			}
-		}).setNegativeButton("取消", 
+		}).setNegativeButton(R.string.change_cancel, 
 				new DialogInterface.OnClickListener() {
 			 
             @Override
@@ -386,9 +386,9 @@ public class PersonalActivity extends Activity{
 						@Override
 						public void run() {
 							if(succeed){
-								PersonalActivity.this.onResponsePhone(arg0,"修改电话号码成功");
+								PersonalActivity.this.onResponsePhone(arg0,getString(R.string.change_succeed));
 							}else {
-								PersonalActivity.this.onFailurePhone(arg0,new Exception("修改失败"));
+								PersonalActivity.this.onFailurePhone(arg0,new Exception(getString(R.string.change_fail)));
 							}
 							
 						}
@@ -415,7 +415,7 @@ public class PersonalActivity extends Activity{
 					@Override
 					public void run() {
 						new AlertDialog.Builder(PersonalActivity.this)
-						.setTitle("失败")
+						.setTitle(R.string.no_net)
 						.setMessage(arg1.getLocalizedMessage())
 						.show();
 					}
@@ -430,7 +430,7 @@ public class PersonalActivity extends Activity{
 	}
 
 	void onResponsePhone(Call arg0,String string){
-		Toast.makeText(PersonalActivity.this, "修改电话号码成功", Toast.LENGTH_SHORT)
+		Toast.makeText(PersonalActivity.this, R.string.change_phone_succeed, Toast.LENGTH_SHORT)
 		.show();
 		
 		onResume();
@@ -444,12 +444,12 @@ public class PersonalActivity extends Activity{
 	protected void goChangeEmail() {
 		// TODO Auto-generated method stub
 		final EditText et=new EditText(PersonalActivity.this);
-		et.setHint("请输入邮箱");
+		et.setHint(R.string.hint_email);
 		
 		AlertDialog.Builder inputDialog=new AlertDialog.Builder(PersonalActivity.this);
-		inputDialog.setTitle("修改邮箱").setView(et);
+		inputDialog.setTitle(R.string.dialog_email).setView(et);
 
-		inputDialog.setPositiveButton("保存", new DialogInterface.OnClickListener() {
+		inputDialog.setPositiveButton(R.string.change_save, new DialogInterface.OnClickListener() {
 
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
@@ -466,7 +466,7 @@ public class PersonalActivity extends Activity{
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
-					Toast.makeText(PersonalActivity.this, "请输入正确的邮箱地址", Toast.LENGTH_SHORT)
+					Toast.makeText(PersonalActivity.this, R.string.tip_email, Toast.LENGTH_SHORT)
 					.show();
 				}else{
 					try {
@@ -483,7 +483,7 @@ public class PersonalActivity extends Activity{
 				}
 
 			}
-		}).setNegativeButton("取消", 
+		}).setNegativeButton(R.string.change_cancel, 
 				new DialogInterface.OnClickListener() {
 			 
             @Override
@@ -529,10 +529,10 @@ public class PersonalActivity extends Activity{
 						@Override
 						public void run() {
 							if(succeed){
-								PersonalActivity.this.onResponseEmail(arg0,"修改成功");
+								PersonalActivity.this.onResponseEmail(arg0,getString(R.string.change_succeed));
 								
 							}else {
-								PersonalActivity.this.onFailureEmail(arg0,new Exception("修改失败"));
+								PersonalActivity.this.onFailureEmail(arg0,new Exception(getString(R.string.change_fail)));
 							}
 						}
 					});
@@ -557,7 +557,7 @@ public class PersonalActivity extends Activity{
 					@Override
 					public void run() {
 						new AlertDialog.Builder(PersonalActivity.this)
-						.setTitle("失败")
+						.setTitle(R.string.no_net)
 						.setMessage(arg1.getLocalizedMessage())
 						.show();
 					}
@@ -572,7 +572,7 @@ public class PersonalActivity extends Activity{
 	}
 	
 	void onResponseEmail(Call arg0,String string){
-		Toast.makeText(PersonalActivity.this, "修改邮箱成功", Toast.LENGTH_SHORT)
+		Toast.makeText(PersonalActivity.this, R.string.change_email_succeed, Toast.LENGTH_SHORT)
 		.show();
 
 		onResume();
@@ -583,12 +583,12 @@ public class PersonalActivity extends Activity{
 	protected void goChangeName() {
 		// TODO Auto-generated method stub
 		final EditText et=new EditText(PersonalActivity.this);
-		et.setHint("请输入昵称");
+		et.setHint(R.string.hint_name);
 
 		AlertDialog.Builder inputDialog=new AlertDialog.Builder(PersonalActivity.this);
-		inputDialog.setTitle("修改昵称").setView(et);
+		inputDialog.setTitle(R.string.dialog_name).setView(et);
 
-		inputDialog.setPositiveButton("保存", new DialogInterface.OnClickListener() {
+		inputDialog.setPositiveButton(R.string.change_save, new DialogInterface.OnClickListener() {
 
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
@@ -605,7 +605,7 @@ public class PersonalActivity extends Activity{
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
-					Toast.makeText(PersonalActivity.this, "昵称不能为空", Toast.LENGTH_SHORT)
+					Toast.makeText(PersonalActivity.this, R.string.tip_name, Toast.LENGTH_SHORT)
 					.show();
 				}else{
 					try {
@@ -622,7 +622,7 @@ public class PersonalActivity extends Activity{
 				}
 
 			}
-		}).setNegativeButton("取消",  
+		}).setNegativeButton(R.string.change_cancel,  
 				new DialogInterface.OnClickListener() {
 			 
 			                              @Override
@@ -668,10 +668,10 @@ public class PersonalActivity extends Activity{
 						@Override
 						public void run() {
 							if(succeed){
-								PersonalActivity.this.onResponseName(arg0,"修改成功");
+								PersonalActivity.this.onResponseName(arg0,getString(R.string.change_succeed));
 
 							}else {
-								PersonalActivity.this.onFailureName(arg0,new Exception("修改失败"));
+								PersonalActivity.this.onFailureName(arg0,new Exception(getString(R.string.change_fail)));
 							}
 						}
 					});		
@@ -696,7 +696,7 @@ public class PersonalActivity extends Activity{
 					@Override
 					public void run() {
 						new AlertDialog.Builder(PersonalActivity.this)
-						.setTitle("失败")
+						.setTitle(R.string.no_net)
 						.setMessage(arg1.getLocalizedMessage())
 						.show();
 					}
@@ -711,7 +711,7 @@ public class PersonalActivity extends Activity{
 	}
 
 	void onResponseName(Call arg0,String string){
-		Toast.makeText(PersonalActivity.this, "修改昵称成功", Toast.LENGTH_SHORT)
+		Toast.makeText(PersonalActivity.this, R.string.change_name_succeed, Toast.LENGTH_SHORT)
 		.show();
 
 		onResume();
@@ -724,10 +724,10 @@ public class PersonalActivity extends Activity{
 
 
 	protected void onChangeAvatar() {
-		String[] items={"拍照","相册"};
+		String[] items={getString(R.string.takePhoto),getString(R.string.image_book)};
 
 		new AlertDialog.Builder(this)
-		.setTitle("修改头像")
+		.setTitle(R.string.dialog_avatar)
 		.setItems(items, new DialogInterface.OnClickListener() {
 
 			@Override
@@ -743,7 +743,7 @@ public class PersonalActivity extends Activity{
 					break;
 				}
 			}
-		}).setPositiveButton("取消", null)
+		}).setPositiveButton(R.string.change_cancel, null)
 		.show();
 
 	}
@@ -785,13 +785,13 @@ public class PersonalActivity extends Activity{
 		});
 	}
 	protected void onFailure(Call arg0, Exception arg1) {//鏃犳硶杩炴帴鏈嶅姟鍣ㄦ椂
-		new AlertDialog.Builder(this).setTitle("失败").setMessage(arg1.getLocalizedMessage())
-		.setNegativeButton("好", null).show();
+		new AlertDialog.Builder(this).setTitle(R.string.no_net).setMessage(arg1.getLocalizedMessage())
+		.setNegativeButton(R.string.avatar_ok, null).show();
 	}
 	protected void onResponse(Call arg0, String ar) {//鎴愬姛
 		try {
 
-			Toast.makeText(PersonalActivity.this, "修改头像成功", Toast.LENGTH_SHORT).show();
+			Toast.makeText(PersonalActivity.this, R.string.person_avatar_succeed, Toast.LENGTH_SHORT).show();
 
 
 		} catch (Exception e) {
@@ -906,14 +906,14 @@ public class PersonalActivity extends Activity{
 	}
 
 	protected void OnFailure(Call arg0, Exception arg1) {
-		Toast.makeText(PersonalActivity.this, "对不起，网络错误", Toast.LENGTH_SHORT)
+		Toast.makeText(PersonalActivity.this, R.string.sorry_net_fial, Toast.LENGTH_SHORT)
 		.show();
 	}
 
 	protected void OnReponse(Call arg0, User user) {
 		if(TextUtils.isEmpty(user.getAvatar())){
 			//avatar.setBackgroundResource(R.drawable.avatar_not_login);
-			avatar_none.setText("点击添加头像");
+			avatar_none.setText(R.string.onclick_add_avatar);
 		}
 		avatar.load(user);
 		p_name.setText(user.getName());

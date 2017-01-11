@@ -187,14 +187,14 @@ public class LoginActivity extends Activity {
 	protected void onResume() { //初始化控件
 		super.onResume();
 
-		fragAccount.setLabelText("账号:");
+		fragAccount.setLabelText(getString(R.string.login_a_l));
 		{
-			fragAccount.setHintText("请输入账号");
+			fragAccount.setHintText(getString(R.string.login_a_h));
 		}
 
-		fragPassword.setLabelText("密码:");
+		fragPassword.setLabelText(getString(R.string.login_p_l));
 		{
-			fragPassword.setHintText("请输入密码");
+			fragPassword.setHintText(getString(R.string.login_p_h));
 			fragPassword.setIsPassword(true);
 		}
 		if(b){
@@ -231,10 +231,10 @@ public class LoginActivity extends Activity {
 		String current_password=fragPassword.getText();//获取当前用户的密码
 		
 		if(current_password.length()==0){
-			Toast.makeText(LoginActivity.this, "请输入密码", Toast.LENGTH_SHORT).show();
+			Toast.makeText(LoginActivity.this, R.string.login_p_h, Toast.LENGTH_SHORT).show();
 			return;    
 		}else if (current_user.length()==0) {
-			Toast.makeText(LoginActivity.this, "请输入账户", Toast.LENGTH_SHORT).show();
+			Toast.makeText(LoginActivity.this, R.string.login_a_t, Toast.LENGTH_SHORT).show();
 			return;
 		}
 		//生成请求体
@@ -250,7 +250,7 @@ public class LoginActivity extends Activity {
 
 		//创建进度条
 		final ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this);
-		progressDialog.setMessage("请稍后");
+		progressDialog.setMessage(getString(R.string.zc_wait));
 		progressDialog.setCancelable(false);
 		progressDialog.setCanceledOnTouchOutside(false);
 		progressDialog.show();
@@ -271,13 +271,13 @@ public class LoginActivity extends Activity {
 						progressDialog.dismiss();//进度条消失
 
 							if(TextUtils.isEmpty(string)){//判断解析出来的是否为空字符串（如果为空，则数据库中没有此用户）
-								Toast.makeText(LoginActivity.this, "密码错误", Toast.LENGTH_SHORT).show();
+								Toast.makeText(LoginActivity.this, R.string.login_p_error, Toast.LENGTH_SHORT).show();
 								return;
 							}
 
 //							ObjectMapper objectMapper=new ObjectMapper();
 //							user=objectMapper.readValue(string, User.class);//读取值
-							Toast.makeText(LoginActivity.this, "登录成功", Toast.LENGTH_SHORT).show();
+							Toast.makeText(LoginActivity.this, R.string.login_succeed, Toast.LENGTH_SHORT).show();
 							
 							Intent itnt = new Intent(LoginActivity.this, HelloWorldActivity.class);//跳转的页面
 							startActivity(itnt);
@@ -305,9 +305,9 @@ public class LoginActivity extends Activity {
 						progressDialog.dismiss();
 
 						new AlertDialog.Builder(LoginActivity.this)
-						.setTitle("失败")
-						.setMessage("连接失败")
-						.setNegativeButton("确定", null)
+						.setTitle(R.string.login_fail)
+						.setMessage(R.string.login_net_error)
+						.setNegativeButton(R.string.login_sure, null)
 						.show();
 					}
 				});

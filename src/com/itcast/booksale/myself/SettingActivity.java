@@ -97,7 +97,8 @@ public class SettingActivity extends Activity{
 					
 					@Override
 					public void run() {
-						Toast.makeText(SettingActivity.this, "you have success to exit", Toast.LENGTH_SHORT).show();
+						Toast.makeText(SettingActivity.this, R.string.set_exit, Toast.LENGTH_SHORT).show();
+
 						Intent intent=new Intent(SettingActivity.this, HelloWorldActivity.class);
 						startActivity(intent);
 						finish();
@@ -111,7 +112,8 @@ public class SettingActivity extends Activity{
 					
 					@Override
 					public void run() {
-						Toast.makeText(SettingActivity.this, "you are fail to connect net", Toast.LENGTH_SHORT).show();
+						Toast.makeText(SettingActivity.this, R.string.set_exit_fail, Toast.LENGTH_SHORT).show();
+
 					}
 				});
 			}

@@ -48,22 +48,22 @@ public class RegisterFirstActivity extends Activity {
 		String phone=fragInputCellPhone.getText();
 		
 		if(phone.length()==0) {
-			Toast.makeText(RegisterFirstActivity.this,"电话号码不能为空", Toast.LENGTH_SHORT).show();
+			Toast.makeText(RegisterFirstActivity.this,R.string.zc_phone_notnull, Toast.LENGTH_SHORT).show();
 			return;
 		}
 		
 		if(phone.length()!=11){
-			Toast.makeText(RegisterFirstActivity.this,"手机号码输入错误，请输入11位手机号码", Toast.LENGTH_SHORT).show();
+			Toast.makeText(RegisterFirstActivity.this,R.string.zc_tip_phone, Toast.LENGTH_SHORT).show();
 			return;
 		}
 		
 		if(!SimpleTextInputCellFragment.isMobileNO(phone)){
-			Toast.makeText(RegisterFirstActivity.this,"手机号码输入错误，请重新输入", Toast.LENGTH_SHORT).show();
+			Toast.makeText(RegisterFirstActivity.this,R.string.zc_phone_error, Toast.LENGTH_SHORT).show();
 			return;
 		}
 		
 		
-		Toast.makeText(RegisterFirstActivity.this, "验证码已发送到该手机上，请注意查收！", Toast.LENGTH_SHORT)
+		Toast.makeText(RegisterFirstActivity.this, R.string.zc_yzm, Toast.LENGTH_SHORT)
 		.show();
 		
 		//String phone=fragInputCellPhone.getText();
@@ -112,15 +112,15 @@ public class RegisterFirstActivity extends Activity {
 	
 	protected void onFailure(Call arg0, Exception arg1) {//鏃犳硶杩炴帴鏈嶅姟鍣ㄦ椂
 		new AlertDialog.Builder(this)
-		.setTitle("错误！")
+		.setTitle(R.string.zc_error)
 		.setMessage(arg1.getLocalizedMessage())
-		.setNegativeButton("好", null)
+		.setNegativeButton(R.string.zc_ok, null)
 		.show();
 	}
 	
 	protected void onResponse(Call arg0, String ar) {//鎴愬姛
 		try {
-			Toast.makeText(RegisterFirstActivity.this, "验证码已发送到该手机上，请注意查收！", Toast.LENGTH_SHORT)
+			Toast.makeText(RegisterFirstActivity.this, R.string.zc_yzm, Toast.LENGTH_SHORT)
 			.show();
 			
 			String phone=fragInputCellPhone.getText();
@@ -141,9 +141,9 @@ public class RegisterFirstActivity extends Activity {
 		// TODO Auto-generated method stub
 		super.onResume();
 		
-		fragInputCellPhone.setLabelText("手机号码*:");//鐢佃瘽
+		fragInputCellPhone.setLabelText(getString(R.string.zc_phone_l));//鐢佃瘽
 		{
-			fragInputCellPhone.setHintText("请输入11位手机号码(必填)");
+			fragInputCellPhone.setHintText(getString(R.string.zc_phone_hint));
 			fragInputCellPhone.setIsPhone(true);
 		}
 	}

@@ -59,7 +59,7 @@ public class PictureInputCellFragment extends Fragment {
 	}
 	
 	protected void onImageViewClicked() {
-		String[] items={"拍照","相册"};//娣诲姞items闆嗗悎灞炴��
+		String[] items={getString(R.string.takePhoto),getString(R.string.image_book)};//娣诲姞items闆嗗悎灞炴��
 		
 		new AlertDialog.Builder(getActivity())   //鐢熸垚鍒楄〃瀵硅瘽妗�
 		.setTitle(hintText.getText())   //鎻愬彇hintText鎺т欢鍐呭鏉ヨ缃爣棰�
@@ -82,7 +82,7 @@ public class PictureInputCellFragment extends Fragment {
 					break;
 				}	
 			}
-		}).setNegativeButton("取消", null)//璁剧疆涓�涓彇娑堟寜閽�
+		}).setNegativeButton(R.string.me_cancel, null)//璁剧疆涓�涓彇娑堟寜閽�
 		  .show();
 		
 		

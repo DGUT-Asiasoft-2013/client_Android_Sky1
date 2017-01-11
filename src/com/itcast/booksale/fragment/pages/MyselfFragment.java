@@ -303,7 +303,7 @@ public class MyselfFragment extends Fragment{
 
 	protected void OnFailureMyself(Call arg0, Exception e) {
 		// TODO Auto-generated method stub
-		Toast.makeText(getActivity(), "对不起，你未登录", Toast.LENGTH_SHORT)
+		Toast.makeText(getActivity(), R.string.sorry_nologin, Toast.LENGTH_SHORT)
 		.show();
 	}
 

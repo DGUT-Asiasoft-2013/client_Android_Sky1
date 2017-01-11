@@ -90,10 +90,10 @@ public class BooksContentActivity extends Activity {
 
 		bookUserName.setText(book.getUser().getName());
 		bookTitle.setText(book.getTitle());
-		bookUserPhone.setText("电话:"+book.getUser().getPhoneNumb());
-		bookUserQQ.setText("QQ:"+book.getUser().getQq());
-		bookUserText.setText("卖家留言:"+book.getText());
-		bookSummaryText.setText("简介:"+"   " + book.getSummary());
+		bookUserPhone.setText(R.string.tel+book.getUser().getPhoneNumb());
+		bookUserQQ.setText(R.string.qq+book.getUser().getQq());
+		bookUserText.setText(R.string.Sellermessage+book.getText());
+		bookSummaryText.setText(R.string.Introduction+"   " + book.getSummary());
 
 		bookUserAvatar.load(Servelet.urlstring + book.getUser().getAvatar());
 		bookAvatar.load(Servelet.urlstring + book.getBookavatar());
