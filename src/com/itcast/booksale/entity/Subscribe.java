@@ -3,8 +3,10 @@ package com.itcast.booksale.entity;
 import java.io.Serializable;
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 
+@JsonIgnoreProperties(ignoreUnknown=true)
 public class Subscribe{
 	boolean b;
 	int count;

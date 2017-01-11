@@ -17,6 +17,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.itcast.booksale.entity.Page;
 import com.itcast.booksale.entity.PrivateMessage;
+import com.itcast.booksale.entity.Subscribe;
 import com.itcast.booksale.entity.User;
 import com.itcast.booksale.fragment.widgets.AvatarView;
 import com.itcast.booksale.servelet.Servelet;
@@ -43,7 +44,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class PrivateMessageListActivity extends Activity {
-	List<User> privateMessageData;
+	List<Subscribe> privateMessageData;
 	String privateMessageDetail;
 	User currentUser;
 
@@ -69,7 +70,7 @@ public class PrivateMessageListActivity extends Activity {
 			if (view == null) {
 				view = LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_listitem_connecters, null);
 			}
-			User user = privateMessageData.get(position);
+			User user = privateMessageData.get(position).getId().getSaler();
 			AvatarView avatar = (AvatarView) view.findViewById(R.id.chatlist_avatar);
 			// TextView text_message = (TextView)
 			// view.findViewById(R.id.chatlist_text);
@@ -108,10 +109,10 @@ public class PrivateMessageListActivity extends Activity {
 
 	public void onItemClicked(int position) {
 
-		User user = privateMessageData.get(position);
+		Subscribe user = privateMessageData.get(position);
 
 		Intent itnt = new Intent(this, SendPrivateMessageActivity.class);
-		itnt.putExtra("sendToReceiver", user);
+		itnt.putExtra("sendToReceiver", user.getId().getSaler());
 		startActivity(itnt);
 	}
 
@@ -203,8 +204,8 @@ public class PrivateMessageListActivity extends Activity {
 
 				try {
 					String rr = arg1.body().string();
-					Log.d("rr", rr);
-					final Page<User> pageData = new ObjectMapper().readValue(rr, new TypeReference<Page<User>>() {
+					Log.d("rr1", rr);
+					final Page<Subscribe> pageData = new ObjectMapper().readValue(rr, new TypeReference<Page<Subscribe>>() {
 					});
 
 					runOnUiThread(new Runnable() {
