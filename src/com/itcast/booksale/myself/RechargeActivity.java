@@ -198,7 +198,7 @@ public class RechargeActivity extends Activity {
 
 	protected void onFailurePay(Call arg0, Exception arg1) {
 		// TODO Auto-generated method stub
-		Toast.makeText(RechargeActivity.this, R.string.r_net_error, Toast.LENGTH_SHORT)
+		Toast.makeText(RechargeActivity.this, R.string.recharge_yihcang, Toast.LENGTH_SHORT)
 		.show();
 	}
 
