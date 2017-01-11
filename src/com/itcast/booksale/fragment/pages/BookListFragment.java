@@ -147,6 +147,7 @@ public class BookListFragment extends Fragment implements OnClickListener {
 				public void onRefresh(PullToRefreshLayout pullToRefreshLayout) {
 					super.onRefresh(pullToRefreshLayout);
 					pullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
+					getBooksListByAll();
 				}
 				//下拉加载后的操作
 				@Override
